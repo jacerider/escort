@@ -1,0 +1,68 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a escort.
+ *
+ * Available variables:
+ * - $escort->subject: Escort title.
+ * - $content: Escort content.
+ * - $escort->module: Module that generated the escort.
+ * - $escort->delta: An ID for the escort, unique within each module.
+ * - $escort->region: The escort region embedding the current escort.
+ * - $classes: String of classes that can be used to style contextually through
+ *   CSS. It can be manipulated through the variable $classes_array from
+ *   preprocess functions. The default values can be one or more of the
+ *   following:
+ *   - escort: The current template type, i.e., "theming hook".
+ *   - escort-[module]: The module generating the escort. For example, the user
+ *     module is responsible for handling the default user navigation escort. In
+ *     that case the class would be 'escort-user'.
+ * - $title_prefix (array): An array containing additional output populated by
+ *   modules, intended to be displayed in front of the main title tag that
+ *   appears in the template.
+ * - $title_suffix (array): An array containing additional output populated by
+ *   modules, intended to be displayed after the main title tag that appears in
+ *   the template.
+ *
+ * Helper variables:
+ * - $classes_array: Array of html class attribute values. It is flattened
+ *   into a string within the variable $classes.
+ * - $escort_zebra: Outputs 'odd' and 'even' dependent on each escort region.
+ * - $zebra: Same output as $escort_zebra but independent of any escort region.
+ * - $escort_id: Counter dependent on each escort region.
+ * - $id: Same output as $escort_id but independent of any escort region.
+ * - $is_front: Flags true when presented in the front page.
+ * - $logged_in: Flags true when the current user is a logged-in member.
+ * - $is_admin: Flags true when the current user is an administrator.
+ * - $escort_html_id: A valid HTML ID and guaranteed unique.
+ *
+ * @ingroup templates
+ *
+ * @see bootstrap_preprocess_escort()
+ * @see template_preprocess()
+ * @see template_preprocess_escort()
+ * @see bootstrap_process_escort()
+ * @see template_process()
+ */
+#}
+{%
+  set classes = [
+    tag == 'a' ? 'escort-link',
+  ]
+%}
+<{{tag}}{{ attributes.addClass(classes) }}>
+  {% if icon %}
+    <div{{ icon_attributes.addClass('escort-icon') }}>{{ icon }}</div>
+  {% endif %}
+
+  {{ title_prefix }}
+  {% if label %}
+    <h2{{ title_attributes.addClass('escort-title') }}>{{ label }}</h2>
+  {% endif %}
+  {{ title_suffix }}
+
+  {% block content %}
+    {{ content }}
+  {% endblock %}
+</{{tag}}>
+

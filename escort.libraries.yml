@@ -1,0 +1,26 @@
+escort:
+  version: VERSION
+  css:
+    component:
+      css/escort.css: {}
+  js:
+    js/escort.js: { minified: true }
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+
+escort.active:
+  version: VERSION
+  js:
+    js/escort.active.js: {}
+  dependencies:
+    - escort/escort
+
+admin:
+  version: VERSION
+  js:
+    js/escort.admin.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

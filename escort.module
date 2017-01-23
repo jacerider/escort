@@ -1,0 +1,120 @@
+<?php
+
+/**
+ * @file
+ * Contains escort.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\NestedArray;
+
+/**
+ * Implements hook_help().
+ */
+function escort_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the escort module.
+    case 'help.page.escort':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('An admin menu of extreme super awesomeness.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function escort_theme() {
+  $items['escort_region'] = [
+    'render element' => 'element',
+    'file' => 'escort.theme',
+  ];
+  $items['escort_section'] = [
+    'render element' => 'element',
+    'file' => 'escort.theme',
+  ];
+  $items['escort_item'] = [
+    'render element' => 'element',
+    'file' => 'escort.theme',
+  ];
+  $items['escort_plugin_local_task'] = [
+    'render element' => 'element',
+  ];
+  return $items;
+}
+
+/**
+ * Implements hook_page_top().
+ *
+ * Add admin escort to the bottom of the page automatically.
+ */
+function escort_page_top(array &$page_top) {
+  $cacheable_metadata_list = [];
+  $regions = \Drupal::service('escort.repository')->getEscortsPerRegion($cacheable_metadata_list);
+  $page_top['escort'] = array(
+    '#type' => 'escort',
+    '#access' => \Drupal::currentUser()->hasPermission('access escort'),
+    '#weight' => -1001,
+    '#cache' => [
+      'keys' => ['escort'],
+      'contexts' => ['user.permissions'],
+    ],
+  );
+  if (\Drupal::moduleHandler()->moduleExists('ux')) {
+    $page_top['ux']['#attributes']['class'][] = 'escort-wrapper';
+  }
+  else {
+    $page_top['escort_container'] = [
+      '#markup' => '<div class="escort-wrapper">',
+      '#weight' => -1000,
+    ];
+  }
+  $merged_cacheable_metadata = CacheableMetadata::createFromRenderArray($page_top['escort']);
+  foreach ($cacheable_metadata_list as $regions) {
+    foreach ($regions as $cacheable_metadata) {
+      $merged_cacheable_metadata = $merged_cacheable_metadata->merge($cacheable_metadata);
+    }
+  }
+  $merged_cacheable_metadata->applyTo($page_top['escort']);
+}
+
+/**
+ * Implements hook_page_bottom().
+ *
+ * Add admin escort to the bottom of the page automatically.
+ */
+function escort_page_bottom(array &$page_bottom) {
+  if (!\Drupal::moduleHandler()->moduleExists('ux')) {
+    $page_bottom['escort_container'] = [
+      '#markup' => '</div>',
+      '#weight' => 1000,
+    ];
+  }
+}
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function escort_preprocess_html(&$variables) {
+  // Add classes to body if regions have escorts.
+  $regions = \Drupal::service('escort.repository')->getEscortsPerRegion();
+  if (!empty($regions)) {
+    $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort');
+    foreach ($regions as $region_id => $sections) {
+      $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $region_id);
+      foreach ($sections as $section) {
+        foreach ($section as $escort) {
+          // Allow plugins to add body attributes.
+          if ($attributes = $escort->getPlugin()->getBodyAttributes()) {
+            $variables['attributes'] = NestedArray::mergeDeep($variables['attributes'], $attributes);
+          }
+        }
+      }
+    }
+  }
+}

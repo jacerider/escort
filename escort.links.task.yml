@@ -1,0 +1,14 @@
+escort.config:
+  route_name: escort.escort_config_form
+  base_route: escort.escort_config_form
+  title: 'Config'
+
+escort.list:
+  route_name: escort.escort_list
+  base_route: escort.escort_config_form
+  title: 'List'
+
+# escort.list:
+#   route_name: entity.escort.collection
+#   base_route: escort.escort_config_form
+#   title: 'List'

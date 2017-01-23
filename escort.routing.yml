@@ -1,0 +1,50 @@
+
+escort.escort_config_form:
+  path: '/admin/config/escort'
+  defaults:
+    _form: '\Drupal\escort\Form\EscortConfigForm'
+    _title: 'Escort'
+  requirements:
+    _permission: 'administer escorts'
+  options:
+    _admin_route: TRUE
+
+escort.escort_list:
+  path: '/admin/config/escort/list'
+  defaults:
+    _controller: '\Drupal\escort\Controller\EscortListController::listing'
+    _title: 'Escort layout'
+  requirements:
+    _permission: 'administer escorts'
+
+escort.escort_library:
+  path: '/admin/config/escort/library'
+  defaults:
+    _controller: '\Drupal\escort\Controller\EscortLibraryController::listEscorts'
+    _title: 'Place escort'
+  requirements:
+    _permission: 'administer escorts'
+
+escort.escort_add:
+  path: '/admin/config/escort/add/{plugin_id}'
+  defaults:
+    _controller: '\Drupal\escort\Controller\EscortAddController::escorItemAddForm'
+    _title: 'Configure Escort'
+  requirements:
+    _permission: 'administer escorts'
+
+entity.escort.edit_form:
+  path: '/admin/config/escort/manage/{escort}'
+  defaults:
+    _entity_form: 'escort.default'
+    _title: 'Configure escort'
+  requirements:
+    _permission: 'administer escorts'
+
+entity.escort.delete_form:
+  path: '/admin/config/escort/manage/{escort}/delete'
+  defaults:
+    _entity_form: 'escort.delete'
+    _title: 'Delete escort'
+  requirements:
+    _permission: 'administer escorts'

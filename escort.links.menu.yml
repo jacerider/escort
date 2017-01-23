@@ -1,0 +1,16 @@
+escort.escort_config_form:
+  title: 'Escort'
+  route_name: escort.escort_config_form
+  description: 'Manage the Escort toolbar.'
+  parent: system.admin_config_system
+  weight: 99
+
+
+# Escort menu items definition
+# entity.escort.collection:
+#   title: 'Escort Items'
+#   route_name: entity.escort.collection
+#   description: 'List Escort (bundles)'
+#   parent: escort.escort_config_form
+#   weight: 99
+

@@ -1,0 +1,144 @@
+<?php
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Template\Attribute;
+use Drupal\Component\Utility\SafeMarkup;
+
+/**
+ * Prepares variables for administration escort template.
+ *
+ * Default template: escort.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element.
+ */
+function template_preprocess_escort_region(&$variables) {
+  $element = $variables['element'];
+
+  // Prepare the escort attributes.
+  $variables['attributes'] = $element['#attributes'];
+
+  foreach (Element::children($element) as $key) {
+    $variables['content'][$key] = $element[$key];
+  }
+}
+
+/**
+ * Prepares variables for administration escort template.
+ *
+ * Default template: escort.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element.
+ */
+function template_preprocess_escort_section(&$variables) {
+  $element = $variables['element'];
+
+  // Prepare the escort attributes.
+  $variables['attributes'] = $element['#attributes'];
+
+  foreach (Element::children($element) as $key) {
+    $variables['content'][$key] = $element[$key];
+  }
+}
+
+/**
+ * Prepares variables for escort templates.
+ *
+ * Default template: escort.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #escort, #configuration, #children, #plugin_id.
+ */
+function template_preprocess_escort_item(&$variables) {
+  $variables['configuration'] = $variables['element']['#configuration'];
+  $variables['plugin_id'] = $variables['element']['#plugin_id'];
+  $variables['base_plugin_id'] = $variables['element']['#base_plugin_id'];
+  $variables['derivative_plugin_id'] = $variables['element']['#derivative_plugin_id'];
+  $variables['label'] = !empty($variables['configuration']['label_display']) ? $variables['configuration']['label'] : '';
+  $variables['content'] = $variables['element']['content'];
+  $variables['tag'] = !empty($variables['element']['#tag']) ? $variables['element']['#tag'] : 'div';
+
+  $variables['icon'] = '';
+  $variables['icon_attributes'] = new Attribute();
+  // Icon can be set within element content.
+  if (!empty($variables['element']['content']['#icon'])) {
+    $variables['icon'] = $variables['element']['content']['#icon'];
+  }
+  // If icon not set within content, it may also be set within configuration.
+  else if (!empty($variables['configuration']['icon'])) {
+    $variables['icon'] = $variables['configuration']['icon'];
+  }
+
+  // Let micon theme our icon.
+  if (!empty($variables['icon'])) {
+    $variables['icon'] = [
+      '#theme' => 'micon',
+      '#icon' => $variables['icon'],
+    ];
+  }
+
+  // A escort's label is configuration: it is static. Allow dynamic labels to be
+  // set in the render array.
+  if (isset($variables['element']['content']['#title']) && !empty($variables['configuration']['label_display'])) {
+    $variables['label'] = $variables['element']['content']['#title'];
+  }
+
+  // Add base class
+  $variables['attributes']['class'][] = 'escort-item';
+
+  // Create a valid HTML ID and make sure it is unique.
+  if (!empty($variables['element']['#id']) && empty($variables['content']['#escort_group'])) {
+    $variables['attributes']['id'] = Html::getUniqueId('escort-item-' . $variables['element']['#id']);
+    $variables['attributes']['class'][] = $variables['attributes']['id'];
+  }
+
+  // Proactively add aria-describedby if possible to improve accessibility.
+  if ($variables['label'] && isset($variables['attributes']['role'])) {
+    $variables['title_attributes']['id'] = Html::getUniqueId($variables['label']);
+    $variables['attributes']['aria-describedby'] = $variables['title_attributes']['id'];
+  }
+}
+
+
+/**
+ * Prepares variables for single local task link templates.
+ *
+ * Default template: menu-local-task.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: A render element containing:
+ *     - #link: A menu link array with 'title', 'url', and (optionally)
+ *       'localized_options' keys.
+ *     - #active: A boolean indicating whether the local task is active.
+ */
+function template_preprocess_escort_plugin_local_task(&$variables) {
+  $link = $variables['element']['#link'];
+  $link += array(
+    'localized_options' => array(),
+  );
+  $link_text = $link['title'];
+
+  if (!empty($variables['element']['#active'])) {
+    $variables['is_active'] = TRUE;
+
+    // Add text to indicate active tab for non-visual users.
+    $active = SafeMarkup::format('<span class="visually-hidden">@label</span>', array('@label' => t('(active tab)')));
+    $link_text = t('@local-task-title@active', array('@local-task-title' => $link_text, '@active' => $active));
+  }
+
+  $link['localized_options']['set_active_class'] = TRUE;
+
+  $variables['link'] = array(
+    '#type' => 'link',
+    '#title' => $link_text,
+    '#url' => $link['url'],
+    '#options' => $link['localized_options'],
+  );
+}

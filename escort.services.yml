@@ -1,0 +1,9 @@
+services:
+  plugin.manager.escort:
+    class: Drupal\escort\EscortManager
+    parent: default_plugin_manager
+  escort.region_manager:
+    class: Drupal\escort\EscortRegionManager
+  escort.repository:
+    class: Drupal\escort\EscortRepository
+    arguments: ['@entity_type.manager', '@escort.region_manager']

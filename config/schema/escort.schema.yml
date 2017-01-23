@@ -1,0 +1,23 @@
+escort.escort.*:
+  type: config_entity
+  label: 'Escort config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    region:
+      type: string
+      label: 'Region'
+    weight:
+      type: integer
+      label: 'Weight'
+    plugin:
+      type: string
+      label: 'Plugin'
+    settings:
+      type: escort.settings.[%parent.plugin]
+    uuid:
+      type: string
+
+escort.settings.*:
+  type: escort_settings

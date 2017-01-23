@@ -1,0 +1,5 @@
+# entity.escort.add_form:
+#   route_name: 'entity.escort.add_form'
+#   title: 'Add Escort'
+#   appears_on:
+#     - entity.escort.collection
