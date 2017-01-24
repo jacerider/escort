@@ -10,7 +10,6 @@ use Drupal\Component\Utility\Html;
  * @Escort(
  *   id = "toggle",
  *   admin_label = @Translation("Toggle"),
- *   category = @Translation("Basic"),
  *   no_ui = TRUE,
  * )
  */

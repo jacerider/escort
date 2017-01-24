@@ -41,6 +41,14 @@ entity.escort.edit_form:
   requirements:
     _permission: 'administer escorts'
 
+entity.escort.disable_form:
+  path: '/admin/config/escort/manage/{escort}/disable'
+  defaults:
+    _entity_form: 'escort.disable'
+    _title: 'Disable escort'
+  requirements:
+    _permission: 'administer escorts'
+
 entity.escort.delete_form:
   path: '/admin/config/escort/manage/{escort}/delete'
   defaults:

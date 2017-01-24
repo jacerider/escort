@@ -10,7 +10,6 @@ use Drupal\Core\Form\FormStateInterface;
  * @Escort(
  *   id = "broken",
  *   admin_label = @Translation("Broken/Missing"),
- *   category = @Translation("Escort"),
  * )
  */
 class Broken extends EscortPluginBase {

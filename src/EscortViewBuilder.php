@@ -76,6 +76,7 @@ class EscortViewBuilder extends EntityViewBuilder {
    */
   public function viewMultiple(array $entities = array(), $view_mode = 'full', $langcode = NULL) {
     /** @var \Drupal\escort\EscortInterface[] $entities */
+
     $build = array();
     foreach ($entities as $entity) {
       $entity_id = $entity->id();
@@ -213,19 +214,22 @@ class EscortViewBuilder extends EntityViewBuilder {
    *   to the escort itself.
    */
   public static function preRender($build) {
-    $plugin = $build['#escort']->getPlugin();
+    $entity = $build['#escort'];
+    $plugin = $entity->getPlugin();
 
     $content = NULL;
     if ($plugin->usesMultiple()) {
-      $items = $plugin->buildItems();
-      if (is_array($items)) {
-        $build['#attributes']['class'][] = 'escort-item-group';
-        foreach ($items as $item) {
-          $item['#escort_group'] = TRUE;
-          $item_build = static::buildPreRenderableEscort($build['#escort'], \Drupal::service('module_handler'), $item);
-          $item_build['content'] = static::mergeProperties($item_build, $item_build['content']);
-          $content[] = $item_build;
-        }
+      // A plugin can define multiple escort items. We pass each item back
+      // through the buildPreRenderableEscort so each item is built out as an
+      // individual escort.
+      $content = $plugin->buildItems();
+      $build['#attributes']['class'][] = 'escort-item-group';
+      foreach (Element::children($content) as $key) {
+        $item = $content[$key];
+        $item['#escort_group'] = TRUE;
+        $item_build = static::buildPreRenderableEscort($build['#escort'], \Drupal::service('module_handler'), $item);
+        $item_build['content'] = static::mergeProperties($item_build, $item_build['content']);
+        $content[$key] = $item_build;
       }
     }
     else {
@@ -238,6 +242,17 @@ class EscortViewBuilder extends EntityViewBuilder {
     if ($content !== NULL && !Element::isEmpty($content)) {
       // Merge properties.
       $build['content'] = static::mergeProperties($build, $content);
+      if (\Drupal::service('escort.path.matcher')->isAdmin() && !$entity->isNew()) {
+        // Because ops contain links, we need to force the element tag to be a
+        // div as nested links are face breaking.
+        $build['#tag'] = 'div';
+        $build['ops']['move']['#markup'] = '<a class="escort-drag">Reorder</a>';
+        $build['ops']['links'] = [
+          '#theme' => 'links',
+          '#links' => $entity->buildOps(),
+          '#attributes' => ['class' => ['escort-ops']],
+        ];
+      }
     }
     // Either the escort's content is completely empty, or it consists only of
     // cacheability metadata.

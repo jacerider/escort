@@ -205,6 +205,13 @@ $primary: #4190e7;
       .escort-icon {
         margin-right: map-get($settings, padding) / 2;
       }
+
+      /**
+       * Horizontal operations
+       */
+      .escort-ops {
+        top: 100%;
+      }
     }
 
     /**
@@ -262,6 +269,13 @@ $primary: #4190e7;
       .escort-icon {
         width: map-get($settings, size);
         text-align: center;
+      }
+
+      /**
+       * Vertical operations
+       */
+      .escort-ops {
+        right: 0;
       }
 
       /**
@@ -347,6 +361,7 @@ $primary: #4190e7;
 .escort-item {
   display: flex;
   transition: all 300ms;
+  position: relative;
 
   // Link elements
   &.escort-link {
@@ -356,8 +371,7 @@ $primary: #4190e7;
 
   // Toggle elements
   &.escort-toggle {
-    display: block;
-    text-align: center;
+    justify-content: center;
 
     @each $region, $settings in $regions {
 
@@ -378,5 +392,28 @@ $primary: #4190e7;
         }
       }
     }
+  }
+
+  // Drag
+  .escort-drag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-indent: -1000px;
+    cursor: move;
+  }
+
+  // Operations
+  .escort-ops {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    line-height: normal;
   }
 }

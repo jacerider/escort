@@ -8,7 +8,6 @@ use Drupal\Core\Menu\LocalTaskManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\micon\MiconIconize;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -17,6 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @Escort(
  *   id = "local_tasks",
  *   admin_label = @Translation("Tabs"),
+ *   category = @Translation("Menu"),
  * )
  */
 class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPluginInterface {
@@ -147,13 +147,20 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
       $attributes['class'][] = 'is-active';
     }
     $title = $tab['#link']['title'];
-    if (!$title instanceof MiconIconize) {
-      $title = MiconIconize::iconize($title);
+    $icon = '';
+
+    // Icon support.
+    if ($this->hasIconSupport()) {
+      // Check if title has already been MiconIfied.
+      if (!$title instanceof \Drupal\micon\MiconIconize) {
+        $title = \Drupal\micon\MiconIconize::iconize($title);
+      }
+      if ($icon = $title->getIcon()) {
+        $icon = $icon->getSelector();
+      }
+      $title = $title->getTitle();
     }
-    if ($icon = $title->getIcon()) {
-      $icon = $icon->getSelector();
-    }
-    $title = $title->getTitle();
+
     return [
       '#tag' => 'a',
       '#icon' => $icon,

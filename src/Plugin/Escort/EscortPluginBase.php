@@ -187,11 +187,13 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
       '#default_value' => $this->label(),
       '#required' => TRUE,
     ];
-    $form['icon'] = [
-      '#type' => 'micon',
-      '#title' => $this->t('Icon'),
-      '#default_value' => $this->configuration['icon'],
-    ];
+    if ($this->hasIconSupport()) {
+      $form['icon'] = [
+        '#type' => 'micon',
+        '#title' => $this->t('Icon'),
+        '#default_value' => $this->configuration['icon'],
+      ];
+    }
     return $form;
   }
 
@@ -298,6 +300,16 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
    */
   public function setTransliteration(TransliterationInterface $transliteration) {
     $this->transliteration = $transliteration;
+  }
+
+  /**
+   * Checks if Micon module is installed.
+   *
+   * @return bool
+   *   True if Micon module is installed.
+   */
+  public function hasIconSupport() {
+    return \Drupal::moduleHandler()->moduleExists('devel');
   }
 
   /**

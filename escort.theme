@@ -63,6 +63,7 @@ function template_preprocess_escort_item(&$variables) {
   $variables['label'] = !empty($variables['configuration']['label_display']) ? $variables['configuration']['label'] : '';
   $variables['content'] = $variables['element']['content'];
   $variables['tag'] = !empty($variables['element']['#tag']) ? $variables['element']['#tag'] : 'div';
+  $variables['ops'] = !empty($variables['element']['ops']) ? $variables['element']['ops'] : '';
 
   $variables['icon'] = '';
   $variables['icon_attributes'] = new Attribute();

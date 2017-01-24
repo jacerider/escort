@@ -34,14 +34,22 @@ class EscortRepository implements EscortRepositoryInterface {
   protected $escortRegionManager;
 
   /**
+   * The escort patch matcher.
+   *
+   * @var \Drupal\escort\EscortPathMatcherInterface
+   */
+  protected $escortPathMatcher;
+
+  /**
    * Constructs a new EscortRepository.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity manager.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, EscortRegionManagerInterface $escort_region_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EscortRegionManagerInterface $escort_region_manager, EscortPathMatcherInterface $escort_path_matcher) {
     $this->escortStorage = $entity_type_manager->getStorage('escort');
     $this->escortRegionManager = $escort_region_manager;
+    $this->escortPathMatcher = $escort_path_matcher;
   }
 
   /**
@@ -79,16 +87,28 @@ class EscortRepository implements EscortRepositoryInterface {
           foreach ($group['toggle'] as $data) {
             // Check to make sure region is not empty.
             if (isset($full[$data['region']])) {
-              // Create a placeholder plugin and escort entity.
-              $plugin = \Drupal::service('plugin.manager.escort')
-                ->createInstance('toggle', ['region' => $data['region'], 'event' => $data['event']]);
-              $escort = Escort::create([
-                'plugin' => 'toggle',
-                'weight' => $data['weight'],
-                'region' => $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $data['section'],
-              ])->setPlugin($plugin);
+              // Create 'toggle' escort.
+              $escort = $this->createEscort('toggle', [
+                'region' => $data['region'],
+                'event' => $data['event'],
+              ], $group_id, $data['section'], $data['weight']);
               $full[$group_id][$data['section']][$group_id . '_' . $data['section'] . '_' . $data['region'] . '_toggle'] = $escort;
             }
+          }
+        }
+      }
+
+      // Check if admin and add additional dynamic escorts.
+      if ($this->escortPathMatcher->isAdmin()) {
+        foreach ($raw_regions as $group_id => $group) {
+          $offset = 1;
+          foreach ($group['sections'] as $section_id => $section) {
+            // Create 'add' escort.
+            $escort = $this->createEscort('add', [
+              'region' => $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $section_id
+            ], $group_id, $section_id, 1000 * $offset);
+            $full[$group_id][$section_id]['add'] = $escort;
+            $offset = -1;
           }
         }
       }
@@ -112,6 +132,20 @@ class EscortRepository implements EscortRepositoryInterface {
       $this->escorts = $escorts;
     }
     return $this->escorts;
+  }
+
+  /**
+   * Create a dynamic escort.
+   */
+  protected function createEscort($plugin_id, $plugin_settings, $group_id, $section_id, $weight = 0) {
+    $plugin = \Drupal::service('plugin.manager.escort')
+      ->createInstance($plugin_id, $plugin_settings);
+    $escort = Escort::create([
+      'plugin' => $plugin_id,
+      'weight' => $weight,
+      'region' => $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $section_id,
+    ])->setPlugin($plugin);
+    return $escort;
   }
 
 }

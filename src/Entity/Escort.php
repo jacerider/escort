@@ -20,6 +20,7 @@ use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
  *     "view_builder" = "Drupal\escort\EscortViewBuilder",
  *     "form" = {
  *       "default" = "Drupal\escort\Form\EscortForm",
+ *       "disable" = "Drupal\escort\Form\EscortDisableForm",
  *       "delete" = "Drupal\escort\Form\EscortDeleteForm"
  *     },
  *   },
@@ -30,6 +31,7 @@ use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
  *   },
  *   links = {
  *     "edit-form" = "/admin/config/escort/{escort}/edit",
+ *     "disable-form" = "/admin/config/escort/{escort}/disable",
  *     "delete-form" = "/admin/config/escort/{escort}/delete"
  *   },
  *   config_export = {
@@ -179,7 +181,7 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
   /**
    * {@inheritdoc}
    */
-  public function setRegion($region) {
+  public function setRegion($region = self::ESCORT_REGION_NONE) {
     $this->region = $region;
     return $this;
   }
@@ -190,6 +192,26 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
   public function setWeight($weight) {
     $this->weight = $weight;
     return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildOps() {
+    $links = [];
+    $links[] = [
+      'title' => t('Edit'),
+      'url' => $this->toUrl(),
+    ];
+    $links[] = [
+      'title' => t('Disable'),
+      'url' => $this->toUrl('disable-form'),
+    ];
+    $links[] = [
+      'title' => t('Delete'),
+      'url' => $this->toUrl('delete-form'),
+    ];
+    return $links;
   }
 
   /**

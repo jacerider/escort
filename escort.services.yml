@@ -6,4 +6,7 @@ services:
     class: Drupal\escort\EscortRegionManager
   escort.repository:
     class: Drupal\escort\EscortRepository
-    arguments: ['@entity_type.manager', '@escort.region_manager']
+    arguments: ['@entity_type.manager', '@escort.region_manager', '@escort.path.matcher']
+  escort.path.matcher:
+    class: Drupal\escort\EscortPathMatcher
+    arguments: ['@path.matcher', '@request_stack', '@path.current']
