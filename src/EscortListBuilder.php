@@ -296,12 +296,6 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
       $entity_values = $form_state->getValue(array('escorts', $entity_id));
       $entity->setWeight($entity_values['weight']);
       $entity->setRegion($entity_values['region']);
-      if ($entity->getRegion() == EscortInterface::ESCORT_REGION_NONE) {
-        $entity->disable();
-      }
-      else {
-        $entity->enable();
-      }
       $entity->save();
     }
     drupal_set_message(t('The escort settings have been updated.'));

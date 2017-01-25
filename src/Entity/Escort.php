@@ -7,6 +7,7 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\escort\EscortPluginCollection;
 use Drupal\escort\Plugin\Escort\EscortPluginInterface;;
 use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
 
 /**
  * Defines the Escort entity.
@@ -94,6 +95,20 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
    * @var \Drupal\escort\Plugin\Escort\EscortPluginInterface
    */
   protected $pluginInstance;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preSave(EntityStorageInterface $storage) {
+    parent::preSave($storage);
+
+    if ($this->getRegion() == EscortInterface::ESCORT_REGION_NONE) {
+      $this->disable();
+    }
+    else {
+      $this->enable();
+    }
+  }
 
   /**
    * {@inheritdoc}
