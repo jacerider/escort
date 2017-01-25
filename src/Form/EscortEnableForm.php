@@ -6,8 +6,8 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\escort\Entity\EscortInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Contribute form.
@@ -71,7 +71,6 @@ class EscortEnableForm extends FormBase {
     $form['escorts'] = [
       '#type' => 'table',
       '#header' => $headers,
-      // '#rows' => $rows,
       '#empty' => $this->t('No disabled escorts available.'),
       '#attributes' => [
         'class' => ['escort-add-table'],
