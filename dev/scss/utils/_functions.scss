@@ -1,0 +1,21 @@
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTIONS
+//
+// -----------------------------------------------------------------------------
+// Table of Contents:
+//
+//   1. Setting
+
+
+/////////////////////
+// 1. Setting
+// Retrieve setting from the regions map.
+// ---------
+
+@function setting($keys...) {
+  $map: $regions;
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+  @return $map;
+}

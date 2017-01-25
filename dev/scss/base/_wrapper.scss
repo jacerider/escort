@@ -1,0 +1,113 @@
+////////////////////////////////////////////////////////////////////////////////
+// WRAPPER
+// -----------------------------------------------------------------------------
+// Defines toolbar layout and basic interactivity
+
+/**
+ * hide overflow on the body
+ */
+.has-escort {
+  overflow: hidden;
+}
+
+/**
+ * The wrapper around the content of the page. The escort regions exists as
+ * siblings to this element.
+ */
+.escort-wrapper-scroll {
+  position: relative;
+  z-index: 100;
+  background: $white;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; // sass-lint:disable-line no-misspelled-properties
+}
+
+.escort-wrapper {
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: auto;
+
+  @each $region, $settings in $regions {
+
+    /**
+     * Offset the main content area based on the size of each escort region
+     * unless the region is set as hidden (deterined based on the
+     * body.hide-escort-?).
+     */
+    .has-escort-#{$region} & {
+
+      @if map-get($settings, type) == 'horizontal' {
+
+        @if map-get($settings, position) == 'top' {
+          top: map-get($settings, size);
+        }
+
+        @if map-get($settings, position) == 'bottom' {
+          bottom: map-get($settings, size);
+        }
+      }
+
+      @if map-get($settings, type) == 'vertical' {
+
+        @if map-get($settings, position) == 'left' {
+          left: map-get($settings, size);
+        }
+
+        @if map-get($settings, position) == 'right' {
+          right: map-get($settings, size);
+        }
+      }
+    }
+
+    /**
+     * Regions can be hidden and toggled active. If they are hidden there
+     * should be no offset.
+     */
+    .hide-escort-#{$region} & {
+
+      @if map-get($settings, type) == 'horizontal' {
+
+        @if map-get($settings, position) == 'top' {
+          top: 0;
+        }
+
+        @if map-get($settings, position) == 'bottom' {
+          bottom: 0;
+        }
+      }
+
+      @if map-get($settings, type) == 'vertical' {
+
+        @if map-get($settings, position) == 'left' {
+          left: 0;
+        }
+
+        @if map-get($settings, position) == 'right' {
+          right: 0;
+        }
+      }
+    }
+
+    /**
+     * In admin mode we want elements fully expanded.
+     */
+    .is-escort-admin.has-escort-#{$region} & {
+
+      @if map-get($settings, type) == 'vertical' {
+
+        @if map-get($settings, position) == 'left' {
+          left: map-get($settings, size_full);
+        }
+
+        @if map-get($settings, position) == 'right' {
+          right: map-get($settings, size_full);
+        }
+      }
+    }
+  }
+}
