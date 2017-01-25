@@ -5,10 +5,10 @@ namespace Drupal\escort\Plugin\Escort;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\Url;
+use Drupal\Core\Access\AccessResult;
 
 /**
- * Defines a trait that provides the necessary functionality to output an
- * escort plugin as a link.
+ * A trait that provides link utilities.
  */
 trait EscortPluginLinkTrait {
 
@@ -49,6 +49,28 @@ trait EscortPluginLinkTrait {
       $attributes['href'] = $href;
     }
     return $attributes;
+  }
+
+  /**
+   * Check if user has access to page.
+   *
+   * @param mixed $uri
+   *   The uri or \Drupal\Core\Url object.
+   *
+   * @return Drupal\Core\Access\AccessResult
+   *   The access result.
+   */
+  public function uriAccess($uri) {
+    if (!empty($uri)) {
+      if ($uri instanceof Url) {
+        $url = $uri;
+      }
+      else {
+        $url = Url::fromUri($uri);
+      }
+      return $url->access() ? AccessResult::allowed() : AccessResult::forbidden();
+    }
+    return AccessResult::forbidden();
   }
 
   /**

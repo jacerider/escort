@@ -3,6 +3,7 @@
 namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 
 /**
  * Defines a fallback plugin for missing block plugins.
@@ -86,6 +87,13 @@ class Link extends Text {
       '#markup' => $this->configuration['title'],
       '#attached' => ['library' => ['escort/escort.active']],
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function escortAccess(AccountInterface $account) {
+    return $this->uriAccess($this->configuration['url']);
   }
 
 }
