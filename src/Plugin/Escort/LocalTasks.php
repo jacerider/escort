@@ -11,11 +11,11 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a "Tabs" escort to display the local tasks.
+ * Provides a "Local Tasks" escort to display the local tasks.
  *
  * @Escort(
  *   id = "local_tasks",
- *   admin_label = @Translation("Tabs"),
+ *   admin_label = @Translation("Local Tasks"),
  *   category = @Translation("Menu"),
  * )
  */
@@ -160,6 +160,7 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
         $icon = $icon->getSelector();
       }
       $title = $title->getTitle();
+      $attributes['title'] = $title;
     }
 
     return [

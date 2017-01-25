@@ -78,9 +78,11 @@ class Link extends Text {
    * {@inheritdoc}
    */
   public function build() {
+    $attributes = $this->getUriAsAttributes($this->configuration['url']);
+    $attributes['title'] = $this->configuration['title'];
     return [
       '#tag' => 'a',
-      '#attributes' => $this->getUriAsAttributes($this->configuration['url']),
+      '#attributes' => $attributes,
       '#markup' => $this->configuration['title'],
       '#attached' => ['library' => ['escort/escort.active']],
     ];
