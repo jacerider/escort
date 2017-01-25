@@ -32,6 +32,7 @@ class Toggle extends EscortPluginBase implements EscortPluginImmediateInterface 
   public function build() {
     $build = [];
     $build['#tag'] = 'a';
+    $build['#attached']['library'][] = 'escort/escort.toggle';
     $build['#attributes']['class'][] = 'escort-toggle';
     $build['#attributes']['data-region'] = $this->configuration['region'];
     $build['#attributes']['data-event'] = $this->configuration['event'];
@@ -41,8 +42,10 @@ class Toggle extends EscortPluginBase implements EscortPluginImmediateInterface 
   /**
    * {@inheritdoc}
    */
-  public function getBodyAttributes() {
-    return ['class' => [Html::cleanCssIdentifier('hide-escort-' . $this->configuration['region'])]];
+  public function getBodyAttributes($is_admin) {
+    if (!$is_admin) {
+      return ['class' => [Html::cleanCssIdentifier('hide-escort-' . $this->configuration['region'])]];
+    }
   }
 
 }

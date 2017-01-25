@@ -104,13 +104,17 @@ function escort_preprocess_html(&$variables) {
   // Add classes to body if regions have escorts.
   $regions = \Drupal::service('escort.repository')->getEscortsPerRegion();
   if (!empty($regions)) {
-    $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort');
+    $is_admin = \Drupal::service('escort.path.matcher')->isAdmin();
+    $variables['attributes']['class'][] = 'has-escort';
+    if ($is_admin) {
+      $variables['attributes']['class'][] = 'is-escort-admin';
+    }
     foreach ($regions as $region_id => $sections) {
       $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $region_id);
       foreach ($sections as $section) {
         foreach ($section as $escort) {
           // Allow plugins to add body attributes.
-          if ($attributes = $escort->getPlugin()->getBodyAttributes()) {
+          if ($attributes = $escort->getPlugin()->getBodyAttributes($is_admin)) {
             $variables['attributes'] = NestedArray::mergeDeep($variables['attributes'], $attributes);
           }
         }

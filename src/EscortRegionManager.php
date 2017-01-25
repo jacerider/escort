@@ -2,10 +2,29 @@
 
 namespace Drupal\escort;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+
 /**
  * Provides list of regions.
  */
 class EscortRegionManager implements EscortRegionManagerInterface {
+
+  /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $config;
+
+  /**
+   * Creates a new EscortRegionManager.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory.
+   */
+  public function __construct(ConfigFactoryInterface $config_factory) {
+    $this->config = $config_factory->get('escort.config');
+  }
 
   /**
    * Get an array of all regions.
@@ -17,37 +36,50 @@ class EscortRegionManager implements EscortRegionManagerInterface {
     $regions = [
       'top' => [
         'label' => t('Top'),
+        'type' => 'horizontal',
         'sections' => [
-          'first' => t('Left'),
-          'second' => t('Right'),
-        ],
-        'toggle' => [
-          ['section' => 'first', 'region' => 'left', 'weight' => -100, 'event' => 'hover'],
-          ['section' => 'first', 'region' => 'bottom', 'weight' => -99, 'event' => 'click'],
+          'left' => [
+            'label' => t('Left'),
+          ],
+          'right' => [
+            'label' => t('Right'),
+          ],
         ],
       ],
       'bottom' => [
         'label' => t('Bottom'),
+        'type' => 'horizontal',
         'sections' => [
-          'first' => t('Left'),
-          'second' => t('Right'),
-        ],
-        'toggle' => [
-          ['section' => 'second', 'region' => 'right', 'weight' => 100, 'event' => 'hover'],
+          'left' => [
+            'label' => t('Left'),
+          ],
+          'right' => [
+            'label' => t('Right'),
+          ],
         ],
       ],
       'left' => [
         'label' => t('Left'),
+        'type' => 'vertical',
         'sections' => [
-          'first' => t('Top'),
-          'second' => t('Bottom'),
+          'top' => [
+            'label' => t('Top'),
+          ],
+          'bottom' => [
+            'label' => t('Bottom'),
+          ],
         ],
       ],
       'right' => [
         'label' => t('Right'),
+        'type' => 'vertical',
         'sections' => [
-          'first' => t('Top'),
-          'second' => t('Bottom'),
+          'top' => [
+            'label' => t('Top'),
+          ],
+          'bottom' => [
+            'label' => t('Bottom'),
+          ],
         ],
       ],
     ];
@@ -57,24 +89,74 @@ class EscortRegionManager implements EscortRegionManagerInterface {
   /**
    * Return the raw regions.
    *
+   * @param bool $enabled_only
+   *   Include only regions enabled via settings.
+   *
    * @return array
    *   An array of regions.
    */
-  public function getRawRegions() {
-    return static::rawRegions();
+  public function getRawRegions($enabled_only = FALSE, $excluded_groups = []) {
+    $regions = static::rawRegions();
+    if ($enabled_only && $enabled = $this->config->get('regions')) {
+      $regions = array_intersect_key($regions, $enabled);
+    }
+    if (!empty($excluded_groups)) {
+      $regions = array_diff_key($regions, array_flip($excluded_groups));
+    }
+    if ($toggle = $this->config->get('toggle')) {
+      foreach ($toggle as $group_id => $region) {
+        // Make sure region being toggled exists.
+        if (isset($regions[$group_id])) {
+          $dest_group_id = $this->getGroupId($region);
+          $dest_section_id = $this->getSectionId($region);
+          // Make sure destination region exists.
+          if (isset($regions[$dest_group_id])) {
+            $regions[$dest_group_id]['toggle'][] = [
+              'section' => $dest_section_id,
+              'region' => $group_id,
+              'weight' => -100,
+              'event' => 'hover',
+            ];
+          }
+        }
+      }
+    }
+    return $regions;
+  }
+
+  /**
+   * Get a flat array of all groups.
+   *
+   * @param bool $enabled_only
+   *   Include only regions enabled via settings.
+   *
+   * @return array
+   *   An array of group_id => name.
+   */
+  public function getGroups($enabled_only = FALSE) {
+    $groups = [];
+    foreach ($this->getRawRegions($enabled_only) as $group_id => $group) {
+      $groups[$group_id] = $group['label'];
+    }
+    return $groups;
   }
 
   /**
    * Get a flat array of all regions.
    *
+   * @param bool $enabled_only
+   *   Include only regions enabled via settings.
+   * @param array $excluded_groups
+   *   An array of group ids to exclude.
+   *
    * @return array
    *   An array of group_id . section_id => name pairs.
    */
-  public function getRegions() {
+  public function getRegions($enabled_only = FALSE, $excluded_groups = []) {
     $regions = [];
-    foreach ($this->getRawRegions() as $group_id => $region) {
-      foreach ($region['sections'] as $section_id => $name) {
-        $regions[$group_id . self::ESCORT_REGION_SECTION_SEPARATOR . $section_id] = $region['label'] . ': ' . $name;
+    foreach ($this->getRawRegions($enabled_only, $excluded_groups) as $group_id => $group) {
+      foreach ($group['sections'] as $section_id => $section) {
+        $regions[$group_id . self::ESCORT_REGION_SECTION_SEPARATOR . $section_id] = $group['label'] . ': ' . $section['label'];
       }
     }
     return $regions;
@@ -90,8 +172,8 @@ class EscortRegionManager implements EscortRegionManagerInterface {
    *   The region base id.
    */
   public function getGroupId($region_id) {
-    foreach ($this->getRawRegions() as $group_id => $region) {
-      foreach ($region['sections'] as $section_id => $name) {
+    foreach (static::rawRegions() as $group_id => $group) {
+      foreach ($group['sections'] as $section_id => $name) {
         if ($region_id == $group_id . self::ESCORT_REGION_SECTION_SEPARATOR . $section_id) {
           return $group_id;
         }
@@ -110,8 +192,8 @@ class EscortRegionManager implements EscortRegionManagerInterface {
    *   The region base id.
    */
   public function getSectionId($region_id) {
-    foreach ($this->getRawRegions() as $group_id => $region) {
-      foreach ($region['sections'] as $section_id => $name) {
+    foreach (static::rawRegions() as $group_id => $group) {
+      foreach ($group['sections'] as $section_id => $name) {
         if ($region_id == $group_id . self::ESCORT_REGION_SECTION_SEPARATOR . $section_id) {
           return $section_id;
         }

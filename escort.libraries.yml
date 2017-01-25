@@ -10,10 +10,17 @@ escort:
     - core/jquery.once
     - core/drupal
 
+escort.toggle:
+  version: VERSION
+  js:
+    js/escort.toggle.js: { minified: true }
+  dependencies:
+    - escort/escort
+
 escort.active:
   version: VERSION
   js:
-    js/escort.active.js: {}
+    js/escort.active.js: { minified: true }
   dependencies:
     - escort/escort
 

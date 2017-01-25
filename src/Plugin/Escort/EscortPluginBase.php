@@ -322,10 +322,13 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
   /**
    * Returns attributes that will be added to the HTML doc body.
    *
+   * @var bool $is_admin
+   *   TRUE if page is an admin page.
+   *
    * @return array
    *   An associative attributes array.
    */
-  public function getBodyAttributes() {
+  public function getBodyAttributes($is_admin) {
     return array();
   }
 

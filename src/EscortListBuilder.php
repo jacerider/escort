@@ -120,7 +120,7 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
    */
   protected function buildItemsForm() {
     $escorts = [];
-    $regions = $this->escortRegionManager->getRegions();
+    $regions = $this->escortRegionManager->getRegions(TRUE);
     $entities = $this->load();
     /** @var \Drupal\escort\EscortInterface[] $entities */
     foreach ($entities as $entity_id => $entity) {

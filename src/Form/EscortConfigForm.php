@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\escort\EscortRegionManagerInterface;
 
 /**
  * Class EscortConfigForm.
@@ -21,18 +22,31 @@ class EscortConfigForm extends ConfigFormBase {
    * @var \Drupal\Core\Entity\EntityTypeManager
    */
   protected $entityTypeManager;
-  public function __construct(
-    ConfigFactoryInterface $config_factory,
-      EntityTypeManager $entity_type_manager
-    ) {
+
+  /**
+   * Drupal\escort\EscortRegionManagerInterface definition.
+   *
+   * @var \Drupal\escort\EscortRegionManagerInterface
+   */
+  protected $escortRegionManager;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManager $entity_type_manager, EscortRegionManagerInterface $escort_region_manager) {
     parent::__construct($config_factory);
-        $this->entityTypeManager = $entity_type_manager;
+    $this->entityTypeManager = $entity_type_manager;
+    $this->escortRegionManager = $escort_region_manager;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
-            $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('escort.region_manager')
     );
   }
 
@@ -41,7 +55,7 @@ class EscortConfigForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-      'escort.escortconfig',
+      'escort.config',
     ];
   }
 
@@ -49,22 +63,36 @@ class EscortConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'escort_config_form';
+    return 'escort_config';
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('escort.escortconfig');
-    $form['awesome'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Awesome?'),
-      '#description' => $this->t('Yes. It is awesome.'),
-      '#maxlength' => 64,
-      '#size' => 64,
-      '#default_value' => $config->get('awesome'),
+    $config = $this->config('escort.config');
+
+    $form['regions'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Regions'),
+      '#options' => $this->escortRegionManager->getGroups(),
+      '#default_value' => $config->get('regions'),
     ];
+
+    $form['toggle'] = [
+      '#tree' => TRUE,
+    ];
+    $toggle = $config->get('toggle');
+    foreach ($this->escortRegionManager->getGroups(TRUE) as $group_id => $name) {
+      $form['toggle'][$group_id] = [
+        '#type' => 'select',
+        '#title' => $this->t('Toggle the display of %name from', ['%name' => $name]),
+        '#options' => ['- Do not toggle -'] + $this->escortRegionManager->getRegions(TRUE, [$group_id]),
+        '#default_value' => isset($toggle[$group_id]) ? $toggle[$group_id] : NULL,
+      ];
+    }
+
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -81,8 +109,9 @@ class EscortConfigForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
-    $this->config('escort.escortconfig')
-      ->set('awesome', $form_state->getValue('awesome'))
+    $this->config('escort.config')
+      ->set('regions', array_filter($form_state->getValue('regions')))
+      ->set('toggle', array_filter($form_state->getValue('toggle')))
       ->save();
   }
 

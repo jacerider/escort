@@ -7,90 +7,39 @@
 
   'use strict';
 
-  function EscortRegionToggles(trigger) {
-    this.$trigger = $(trigger);
-    this.region = this.$trigger.data('region');
-    this.event = this.$trigger.data('event');
-    this.$region = $('#escort-' + this.region);
+  function Escort(region) {
+    this.$region = $(region);
+    this.region = this.$region.data('region');
     this.$body = $('body');
     this.setup();
   }
 
-  $.extend(EscortRegionToggles, /** @lends Drupal.EscortRegionToggles */{
+  $.extend(Escort, /** @lends Drupal.Escort */{
 
     /**
-     * Holds references to instantiated EscortRegionToggles objects.
+     * Holds references to instantiated Escort objects.
      *
-     * @type {Array.<Drupal.EscortRegionToggles>}
+     * @type {Array.<Drupal.Escort>}
      */
     instances: []
   });
 
-  $.extend(EscortRegionToggles.prototype, /** @lends Drupal.EscortRegionToggles# */{
-    lock: false,
-    mini: false,
+  $.extend(Escort.prototype, /** @lends Drupal.Escort# */{
     full: false,
 
     setup: function () {
       var _this = this;
+      _this.$region.hover(function (e) {
+        e.preventDefault();
+        _this.showFull();
 
-      // Attach events.
-      switch (_this.event) {
-        case 'click':
-          _this.$trigger.click(function (e) {
-            e.preventDefault();
-            if (_this.full) {
-              _this.hideFull();
-            }
-            else {
-              _this.showFull();
-            }
-          });
-          break;
-        default:
-          // On hover is default state.
-          _this.$trigger.hover(function (e) {
-            e.preventDefault();
-            _this.showMini();
-          }, function (e) {
-            e.preventDefault();
-            _this.hideMini();
-          });
-          _this.$trigger.click(function (e) {
-            if (_this.full) {
-              _this.hideFull();
-            }
-            else {
-              _this.showFull();
-            }
-          });
-          _this.$region.hover(function (e) {
-            e.preventDefault();
-            _this.showFull();
-
-            // Bind body click event.
-            _this.$body.on('click.escort-' + _this.region, function (e) {
-              if (_this.full && !$(e.target).closest(_this.$region).length) {
-                _this.hideFull();
-              }
-            });
-          });
-          break;
-      }
-    },
-
-    showMini: function (e) {
-      if (!this.mini) {
-        this.mini = true;
-        this.$body.addClass('show-escort-mini-' + this.region);
-      }
-    },
-
-    hideMini: function (e) {
-      if (this.mini) {
-        this.mini = false;
-        this.$body.removeClass('show-escort-mini-' + this.region);
-      }
+        // Bind body click event.
+        _this.$body.on('click.escort-' + _this.region, function (e) {
+          if (_this.full && !$(e.target).closest(_this.$region).length) {
+            _this.hideFull();
+          }
+        });
+      });
     },
 
     showFull: function () {
@@ -111,10 +60,10 @@
 
   Drupal.behaviors.escort = {
     attach: function (context) {
-      var $escrotRegionToggles = $(context).find('.escort-toggle').once('escort-toggle').addClass('escort-toggle-processed');
-      if ($escrotRegionToggles.length) {
-        for (var i = 0; i < $escrotRegionToggles.length; i++) {
-          EscortRegionToggles.instances.push(new EscortRegionToggles($escrotRegionToggles[i]));
+      var $escortRegion = $(context).find('.escort-region').once('escort-region').addClass('escort-region-processed');
+      if ($escortRegion.length) {
+        for (var i = 0; i < $escortRegion.length; i++) {
+          Escort.instances.push(new Escort($escortRegion[i]));
         }
         setTimeout(function () {
           $('body').addClass('escort-ready');
@@ -124,6 +73,6 @@
   };
 
   // Expose constructor in the public space.
-  Drupal.EscortRegionToggles = EscortRegionToggles;
+  Drupal.Escort = Escort;
 
 }(jQuery, document));

@@ -75,7 +75,7 @@ $primary: #4190e7;
      * unless the region is set as hidden (deterined based on the
      * body.hide-escort-?).
      */
-    .has-escort-#{$region}:not(.hide-escort-#{$region}) & { // sass-lint:disable-line force-pseudo-nesting
+    .has-escort-#{$region} & {
 
       @if map-get($settings, type) == 'horizontal' {
 
@@ -96,6 +96,52 @@ $primary: #4190e7;
 
         @if map-get($settings, position) == 'right' {
           right: map-get($settings, size);
+        }
+      }
+    }
+
+    /**
+     * Regions can be hidden and toggled active. If they are hidden there
+     * should be no offset.
+     */
+    .hide-escort-#{$region} & {
+
+      @if map-get($settings, type) == 'horizontal' {
+
+        @if map-get($settings, position) == 'top' {
+          top: 0;
+        }
+
+        @if map-get($settings, position) == 'bottom' {
+          bottom: 0;
+        }
+      }
+
+      @if map-get($settings, type) == 'vertical' {
+
+        @if map-get($settings, position) == 'left' {
+          left: 0;
+        }
+
+        @if map-get($settings, position) == 'right' {
+          right: 0;
+        }
+      }
+    }
+
+    /**
+     * In admin mode we want elements fully expanded.
+     */
+    .is-escort-admin.has-escort-#{$region} & {
+
+      @if map-get($settings, type) == 'vertical' {
+
+        @if map-get($settings, position) == 'left' {
+          left: map-get($settings, size_full);
+        }
+
+        @if map-get($settings, position) == 'right' {
+          right: map-get($settings, size_full);
         }
       }
     }
@@ -133,7 +179,17 @@ $primary: #4190e7;
     background: map-get($settings, bg);
     color: $white;
     transition: all 300ms;
-    // flex: auto;
+
+    .escort-ops {
+      display: none;
+    }
+
+    &:hover {
+
+      .escort-ops {
+        display: block;
+      }
+    }
 
     /**
      * If region is horizontal.
@@ -144,6 +200,7 @@ $primary: #4190e7;
       right: 0;
       height: map-get($settings, size);
       width: 100%;
+      z-index: 10;
 
       @if map-get($settings, position) == 'top' {
         top: 0;
@@ -182,7 +239,7 @@ $primary: #4190e7;
         border-right: 1px dotted $white-30;
         border-left: 1px dotted $white-30;
 
-        &.escort-item-group {
+        &.escort-group {
           border: 0;
           padding: 0;
         }
@@ -224,6 +281,7 @@ $primary: #4190e7;
       width: map-get($settings, size);
       flex-direction: column;
       overflow: hidden;
+      z-index: 5;
 
       @if map-get($settings, position) == 'left' {
         left: 0;
@@ -243,14 +301,14 @@ $primary: #4190e7;
         &:first-child {
 
           .escort-item {
-            border-bottom: 1px dotted $black-30;
+            border-top: 0;
           }
         }
 
         &:last-child {
 
           .escort-item {
-            border-bottom: 1px dotted $black-30;
+            border-bottom: 0;
           }
         }
       }
@@ -261,6 +319,14 @@ $primary: #4190e7;
       .escort-item {
         padding: map-get($settings, padding) 0;
         width: map-get($settings, size_full);
+        border-top: 1px dotted $black-30;
+        border-bottom: 1px dotted $black-30;
+
+        &.escort-group {
+          display: block;
+          border: 0;
+          padding: 0;
+        }
       }
 
       /**
@@ -343,21 +409,12 @@ $primary: #4190e7;
       }
     }
   }
-
-  /**
-   * The .hide-escort-? class is added to the body when a toggle element exists
-   * for an escort region. By default, if a region exists it is shown. If the
-   * region is toggleable the toggle trigger is responsible for showing/hiding
-   * the region.
-   */
-  .hide-escort-#{$region} {
-
-    .escort-#{$region} {
-      // display: none;
-    }
-  }
 }
 
+/**
+ * Styles that apply globally to escort items. All position-specific styles
+ * should be added in the region specific style section.
+ */
 .escort-item {
   display: flex;
   transition: all 300ms;
@@ -416,4 +473,32 @@ $primary: #4190e7;
     list-style-type: none;
     line-height: normal;
   }
+}
+
+/**
+ * Styles applied when in admin mode.
+ */
+.is-escort-admin {
+
+  @each $region, $settings in $regions {
+
+    .escort-#{$region} {
+
+      @if map-get($settings, type) == 'vertical' {
+        width: map-get($settings, size_full);
+      }
+    }
+
+    // .escort-wrapper {
+
+    //   @if map-get($settings, position) == 'left' {
+    //     left: map-get($settings, size_full);
+    //   }
+
+    //   @if map-get($settings, position) == 'right' {
+    //     right: map-get($settings, size_full) !important;
+    //   }
+    // }
+  }
+
 }

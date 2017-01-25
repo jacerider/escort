@@ -58,8 +58,8 @@ class EscortRepository implements EscortRepositoryInterface {
   public function getEscortsPerRegion(array &$cacheable_metadata = NULL) {
     if (!isset($this->escorts) || is_array($cacheable_metadata)) {
       $cacheable_metadata = is_array($cacheable_metadata) ? $cacheable_metadata : [];
-      $raw_regions = $this->escortRegionManager->getRawRegions();
-      $regions = $this->escortRegionManager->getRegions();
+      $raw_regions = $this->escortRegionManager->getRawRegions(TRUE);
+      $regions = $this->escortRegionManager->getRegions(TRUE);
       $full = array();
       foreach ($this->escortStorage->loadByProperties(array('region' => array_keys($regions))) as $escort_id => $escort) {
         /** @var \Drupal\escort\Entity\EscortInterface $escort */
@@ -80,6 +80,21 @@ class EscortRepository implements EscortRepositoryInterface {
         }
       }
 
+      // Check if admin and add additional dynamic escorts.
+      if ($this->escortPathMatcher->isAdmin()) {
+        foreach ($raw_regions as $group_id => $group) {
+          $offset = 1;
+          foreach ($group['sections'] as $section_id => $section) {
+            // Create 'add' escort.
+            $escort = $this->createEscort('add', [
+              'region' => $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $section_id,
+            ], $group_id, $section_id, 1000 * $offset);
+            $full[$group_id][$section_id]['add'] = $escort;
+            $offset = -1;
+          }
+        }
+      }
+
       // Check for toggle elements.
       foreach ($raw_regions as $group_id => $group) {
         // Check if we have a toggle request and that the toggle region exists.
@@ -94,21 +109,6 @@ class EscortRepository implements EscortRepositoryInterface {
               ], $group_id, $data['section'], $data['weight']);
               $full[$group_id][$data['section']][$group_id . '_' . $data['section'] . '_' . $data['region'] . '_toggle'] = $escort;
             }
-          }
-        }
-      }
-
-      // Check if admin and add additional dynamic escorts.
-      if ($this->escortPathMatcher->isAdmin()) {
-        foreach ($raw_regions as $group_id => $group) {
-          $offset = 1;
-          foreach ($group['sections'] as $section_id => $section) {
-            // Create 'add' escort.
-            $escort = $this->createEscort('add', [
-              'region' => $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $section_id
-            ], $group_id, $section_id, 1000 * $offset);
-            $full[$group_id][$section_id]['add'] = $escort;
-            $offset = -1;
           }
         }
       }

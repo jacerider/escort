@@ -56,10 +56,11 @@ class Escort extends RenderElement {
           'class' => [
             Html::cleanCssIdentifier('escort-' . $group_id),
           ],
+          'data-region' => $group_id,
         ),
       ];
       foreach ($sections as $section_id => $escorts) {
-        $id = Html::cleanCssIdentifier('escort-' . $section_id);
+        $id = Html::cleanCssIdentifier('escort-' . $group_id . '-' . $section_id);
         $element[$group_id][$section_id] = [
           '#theme' => 'escort_section',
           '#attributes' => array(

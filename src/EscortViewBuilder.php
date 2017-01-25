@@ -223,7 +223,7 @@ class EscortViewBuilder extends EntityViewBuilder {
       // through the buildPreRenderableEscort so each item is built out as an
       // individual escort.
       $content = $plugin->buildItems();
-      $build['#attributes']['class'][] = 'escort-item-group';
+      $build['#attributes']['class'][] = 'escort-group';
       foreach (Element::children($content) as $key) {
         $item = $content[$key];
         $item['#escort_group'] = TRUE;

@@ -4,6 +4,7 @@ services:
     parent: default_plugin_manager
   escort.region_manager:
     class: Drupal\escort\EscortRegionManager
+    arguments: ['@config.factory']
   escort.repository:
     class: Drupal\escort\EscortRepository
     arguments: ['@entity_type.manager', '@escort.region_manager', '@escort.path.matcher']

@@ -1,0 +1,12 @@
+# Schema for the configuration files of the Escort module.
+
+escort.config:
+  type: config_object
+  label: 'Escort config'
+  mapping:
+    regions:
+      type: sequence
+      label: 'Regions'
+      sequence:
+        type: string
+        label: 'Region'
