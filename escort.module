@@ -62,6 +62,7 @@ function escort_page_top(array &$page_top) {
     '#weight' => -1001,
     '#cache' => [
       'keys' => ['escort'],
+      'tags' => ['config:escort.config'],
       'contexts' => ['user.permissions'],
     ],
   );
