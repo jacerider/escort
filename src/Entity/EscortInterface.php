@@ -15,6 +15,33 @@ interface EscortInterface extends ConfigEntityInterface {
   const ESCORT_REGION_NONE = -1;
 
   /**
+   * Determines whether the entity is new.
+   *
+   * An escort is temporary if it has been generated programatically and does
+   * not have stored data.
+   *
+   * @return bool
+   *   TRUE if the entity is temporary, or FALSE if the entity is not.
+   *
+   * @see \Drupal\escort\Entity\EscortInterface::enforceIsTemporary()
+   */
+  public function isTemporary();
+
+  /**
+   * Escorts can be dynamically generated without being saved.
+   *
+   * Settings an escort as temporary will assign it a temporary ID useful for
+   * caching purposes.
+   *
+   * @param bool $value
+   *   (optional) Whether the entity should be forced to be temporary. Defaults
+   *   to TRUE.
+   *
+   * @return $this
+   */
+  public function enforceIsTemporary();
+
+  /**
    * A list of operation links that are added to each escort item in admin mode.
    *
    * @return array

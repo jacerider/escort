@@ -97,6 +97,13 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
   protected $pluginInstance;
 
   /**
+   * Flag that indicates if escort is dynamic/temporary.
+   *
+   * @var bool
+   */
+  protected $enforceIsTemporary = FALSE;
+
+  /**
    * {@inheritdoc}
    */
   public function preSave(EntityStorageInterface $storage) {
@@ -122,6 +129,13 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
       $definition = $this->getPlugin()->getPluginDefinition();
       return $definition['admin_label'];
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function id() {
+    return isset($this->id) ? $this->id : ($this->isTemporary() ? $this->uuidGenerator()->generate() : NULL);
   }
 
   /**
@@ -206,6 +220,21 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
    */
   public function setWeight($weight) {
     $this->weight = $weight;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isTemporary() {
+    return !empty($this->enforceIsTemporary);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function enforceIsTemporary($value = TRUE) {
+    $this->enforceIsTemporary = TRUE;
     return $this;
   }
 

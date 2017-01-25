@@ -243,7 +243,7 @@ class EscortViewBuilder extends EntityViewBuilder {
     if ($content !== NULL && !Element::isEmpty($content)) {
       // Merge properties.
       $build['content'] = static::mergeProperties($build, $content);
-      if (\Drupal::service('escort.path.matcher')->isAdmin() && !$entity->isNew()) {
+      if (\Drupal::service('escort.path.matcher')->isAdmin() && !$entity->isTemporary()) {
         // Set admin flag for use in preprocessing and twig.
         $build['#is_admin'] = TRUE;
         // Add entity operations.

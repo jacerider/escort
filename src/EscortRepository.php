@@ -173,11 +173,13 @@ class EscortRepository implements EscortRepositoryInterface {
   protected function createEscort($plugin_id, $plugin_settings, $group_id, $section_id, $weight = 0) {
     $plugin = \Drupal::service('plugin.manager.escort')
       ->createInstance($plugin_id, $plugin_settings);
+    $plugin->addCacheContexts(['route']);
+    $plugin->addCacheTags(['config:escort.config']);
     $escort = Escort::create([
       'plugin' => $plugin_id,
       'weight' => $weight,
       'region' => $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $section_id,
-    ])->setPlugin($plugin);
+    ])->setPlugin($plugin)->enforceIsTemporary();
     return $escort;
   }
 
