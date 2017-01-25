@@ -8,36 +8,16 @@
   display: flex;
   transition: all 300ms;
   position: relative;
+  text-align: center;
+
+  > div {
+    display: inline-flex;
+  }
 
   // Link elements
   &.escort-link {
     cursor: pointer;
     text-decoration: none;
-  }
-
-  // Toggle elements
-  &.escort-toggle {
-    justify-content: center;
-
-    @each $region, $settings in $regions {
-
-      &[data-region='#{$region}'] {
-
-        @if map-get($settings, type) == 'vertical' {
-          width: map-get($settings, size);
-        }
-
-        // The active state of the MINI region toggle.
-        .show-escort-mini-#{$region} & {
-          color: $primary;
-        }
-
-        // The active state of the FULL region toggle.
-        .show-escort-full-#{$region} & {
-          color: $primary;
-        }
-      }
-    }
   }
 
   // Drag

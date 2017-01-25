@@ -7,6 +7,9 @@
 
   @each $region, $settings in $regions {
 
+    /**
+     * In admin mode we want the vertical panels expanded by default
+     */
     .escort-#{$region} {
 
       @if map-get($settings, type) == 'vertical' {
@@ -14,15 +17,24 @@
       }
     }
 
-    // .escort-wrapper {
+    /**
+     * In admin mode we want elements fully expanded so the wrapper needs to accomodate
+     */
+    &.has-escort-#{$region} {
 
-    //   @if map-get($settings, position) == 'left' {
-    //     left: map-get($settings, size_full);
-    //   }
+      .escort-wrapper {
 
-    //   @if map-get($settings, position) == 'right' {
-    //     right: map-get($settings, size_full) !important;
-    //   }
-    // }
+        @if map-get($settings, type) == 'vertical' {
+
+          @if map-get($settings, position) == 'left' {
+            left: map-get($settings, size_full);
+          }
+
+          @if map-get($settings, position) == 'right' {
+            right: map-get($settings, size_full);
+          }
+        }
+      }
+    }
   }
 }

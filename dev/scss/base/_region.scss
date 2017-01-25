@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // REGION
 // -----------------------------------------------------------------------------
-// Region specific layout and styles
+// Defines styles associated with all regions
 
 /**
  * Styles that apply to all escort regions.
@@ -32,7 +32,6 @@
 
   .escort-#{$region} {
     background: map-get($settings, bg);
-    color: $white;
     transition: all 300ms;
 
     .escort-ops {
@@ -43,199 +42,6 @@
 
       .escort-ops {
         display: block;
-      }
-    }
-
-    /**
-     * If region is horizontal.
-     */
-    @if map-get($settings, type) == 'horizontal' {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: map-get($settings, size);
-      width: 100%;
-      z-index: 10;
-
-      @if map-get($settings, position) == 'top' {
-        top: 0;
-      }
-
-      @if map-get($settings, position) == 'bottom' {
-        bottom: 0;
-      }
-
-      &.icon-only {
-
-        .escort-link.has-icon .escort-content {
-          margin: 0;
-          display: none;
-        }
-      }
-
-      /**
-       * Horizontal sections
-       */
-      .escort-section {
-
-        &:first-child {
-
-          .escort-item {
-            border-left: 0;
-          }
-        }
-
-        &:last-child {
-
-          .escort-item {
-            border-right: 0;
-          }
-        }
-      }
-
-      /**
-       * Horizontal items
-       */
-      .escort-item {
-        line-height: map-get($settings, size);
-        padding: 0 map-get($settings, padding);
-        border-right: 1px dotted $white-30;
-        border-left: 1px dotted $white-30;
-
-        &.escort-group {
-          border: 0;
-          padding: 0;
-        }
-
-        &.has-icon {
-
-          .escort-content {
-            margin-left: map-get($settings, padding) / 2;
-          }
-        }
-
-        &.escort-link {
-
-          &:hover {
-            background: lighten(map-get($settings, bg), 5%);
-          }
-        }
-
-        &.is-active {
-          background: darken(map-get($settings, bg), 5%);
-        }
-      }
-
-      /**
-       * Horizontal content
-       */
-      .escort-content {
-        display: flex;
-      }
-
-      /**
-       * Horizontal operations
-       */
-      .escort-ops {
-        top: 100%;
-      }
-    }
-
-    /**
-     * If region is vertical.
-     */
-    @if map-get($settings, type) == 'vertical' {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: map-get($settings, size);
-      flex-direction: column;
-      overflow: hidden;
-      z-index: 5;
-
-      @if map-get($settings, position) == 'left' {
-        left: 0;
-      }
-
-      @if map-get($settings, position) == 'right' {
-        right: 0;
-        // order: 10;
-      }
-
-      /**
-       * Vertical sections
-       */
-      .escort-section {
-        flex-direction: column;
-
-        &:first-child {
-
-          .escort-item {
-            border-top: 0;
-          }
-        }
-
-        &:last-child {
-
-          .escort-item {
-            border-bottom: 0;
-          }
-        }
-      }
-
-      /**
-       * Vertical items
-       */
-      .escort-item {
-        padding: map-get($settings, padding) 0;
-        width: map-get($settings, size_full);
-        border-top: 1px dotted $black-30;
-        border-bottom: 1px dotted $black-30;
-
-        &.escort-group {
-          display: block;
-          border: 0;
-          padding: 0;
-        }
-      }
-
-      /**
-       * Vertical icons
-       */
-      .escort-icon {
-        width: map-get($settings, size);
-        text-align: center;
-      }
-
-      /**
-       * Vertical operations
-       */
-      .escort-ops {
-        right: 0;
-      }
-
-      /**
-       * Vertical regions can be offset by horizontal regions. We loop through
-       * all regions again, and add offset.
-       */
-      @each $r, $s in $regions {
-
-        @if map-get($s, type) == 'horizontal' {
-
-          @if map-get($s, position) == 'top' {
-            .has-escort-#{$r}:not(.hide-escort-#{$r}) & { // sass-lint:disable-line force-pseudo-nesting
-              top: map-get($s, size);
-            }
-          }
-
-          @if map-get($s, position) == 'bottom' {
-            .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
-            .show-escort-mini-#{$r} &,
-            .show-escort-full-#{$r} & {
-              bottom: map-get($s, size);
-            }
-          }
-        }
       }
     }
 

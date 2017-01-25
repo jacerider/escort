@@ -1,0 +1,106 @@
+////////////////////////////////////////////////////////////////////////////////
+// REGION Horizontal
+// -----------------------------------------------------------------------------
+// Defines styles only associated with horizontal regions
+
+@each $region, $settings in $regions {
+
+  .escort-#{$region} {
+
+    /**
+     * If region is horizontal.
+     */
+    @if map-get($settings, type) == 'horizontal' {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: map-get($settings, size);
+      width: 100%;
+      z-index: 10;
+      color: $white;
+
+      @if map-get($settings, position) == 'top' {
+        top: 0;
+      }
+
+      @if map-get($settings, position) == 'bottom' {
+        bottom: 0;
+      }
+
+      &.icon-only {
+
+        .escort-link.has-icon .escort-content {
+          margin: 0;
+          display: none;
+        }
+      }
+
+      /**
+       * Horizontal sections
+       */
+      .escort-section {
+
+        &:first-child {
+
+          .escort-item {
+            border-left: 0;
+          }
+        }
+
+        &:last-child {
+
+          .escort-item {
+            border-right: 0;
+          }
+        }
+      }
+
+      /**
+       * Horizontal items
+       */
+      .escort-item {
+        line-height: map-get($settings, size);
+        padding: 0 map-get($settings, padding);
+        border-right: 1px dotted $white-30;
+        border-left: 1px dotted $white-30;
+
+        &.escort-group {
+          border: 0;
+          padding: 0;
+        }
+
+        &.has-icon {
+
+          .escort-content {
+            margin-left: map-get($settings, padding) / 2;
+          }
+        }
+
+        &.escort-link {
+
+          &:hover {
+            background: lighten(map-get($settings, bg), 5%);
+          }
+        }
+
+        &.is-active {
+          background: darken(map-get($settings, bg), 5%);
+        }
+      }
+
+      /**
+       * Horizontal content
+       */
+      .escort-content {
+        display: flex;
+      }
+
+      /**
+       * Horizontal operations
+       */
+      .escort-ops {
+        top: 100%;
+      }
+    }
+  }
+}
