@@ -166,6 +166,7 @@ class EscortViewBuilder extends EntityViewBuilder {
       '#base_plugin_id' => $base_id,
       '#derivative_plugin_id' => $derivative_id,
       '#id' => $entity->id(),
+      '#is_admin' => FALSE,
       // Add the entity so that it can be used in the #pre_render method.
       '#escort' => $entity,
     ];
@@ -243,9 +244,9 @@ class EscortViewBuilder extends EntityViewBuilder {
       // Merge properties.
       $build['content'] = static::mergeProperties($build, $content);
       if (\Drupal::service('escort.path.matcher')->isAdmin() && !$entity->isNew()) {
-        // Because ops contain links, we need to force the element tag to be a
-        // div as nested links are face breaking.
-        $build['#tag'] = 'div';
+        // Set admin flag for use in preprocessing and twig.
+        $build['#is_admin'] = TRUE;
+        // Add entity operations.
         $build['ops']['move']['#markup'] = '<a class="escort-drag">Reorder</a>';
         $build['ops']['links'] = [
           '#theme' => 'links',

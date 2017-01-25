@@ -92,6 +92,9 @@ function template_preprocess_escort_item(&$variables) {
 
   // Add base class
   $variables['attributes']['class'][] = 'escort-item';
+  if ($variables['tag'] == 'a') {
+    $variables['attributes']['class'][] = 'escort-link';
+  }
 
   // Create a valid HTML ID and make sure it is unique.
   if (!empty($variables['element']['#id']) && empty($variables['content']['#escort_group'])) {
@@ -103,6 +106,15 @@ function template_preprocess_escort_item(&$variables) {
   if ($variables['label'] && isset($variables['attributes']['role'])) {
     $variables['title_attributes']['id'] = Html::getUniqueId($variables['label']);
     $variables['attributes']['aria-describedby'] = $variables['title_attributes']['id'];
+  }
+
+  // Changes are needed if we are in admin mode.
+  if ($variables['is_admin']) {
+    // Because ops contain links, we need to force the element tag to be a
+    // div as nested links are face breaking.
+    if ($variables['tag'] == 'a') {
+      $variables['tag'] = 'div';
+    }
   }
 }
 
