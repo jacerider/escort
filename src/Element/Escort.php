@@ -46,6 +46,7 @@ class Escort extends RenderElement {
   public static function preRenderEscort($element) {
     $view_builder = \Drupal::service('entity_type.manager')->getViewBuilder('escort');
     $regions = \Drupal::service('escort.repository')->getEscortsPerRegion();
+    $config = \Drupal::config('escort.config')->get('regions');
     foreach ($regions as $group_id => $sections) {
       $element[$group_id] = [
         '#theme' => 'escort_region',
@@ -59,6 +60,9 @@ class Escort extends RenderElement {
           'data-region' => $group_id,
         ),
       ];
+      if (!empty($config[$group_id]['icon_only'])) {
+        $element[$group_id]['#attributes']['class'][] = 'icon-only';
+      }
       foreach ($sections as $section_id => $escorts) {
         $id = Html::cleanCssIdentifier('escort-' . $group_id . '-' . $section_id);
         $element[$group_id][$section_id] = [

@@ -47,7 +47,7 @@
 #}
 {%
   set classes = [
-    tag == 'a' ? 'escort-link',
+    icon ? 'has-icon',
   ]
 %}
 <{{tag}}{{ attributes.addClass(classes) }}>
@@ -61,9 +61,11 @@
   {% endif %}
   {{ title_suffix }}
 
-  {% block content %}
-    {{ content }}
-  {% endblock %}
+  <div{{ content_attributes.addClass('escort-content') }}>
+    {% block content %}
+      {{ content }}
+    {% endblock %}
+  </div>
 
   {% if ops %}
     {{ ops }}

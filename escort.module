@@ -104,7 +104,7 @@ function escort_preprocess_html(&$variables) {
   // Add classes to body if regions have escorts.
   $regions = \Drupal::service('escort.repository')->getEscortsPerRegion();
   if (!empty($regions)) {
-    $is_admin = \Drupal::service('escort.path.matcher')->isAdmin();
+    $is_admin = $variables['user']->hasPermission('administer escort') && \Drupal::service('escort.path.matcher')->isAdmin();
     $variables['attributes']['class'][] = 'has-escort';
     if ($is_admin) {
       $variables['attributes']['class'][] = 'is-escort-admin';

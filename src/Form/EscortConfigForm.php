@@ -83,19 +83,25 @@ class EscortConfigForm extends ConfigFormBase {
       '#tree' => TRUE,
     ];
     $region_settings = $config->get('regions');
-    foreach ($this->escortRegionManager->getGroups(TRUE) as $group_id => $name) {
+    foreach ($this->escortRegionManager->getRaw(TRUE) as $group_id => $group) {
       $form['regions'][$group_id] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('%region settings', ['%region' => $name]),
+        '#title' => $this->t('%region settings', ['%region' => $group['label']]),
       ];
       $form['regions'][$group_id]['toggle'] = [
         '#type' => 'select',
-        '#title' => $this->t('Toggle the display of %name from', ['%name' => $name]),
+        '#title' => $this->t('Toggle the display of %name from', ['%name' => $group['label']]),
         '#options' => ['- Do not toggle -'] + $this->escortRegionManager->getRegions(TRUE, [$group_id]),
         '#default_value' => isset($region_settings[$group_id]['toggle']) ? $region_settings[$group_id]['toggle'] : NULL,
       ];
+      if ($group['type'] == 'horizontal') {
+        $form['regions'][$group_id]['icon_only'] = [
+          '#type' => 'checkbox',
+          '#title' => $this->t('Icon only'),
+          '#default_value' => !empty($region_settings[$group_id]['icon_only']),
+        ];
+      }
     }
-
 
     return parent::buildForm($form, $form_state);
   }
@@ -113,12 +119,15 @@ class EscortConfigForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
+    // Clean up empty settings before saving.
     $regions = $form_state->getValue('regions');
-    ksm($regions);
+    foreach ($regions as &$region) {
+      $region = array_filter($region);
+    }
 
     $this->config('escort.config')
       ->set('enabled', array_filter($form_state->getValue('enabled')))
-      ->set('regions', array_filter($form_state->getValue('regions')))
+      ->set('regions', array_filter($regions))
       ->save();
   }
 

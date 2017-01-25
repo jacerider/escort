@@ -5,6 +5,7 @@ namespace Drupal\escort;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\escort\Entity\Escort;
+use Drupal\Core\Session\AccountProxy;
 
 /**
  * Provides a repository for Escort config entities.
@@ -41,15 +42,23 @@ class EscortRepository implements EscortRepositoryInterface {
   protected $escortPathMatcher;
 
   /**
+   * Drupal\Core\Session\AccountProxy definition.
+   *
+   * @var \Drupal\Core\Session\AccountProxy
+   */
+  protected $currentUser;
+
+  /**
    * Constructs a new EscortRepository.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity manager.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, EscortRegionManagerInterface $escort_region_manager, EscortPathMatcherInterface $escort_path_matcher) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EscortRegionManagerInterface $escort_region_manager, EscortPathMatcherInterface $escort_path_matcher, AccountProxy $current_user) {
     $this->escortStorage = $entity_type_manager->getStorage('escort');
     $this->escortRegionManager = $escort_region_manager;
     $this->escortPathMatcher = $escort_path_matcher;
+    $this->currentUser = $current_user;
   }
 
   /**
@@ -58,7 +67,7 @@ class EscortRepository implements EscortRepositoryInterface {
   public function getEscortsPerRegion(array &$cacheable_metadata = NULL) {
     if (!isset($this->escorts) || is_array($cacheable_metadata)) {
       $cacheable_metadata = is_array($cacheable_metadata) ? $cacheable_metadata : [];
-      $raw_regions = $this->escortRegionManager->getRawRegions(TRUE);
+      $raw_regions = $this->escortRegionManager->getRaw(TRUE);
       $regions = $this->escortRegionManager->getRegions(TRUE);
       $full = array();
       foreach ($this->escortStorage->loadByProperties(array('region' => array_keys($regions))) as $escort_id => $escort) {
@@ -81,37 +90,10 @@ class EscortRepository implements EscortRepositoryInterface {
       }
 
       // Check if admin and add additional dynamic escorts.
-      if ($this->escortPathMatcher->isAdmin()) {
-        foreach ($raw_regions as $group_id => $group) {
-          $offset = 1;
-          foreach ($group['sections'] as $section_id => $section) {
-            // Create 'add' escort.
-            $escort = $this->createEscort('add', [
-              'region' => $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $section_id,
-            ], $group_id, $section_id, 1000 * $offset);
-            $full[$group_id][$section_id]['add'] = $escort;
-            $offset = -1;
-          }
-        }
-      }
+      $this->addAddEscorts($full, $raw_regions);
 
       // Check for toggle elements.
-      foreach ($raw_regions as $group_id => $group) {
-        // Check if we have a toggle request and that the toggle region exists.
-        if (isset($group['toggle']) && is_array($group['toggle'])) {
-          foreach ($group['toggle'] as $data) {
-            // Check to make sure region is not empty.
-            if (isset($full[$data['region']])) {
-              // Create 'toggle' escort.
-              $escort = $this->createEscort('toggle', [
-                'region' => $data['region'],
-                'event' => $data['event'],
-              ], $group_id, $data['section'], $data['weight']);
-              $full[$group_id][$data['section']][$group_id . '_' . $data['section'] . '_' . $data['region'] . '_toggle'] = $escort;
-            }
-          }
-        }
-      }
+      $this->addToggleEscorts($full, $raw_regions);
 
       // Merge it with the actual values to maintain the region ordering.
       $empty = array_fill_keys(array_keys($raw_regions), array());
@@ -132,6 +114,57 @@ class EscortRepository implements EscortRepositoryInterface {
       $this->escorts = $escorts;
     }
     return $this->escorts;
+  }
+
+  /**
+   * Add 'add' escorts to repository.
+   *
+   * @var array $escorts
+   *   The currest escort list.
+   * @var array $raw_regions
+   *   The raw region data.
+   */
+  protected function addAddEscorts(&$escorts, $raw_regions) {
+    if ($this->currentUser->hasPermission('administer escort') && $this->escortPathMatcher->isAdmin()) {
+      foreach ($raw_regions as $group_id => $group) {
+        $offset = 1;
+        foreach ($group['sections'] as $section_id => $section) {
+          // Create 'add' escort to every available region.
+          $escort = $this->createEscort('add', [
+            'region' => $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $section_id,
+          ], $group_id, $section_id, 1000 * $offset);
+          $escorts[$group_id][$section_id]['add'] = $escort;
+          $offset = -1;
+        }
+      }
+    }
+  }
+
+  /**
+   * Add 'toggle' escorts to repository.
+   *
+   * @var array $escorts
+   *   The currest escort list.
+   * @var array $raw_regions
+   *   The raw region data.
+   */
+  protected function addToggleEscorts(&$escorts, $raw_regions) {
+    foreach ($raw_regions as $group_id => $group) {
+      // Check if we have a toggle request and that the toggle region exists.
+      if (isset($group['toggle']) && is_array($group['toggle'])) {
+        foreach ($group['toggle'] as $data) {
+          // Check to make sure region is not empty.
+          if (isset($escorts[$data['region']])) {
+            // Create 'toggle' escort.
+            $escort = $this->createEscort('toggle', [
+              'region' => $data['region'],
+              'event' => $data['event'],
+            ], $group_id, $data['section'], $data['weight']);
+            $escorts[$group_id][$data['section']][$group_id . '_' . $data['section'] . '_' . $data['region'] . '_toggle'] = $escort;
+          }
+        }
+      }
+    }
   }
 
   /**

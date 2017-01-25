@@ -95,7 +95,7 @@ class EscortRegionManager implements EscortRegionManagerInterface {
    * @return array
    *   An array of regions.
    */
-  public function getRawRegions($enabled_only = FALSE, $excluded_groups = []) {
+  public function getRaw($enabled_only = FALSE, $excluded_groups = []) {
     $regions = static::rawRegions();
     if ($enabled_only && $enabled = $this->config->get('enabled')) {
       $regions = array_intersect_key($regions, $enabled);
@@ -137,7 +137,7 @@ class EscortRegionManager implements EscortRegionManagerInterface {
    */
   public function getGroups($enabled_only = FALSE) {
     $groups = [];
-    foreach ($this->getRawRegions($enabled_only) as $group_id => $group) {
+    foreach ($this->getRaw($enabled_only) as $group_id => $group) {
       $groups[$group_id] = $group['label'];
     }
     return $groups;
@@ -156,7 +156,7 @@ class EscortRegionManager implements EscortRegionManagerInterface {
    */
   public function getRegions($enabled_only = FALSE, $excluded_groups = []) {
     $regions = [];
-    foreach ($this->getRawRegions($enabled_only, $excluded_groups) as $group_id => $group) {
+    foreach ($this->getRaw($enabled_only, $excluded_groups) as $group_id => $group) {
       foreach ($group['sections'] as $section_id => $section) {
         $regions[$group_id . self::ESCORT_REGION_SECTION_SEPARATOR . $section_id] = $group['label'] . ': ' . $section['label'];
       }

@@ -81,6 +81,31 @@ class EscortLibraryController extends ControllerBase {
    *   A render array as expected by the renderer.
    */
   public function listEscorts(Request $request) {
+    $build = [];
+    $build['new'] = $this->listNewEscorts($request);
+    $build['existing'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Add Existing'),
+    ];
+    $build['existing']['form'] = $this->formBuilder()->getForm('Drupal\escort\Form\EscortEnableForm');
+    return $build;
+  }
+
+  /**
+   * Generate list of options for new escorts.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request.
+   *
+   * @return array
+   *   A render array as expected by the renderer.
+   */
+  protected function listNewEscorts(Request $request) {
+
+    $build = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Add New'),
+    ];
 
     $headers = [
       ['data' => $this->t('Escort')],
@@ -99,7 +124,7 @@ class EscortLibraryController extends ControllerBase {
       $row['title']['data'] = $plugin_definition['admin_label'];
       $row['category']['data'] = $plugin_definition['category'];
       $links['add'] = [
-        'title' => $this->t('Place escort'),
+        'title' => $this->t('Create escort'),
         'url' => Url::fromRoute('escort.escort_add', ['plugin_id' => $plugin_id]),
         'attributes' => [
           'class' => ['use-ajax'],
@@ -131,7 +156,6 @@ class EscortLibraryController extends ControllerBase {
         'class' => ['escort-add-table'],
       ],
     ];
-
     return $build;
   }
 

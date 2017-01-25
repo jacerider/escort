@@ -5,16 +5,16 @@ $regions: (
   top: (
     'type': 'horizontal',
     'position': 'top',
-    'size': 50px,
+    'size': 60px,
     'bg': #2e2f2f,
-    'padding': 10px,
+    'padding': 20px,
   ),
   bottom: (
     'type': 'horizontal',
     'position': 'bottom',
     'size': 40px,
     'bg': #2e2f2f,
-    'padding': 10px,
+    'padding': 20px,
   ),
   left: (
     'type': 'vertical',
@@ -22,7 +22,7 @@ $regions: (
     'size': 60px,
     'size_full': 380px,
     'bg': #ccd2d4,
-    'padding': 10px,
+    'padding': 20px,
   ),
   right: (
     'type': 'vertical',
@@ -30,7 +30,7 @@ $regions: (
     'size': 60px,
     'size_full': 380px,
     'bg': #ccd2d4,
-    'padding': 10px,
+    'padding': 20px,
   ),
 );
 
@@ -210,6 +210,14 @@ $primary: #4190e7;
         bottom: 0;
       }
 
+      &.icon-only {
+
+        .escort-link .escort-content {
+          margin: 0;
+          display: none;
+        }
+      }
+
       /**
        * Horizontal sections
        */
@@ -244,6 +252,13 @@ $primary: #4190e7;
           padding: 0;
         }
 
+        &.has-icon {
+
+          .escort-content {
+            margin-left: map-get($settings, padding) / 2;
+          }
+        }
+
         &.escort-link {
 
           &:hover {
@@ -254,13 +269,6 @@ $primary: #4190e7;
         &.is-active {
           background: darken(map-get($settings, bg), 5%);
         }
-      }
-
-      /**
-       * Horizontal icons
-       */
-      .escort-icon {
-        margin-right: map-get($settings, padding) / 2;
       }
 
       /**
