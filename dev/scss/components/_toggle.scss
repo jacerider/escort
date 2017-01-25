@@ -1,0 +1,32 @@
+////////////////////////////////////////////////////////////////////////////////
+// Toggle
+// -----------------------------------------------------------------------------
+// Styles for toggle regions
+
+.escort-item {
+
+  // Toggle elements
+  &.escort-toggle {
+    justify-content: center;
+
+    @each $region, $settings in $regions {
+
+      &[data-region='#{$region}'] {
+
+        @if map-get($settings, type) == 'vertical' {
+          width: map-get($settings, size);
+        }
+
+        // The active state of the MINI region toggle.
+        .show-escort-mini-#{$region} & {
+          color: $primary;
+        }
+
+        // The active state of the FULL region toggle.
+        .show-escort-full-#{$region} & {
+          color: $primary;
+        }
+      }
+    }
+  }
+}

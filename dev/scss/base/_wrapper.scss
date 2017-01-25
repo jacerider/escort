@@ -92,22 +92,5 @@
         }
       }
     }
-
-    /**
-     * In admin mode we want elements fully expanded.
-     */
-    .is-escort-admin.has-escort-#{$region} & {
-
-      @if map-get($settings, type) == 'vertical' {
-
-        @if map-get($settings, position) == 'left' {
-          left: map-get($settings, size_full);
-        }
-
-        @if map-get($settings, position) == 'right' {
-          right: map-get($settings, size_full);
-        }
-      }
-    }
   }
 }

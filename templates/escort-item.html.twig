@@ -51,8 +51,9 @@
   ]
 %}
 <{{tag}}{{ attributes.addClass(classes) }}>
+  <div>
   {% if icon %}
-    <div{{ icon_attributes.addClass('escort-icon') }}>{{ icon }}</div>
+    <span{{ icon_attributes.addClass('escort-icon') }}>{{ icon }}</span>
   {% endif %}
 
   {{ title_prefix }}
@@ -61,14 +62,15 @@
   {% endif %}
   {{ title_suffix }}
 
-  <div{{ content_attributes.addClass('escort-content') }}>
+  <span{{ content_attributes.addClass('escort-content') }}>
     {% block content %}
       {{ content }}
     {% endblock %}
-  </div>
+  </span>
 
   {% if ops %}
     {{ ops }}
   {% endif %}
+</div>
 </{{tag}}>
 
