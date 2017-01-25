@@ -126,6 +126,7 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
         }
       }
     }
+    $cacheability->applyTo($items);
 
     return $items;
   }

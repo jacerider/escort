@@ -4,6 +4,7 @@ namespace Drupal\escort\Element;
 
 use Drupal\Core\Render\Element\RenderElement;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Cache\CacheableMetadata;
 
 /**
  * Provides a render element for Escort.
@@ -47,6 +48,8 @@ class Escort extends RenderElement {
     $view_builder = \Drupal::service('entity_type.manager')->getViewBuilder('escort');
     $regions = \Drupal::service('escort.repository')->getEscortsPerRegion();
     $config = \Drupal::config('escort.config')->get('regions');
+    // Element cache build.
+    $element_cachable_metadata = CacheableMetadata::createFromRenderArray($element);
     foreach ($regions as $group_id => $sections) {
       $element[$group_id] = [
         '#theme' => 'escort_region',
@@ -63,6 +66,8 @@ class Escort extends RenderElement {
       if (!empty($config[$group_id]['icon_only'])) {
         $element[$group_id]['#attributes']['class'][] = 'icon-only';
       }
+      // Region cache build.
+      $region_cacheable_metadata = CacheableMetadata::createFromRenderArray($element[$group_id]);
       foreach ($sections as $section_id => $escorts) {
         $id = Html::cleanCssIdentifier('escort-' . $group_id . '-' . $section_id);
         $element[$group_id][$section_id] = [
@@ -75,11 +80,27 @@ class Escort extends RenderElement {
           ),
           '#sorted' => TRUE,
         ];
+        // Section cache build.
+        $section_cacheable_metadata = CacheableMetadata::createFromRenderArray($element[$group_id][$section_id]);
         foreach ($escorts as $key => $escort) {
+          // Add escort to section.
           $element[$group_id][$section_id][$key] = $view_builder->view($escort);
+          // Section cache add.
+          $section_cacheable_metadata = $section_cacheable_metadata->merge(CacheableMetadata::createFromRenderArray($element[$group_id][$section_id][$key]));
         }
+        // Section cache apply.
+        $section_cacheable_metadata->applyTo($element[$group_id][$section_id]);
+        // Region cache add.
+        $region_cacheable_metadata = $region_cacheable_metadata->merge(CacheableMetadata::createFromRenderArray($element[$group_id][$section_id]));
       }
+      // Region cache apply.
+      $region_cacheable_metadata->applyTo($element[$group_id]);
+      // Element cache add.
+      $element_cachable_metadata = $element_cachable_metadata->merge(CacheableMetadata::createFromRenderArray($element[$group_id]));
+
     }
+    // Element cache apply.
+    $element_cachable_metadata->applyTo($element);
     return $element;
   }
 
