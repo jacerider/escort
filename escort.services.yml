@@ -10,7 +10,7 @@ services:
     arguments: ['@entity_type.manager', '@escort.region_manager', '@escort.path.matcher', '@current_user']
   escort.path.matcher:
     class: Drupal\escort\EscortPathMatcher
-    arguments: ['@path.matcher', '@request_stack', '@path.current']
+    arguments: ['@path.matcher', '@request_stack', '@path.current', '@current_user']
   cache_context.url.path.is_escort_admin:
     class: Drupal\escort\Cache\Context\IsEscortAdminPathCacheContext
     arguments: ['@escort.path.matcher']
