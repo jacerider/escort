@@ -70,7 +70,7 @@ function escort_page_top(array &$page_top) {
   }
   else {
     $page_top['escort_container'] = [
-      '#markup' => '<div class="escort-wrapper">',
+      '#markup' => '<div class="escort-wrapper escort-wrapper-scroll">',
       '#weight' => -1000,
     ];
   }
