@@ -100,6 +100,10 @@ class EscortViewBuilder extends EntityViewBuilder {
         '#weight' => $entity->getWeight(),
       );
 
+      // Add escort admin cache context.
+      // @TODO There may be a better way to ignore caching on admin pages.
+      $build[$entity_id]['#cache']['contexts'][] = 'url.path.is_escort_admin';
+
       // Allow altering of cacheability metadata or setting #create_placeholder.
       $this->moduleHandler->alter(['escort_build', "escort_build_" . $plugin->getBaseId()], $build[$entity_id], $plugin);
 

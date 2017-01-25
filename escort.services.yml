@@ -11,3 +11,9 @@ services:
   escort.path.matcher:
     class: Drupal\escort\EscortPathMatcher
     arguments: ['@path.matcher', '@request_stack', '@path.current']
+  cache_context.url.path.is_escort_admin:
+    class: Drupal\escort\Cache\Context\IsEscortAdminPathCacheContext
+    arguments: ['@escort.path.matcher']
+    tags:
+      - { name: cache.context }
+
