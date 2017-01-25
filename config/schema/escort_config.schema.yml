@@ -8,5 +8,9 @@ escort.config:
       type: sequence
       label: 'Regions'
       sequence:
-        type: string
+        type: mapping
         label: 'Region'
+        mapping:
+          toggle:
+            type: string
+            label: 'Toggle'

@@ -72,23 +72,27 @@ class EscortConfigForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('escort.config');
 
-    $form['regions'] = [
+    $form['enabled'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Regions'),
       '#options' => $this->escortRegionManager->getGroups(),
-      '#default_value' => $config->get('regions'),
+      '#default_value' => $config->get('enabled'),
     ];
 
-    $form['toggle'] = [
+    $form['regions'] = [
       '#tree' => TRUE,
     ];
-    $toggle = $config->get('toggle');
+    $region_settings = $config->get('regions');
     foreach ($this->escortRegionManager->getGroups(TRUE) as $group_id => $name) {
-      $form['toggle'][$group_id] = [
+      $form['regions'][$group_id] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('%region settings', ['%region' => $name]),
+      ];
+      $form['regions'][$group_id]['toggle'] = [
         '#type' => 'select',
         '#title' => $this->t('Toggle the display of %name from', ['%name' => $name]),
         '#options' => ['- Do not toggle -'] + $this->escortRegionManager->getRegions(TRUE, [$group_id]),
-        '#default_value' => isset($toggle[$group_id]) ? $toggle[$group_id] : NULL,
+        '#default_value' => isset($region_settings[$group_id]['toggle']) ? $region_settings[$group_id]['toggle'] : NULL,
       ];
     }
 
@@ -109,9 +113,12 @@ class EscortConfigForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
+    $regions = $form_state->getValue('regions');
+    ksm($regions);
+
     $this->config('escort.config')
+      ->set('enabled', array_filter($form_state->getValue('enabled')))
       ->set('regions', array_filter($form_state->getValue('regions')))
-      ->set('toggle', array_filter($form_state->getValue('toggle')))
       ->save();
   }
 

@@ -97,16 +97,18 @@ class EscortRegionManager implements EscortRegionManagerInterface {
    */
   public function getRawRegions($enabled_only = FALSE, $excluded_groups = []) {
     $regions = static::rawRegions();
-    if ($enabled_only && $enabled = $this->config->get('regions')) {
+    if ($enabled_only && $enabled = $this->config->get('enabled')) {
       $regions = array_intersect_key($regions, $enabled);
     }
     if (!empty($excluded_groups)) {
       $regions = array_diff_key($regions, array_flip($excluded_groups));
     }
-    if ($toggle = $this->config->get('toggle')) {
-      foreach ($toggle as $group_id => $region) {
+    $region_settings = $this->config->get('regions');
+    foreach ($region_settings as $group_id => $settings) {
+      if (!empty($settings['toggle'])) {
         // Make sure region being toggled exists.
         if (isset($regions[$group_id])) {
+          $region = $settings['toggle'];
           $dest_group_id = $this->getGroupId($region);
           $dest_section_id = $this->getSectionId($region);
           // Make sure destination region exists.
