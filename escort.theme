@@ -64,6 +64,7 @@ function template_preprocess_escort_item(&$variables) {
   $variables['content'] = $variables['element']['content'];
   $variables['tag'] = !empty($variables['element']['#tag']) ? $variables['element']['#tag'] : 'div';
   $variables['ops'] = !empty($variables['element']['ops']) ? $variables['element']['ops'] : '';
+  $variables['is_escort_admin'] = $variables['element']['#is_escort_admin'];
 
   $variables['icon'] = '';
   $variables['icon_attributes'] = new Attribute();
@@ -109,7 +110,7 @@ function template_preprocess_escort_item(&$variables) {
   }
 
   // Changes are needed if we are in admin mode.
-  if ($variables['is_admin']) {
+  if ($variables['is_escort_admin']) {
     // Because ops contain links, we need to force the element tag to be a
     // div as nested links are face breaking.
     if ($variables['tag'] == 'a') {
