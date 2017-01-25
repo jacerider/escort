@@ -281,6 +281,13 @@ $primary: #4190e7;
       }
 
       /**
+       * Horizontal content
+       */
+      .escort-content {
+        display: flex;
+      }
+
+      /**
        * Horizontal operations
        */
       .escort-ops {
