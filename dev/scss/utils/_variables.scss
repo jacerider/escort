@@ -1,0 +1,81 @@
+////////////////////////////////////////////////////////////////////////////////
+// VARIABLES
+//
+// -----------------------------------------------------------------------------
+// Table of Contents:
+//
+//   1. Colors
+//   2. Spacing/Sizes
+//   3. Breakpoints
+
+
+/////////////////////
+// 1. Colors
+// ---------
+
+$primary-color: #4190e7;
+$secondary-color: #34b8e3;
+$bg-color: #2e2f2f;
+$bg-alt-color: #f3f3f3;
+
+$white: #fff;
+$white-30: rgba($white, 0.3);
+$black: #111;
+$black-30: rgba($black, 0.3);
+$primary: #4190e7;
+
+
+/////////////////////
+// 2. Spacing/Sizes
+// ---------
+$base-size: 3.5rem;
+$base-size-active: $base-size * 6;
+$base-padding: 1rem;
+$base-margin: 1rem;
+$padding: 1em;
+$margin: 1em;
+
+$regions: (
+  top: (
+    'type': 'horizontal',
+    'position': 'top',
+    'size': $base-size,
+    'bg': $bg-color,
+    'padding': $base-padding,
+  ),
+  bottom: (
+    'type': 'horizontal',
+    'position': 'bottom',
+    'size': $base-size,
+    'bg': $bg-color,
+    'padding': $base-padding,
+  ),
+  left: (
+    'type': 'vertical',
+    'position': 'left',
+    'size': $base-size,
+    'size_full': $base-size-active,
+    'bg': $bg-alt-color,
+    'padding': $base-padding,
+  ),
+  right: (
+    'type': 'vertical',
+    'position': 'right',
+    'size': $base-size,
+    'size_full': $base-size-active,
+    'bg': $bg-alt-color,
+    'padding': $base-padding,
+  ),
+);
+
+
+/////////////////////
+// 2. Breakpoints
+// ---------
+// $breakpoints: (
+//   small: 0, // converted from "0"
+//   medium: 40em, // converted from "all and (min-width: 40em)"
+//   large: 64em, // converted from "all and (min-width: 64em)"
+//   xlarge: 120em, // converted from "all and (min-width: 120em)"
+// );
+// $breakpoint-classes: (small medium large xlarge);

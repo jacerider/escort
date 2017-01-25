@@ -1,0 +1,28 @@
+////////////////////////////////////////////////////////////////////////////////
+// ADMIN
+// -----------------------------------------------------------------------------
+// Styles applied when in admin mode.
+
+.is-escort-admin {
+
+  @each $region, $settings in $regions {
+
+    .escort-#{$region} {
+
+      @if map-get($settings, type) == 'vertical' {
+        width: map-get($settings, size_full);
+      }
+    }
+
+    // .escort-wrapper {
+
+    //   @if map-get($settings, position) == 'left' {
+    //     left: map-get($settings, size_full);
+    //   }
+
+    //   @if map-get($settings, position) == 'right' {
+    //     right: map-get($settings, size_full) !important;
+    //   }
+    // }
+  }
+}
