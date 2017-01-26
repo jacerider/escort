@@ -27,6 +27,12 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
    */
   protected $provideMultiple = TRUE;
 
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $usesIcon = FALSE;
+
   /**
    * The local task manager.
    *
@@ -119,6 +125,8 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
           if (!empty($tab['#active']) && !empty($secondary_tabs)) {
             foreach ($secondary_tabs as $secondary_tab) {
               $secondary_tab_build = $this->buildTab($secondary_tab);
+              // Set weight to same as parent.
+              $secondary_tab_build['#weight'] = $tab_build['#weight'];
               $secondary_tab_build['#attributes']['class'][] = 'secondary-tab';
               $items[] = $secondary_tab_build;
             }
@@ -127,7 +135,6 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
       }
     }
     $cacheability->applyTo($items);
-
     return $items;
   }
 
@@ -135,10 +142,10 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
    * Prepare tab for rendering.
    *
    * @param array $tab
-   *   An array of tabs.
+   *   A tab.
    *
    * @return array
-   *   An array of tabs.
+   *   A render array.
    */
   protected function buildTab($tab) {
     // Get URL attributes.
@@ -168,6 +175,8 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
       '#icon' => $icon,
       '#attributes' => $attributes,
       '#markup' => $title,
+      '#access' => $tab['#access'],
+      '#weight' => $tab['#weight'],
     ];
   }
 
