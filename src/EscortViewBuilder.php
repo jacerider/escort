@@ -300,7 +300,7 @@ class EscortViewBuilder extends EntityViewBuilder {
     // properties and rendering (for instance, its own #theme) without
     // conflicting with the properties used above, or alternate ones used by
     // alternate escort rendering approaches in contrib.
-    foreach (array('#tag', '#attributes', '#contextual_links') as $property) {
+    foreach (array('#tag', '#attributes', '#contextual_links', '#weight', '#access') as $property) {
       if (isset($content[$property])) {
         if (is_array($content[$property])) {
           $build[$property] += $content[$property];
