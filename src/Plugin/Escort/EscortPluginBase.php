@@ -43,6 +43,13 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
   protected $provideMultiple = FALSE;
 
   /**
+   * Whether the escort provides multiple sub-escorts.
+   *
+   * @var bool
+   */
+  protected $usesIcon = TRUE;
+
+  /**
    * {@inheritdoc}
    */
   public function label() {
@@ -187,7 +194,7 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
       '#default_value' => $this->label(),
       '#required' => TRUE,
     ];
-    if ($this->hasIconSupport()) {
+    if ($this->usesIcon && $this->hasIconSupport()) {
       $form['icon'] = [
         '#type' => 'micon',
         '#title' => $this->t('Icon'),
