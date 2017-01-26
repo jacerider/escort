@@ -1,0 +1,36 @@
+/////////////////////
+// 1. Regions
+// ---------
+
+$regions: (
+  top: (
+    'type': 'horizontal',
+    'position': 'top',
+    'size': $base-size,
+    'bg': $bg-color,
+    'padding': $base-padding,
+  ),
+  bottom: (
+    'type': 'horizontal',
+    'position': 'bottom',
+    'size': $base-size,
+    'bg': $bg-color,
+    'padding': $base-padding,
+  ),
+  left: (
+    'type': 'vertical',
+    'position': 'left',
+    'size': em-size-down($base-size),
+    'size_full': em-size-down($base-size-active),
+    'bg': $bg-alt-color,
+    'padding': $base-padding,
+  ),
+  right: (
+    'type': 'vertical',
+    'position': 'right',
+    'size': em-size-down($base-size),
+    'size_full': em-size-down($base-size-active),
+    'bg': $bg-alt-color,
+    'padding': $base-padding,
+  ),
+);

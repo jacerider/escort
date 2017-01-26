@@ -6,6 +6,7 @@
 //
 //   1. Colors
 //   2. Spacing/Sizes
+//   3. Typography
 //   3. Breakpoints
 
 
@@ -28,49 +29,32 @@ $primary: #4190e7;
 /////////////////////
 // 2. Spacing/Sizes
 // ---------
-$base-size: 3.5rem;
+
+$base-size: 4em;
 $base-size-active: $base-size * 6;
-$base-padding: 1rem;
-$base-margin: 1rem;
+
+$base-padding: 1em;
+$base-margin: 1em;
 $padding: 1em;
 $margin: 1em;
 
-$regions: (
-  top: (
-    'type': 'horizontal',
-    'position': 'top',
-    'size': $base-size,
-    'bg': $bg-color,
-    'padding': $base-padding,
-  ),
-  bottom: (
-    'type': 'horizontal',
-    'position': 'bottom',
-    'size': $base-size,
-    'bg': $bg-color,
-    'padding': $base-padding,
-  ),
-  left: (
-    'type': 'vertical',
-    'position': 'left',
-    'size': $base-size,
-    'size_full': $base-size-active,
-    'bg': $bg-alt-color,
-    'padding': $base-padding,
-  ),
-  right: (
-    'type': 'vertical',
-    'position': 'right',
-    'size': $base-size,
-    'size_full': $base-size-active,
-    'bg': $bg-alt-color,
-    'padding': $base-padding,
-  ),
-);
-
 
 /////////////////////
-// 2. Breakpoints
+// 3. Typography
+// ---------
+
+$font-size: 1em;
+
+$font-family: Ubuntu;
+$font-type: sans-serif;
+$font-weight: 400;
+$font-location: fonts/Ubuntu;
+$font-format: ttf;
+
+$font: $font-family, $font-type;
+
+/////////////////////
+// 4. Breakpoints
 // ---------
 // $breakpoints: (
 //   small: 0, // converted from "0"

@@ -19,6 +19,7 @@
       overflow: hidden;
       z-index: 5;
       color: $black;
+      font-size: $font-size * 1.1;
 
       @if map-get($settings, position) == 'left' {
         left: 0;
@@ -91,7 +92,7 @@
 
           @if map-get($s, position) == 'top' {
             .has-escort-#{$r}:not(.hide-escort-#{$r}) & { // sass-lint:disable-line force-pseudo-nesting
-              top: map-get($s, size);
+              top: em-size-down(map-get($s, size));
             }
           }
 
@@ -99,7 +100,7 @@
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,
             .show-escort-full-#{$r} & {
-              bottom: map-get($s, size);
+              bottom: em-size-down(map-get($s, size));
             }
           }
         }

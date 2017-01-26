@@ -14,7 +14,7 @@
       &[data-region='#{$region}'] {
 
         @if map-get($settings, type) == 'vertical' {
-          width: map-get($settings, size);
+          width: $base-size;
         }
 
         // The active state of the MINI region toggle.

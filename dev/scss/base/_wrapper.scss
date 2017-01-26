@@ -18,7 +18,6 @@
   position: relative;
   z-index: 100;
   background: $white;
-  overflow-y: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch; // sass-lint:disable-line no-misspelled-properties
 }
@@ -55,11 +54,11 @@
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          left: map-get($settings, size);
+          left: em-size-up(map-get($settings, size));
         }
 
         @if map-get($settings, position) == 'right' {
-          right: map-get($settings, size);
+          right: em-size-up(map-get($settings, size));
         }
       }
     }

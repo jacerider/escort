@@ -5,10 +5,8 @@
 // should be added in the region specific style section.
 
 .escort-item {
-  display: flex;
   transition: all 300ms;
   position: relative;
-  text-align: center;
 
   > div {
     display: inline-flex;

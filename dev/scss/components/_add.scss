@@ -1,0 +1,30 @@
+////////////////////////////////////////////////////////////////////////////////
+// ADD
+// -----------------------------------------------------------------------------
+// Styles for add escort widget button on the admin page
+
+.escort-add {
+  font-size: $font-size;
+  text-align: center;
+
+  &:hover {
+
+    i {
+      border: 2px solid $primary-color;
+      background: $primary-color;
+    }
+  }
+
+  i {
+    color: $white;
+    display: inline-block;
+    background: $secondary-color;
+    text-shadow: none;
+    border: 2px solid $secondary-color;
+    width: $padding * 2;
+    height: $padding * 2;
+    vertical-align: middle;
+    line-height: $font-size * 1.75;
+    border-radius: 50%;
+  }
+}
