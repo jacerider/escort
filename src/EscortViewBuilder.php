@@ -15,6 +15,7 @@ use Drupal\escort\Entity\Escort;
 use Drupal\escort\Entity\EscortInterface;
 use Drupal\escort\Plugin\Escort\EscortPluginImmediateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Provides a Escort view builder.
@@ -221,6 +222,7 @@ class EscortViewBuilder extends EntityViewBuilder {
   public static function preRender($build) {
     $entity = $build['#escort'];
     $plugin = $entity->getPlugin();
+    $is_admin = \Drupal::service('escort.path.matcher')->isAdmin();
 
     $content = NULL;
     if ($plugin->usesMultiple()) {
@@ -234,6 +236,7 @@ class EscortViewBuilder extends EntityViewBuilder {
         $item['#escort_group'] = TRUE;
         $item_build = static::buildPreRenderableEscort($build['#escort'], \Drupal::service('module_handler'), $item);
         $item_build['content'] = static::mergeProperties($item_build, $item_build['content']);
+        $item_build['#is_escort_admin'] = $is_admin;
         $content[$key] = $item_build;
       }
     }
@@ -247,14 +250,26 @@ class EscortViewBuilder extends EntityViewBuilder {
     if ($content !== NULL && !Element::isEmpty($content)) {
       // Merge properties.
       $build['content'] = static::mergeProperties($build, $content);
-      if (\Drupal::service('escort.path.matcher')->isAdmin() && !$entity->isTemporary()) {
+      if ($is_admin && !$entity->isTemporary()) {
         // Set admin flag for use in preprocessing and twig.
         $build['#is_escort_admin'] = TRUE;
         // Add entity operations.
+        $ops = array_map(function ($op) {
+          return $op += [
+            'attributes' => [
+              'class' => ['use-ajax'],
+              'data-dialog-type' => 'modal',
+              'data-dialog-options' => Json::encode([
+                'width' => 700,
+              ]),
+            ],
+          ];
+        }, $entity->buildOps());
         $build['ops']['move']['#markup'] = '<a class="escort-drag">Reorder</a>';
         $build['ops']['links'] = [
           '#theme' => 'links',
-          '#links' => $entity->buildOps(),
+          '#links' => $ops,
+          '#attached' => ['library' => ['core/drupal.dialog.ajax']],
           '#attributes' => ['class' => ['escort-ops']],
         ];
       }
