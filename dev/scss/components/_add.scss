@@ -1,0 +1,67 @@
+////////////////////////////////////////////////////////////////////////////////
+// ADD
+// -----------------------------------------------------------------------------
+// Styles for add escort widget button on the admin page
+
+.escort-add {
+  border: 0 !important;
+  justify-content: center;
+
+  .escort-icon {
+
+    i {
+      font-size: $font-size * 0.75;
+      vertical-align: sub !important;
+    }
+  }
+}
+
+@each $region, $settings in $regions {
+
+  .escort-#{$region} {
+
+    /**
+     * If region is horizontal.
+     */
+    @if map-get($settings, type) == 'horizontal' {
+
+      .escort-add {
+
+        > div {
+
+          @if map-get($settings, position) == 'top' {
+            @include button($region: top);
+          }
+
+          @if map-get($settings, position) == 'bottom' {
+            @include button($region: bottom);
+          }
+        }
+
+        i {
+          line-height: $font-size;
+        }
+      }
+    }
+
+    /**
+     * If region is vertical.
+     */
+    @if map-get($settings, type) == 'vertical' {
+
+      .escort-add {
+
+        > div {
+
+          @if map-get($settings, position) == 'left' {
+            @include button($region: left);
+          }
+
+          @if map-get($settings, position) == 'right' {
+            @include button($region: right);
+          }
+        }
+      }
+    }
+  }
+}

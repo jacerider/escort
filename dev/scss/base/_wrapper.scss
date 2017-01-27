@@ -18,7 +18,6 @@
   position: relative;
   z-index: 100;
   background: $white;
-  overflow-y: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch; // sass-lint:disable-line no-misspelled-properties
 }

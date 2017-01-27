@@ -4,10 +4,136 @@
 // -----------------------------------------------------------------------------
 // Table of Contents:
 //
-//   1. 
+//   1. Gradient
+//   2. Button
+//   3. Font Face
 
 
 /////////////////////
-// 1. Button
+// 1. Gradient
+// Creates a gradient with backup color;
+// ---------
+@mixin linear-gradient($color1, $color2, $direction, $amount1: 0%, $amount2: 100%) {
+  background-color: $color1; /* Old browsers */
+  background: linear-gradient(to $direction, $color1 $amount1, $color2 $amount2);
+}
+
+@mixin radial-gradient($center, $edge) {
+  background-color: $edge;
+  background: radial-gradient(ellipse at center, $center $amount1, $edge $amount2);
+}
+
+/////////////////////
+// 2. Button
 // Defines base button styles
 // ---------
+@mixin button-base {
+  @include linear-gradient($primary-color, darken($primary-color, 8%), bottom);
+  display: inline-block;
+  border-radius: 3px;
+  color: smart-scale($primary-color, $scale: 80%);
+  padding: 0 ($padding * 0.66);
+  min-height: $base-size * 0.5;
+  line-height: $font-size * 1.5;
+  text-shadow: none;
+  transition: background-color 300ms, color 300ms, box-shadow 300ms;
+
+  &:visited,
+  &:active,
+  &:focus {
+    color: smart-scale($primary-color, $scale: 80%);
+  }
+
+  &:hover {
+    @include linear-gradient(lighten($primary-color, 5%), $primary-color, bottom);
+    color: smart-scale($primary-color, $scale: 100%);
+    cursor: pointer;
+    text-decoration: none;
+  }
+}
+
+//////////////////
+//button
+@mixin button($region: null, $outline: false) {
+  @include button-base;
+
+  @if $outline == true {
+    @include linear-gradient(rgba(smart-scale($primary-color), 0.1), rgba(smart-scale($primary-color), 0.33), bottom);
+    color: smart-scale($primary-color, $scale: 50%);
+
+    &:visited,
+    &:active,
+    &:focus {
+      color: smart-scale($primary-color, $scale: 100%);
+    }
+
+    &:hover {
+      background-color: lighten($primary-color, 10%);
+      color: smart-scale($primary-color, $scale: 50%);
+    }
+  }
+
+  @if $region == 'top' {
+    box-shadow: 0 1px 10px adjust-color($bg-color-top, $saturation: 0%, $lightness: -25%);
+
+    &:hover {
+      box-shadow: 0 3px 15px adjust-color($bg-color-top, $saturation: 0%, $lightness: -50%);
+    }
+  }
+
+  @if $region == 'bottom' {
+    box-shadow: 0 1px 10px adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -25%);
+
+    &:hover {
+      box-shadow: 0 3px 15px adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -50%);
+    }
+  }
+
+  @if $region == 'left' {
+    box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -25%);
+
+    &:hover {
+      box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -50%);
+    }
+  }
+
+  @if $region == 'right' {
+    box-shadow: 0 1px 10px adjust-color($bg-color-right, $saturation: 0%, $lightness: -25%);
+
+    &:hover {
+      box-shadow: 0 3px 15px adjust-color($bg-color-right, $saturation: 0%, $lightness: -50%);
+    }
+  }
+  @content;
+}
+
+/////////////////////
+// 3. Font Face
+// Generates the proper font styles from a linked font file(s)
+// ---------
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+  $src: null;
+
+  $extmods: (
+    eot: '?',
+    svg: '#' + str-replace($name, ' ', '_')
+  );
+
+  $formats: (
+    otf: 'opentype',
+    ttf: 'truetype'
+  );
+
+  @each $ext in $exts {
+    $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+    $src: append($src, url(quote($path + '.' + $extmod)) format(quote($format)), comma);
+  }
+
+  @font-face {
+    font-family: quote($name);
+    font-style: $style;
+    font-weight: $weight;
+    src: $src;
+  }
+}
