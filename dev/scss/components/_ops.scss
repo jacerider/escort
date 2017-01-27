@@ -1,3 +1,8 @@
+////////////////////////////////////////////////////////////////////////////////
+// Ops
+// -----------------------------------------------------------------------------
+// Styles for operation buttons for each escort widget on the admin page
+
 .escort-ops {
   display: none;
 
@@ -9,3 +14,29 @@
     @include button($outline: true);
   }
 }
+
+// @each $region, $settings in $regions {
+
+//   .escort-#{$region} {
+
+//     /**
+//      * If region is horizontal.
+//      */
+//     @if map-get($settings, type) == 'horizontal' {
+
+//       .escort-ops {
+
+//       }
+//     }
+
+//     /**
+//      * If region is vertical.
+//      */
+//     @if map-get($settings, type) == 'vertical' {
+
+//       .escort-ops {
+//         border-bottom: 1px solid 
+//       }
+//     }
+//   }
+// }

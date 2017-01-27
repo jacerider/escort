@@ -31,7 +31,7 @@
   @include linear-gradient($primary-color, darken($primary-color, 8%), bottom);
   display: inline-block;
   border-radius: 3px;
-  color: smart-scale($primary-color, $scale: 100%);
+  color: smart-scale($primary-color, $scale: 80%);
   padding: 0 ($padding * 0.66);
   min-height: $base-size * 0.5;
   line-height: $font-size * 1.5;
@@ -41,13 +41,14 @@
   &:visited,
   &:active,
   &:focus {
-    color: smart-scale($primary-color, $scale: 100%);
+    color: smart-scale($primary-color, $scale: 80%);
   }
 
   &:hover {
     @include linear-gradient(lighten($primary-color, 5%), $primary-color, bottom);
-    color: $white;
+    color: smart-scale($primary-color, $scale: 100%);
     cursor: pointer;
+    text-decoration: none;
   }
 }
 
@@ -57,8 +58,8 @@
   @include button-base;
 
   @if $outline == true {
-    background-color: transparent;
-    color: smart-scale($primary-color, $scale: 100%);
+    @include linear-gradient(rgba(smart-scale($primary-color), 0.1), rgba(smart-scale($primary-color), 0.33), bottom);
+    color: smart-scale($primary-color, $scale: 50%);
 
     &:visited,
     &:active,
