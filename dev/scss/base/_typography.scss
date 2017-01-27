@@ -2,3 +2,23 @@
 // TYPOGRAPHY
 // -----------------------------------------------------------------------------
 // Defines fonts, weights, and other character specific styles
+
+@include font-face($font-family, $font-location, $font-weight, normal, $font-format);
+
+.escort-region {
+  font-family: $font;
+  font-size: $font-size;
+
+  a {
+    cursor: pointer;
+    text-decoration: none;
+    color: $primary-color;
+    transition: color 300ms, border 300ms, background-color 300ms, padding 300ms;
+    border: 0;
+    outline: none;
+
+    &:hover {
+      color: $secondary-color;
+    }
+  }
+}

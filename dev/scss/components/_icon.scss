@@ -1,0 +1,45 @@
+////////////////////////////////////////////////////////////////////////////////
+// Icon
+// -----------------------------------------------------------------------------
+// Defines styles associated with all regions
+
+/**
+ * Styles that apply to all escort regions.
+ */
+// .escort-icon {
+
+//   i {
+//     vertical-align: middle;
+//   }
+// }
+
+@each $region, $settings in $regions {
+
+  .escort-#{$region} {
+
+    /**
+     * If region is horizontal.
+     */
+    @if map-get($settings, type) == 'horizontal' {
+      .escort-icon {
+
+        i {
+          vertical-align: middle;
+        }
+      }
+    }
+
+    /**
+     * If region is vertical.
+     */
+    @if map-get($settings, type) == 'vertical' {
+
+      .escort-icon {
+
+        i {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}

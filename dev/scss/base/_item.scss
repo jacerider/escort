@@ -5,13 +5,17 @@
 // should be added in the region specific style section.
 
 .escort-item {
-  display: flex;
   transition: all 300ms;
   position: relative;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
 
   > div {
-    display: inline-flex;
+    display: flex;
+  }
+
+  .escort-content {
+    display: flex;
   }
 
   // Link elements
@@ -41,5 +45,62 @@
     padding: 0;
     list-style-type: none;
     line-height: normal;
+  }
+}
+
+@each $region, $settings in $regions {
+
+  .escort-#{$region} {
+
+    /**
+     * If region is horizontal.
+     */
+    @if map-get($settings, type) == 'horizontal' {
+
+      @if map-get($settings, position) == 'top' {
+
+        .escort-item {
+          justify-content: center;
+        }
+
+        .escort-content {
+          text-shadow: 0 1px 2px adjust-color($bg-color-top, $lightness: -15%);
+        }
+      }
+
+      @if map-get($settings, position) == 'bottom' {
+        .escort-content {
+          text-shadow: 0 1px 2px scale-color($bg-color-bottom, $lightness: -15%);
+        }
+      }
+    }
+
+    /**
+     * If region is vertical.
+     */
+    @if map-get($settings, type) == 'vertical' {
+
+      @if map-get($settings, position) == 'left' {
+
+        .escort-item {
+          border-bottom: 1px solid rgba(smart-scale($bg-color-left), 0.25);
+        }
+
+        .escort-content {
+          text-shadow: 0 1px 2px scale-color($bg-color-left, $lightness: -15%);
+        }
+      }
+
+      @if map-get($settings, position) == 'right' {
+
+        .escort-item {
+          border-bottom: 1px solid rgba(smart-scale($bg-color-right), 0.25);
+        }
+
+        .escort-content {
+          text-shadow: 0 1px 2px scale-color($bg-color-right, $lightness: -15%);
+        }
+      }
+    }
   }
 }

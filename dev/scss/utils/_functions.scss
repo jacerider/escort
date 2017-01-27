@@ -5,6 +5,7 @@
 // Table of Contents:
 //
 //   1. Setting
+//	 2. Smart Scale
 
 
 /////////////////////
@@ -18,4 +19,17 @@
     $map: map-get($map, $key);
   }
   @return $map;
+}
+
+
+/////////////////////
+// 2. Smart Scale
+// Scales a color to be darker if it's light, or lighter if it's dark.
+// ---------
+
+@function smart-scale($color, $scale: 75%, $threshold: 50%) {
+  @if lightness($color) > $threshold {
+    $scale: -$scale;
+  }
+  @return scale-color($color, $lightness: $scale);
 }

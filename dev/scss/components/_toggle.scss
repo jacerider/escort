@@ -14,17 +14,17 @@
       &[data-region='#{$region}'] {
 
         @if map-get($settings, type) == 'vertical' {
-          width: map-get($settings, size);
+          width: $base-size;
         }
 
         // The active state of the MINI region toggle.
         .show-escort-mini-#{$region} & {
-          color: $primary;
+          color: $primary-color;
         }
 
         // The active state of the FULL region toggle.
         .show-escort-full-#{$region} & {
-          color: $primary;
+          color: $primary-color;
         }
       }
     }
