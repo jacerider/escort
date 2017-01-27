@@ -18,16 +18,18 @@
       flex-direction: column;
       overflow: hidden;
       z-index: 5;
-      color: $black;
       font-size: $font-size * 1.1;
 
       @if map-get($settings, position) == 'left' {
         left: 0;
+        border-right: 1px solid scale-color($bg-color-left, $lightness: -10%);
+        color: smart-scale($bg-color-left);
       }
 
       @if map-get($settings, position) == 'right' {
         right: 0;
-        // order: 10;
+        border-left: 1px solid scale-color($bg-color-right, $lightness: -10%);
+        color: smart-scale($bg-color-right);
       }
 
       /**
@@ -57,8 +59,6 @@
       .escort-item {
         padding: map-get($settings, padding) 0;
         width: map-get($settings, size_full);
-        border-top: 1px dotted $black-30;
-        border-bottom: 1px dotted $black-30;
 
         &.escort-group {
           display: block;
@@ -71,8 +71,14 @@
        * Vertical icons
        */
       .escort-icon {
-        width: map-get($settings, size);
+        width: $base-size;
         text-align: center;
+        vertical-align: super;
+
+        i {
+          font-size: $font-size * 1.75;
+          vertical-align: sub;
+        }
       }
 
       /**
@@ -92,7 +98,7 @@
 
           @if map-get($s, position) == 'top' {
             .has-escort-#{$r}:not(.hide-escort-#{$r}) & { // sass-lint:disable-line force-pseudo-nesting
-              top: em-size-down(map-get($s, size));
+              top: map-get($s, size);
             }
           }
 
@@ -100,7 +106,7 @@
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,
             .show-escort-full-#{$r} & {
-              bottom: em-size-down(map-get($s, size));
+              bottom: map-get($s, size);
             }
           }
         }

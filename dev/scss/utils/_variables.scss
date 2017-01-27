@@ -14,23 +14,23 @@
 // 1. Colors
 // ---------
 
-$primary-color: #4190e7;
-$secondary-color: #34b8e3;
-$bg-color: #2e2f2f;
-$bg-alt-color: #f0f0f0;
+$primary-color: #1c98c1;
+$secondary-color: #ec4431;
+
+$bg-color-top: #2b2b2b;
+$bg-color-bottom: #2b2b2b;
+$bg-color-left: #f0f0f0;
+$bg-color-right: #f0f0f0;
 
 $white: #fff;
-$white-30: rgba($white, 0.3);
 $black: #111;
-$black-30: rgba($black, 0.3);
-$primary: #4190e7;
 
 
 /////////////////////
 // 2. Spacing/Sizes
 // ---------
 
-$base-size: 4em;
+$base-size: 3.25rem;
 $base-size-active: $base-size * 6;
 
 $base-padding: 1em;
@@ -43,12 +43,12 @@ $margin: 1em;
 // 3. Typography
 // ---------
 
-$font-size: 1em;
+$font-size: 0.9rem;
 
 $font-family: Ubuntu;
 $font-type: sans-serif;
 $font-weight: 400;
-$font-location: fonts/Ubuntu;
+$font-location: 'fonts/Ubuntu';
 $font-format: ttf;
 
 $font: $font-family, $font-type;

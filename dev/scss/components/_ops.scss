@@ -1,0 +1,11 @@
+.escort-ops {
+  display: none;
+
+  li {
+    display: inline-flex;
+  }
+
+  a {
+    @include button($outline: true);
+  }
+}

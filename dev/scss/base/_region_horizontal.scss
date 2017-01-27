@@ -17,14 +17,17 @@
       height: map-get($settings, size);
       width: 100%;
       z-index: 10;
-      color: $white;
 
       @if map-get($settings, position) == 'top' {
         top: 0;
+        border-bottom: 1px solid scale-color($bg-color-top, $lightness: -10%);
+        color: smart-scale($bg-color-top);
       }
 
       @if map-get($settings, position) == 'bottom' {
         bottom: 0;
+        border-top: 1px solid scale-color($bg-color-bottom, $lightness: -10%);
+        color: smart-scale($bg-color-bottom);
       }
 
       &.icon-only {
@@ -61,8 +64,8 @@
       .escort-item {
         line-height: map-get($settings, size);
         padding: 0 map-get($settings, padding);
-        border-right: 1px dotted $white-30;
-        border-left: 1px dotted $white-30;
+        border-right: 1px dashed transparentize($white, 0.75);
+        border-left: 1px dashed transparentize($white, 0.75);
         text-align: center;
 
         &.escort-group {
@@ -77,7 +80,7 @@
           }
         }
 
-        &.escort-link {
+        &.escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
           &:hover {
             background: lighten(map-get($settings, bg), 5%);
@@ -92,18 +95,11 @@
       /**
        * Horizontal content
        */
-      .escort-content {
-        display: flex;
-      }
-
-      /**
-       * Horizontal content
-       */
       .escort-icon {
         
         i {
           font-size: $font-size * 1.5;
-          vertical-align: middle;
+          vertical-align: sub;
         }
       }
 

@@ -10,6 +10,7 @@
   display: flex;
   position: relative;
   z-index: 10;
+  font-size: $font-size;
 
   * {
     box-sizing: border-box;
@@ -34,14 +35,10 @@
     background: map-get($settings, bg);
     transition: all 300ms;
 
-    .escort-ops {
-      display: none;
-    }
-
     &:hover {
 
       .escort-ops {
-        display: block;
+        display: flex;
       }
     }
 

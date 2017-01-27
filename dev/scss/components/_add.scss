@@ -4,27 +4,64 @@
 // Styles for add escort widget button on the admin page
 
 .escort-add {
-  font-size: $font-size;
-  text-align: center;
+  border: 0 !important;
+  justify-content: center;
 
-  &:hover {
+  .escort-icon {
 
     i {
-      border: 2px solid $primary-color;
-      background: $primary-color;
+      font-size: $font-size * 0.75;
+      vertical-align: sub !important;
     }
   }
+}
 
-  i {
-    color: $white;
-    display: inline-block;
-    background: $secondary-color;
-    text-shadow: none;
-    border: 2px solid $secondary-color;
-    width: $padding * 2;
-    height: $padding * 2;
-    vertical-align: middle;
-    line-height: $font-size * 1.75;
-    border-radius: 50%;
+@each $region, $settings in $regions {
+
+  .escort-#{$region} {
+
+    /**
+     * If region is horizontal.
+     */
+    @if map-get($settings, type) == 'horizontal' {
+
+      .escort-add {
+
+        > div {
+
+          @if map-get($settings, position) == 'top' {
+            @include button($region: top);
+          }
+
+          @if map-get($settings, position) == 'bottom' {
+            @include button($region: bottom);
+          }
+        }
+
+        i {
+          line-height: $font-size;
+        }
+      }
+    }
+
+    /**
+     * If region is vertical.
+     */
+    @if map-get($settings, type) == 'vertical' {
+
+      .escort-add {
+
+        > div {
+
+          @if map-get($settings, position) == 'left' {
+            @include button($region: left);
+          }
+
+          @if map-get($settings, position) == 'right' {
+            @include button($region: right);
+          }
+        }
+      }
+    }
   }
 }

@@ -54,11 +54,11 @@
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          left: em-size-up(map-get($settings, size));
+          left: map-get($settings, size);
         }
 
         @if map-get($settings, position) == 'right' {
-          right: em-size-up(map-get($settings, size));
+          right: map-get($settings, size);
         }
       }
     }
