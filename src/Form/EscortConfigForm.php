@@ -84,17 +84,11 @@ class EscortConfigForm extends ConfigFormBase {
     ];
     $region_settings = $config->get('regions');
     foreach ($this->escortRegionManager->getRaw(TRUE) as $group_id => $group) {
-      $form['regions'][$group_id] = [
-        '#type' => 'fieldset',
-        '#title' => $this->t('%region settings', ['%region' => $group['label']]),
-      ];
-      $form['regions'][$group_id]['toggle'] = [
-        '#type' => 'select',
-        '#title' => $this->t('Toggle the display of %name from', ['%name' => $group['label']]),
-        '#options' => ['- Do not toggle -'] + $this->escortRegionManager->getRegions(TRUE, [$group_id]),
-        '#default_value' => isset($region_settings[$group_id]['toggle']) ? $region_settings[$group_id]['toggle'] : NULL,
-      ];
       if ($group['type'] == 'horizontal') {
+        $form['regions'][$group_id] = [
+          '#type' => 'fieldset',
+          '#title' => $this->t('%region settings', ['%region' => $group['label']]),
+        ];
         $form['regions'][$group_id]['icon_only'] = [
           '#type' => 'checkbox',
           '#title' => $this->t('Icon only'),

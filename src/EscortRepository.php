@@ -92,9 +92,6 @@ class EscortRepository implements EscortRepositoryInterface {
       // Check if admin and add additional dynamic escorts.
       $this->addAddEscorts($full, $raw_regions);
 
-      // Check for toggle elements.
-      $this->addToggleEscorts($full, $raw_regions);
-
       // Merge it with the actual values to maintain the region ordering.
       $empty = array_fill_keys(array_keys($raw_regions), array());
       $escorts = array_filter(array_intersect_key(array_merge($empty, $full), $empty));
@@ -135,33 +132,6 @@ class EscortRepository implements EscortRepositoryInterface {
           ], $group_id, $section_id, 1000 * $offset);
           $escorts[$group_id][$section_id]['add'] = $escort;
           $offset = -1;
-        }
-      }
-    }
-  }
-
-  /**
-   * Add 'toggle' escorts to repository.
-   *
-   * @var array $escorts
-   *   The currest escort list.
-   * @var array $raw_regions
-   *   The raw region data.
-   */
-  protected function addToggleEscorts(&$escorts, $raw_regions) {
-    foreach ($raw_regions as $group_id => $group) {
-      // Check if we have a toggle request and that the toggle region exists.
-      if (isset($group['toggle']) && is_array($group['toggle'])) {
-        foreach ($group['toggle'] as $data) {
-          // Check to make sure region is not empty.
-          if (isset($escorts[$data['region']])) {
-            // Create 'toggle' escort.
-            $escort = $this->createEscort('toggle', [
-              'region' => $data['region'],
-              'event' => $data['event'],
-            ], $group_id, $data['section'], $data['weight']);
-            $escorts[$group_id][$data['section']][$group_id . '_' . $data['section'] . '_' . $data['region'] . '_toggle'] = $escort;
-          }
         }
       }
     }

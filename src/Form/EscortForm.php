@@ -78,6 +78,14 @@ class EscortForm extends EntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $entity = $this->entity;
 
+    // Add region to entity.
+    $entity_region = $entity->getRegion();
+    $region = $entity->isNew() ? $this->getRequest()->query->get('region', $entity_region) : $entity_region;
+    $entity->setRegion($region);
+
+    // Store entity for use in subforms.
+    $form_state->setTemporaryValue('entity', $entity);
+
     $form['#tree'] = TRUE;
     $form['settings'] = [];
 
@@ -107,8 +115,6 @@ class EscortForm extends EntityForm {
     );
 
     // Region settings.
-    $entity_region = $entity->getRegion();
-    $region = $entity->isNew() ? $this->getRequest()->query->get('region', $entity_region) : $entity_region;
     $form['region'] = array(
       '#type' => 'select',
       '#title' => $this->t('Region'),
@@ -118,6 +124,7 @@ class EscortForm extends EntityForm {
       '#options' => $this->escortRegionManager->getRegions(),
       '#prefix' => '<div id="edit-escort-item-region-wrapper">',
       '#suffix' => '</div>',
+      '#access' => FALSE,
     );
 
     return $form;

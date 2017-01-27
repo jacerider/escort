@@ -103,27 +103,6 @@ class EscortRegionManager implements EscortRegionManagerInterface {
     if (!empty($excluded_groups)) {
       $regions = array_diff_key($regions, array_flip($excluded_groups));
     }
-    if ($region_settings = $this->config->get('regions')) {
-      foreach ($region_settings as $group_id => $settings) {
-        if (!empty($settings['toggle'])) {
-          // Make sure region being toggled exists.
-          if (isset($regions[$group_id])) {
-            $region = $settings['toggle'];
-            $dest_group_id = $this->getGroupId($region);
-            $dest_section_id = $this->getSectionId($region);
-            // Make sure destination region exists.
-            if (isset($regions[$dest_group_id])) {
-              $regions[$dest_group_id]['toggle'][] = [
-                'section' => $dest_section_id,
-                'region' => $group_id,
-                'weight' => -100,
-                'event' => 'hover',
-              ];
-            }
-          }
-        }
-      }
-    }
     return $regions;
   }
 
@@ -132,13 +111,15 @@ class EscortRegionManager implements EscortRegionManagerInterface {
    *
    * @param bool $enabled_only
    *   Include only regions enabled via settings.
+   * @param array $excluded_groups
+   *   An array of group ids to exclude.
    *
    * @return array
    *   An array of group_id => name.
    */
-  public function getGroups($enabled_only = FALSE) {
+  public function getGroups($enabled_only = FALSE, $excluded_groups = []) {
     $groups = [];
-    foreach ($this->getRaw($enabled_only) as $group_id => $group) {
+    foreach ($this->getRaw($enabled_only, $excluded_groups) as $group_id => $group) {
       $groups[$group_id] = $group['label'];
     }
     return $groups;

@@ -3,6 +3,11 @@
 namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\escort\Entity\EscortInterface;
+use Drupal\escort\EscortRegionManagerInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines a fallback plugin for missing block plugins.
@@ -10,10 +15,38 @@ use Drupal\Component\Utility\Html;
  * @Escort(
  *   id = "toggle",
  *   admin_label = @Translation("Toggle"),
- *   no_ui = TRUE,
  * )
  */
-class Toggle extends EscortPluginBase implements EscortPluginImmediateInterface {
+class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * Creates a Toggle instance.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\escort\EscortRegionManagerInterface $escort_region_manager
+   *   The escort region manager.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EscortRegionManagerInterface $escort_region_manager) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->escortRegionManager = $escort_region_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('escort.region_manager')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -24,6 +57,38 @@ class Toggle extends EscortPluginBase implements EscortPluginImmediateInterface 
       'event' => 'hover',
       'icon' => 'fa-bars',
     );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function escortForm($form, FormStateInterface $form_state) {
+    $region = $form_state->getTemporaryValue('entity')->getRegion();
+    $region = $this->escortRegionManager->getGroupId($region);
+    ksm($region);
+
+    $form['region'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Region'),
+      '#description' => $this->t('The region controlled by this toggle.'),
+      '#options' => $this->escortRegionManager->getGroups(TRUE, [$region]),
+      '#default_value' => $this->configuration['region'],
+    ];
+    $form['event'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Event'),
+      '#options' => ['hover' => $this->t('Hover'), 'click' => $this->t('Click')],
+      '#default_value' => $this->configuration['event'],
+    ];
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function escortSubmit($form, FormStateInterface $form_state) {
+    $this->configuration['region'] = $form_state->getValue('region');
+    $this->configuration['event'] = $form_state->getValue('event');
   }
 
   /**

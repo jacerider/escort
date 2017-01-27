@@ -148,36 +148,20 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
    *   A render array.
    */
   protected function buildTab($tab) {
-    // Get URL attributes.
-    $attributes = $this->getUriAsAttributes($tab['#link']['url']);
+    $url = $tab['#link']['url'];
+    $title = $tab['#link']['title'];
+
+    $build = $this->buildLink($title, $url);
+
     // Set active class.
     if (!empty($tab['#active'])) {
-      $attributes['class'][] = 'is-active';
-    }
-    $title = $tab['#link']['title'];
-    $icon = '';
-
-    // Icon support.
-    if ($this->hasIconSupport()) {
-      // Check if title has already been MiconIfied.
-      if (!$title instanceof \Drupal\micon\MiconIconize) {
-        $title = \Drupal\micon\MiconIconize::iconize($title);
-      }
-      if ($icon = $title->getIcon()) {
-        $icon = $icon->getSelector();
-      }
-      $title = $title->getTitle();
-      $attributes['title'] = $title;
+      $build['#attributes']['class'][] = 'is-active';
     }
 
-    return [
-      '#tag' => 'a',
-      '#icon' => $icon,
-      '#attributes' => $attributes,
-      '#markup' => $title,
-      '#access' => $tab['#access'],
-      '#weight' => $tab['#weight'],
-    ];
+    $build['#access'] = $tab['#access'];
+    $build['#weight'] = $tab['#weight'];
+
+    return $build;
   }
 
   /**

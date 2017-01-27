@@ -2,10 +2,11 @@
 
 namespace Drupal\escort\Plugin\Escort;
 
-use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Menu\MenuActiveTrailInterface;
 use Drupal\Core\Menu\MenuLinkTreeInterface;
+use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -106,7 +107,9 @@ class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInt
   public function buildItems() {
     $items = [];
     $menu_name = $this->configuration['menu'];
-    $parameters = $this->menuTree->getCurrentRouteMenuTreeParameters($menu_name);
+    $active_trail = $this->menuActiveTrail->getActiveTrailIds($menu_name);
+    $parameters = new MenuTreeParameters();
+    $parameters->setActiveTrail($active_trail);
 
     $level = $this->configuration['level'];
     $depth = $this->configuration['depth'];
@@ -125,13 +128,27 @@ class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInt
       array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
     );
     $tree = $this->menuTree->transform($tree, $manipulators);
+    $items = $this->buildTree($tree);
 
+    return $items;
+  }
+
+  /**
+   * Loop through tree and return each item on the same level.
+   *
+   * @param array $tree
+   *   An array of menu items.
+   *
+   * @return array
+   *   The items.
+   */
+  protected function buildTree($tree, $items = []) {
     foreach ($tree as $item) {
       $items[] = $this->buildItem($item);
+      if ($item->hasChildren) {
+        $items = $this->buildTree($item->subtree, $items);
+      }
     }
-
-    ksm($items);
-
     return $items;
   }
 
@@ -147,34 +164,18 @@ class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInt
   protected function buildItem($item) {
     $url = $item->link->getUrlObject();
     $title = $item->link->getTitle();
-    // Get URL attributes.
-    $attributes = $this->getUriAsAttributes($url);
-    // // Set active class.
-    // if (!empty($tab['#active'])) {
-    //   $attributes['class'][] = 'is-active';
-    // }
-    // $title = $tab['#link']['title'];
-    $icon = '';
 
-    // Icon support.
-    if ($this->hasIconSupport()) {
-      // Check if title has already been MiconIfied.
-      if (!$title instanceof \Drupal\micon\MiconIconize) {
-        $title = \Drupal\micon\MiconIconize::iconize($title);
-      }
-      if ($icon = $title->getIcon()) {
-        $icon = $icon->getSelector();
-      }
-      $title = $title->getTitle();
-      $attributes['title'] = $title;
+    $build = $this->buildLink($title, $url);
+
+    // Record depth.
+    $build['#attributes']['class'][] = 'depth-' . $item->depth;
+
+    // Set active class.
+    if ($item->inActiveTrail) {
+      $build['#attributes']['class'][] = 'is-active';
     }
 
-    return [
-      '#tag' => 'a',
-      '#icon' => $icon,
-      '#attributes' => $attributes,
-      '#markup' => $title,
-    ];
+    return $build;
   }
 
   /**
@@ -246,6 +247,33 @@ class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInt
     $this->configuration['menu'] = $form_state->getValue('menu');
     $this->configuration['level'] = $form_state->getValue('level');
     $this->configuration['depth'] = $form_state->getValue('depth');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    // Even when the menu block renders to the empty string for a user, we want
+    // the cache tag for this menu to be set: whenever the menu is changed, this
+    // menu block must also be re-rendered for that user, because maybe a menu
+    // link that is accessible for that user has been added.
+    $cache_tags = parent::getCacheTags();
+    $cache_tags[] = 'config:system.menu.' . $this->configuration['menu'];
+    return $cache_tags;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    // ::build() uses MenuLinkTreeInterface::getCurrentRouteMenuTreeParameters()
+    // to generate menu tree parameters, and those take the active menu trail
+    // into account. Therefore, we must vary the rendered menu by the active
+    // trail of the rendered menu.
+    // Additional cache contexts, e.g. those that determine link text or
+    // accessibility of a menu, will be bubbled automatically.
+    $menu_name = $this->configuration['menu'];
+    return Cache::mergeContexts(parent::getCacheContexts(), ['route.menu_active_trails:' . $menu_name]);
   }
 
 }
