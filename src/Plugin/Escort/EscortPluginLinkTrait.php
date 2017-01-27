@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\Url;
 use Drupal\Core\Access\AccessResult;
+use Drupal\micon\MiconIconize;
 
 /**
  * A trait that provides link utilities.
@@ -13,7 +14,57 @@ use Drupal\Core\Access\AccessResult;
 trait EscortPluginLinkTrait {
 
   /**
-   * {@inheritdoc}
+   * The default icon to use when an icon is not set.
+   *
+   * @var string
+   */
+  protected $defaultLinkIcon = 'fa-chevron-right';
+
+  /**
+   * Build a link given a title and uri or Drupal\Core\Url.
+   *
+   * @param string $title
+   *   The title of the link.
+   * @param mixed $uri
+   *   The uri or Drupal\Core\Url of the link.
+   *
+   * @return array
+   *   A render array.
+   */
+  public function buildLink($title, $uri) {
+
+    $attributes = $this->getUriAsAttributes($uri);
+
+    // Icon support.
+    if ($this->hasIconSupport()) {
+      // Check if title has already been MiconIfied.
+      if (!$title instanceof MiconIconize) {
+        $title = MiconIconize::iconize($title);
+      }
+      if ($icon = $title->getIcon()) {
+        $icon = $icon->getSelector();
+      }
+      else {
+        $icon = $this->defaultLinkIcon;
+      }
+      $title = $title->getTitle();
+    }
+    $attributes['title'] = $title;
+
+    return [
+      '#tag' => 'a',
+      '#icon' => $icon,
+      '#attributes' => $attributes,
+      '#markup' => $title,
+    ];
+
+  }
+
+  /**
+   * Convert a uri or Drupal\Core\Url into attributes.
+   *
+   * @var mixed $uri
+   *  A uri or Drupal\Core\Url.
    */
   public function getUriAsAttributes($uri) {
     $attributes = [];
@@ -49,6 +100,13 @@ trait EscortPluginLinkTrait {
       $attributes['href'] = $href;
     }
     return $attributes;
+  }
+
+  /**
+   * Get the default icon.
+   */
+  public function getDefaultLinkIcon() {
+    return $this->defaultLinkIcon;
   }
 
   /**
