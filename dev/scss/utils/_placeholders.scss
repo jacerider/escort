@@ -1,0 +1,38 @@
+////////////////////////////////////////////////////////////////////////////////
+// Placeholders
+//
+// -----------------------------------------------------------------------------
+// Table of Contents:
+//
+//   1. Button
+
+
+/////////////////////
+// 1. Button
+// Base styles for any button type. @See button-style mixin for further styles.
+// ---------
+
+%button {
+  display: inline-flex;
+  border-radius: 3px;
+  color: smart-scale($primary-color, $scale: 80%);
+  padding: 0 ($padding * 0.66);
+  line-height: $font-size * 2;
+  text-shadow: none;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: background-color 300ms, color 300ms, box-shadow 300ms;
+
+  &:visited,
+  &:active,
+  &:focus {
+    color: smart-scale($primary-color, $scale: 80%);
+  }
+
+  &:hover {
+    color: smart-scale($primary-color, $scale: 100%);
+    cursor: pointer;
+    text-decoration: none;
+  }
+}

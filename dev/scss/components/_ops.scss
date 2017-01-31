@@ -3,40 +3,123 @@
 // -----------------------------------------------------------------------------
 // Styles for operation buttons for each escort widget on the admin page
 
+.escort-region {
+
+  // .escort-ops {
+  //   display: block !important;
+  // }
+
+  &:hover {
+
+    .escort-ops {
+      display: block;
+    }
+  }
+}
+
 .escort-ops {
+  @extend %button;
   display: none;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  z-index: 1;
 
   li {
     display: inline-flex;
   }
+}
 
-  a {
-    @include button($outline: true);
+/**
+ * Top region only
+ */
+@include get-location($type: horizontal, $region: top) {
+
+  .escort-ops {
+    @include button-style($region: top, $transparent: true);
   }
 }
 
-// @each $region, $settings in $regions {
+/**
+ * Bottom region only
+ */
+@include get-location($type: horizontal, $region: bottom) {
 
-//   .escort-#{$region} {
+  .escort-ops {
+    @include button-style($region: bottom, $transparent: true);
+  }
+}
 
-//     /**
-//      * If region is horizontal.
-//      */
-//     @if map-get($settings, type) == 'horizontal' {
+/**
+ * Left region only
+ */
+@include get-location($type: vertical) {
 
-//       .escort-ops {
+  .escort-ops {
+    right: $base-size / 4;
+    top: $base-size / 4;
 
-//       }
-//     }
+    a {
+      padding: 0 ($padding / 4);
+    }
 
-//     /**
-//      * If region is vertical.
-//      */
-//     @if map-get($settings, type) == 'vertical' {
+    > :first-child {
 
-//       .escort-ops {
-//         border-bottom: 1px solid 
-//       }
-//     }
-//   }
-// }
+      a {
+        padding-left: $padding / 2;
+      }
+    }
+
+    > :last-child {
+
+      a {
+        padding-right: $padding / 2;
+      }
+    }
+  }
+}
+
+/**
+ * Left region only
+ */
+@include get-location($type: vertical, $region: left) {
+
+  .escort-ops {
+    @include button-style($region: left, $transparent: true) {
+      display: none;
+      box-shadow: 0 1px 10px transparent;
+    };
+    background-color: $bg-color-left;
+
+    > :first-child {
+      border-right: 1px solid rgba(smart-scale($bg-color-left), 0.2); // sass-lint:disable-line no-color-literals
+    }
+
+    > :last-child {
+      border-left: 1px solid rgba(smart-scale($bg-color-left), 0.2); // sass-lint:disable-line no-color-literals
+    }
+  }
+}
+
+/**
+ * Right region only
+ */
+@include get-location($type: vertical, $region: right) {
+
+  .escort-ops {
+    @include button-style($region: right, $transparent: true) {
+      display: none;
+      box-shadow: 0 1px 10px transparent;
+    };
+    background-color: $bg-color-right;
+
+    > :first-child {
+      border-right: 1px solid rgba(smart-scale($bg-color-right), 0.2); // sass-lint:disable-line no-color-literals
+    }
+
+    > :last-child {
+      border-left: 1px solid rgba(smart-scale($bg-color-right), 0.2); // sass-lint:disable-line no-color-literals
+    }
+  }
+}

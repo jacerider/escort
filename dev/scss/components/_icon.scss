@@ -6,39 +6,43 @@
 /**
  * Styles that apply to all escort regions.
  */
-// .escort-icon {
+.escort-icon {
+  text-align: center;
 
-//   i {
-//     vertical-align: middle;
-//   }
-// }
+  i {
+    vertical-align: middle;
+  }
+}
 
-@each $region, $settings in $regions {
+/**
+ * Top AND Bottom region only
+ */
+@include get-location($type: horizontal) {
 
-  .escort-#{$region} {
+  .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
-    /**
-     * If region is horizontal.
-     */
-    @if map-get($settings, type) == 'horizontal' {
-      .escort-icon {
+    .escort-icon {
 
-        i {
-          vertical-align: middle;
-        }
+      i {
+        font-size: $font-size * 1.5;
       }
     }
+  }
+}
 
-    /**
-     * If region is vertical.
-     */
-    @if map-get($settings, type) == 'vertical' {
+/**
+ * Left AND Right region only
+ */
+@include get-location($type: vertical) {
 
-      .escort-icon {
+  .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
-        i {
-          vertical-align: middle;
-        }
+    .escort-icon {
+      width: $base-size;
+      display: inline-block;
+
+      i {
+        font-size: $font-size * 1.75;
       }
     }
   }

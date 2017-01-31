@@ -7,79 +7,13 @@
  * Styles that apply to all escort regions.
  */
 .escort-region {
-  display: flex;
+  display: block;
   position: relative;
   z-index: 10;
   font-size: $font-size;
+  transition: all 300ms;
 
   * {
     box-sizing: border-box;
-  }
-
-  .escort-section {
-    display: flex;
-
-    // Make first section within region fully expanded.
-    &:first-child {
-      flex: auto;
-    }
-  }
-}
-
-/**
- * Region specific styles.
- */
-@each $region, $settings in $regions {
-
-  .escort-#{$region} {
-    background: map-get($settings, bg);
-    transition: all 300ms;
-
-    &:hover {
-
-      .escort-ops {
-        display: flex;
-      }
-    }
-
-    /**
-     * Regions can be set as hidden and as such should not be shown.
-     */
-    .hide-escort-#{$region} & {
-
-      @if map-get($settings, type) == 'horizontal' {
-
-        @if map-get($settings, position) == 'top' {
-          transform: translate(0, -100%);
-        }
-
-        @if map-get($settings, position) == 'bottom' {
-          transform: translate(0, 100%);
-        }
-      }
-
-      @if map-get($settings, type) == 'vertical' {
-
-        @if map-get($settings, position) == 'left' {
-          transform: translate(-100%, 0);
-        }
-
-        @if map-get($settings, position) == 'right' {
-          transform: translate(100%, 0);
-        }
-      }
-    }
-
-    .show-escort-mini-#{$region} & {
-      transform: translate(0, 0);
-    }
-
-    .show-escort-full-#{$region} & {
-      transform: translate(0, 0);
-
-      @if map-get($settings, type) == 'vertical' {
-        width: map-get($settings, size_full);
-      }
-    }
   }
 }
