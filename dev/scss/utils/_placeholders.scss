@@ -14,7 +14,7 @@
 
 %button {
   display: inline-flex;
-  border-radius: 3px;
+  border-radius: $border-radius;
   color: smart-scale($primary-color, $scale: 80%);
   padding: 0 ($padding * 0.66);
   line-height: $font-size * 2;

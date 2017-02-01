@@ -14,6 +14,29 @@
   }
 }
 
+.icon-only {
+
+  .escort-link.has-icon {
+
+    &:hover {
+
+      .escort-content {
+        display: block;
+      }
+    }
+
+    .escort-content {
+      margin: 0 !important;
+      display: none;
+      position: absolute;
+      line-height: $base-size / 2;
+      min-width: 100%;
+      left: 0;
+      padding: ($padding / 4) $padding;
+    }
+  }
+}
+
 /**
  * Top AND Bottom region only
  */
@@ -25,6 +48,78 @@
 
       i {
         font-size: $font-size * 1.5;
+      }
+    }
+  }
+}
+
+@include get-location($type: horizontal, $region: top) {
+
+  &.icon-only {
+
+    .escort-link.has-icon:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+      .escort-content {
+        @include css-triangle($base-size / 4.5, smart-scale($bg-color-top, 20%), up, before) {
+          bottom: 100%;
+          position: absolute;
+        };
+
+        background-color: smart-scale($bg-color-top, 20%);
+        top: 100%;
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+      }
+    }
+
+    .escort-top-right {
+
+      .escort-link.has-icon:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+        .escort-content {
+          left: auto;
+          right: 0;
+
+          &:before {
+            right: $margin;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include get-location($type: horizontal, $region: bottom) {
+
+  &.icon-only {
+
+    .escort-link.has-icon:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+      .escort-content {
+        @include css-triangle($base-size / 4.5, smart-scale($bg-color-bottom, 20%), down, before) {
+          top: 100%;
+          position: absolute;
+        };
+
+        background-color: smart-scale($bg-color-bottom, 20%);
+        bottom: 100%;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+      }
+    }
+
+    .escort-bottom-right {
+
+      .escort-link.has-icon:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+        .escort-content {
+          left: auto;
+          right: 0;
+
+          &:before {
+            right: $margin;
+          }
+        }
       }
     }
   }

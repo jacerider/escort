@@ -9,6 +9,7 @@
 //   3. Button
 //   4. Font Face
 //   5. Ripple
+//   6. CSS Triangle
 
 
 /////////////////////
@@ -28,20 +29,20 @@
   @if $type == 'horizontal' {
 
     @if $region == 'both' {
-      &.escort-top,
-      &.escort-bottom {
+      .escort-top,
+      .escort-bottom {
         @content;
       }
     } 
 
     @if $region == 'top' {
-      &.escort-top {
+      .escort-top {
         @content;
       }
     }
 
     @if $region == 'bottom' {
-      &.escort-bottom {
+      .escort-bottom {
         @content;
       }
     }
@@ -50,20 +51,20 @@
   @if $type == 'vertical' {
 
     @if $region == 'both' {
-      &.escort-left,
-      &.escort-right {
+      .escort-left,
+      .escort-right {
         @content;
       }
     } 
 
     @if $region == 'left' {
-      &.escort-left {
+      .escort-left {
         @content;
       }
     }
 
     @if $region == 'right' {
-      &.escort-right {
+      .escort-right {
         @content;
       }
     }
@@ -163,7 +164,11 @@
 
       &:hover {
         background-color: lighten($primary-color, 10%);
-        color: smart-scale($bg-color-left, $scale: 100%);
+        color: smart-scale($primary-color, $scale: 80%);
+
+        a {
+          color: smart-scale($primary-color, $scale: 80%);
+        }
       }
     }
   }
@@ -187,7 +192,11 @@
 
       &:hover {
         background-color: lighten($primary-color, 10%);
-        color: smart-scale($primary-color, $scale: 50%);
+        color: smart-scale($primary-color, $scale: 80%);
+
+        a {
+          color: smart-scale($primary-color, $scale: 80%);
+        }
       }
     }
   }
@@ -228,7 +237,7 @@
 
 
 /////////////////////
-// 4. Font Face
+// 5. Ripple
 // Generates the proper font styles from a linked font file(s)
 // ---------
 // @include keyframes(rippleTop) {
@@ -243,3 +252,79 @@
 //     background-color: transparent;
 //   }
 // }
+
+
+/////////////////////
+// 5. CSS Triangle
+// Creates a CSS triangle, which can be used for dropdown arrows, dropdown pips, and more.
+// ---------
+@mixin css-triangle($size, $color, $direction, $position) {
+
+  @if ($position == before) {
+
+    &::before {
+      display: block;
+      width: 0;
+      height: 0;
+      border: inset $size;
+      content: '';
+
+      @if ($direction == down) {
+        border-bottom-width: 0;
+        border-top-style: solid;
+        border-color: $color transparent transparent;
+      }
+      @if ($direction == up) {
+        border-top-width: 0;
+        border-bottom-style: solid;
+        border-color: transparent transparent $color;
+      }
+      @if ($direction == right) {
+        border-right-width: 0;
+        border-left-style: solid;
+        border-color: transparent transparent transparent $color;
+      }
+      @if ($direction == left) {
+        border-left-width: 0;
+        border-right-style: solid;
+        border-color: transparent $color transparent transparent;
+      }
+
+      @content;
+    }
+  }
+
+  @if ($position == after) {
+
+    &::before {
+      display: block;
+      width: 0;
+      height: 0;
+      border: inset $size;
+      content: '';
+
+      @if ($direction == down) {
+        border-bottom-width: 0;
+        border-top-style: solid;
+        border-color: $color transparent transparent;
+      }
+      @if ($direction == up) {
+        border-top-width: 0;
+        border-bottom-style: solid;
+        border-color: transparent transparent $color;
+      }
+      @if ($direction == right) {
+        border-right-width: 0;
+        border-left-style: solid;
+        border-color: transparent transparent transparent $color;
+      }
+      @if ($direction == left) {
+        border-left-width: 0;
+        border-right-style: solid;
+        border-color: transparent $color transparent transparent;
+      }
+
+      @content;
+    }
+  }
+}
