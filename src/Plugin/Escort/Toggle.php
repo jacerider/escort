@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @Escort(
  *   id = "toggle",
  *   admin_label = @Translation("Toggle"),
+ *   category = @Translation("Basic"),
  * )
  */
 class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface {

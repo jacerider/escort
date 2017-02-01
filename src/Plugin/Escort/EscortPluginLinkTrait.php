@@ -57,7 +57,22 @@ trait EscortPluginLinkTrait {
       '#attributes' => $attributes,
       '#markup' => $title,
     ];
+  }
 
+  /**
+   * Convert a uri or Drupal\Core\Url into Drupal\Core\Url.
+   *
+   * @var mixed $uri
+   *  A uri or Drupal\Core\Url.
+   */
+  public function getUrl($uri) {
+    if ($uri instanceof Url) {
+      $url = $uri;
+    }
+    else {
+      $url = Url::fromUri($uri);
+    }
+    return $url;
   }
 
   /**
@@ -68,14 +83,7 @@ trait EscortPluginLinkTrait {
    */
   public function getUriAsAttributes($uri) {
     $attributes = [];
-    if (!empty($uri)) {
-      if ($uri instanceof Url) {
-        $url = $uri;
-      }
-      else {
-        $url = Url::fromUri($uri);
-      }
-
+    if ($url = $this->getUrl($uri)) {
       // External URLs can not have cacheable metadata.
       if ($url->isExternal()) {
         $href = $url->toString(FALSE);

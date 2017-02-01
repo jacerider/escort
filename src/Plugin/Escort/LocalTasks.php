@@ -173,6 +173,7 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
 
     $build['#access'] = $tab['#access'];
     $build['#weight'] = $tab['#weight'];
+
     return $build;
   }
 

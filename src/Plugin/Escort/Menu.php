@@ -12,7 +12,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a "Local Tasks" escort to display the local tasks.
+ * Provides a "Menu" escort to display the links from a menu.
  *
  * @Escort(
  *   id = "menu",

@@ -5,7 +5,7 @@ namespace Drupal\escort\Plugin\Escort;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Defines a fallback plugin for missing block plugins.
+ * Defines a text plugin.
  *
  * @Escort(
  *   id = "text",

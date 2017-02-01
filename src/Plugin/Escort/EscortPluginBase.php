@@ -195,14 +195,23 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
       '#required' => TRUE,
     ];
     if ($this->usesIcon && $this->hasIconSupport()) {
-      $form['icon'] = [
-        '#type' => 'micon',
-        '#title' => $this->t('Icon'),
-        '#default_value' => $this->configuration['icon'],
-      ];
+      $form['icon'] = $this->escortIconForm($form, $form_state);
     }
     return $form;
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function escortIconForm($form, FormStateInterface $form_state) {
+    return [
+      '#type' => 'micon',
+      '#title' => $this->t('Icon'),
+      '#default_value' => $this->configuration['icon'],
+    ];
+  }
+
+
 
   /**
    * {@inheritdoc}
