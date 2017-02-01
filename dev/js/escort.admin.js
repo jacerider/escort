@@ -9,7 +9,7 @@
 
   Drupal.behaviors.escortAdminSort = {
     attach: function (context, settings) {
-      var $sortAll = $('.escort-sort');
+      var $sortAll = $('.escort-sort', context);
       var $sort = $sortAll.once('escort-admin-sort');
       var updating = false;
 
@@ -53,8 +53,9 @@
           items: '.escort-sortable',
           connectWith: '.escort-sort',
           placeholder: 'escort-placeholder',
-          forcePlaceholderSize: true,
+          // forcePlaceholderSize: true,
           opacity: 0.5,
+          scroll: false,
           start: function () {
             $('body').addClass('escort-sorting');
           },
