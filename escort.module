@@ -143,6 +143,7 @@ function escort_preprocess_html(&$variables) {
     $variables['attributes']['class'][] = 'has-escort';
     if ($is_admin) {
       $variables['attributes']['class'][] = 'is-escort-admin';
+      $variables['#attached']['library'][] = 'escort/escort.admin';
     }
     foreach ($regions as $region_id => $sections) {
       $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $region_id);

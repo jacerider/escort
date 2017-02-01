@@ -95,7 +95,7 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['#attached']['library'][] = 'core/drupal.tableheader';
-    $form['#attached']['library'][] = 'escort/admin';
+    $form['#attached']['library'][] = 'escort/escort.admin.drag';
 
     // Build the form tree.
     $form['escorts'] = $this->buildItemsForm();
@@ -156,7 +156,11 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
     // region get an unique weight.
     $weight_delta = round(count($entities) / 2);
 
-    $regions_with_disabled = $regions + array(EscortInterface::ESCORT_REGION_NONE => $this->t('Disabled', array(), array('context' => 'Plural')));
+    $regions_with_disabled = $regions + array(
+      EscortInterface::ESCORT_REGION_NONE => $this->t('Disabled', array(), array(
+        'context' => 'Plural',
+      )),
+    );
     foreach ($regions_with_disabled as $region => $title) {
       $form['#tabledrag'][] = array(
         'action' => 'match',
@@ -193,7 +197,7 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
         ),
         '#attributes' => [
           'class' => ['use-ajax', 'button', 'button--small'],
-          'data-dialog-type' => 'modal',
+          'data-dialog-type' => escort_dialog_type(),
           'data-dialog-options' => Json::encode([
             'width' => 700,
           ]),
@@ -266,6 +270,7 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
 
     return $form;
   }
+
   /**
    * {@inheritdoc}
    */

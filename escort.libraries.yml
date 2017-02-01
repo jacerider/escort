@@ -24,10 +24,19 @@ escort.active:
   dependencies:
     - escort/escort
 
-admin:
+escort.admin:
   version: VERSION
   js:
     js/escort.admin.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/jquery.ui.sortable
+
+escort.admin.drag:
+  version: VERSION
+  js:
+    js/escort.admin.drag.js: {}
   dependencies:
     - core/jquery
     - core/drupal

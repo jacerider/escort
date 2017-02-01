@@ -56,3 +56,12 @@ entity.escort.delete_form:
     _title: 'Delete escort'
   requirements:
     _permission: 'administer escorts'
+
+escort.escort_list_update:
+  path: '/admin/config/escort/update'
+  defaults:
+    _controller: '\Drupal\escort\Controller\EscortListController::updateEscorts'
+    _title: 'Update escorts'
+  requirements:
+    _permission: 'administer escorts'
+    _method: POST

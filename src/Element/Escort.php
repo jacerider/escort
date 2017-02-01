@@ -5,6 +5,7 @@ namespace Drupal\escort\Element;
 use Drupal\Core\Render\Element\RenderElement;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\escort\EscortRegionManagerInterface;
 
 /**
  * Provides a render element for Escort.
@@ -19,6 +20,10 @@ class Escort extends RenderElement {
   public function getInfo() {
     $class = get_class($this);
     return array(
+      '#theme' => 'escort',
+      '#attributes' => [
+        'id' => 'escort',
+      ],
       '#pre_render' => array(
         array($class, 'preRenderEscort'),
       ),
@@ -48,6 +53,7 @@ class Escort extends RenderElement {
     $view_builder = \Drupal::service('entity_type.manager')->getViewBuilder('escort');
     $regions = \Drupal::service('escort.repository')->getEscortsPerRegion();
     $config = \Drupal::config('escort.config')->get('regions');
+    $is_admin = \Drupal::service('escort.path.matcher')->isAdmin();
     // Element cache build.
     $element_cachable_metadata = CacheableMetadata::createFromRenderArray($element);
     foreach ($regions as $group_id => $sections) {
@@ -69,7 +75,8 @@ class Escort extends RenderElement {
       // Region cache build.
       $region_cacheable_metadata = CacheableMetadata::createFromRenderArray($element[$group_id]);
       foreach ($sections as $section_id => $escorts) {
-        $id = Html::cleanCssIdentifier('escort-' . $group_id . '-' . $section_id);
+        $region_id = $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $section_id;
+        $id = Html::cleanCssIdentifier('escort-' . $region_id);
         $element[$group_id][$section_id] = [
           '#theme' => 'escort_section',
           '#attributes' => array(
@@ -80,6 +87,10 @@ class Escort extends RenderElement {
           ),
           '#sorted' => TRUE,
         ];
+        if ($is_admin) {
+          $element[$group_id][$section_id]['#attributes']['class'][] = 'escort-sort';
+          $element[$group_id][$section_id]['#attributes']['data-escort-region'][] = $region_id;
+        }
         // Section cache build.
         $section_cacheable_metadata = CacheableMetadata::createFromRenderArray($element[$group_id][$section_id]);
         foreach ($escorts as $key => $escort) {
