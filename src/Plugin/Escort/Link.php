@@ -4,9 +4,10 @@ namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\escort\EscortAjaxTrait;
 
 /**
- * Defines a fallback plugin for missing block plugins.
+ * Defines a link plugin.
  *
  * @Escort(
  *   id = "link",
@@ -16,6 +17,7 @@ use Drupal\Core\Session\AccountInterface;
  */
 class Link extends Text {
   use EscortPluginLinkTrait;
+  use EscortAjaxTrait;
 
   /**
    * {@inheritdoc}
@@ -30,6 +32,7 @@ class Link extends Text {
     return array(
       'url' => '',
       'target' => '',
+      'ajax' => FALSE,
     ) + parent::defaultConfiguration();
   }
 
@@ -63,6 +66,11 @@ class Link extends Text {
       '#return_value' => '_blank',
       '#default_value' => $this->configuration['target'],
     );
+    $form['dialog'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use AJAX dialog'),
+      '#default_value' => $this->configuration['dialog'],
+    );
     return $form;
   }
 
@@ -73,6 +81,7 @@ class Link extends Text {
     parent::escortSubmit($form, $form_state);
     $this->configuration['url'] = $form_state->getValue('url');
     $this->configuration['target'] = $form_state->getValue('target');
+    $this->configuration['dialog'] = $form_state->getValue('dialog');
   }
 
   /**
@@ -81,12 +90,24 @@ class Link extends Text {
   public function build() {
     $attributes = $this->getUriAsAttributes($this->configuration['url']);
     $attributes['title'] = $this->configuration['title'];
-    return [
+    $build = [
       '#tag' => 'a',
       '#attributes' => $attributes,
       '#markup' => $this->configuration['title'],
       '#attached' => ['library' => ['escort/escort.active']],
     ];
+
+    if ($this->configuration['target']) {
+      $build['#attributes']['target'] = $this->configuration['target'];
+    }
+
+    $url = $this->getUrl($this->configuration['url']);
+    if ($this->configuration['dialog'] && !$url->isExternal() && $url->isRouted()) {
+      // Dialog ajaxify.
+      $this->ajaxLinkAttributes($build);
+    }
+
+    return $build;
   }
 
   /**
