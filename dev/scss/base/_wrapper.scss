@@ -31,13 +31,13 @@
   left: 0;
   height: auto;
 
-  @each $region, $settings in $regions {
-
-    /**
+  /**
      * Offset the main content area based on the size of each escort region
      * unless the region is set as hidden (deterined based on the
      * body.hide-escort-?).
      */
+  @each $region, $settings in $regions {
+
     .has-escort-#{$region} & {
 
       @if map-get($settings, type) == 'horizontal' {

@@ -10,15 +10,16 @@
   font-size: $font-size;
 
   a {
-    cursor: pointer;
     text-decoration: none;
     color: $primary-color;
     transition: color 300ms, border 300ms, background-color 300ms, padding 300ms;
     border: 0;
     outline: none;
+    cursor: pointer;
 
     &:hover {
       color: $secondary-color;
+      text-decoration: none;
     }
   }
 }

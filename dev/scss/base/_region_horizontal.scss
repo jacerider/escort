@@ -3,112 +3,90 @@
 // -----------------------------------------------------------------------------
 // Defines styles only associated with horizontal regions
 
-@each $region, $settings in $regions {
+/**
+ * Top AND Bottom region only
+ */
+@include get-location($type: horizontal) {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: $base-size;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  transform: translate(0, 0);
 
-  .escort-#{$region} {
+  .escort-section {
+    display: inline-flex;
 
-    /**
-     * If region is horizontal.
-     */
-    @if map-get($settings, type) == 'horizontal' {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: map-get($settings, size);
-      width: 100%;
-      z-index: 10;
+    &:last-child {
+      margin-left: auto;
+    }
+  }
 
-      @if map-get($settings, position) == 'top' {
-        top: 0;
-        border-bottom: 1px solid scale-color($bg-color-top, $lightness: -10%);
-        color: smart-scale($bg-color-top);
-      }
+  &.icon-only {
 
-      @if map-get($settings, position) == 'bottom' {
-        bottom: 0;
-        border-top: 1px solid scale-color($bg-color-bottom, $lightness: -10%);
-        color: smart-scale($bg-color-bottom);
-      }
+    .escort-link.has-icon .escort-content {
+      margin: 0;
+      display: none;
+    }
+  }
 
-      &.icon-only {
+  /**
+   * Horizontal sections
+   */
+  .escort-section {
 
-        .escort-link.has-icon .escort-content {
-          margin: 0;
-          display: none;
-        }
-      }
+    &:first-child {
 
-      /**
-       * Horizontal sections
-       */
-      .escort-section {
-
-        &:first-child {
-
-          .escort-item {
-            border-left: 0;
-          }
-        }
-
-        &:last-child {
-
-          .escort-item {
-            border-right: 0;
-          }
-        }
-      }
-
-      /**
-       * Horizontal items
-       */
       .escort-item {
-        line-height: map-get($settings, size);
-        padding: 0 map-get($settings, padding);
-        border-right: 1px dashed transparentize($white, 0.75);
-        border-left: 1px dashed transparentize($white, 0.75);
-        text-align: center;
-
-        &.escort-group {
-          border: 0;
-          padding: 0;
-        }
-
-        &.has-icon:not(.escort-add):not(.escort-toggle) { // sass-lint:disable-line force-pseudo-nesting
-
-          .escort-content {
-            margin-left: map-get($settings, padding) / 2;
-          }
-        }
-
-        &.escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
-
-          &:hover {
-            background: lighten(map-get($settings, bg), 5%);
-          }
-        }
-
-        &.is-active {
-          background: darken(map-get($settings, bg), 5%);
-        }
-      }
-
-      /**
-       * Horizontal content
-       */
-      .escort-icon {
-        
-        i {
-          font-size: $font-size * 1.5;
-          vertical-align: sub;
-        }
-      }
-
-      /**
-       * Horizontal operations
-       */
-      .escort-ops {
-        top: 100%;
+        border-left: 0;
       }
     }
+
+    &:last-child {
+
+      .escort-item {
+        border-right: 0;
+      }
+    }
+  }
+}
+
+/**
+ * Top region only
+ */
+@include get-location($type: horizontal, $region: top) {
+  top: 0;
+  background: $bg-color-top;
+  border-bottom: 1px solid scale-color($bg-color-top, $lightness: -10%);
+  color: smart-scale($bg-color-top);
+
+  .hide-escort-top & {
+    transform: translate(0, -100%);
+  }
+
+  .show-escort-mini-top &,
+  .show-escort-full-top & {
+    transform: translate(0, 0);
+  }
+}
+
+/**
+ * Top region only
+ */
+@include get-location($type: horizontal, $region: bottom) {
+  bottom: 0;
+  background: $bg-color-bottom;
+  border-top: 1px solid scale-color($bg-color-bottom, $lightness: -10%);
+  color: smart-scale($bg-color-bottom);
+
+  .hide-escort-bottom & {
+    transform: translate(0, 100%);
+  }
+
+  .show-escort-mini-bottom &,
+  .show-escort-full-bottom & {
+    transform: translate(0, 0);
   }
 }

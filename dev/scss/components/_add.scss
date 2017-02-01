@@ -3,65 +3,90 @@
 // -----------------------------------------------------------------------------
 // Styles for add escort widget button on the admin page
 
-.escort-add {
-  border: 0 !important;
-  justify-content: center;
+.escort-item {
 
-  .escort-icon {
+  &.escort-add {
+    text-align: center;
 
-    i {
-      font-size: $font-size * 0.75;
-      vertical-align: sub !important;
+    > div {
+      @extend %button;
+    }
+
+    .escort-icon {
+
+      i {
+        font-size: $font-size * 0.75;
+        vertical-align: baseline;
+      }
     }
   }
 }
 
-@each $region, $settings in $regions {
+/**
+ * Top AND Bottom region
+ */
+@include get-location($type: horizontal) {
 
-  .escort-#{$region} {
+  .escort-add {
 
-    /**
-     * If region is horizontal.
-     */
-    @if map-get($settings, type) == 'horizontal' {
+    > div {
+      vertical-align: middle;
 
-      .escort-add {
-
-        > div {
-
-          @if map-get($settings, position) == 'top' {
-            @include button($region: top);
-          }
-
-          @if map-get($settings, position) == 'bottom' {
-            @include button($region: bottom);
-          }
-        }
-
-        i {
-          line-height: $font-size;
-        }
+      i {
+        line-height: $font-size * 0.75;
       }
     }
+  }
+}
 
-    /**
-     * If region is vertical.
-     */
-    @if map-get($settings, type) == 'vertical' {
+/**
+ * Top region only
+ */
+@include get-location($type: horizontal, $region: top) {
 
-      .escort-add {
+  .escort-add {
 
-        > div {
+    > div {
+      @include button-style($region: top);
+    }
+  }
+}
 
-          @if map-get($settings, position) == 'left' {
-            @include button($region: left);
-          }
+/**
+ * Bottom region only
+ */
+@include get-location($type: horizontal, $region: bottom) {
 
-          @if map-get($settings, position) == 'right' {
-            @include button($region: right);
-          }
-        }
-      }
+  .escort-add {
+
+    > div {
+      @include button-style($region: bottom);
+    }
+  }
+}
+
+/**
+ * Left region only
+ */
+@include get-location($type: vertical, $region: left) {
+
+  .escort-add {
+
+    > div {
+      @include button-style($region: left);
+    }
+  }
+}
+
+/**
+ * Right region only
+ */
+@include get-location($type: vertical, $region: right) {
+
+  .escort-add {
+
+    > div {
+      @include button-style($region: right);
     }
   }
 }

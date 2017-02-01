@@ -4,13 +4,74 @@
 // -----------------------------------------------------------------------------
 // Table of Contents:
 //
-//   1. Gradient
-//   2. Button
-//   3. Font Face
+//   1. Get Region
+//   2. Gradient
+//   3. Button
+//   4. Font Face
+//   5. Ripple
 
 
 /////////////////////
-// 1. Gradient
+// 1. Get Region
+// Retrieve Region for specific styles. $type => both, horizontal, vertical. $regions => top, bottom, left, right
+// ---------
+
+@mixin get-location($type: 'both', $region: 'both') {
+
+  @if ($type == 'both') and ($region == 'both') {
+
+    .escort-region {
+      @content;
+    }
+  }
+
+  @if $type == 'horizontal' {
+
+    @if $region == 'both' {
+      &.escort-top,
+      &.escort-bottom {
+        @content;
+      }
+    } 
+
+    @if $region == 'top' {
+      &.escort-top {
+        @content;
+      }
+    }
+
+    @if $region == 'bottom' {
+      &.escort-bottom {
+        @content;
+      }
+    }
+  }
+
+  @if $type == 'vertical' {
+
+    @if $region == 'both' {
+      &.escort-left,
+      &.escort-right {
+        @content;
+      }
+    } 
+
+    @if $region == 'left' {
+      &.escort-left {
+        @content;
+      }
+    }
+
+    @if $region == 'right' {
+      &.escort-right {
+        @content;
+      }
+    }
+  }
+}
+
+/////////////////////
+// 2. Gradient
 // Creates a gradient with backup color;
 // ---------
 @mixin linear-gradient($color1, $color2, $direction, $amount1: 0%, $amount2: 100%) {
@@ -24,91 +85,118 @@
 }
 
 /////////////////////
-// 2. Button
+// 3. Button
 // Defines base button styles
 // ---------
-@mixin button-base {
+@mixin button-style($region, $transparent: false) {
   @include linear-gradient($primary-color, darken($primary-color, 8%), bottom);
-  display: inline-block;
-  border-radius: 3px;
-  color: smart-scale($primary-color, $scale: 80%);
-  padding: 0 ($padding * 0.66);
-  min-height: $base-size * 0.5;
-  line-height: $font-size * 1.5;
-  text-shadow: none;
-  transition: background-color 300ms, color 300ms, box-shadow 300ms;
-
-  &:visited,
-  &:active,
-  &:focus {
-    color: smart-scale($primary-color, $scale: 80%);
-  }
+  color: smart-scale($primary-color, $scale: 66%);
 
   &:hover {
     @include linear-gradient(lighten($primary-color, 5%), $primary-color, bottom);
-    color: smart-scale($primary-color, $scale: 100%);
-    cursor: pointer;
-    text-decoration: none;
-  }
-}
-
-//////////////////
-//button
-@mixin button($region: null, $outline: false) {
-  @include button-base;
-
-  @if $outline == true {
-    @include linear-gradient(rgba(smart-scale($primary-color), 0.1), rgba(smart-scale($primary-color), 0.33), bottom);
-    color: smart-scale($primary-color, $scale: 50%);
-
-    &:visited,
-    &:active,
-    &:focus {
-      color: smart-scale($primary-color, $scale: 100%);
-    }
-
-    &:hover {
-      background-color: lighten($primary-color, 10%);
-      color: smart-scale($primary-color, $scale: 50%);
-    }
   }
 
   @if $region == 'top' {
-    box-shadow: 0 1px 10px adjust-color($bg-color-top, $saturation: 0%, $lightness: -25%);
+    box-shadow: 0 1px 10px adjust-color($bg-color-top, $saturation: 0%, $lightness: -20%);
 
     &:hover {
-      box-shadow: 0 3px 15px adjust-color($bg-color-top, $saturation: 0%, $lightness: -50%);
+      box-shadow: 0 3px 15px adjust-color($bg-color-top, $saturation: 0%, $lightness: -40%);
+    }
+
+    @if $transparent == true {
+      @include linear-gradient(rgba(smart-scale($bg-color-top), 0.1), rgba(smart-scale($bg-color-top), 0.33), bottom);
+      color: smart-scale($bg-color-top, $scale: 50%);
+
+      &:visited,
+      &:active,
+      &:focus {
+        color: smart-scale($bg-color-top, $scale: 50%);
+      }
+
+      &:hover {
+        background-color: lighten($primary-color, 10%);
+        color: smart-scale($bg-color-top, $scale: 100%);
+      }
     }
   }
 
   @if $region == 'bottom' {
-    box-shadow: 0 1px 10px adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -25%);
+    box-shadow: 0 1px 10px adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -20%);
 
     &:hover {
-      box-shadow: 0 3px 15px adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -50%);
+      box-shadow: 0 3px 15px adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -40%);
+    }
+
+    @if $transparent == true {
+      @include linear-gradient(rgba(smart-scale($bg-color-bottom), 0.1), rgba(smart-scale($bg-color-bottom), 0.33), bottom);
+      color: smart-scale($primary-color, $scale: 50%);
+
+      &:visited,
+      &:active,
+      &:focus {
+        color: smart-scale($primary-color, $scale: 100%);
+      }
+
+      &:hover {
+        background-color: lighten($primary-color, 10%);
+        color: smart-scale($primary-color, $scale: 50%);
+      }
     }
   }
 
   @if $region == 'left' {
-    box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -25%);
+    box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -20%);
 
     &:hover {
-      box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -50%);
+      box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -40%);
+    }
+
+    @if $transparent == true {
+      @include linear-gradient(rgba(smart-scale($bg-color-left), 0.1), rgba(smart-scale($bg-color-left), 0.33), bottom);
+      color: smart-scale($bg-color-left, $scale: 50%);
+
+      &:visited,
+      &:active,
+      &:focus {
+        color: smart-scale($bg-color-left, $scale: 50%);
+      }
+
+      &:hover {
+        background-color: lighten($primary-color, 10%);
+        color: smart-scale($bg-color-left, $scale: 100%);
+      }
     }
   }
 
   @if $region == 'right' {
-    box-shadow: 0 1px 10px adjust-color($bg-color-right, $saturation: 0%, $lightness: -25%);
+    box-shadow: 0 1px 10px adjust-color($bg-color-right, $saturation: 0%, $lightness: -20%);
 
     &:hover {
-      box-shadow: 0 3px 15px adjust-color($bg-color-right, $saturation: 0%, $lightness: -50%);
+      box-shadow: 0 3px 15px adjust-color($bg-color-right, $saturation: 0%, $lightness: -40%);
+    }
+
+    @if $transparent == true {
+      @include linear-gradient(rgba(smart-scale($bg-color-right), 0.1), rgba(smart-scale($bg-color-right), 0.33), bottom);
+      color: smart-scale($primary-color, $scale: 50%);
+
+      &:visited,
+      &:active,
+      &:focus {
+        color: smart-scale($primary-color, $scale: 100%);
+      }
+
+      &:hover {
+        background-color: lighten($primary-color, 10%);
+        color: smart-scale($primary-color, $scale: 50%);
+      }
     }
   }
+
   @content;
 }
 
 /////////////////////
-// 3. Font Face
+// 4. Font Face
 // Generates the proper font styles from a linked font file(s)
 // ---------
 @mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
@@ -137,3 +225,21 @@
     src: $src;
   }
 }
+
+
+/////////////////////
+// 4. Font Face
+// Generates the proper font styles from a linked font file(s)
+// ---------
+// @include keyframes(rippleTop) {
+//   from {
+//     opacity: 1;
+//     @include transform(scale(0));
+//     background-color: $theforce-top-primary;
+//   }
+//   to {
+//     opacity: 0;
+//     @include transform(scale(2.5));
+//     background-color: transparent;
+//   }
+// }
