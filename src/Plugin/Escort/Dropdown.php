@@ -75,10 +75,15 @@ class Dropdown extends EscortPluginMultipleBase {
   public function buildItems() {
     $items = [];
 
+    // Add a wrapper class.
+    $items['#attributes']['class'][] = 'escort-dropdown';
+    $items['#attached']['library'][] = 'escort/escort.dropdown';
+
     $items['link'] = $this->buildLink();
+    $items['link']['#attributes']['class'][] = 'escort-dropdown-trigger';
 
     $items['dropdown'] = $this->buildDropdown();
-    $items['dropdown']['#attributes']['class'][] = 'escort-dropdown';
+    $items['dropdown']['#attributes']['class'][] = 'escort-dropdown-content';
 
     return $items;
   }
@@ -88,6 +93,7 @@ class Dropdown extends EscortPluginMultipleBase {
    */
   protected function buildLink() {
     return [
+      '#tag' => 'a',
       '#markup' => $this->configuration['trigger'],
       '#icon' => $this->configuration['trigger_icon'],
     ];
