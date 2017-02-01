@@ -5,102 +5,179 @@
 // should be added in the region specific style section.
 
 .escort-item {
-  transition: all 300ms;
   position: relative;
-  display: inline-flex;
-  align-items: center;
+  min-width: $base-size;
 
   > div {
-    display: flex;
-  }
-
-  .escort-content {
-    display: flex;
-  }
-
-  // Link elements
-  &.escort-link {
-    cursor: pointer;
-    text-decoration: none;
-  }
-
-  // Drag
-  .escort-drag {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    text-indent: -1000px;
-    cursor: move;
-  }
-
-  // Operations
-  .escort-ops {
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    line-height: normal;
+    display: block;
+    white-space: nowrap;
   }
 }
 
-@each $region, $settings in $regions {
+/**
+ * Top AND Bottom region
+ */
+@include get-location($type: horizontal) {
 
-  .escort-#{$region} {
+  .escort-item {
+    line-height: $base-size;
+    padding: 0 $padding;
+    text-align: center;
+    display: block;
+    float: left;
 
-    /**
-     * If region is horizontal.
-     */
-    @if map-get($settings, type) == 'horizontal' {
+    &.escort-group {
+      border: 0;
+      padding: 0;
+    }
 
-      @if map-get($settings, position) == 'top' {
+    &.has-icon:not(.escort-add):not(.escort-toggle) { // sass-lint:disable-line force-pseudo-nesting
 
-        .escort-item {
-          justify-content: center;
-        }
-
-        .escort-content {
-          text-shadow: 0 1px 2px adjust-color($bg-color-top, $lightness: -15%);
-        }
+      .escort-content {
+        margin-left: $margin / 2;
       }
+    }
+  }
+}
 
-      @if map-get($settings, position) == 'bottom' {
+/**
+ * Top region only
+ */
+@include get-location($type: horizontal, $region: top) {
+
+  .escort-item {
+    border-right: 1px dashed smart-scale($bg-color-top, $scale: 25%);
+    border-left: 1px dashed smart-scale($bg-color-top, $scale: 25%);
+  }
+
+  .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+    &:hover {
+      background: smart-scale($bg-color-top, $scale: -12%);
+
+      .escort-content {
+        color: smart-scale($bg-color-top, $scale: 80%);
+      }
+    }
+
+    &.is-active {
+      background: smart-scale($bg-color-top, $scale: 5%);
+    }
+  }
+
+  .escort-content {
+    color: smart-scale($bg-color-top, $scale: 60%);
+    text-shadow: 0 1px 2px adjust-color($bg-color-top, $lightness: -25%);
+  }
+}
+
+/**
+ * Bottom region only
+ */
+@include get-location($type: horizontal, $region: bottom) {
+
+  .escort-item {
+    border-right: 1px dashed smart-scale($bg-color-bottom, $scale: 25%);
+    border-left: 1px dashed smart-scale($bg-color-bottom, $scale: 25%);
+  }
+
+  .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+    &:hover {
+      background: smart-scale($bg-color-bottom, $scale: -12%);
+
+      .escort-content {
+        color: smart-scale($bg-color-bottom, $scale: 80%);
+      }
+    }
+
+    &.is-active {
+      background: smart-scale($bg-color-bottom, $scale: 5%);
+    }
+  }
+
+  .escort-content {
+    color: smart-scale($bg-color-bottom, $scale: 60%);
+    text-shadow: 0 1px 2px scale-color($bg-color-bottom, $lightness: -25%);
+  }
+}
+
+/**
+ * Left AND Right region only
+ */
+@include get-location($type: vertical) {
+
+  .escort-item {
+    padding: $padding 0;
+    display: block;
+
+    &.escort-group {
+      display: block;
+      border: 0;
+      padding: 0;
+
+      .escort-content {
+        display: block;
+
         .escort-content {
-          text-shadow: 0 1px 2px scale-color($bg-color-bottom, $lightness: -15%);
+          display: inline-block;
         }
       }
     }
 
-    /**
-     * If region is vertical.
-     */
-    @if map-get($settings, type) == 'vertical' {
+    .escort-content {
+      display: inline-block;
+      line-height: $base-size / 2;
+    }
+  }
+}
 
-      @if map-get($settings, position) == 'left' {
+/**
+ * Left region only
+ */
+@include get-location($type: vertical, $region: left) {
 
-        .escort-item {
-          border-bottom: 1px solid rgba(smart-scale($bg-color-left), 0.25);
-        }
+  .escort-item {
+    border-bottom: 1px solid rgba(smart-scale($bg-color-left), 0.2); // sass-lint:disable-line no-color-literals
+  }
 
-        .escort-content {
-          text-shadow: 0 1px 2px scale-color($bg-color-left, $lightness: -15%);
-        }
-      }
+  .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
-      @if map-get($settings, position) == 'right' {
+    &:hover {
 
-        .escort-item {
-          border-bottom: 1px solid rgba(smart-scale($bg-color-right), 0.25);
-        }
-
-        .escort-content {
-          text-shadow: 0 1px 2px scale-color($bg-color-right, $lightness: -15%);
-        }
+      .escort-content {
+        color: smart-scale($bg-color-left, $scale: 80%);
       }
     }
+  }
+
+  .escort-content {
+    color: smart-scale($bg-color-left, $scale: 60%);
+    text-shadow: 0 1px 2px scale-color($bg-color-left, $lightness: -25%);
+  }
+}
+
+/**
+ * Right region only
+ */
+@include get-location($type: vertical, $region: right) {
+
+  .escort-item {
+    border-bottom: 1px solid rgba(smart-scale($bg-color-right), 0.2); // sass-lint:disable-line no-color-literals
+  }
+
+  .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+    &:hover {
+
+      .escort-content {
+        color: smart-scale($bg-color-right, $scale: 80%);
+      }
+    }
+  }
+
+  .escort-content {
+    color: smart-scale($bg-color-right, $scale: 60%);
+    text-shadow: 0 1px 2px scale-color($bg-color-right, $lightness: -25%);
   }
 }
