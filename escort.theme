@@ -14,6 +14,26 @@ use Drupal\Component\Utility\SafeMarkup;
  *   An associative array containing:
  *   - element.
  */
+function template_preprocess_escort(&$variables) {
+  $element = $variables['element'];
+
+  // Prepare the escort attributes.
+  $variables['attributes'] = $element['#attributes'];
+
+  foreach (Element::children($element) as $key) {
+    $variables['content'][$key] = $element[$key];
+  }
+}
+
+/**
+ * Prepares variables for administration escort template.
+ *
+ * Default template: escort-region.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element.
+ */
 function template_preprocess_escort_region(&$variables) {
   $element = $variables['element'];
 
@@ -28,7 +48,7 @@ function template_preprocess_escort_region(&$variables) {
 /**
  * Prepares variables for administration escort template.
  *
- * Default template: escort.html.twig.
+ * Default template: escort-section.html.twig.
  *
  * @param array $variables
  *   An associative array containing:

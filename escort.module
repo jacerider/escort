@@ -30,33 +30,66 @@ function escort_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_theme().
  */
 function escort_theme() {
-  $items['escort_region'] = [
+  $themes['escort_wrapper'] = [
+    'variables' => ['children' => NULL, 'attributes' => NULL],
+  ];
+  $themes['escort'] = [
     'render element' => 'element',
     'file' => 'escort.theme',
   ];
-  $items['escort_section'] = [
+  $themes['escort_region'] = [
     'render element' => 'element',
     'file' => 'escort.theme',
   ];
-  $items['escort_item'] = [
+  $themes['escort_section'] = [
     'render element' => 'element',
     'file' => 'escort.theme',
   ];
-  $items['escort_plugin_local_task'] = [
+  $themes['escort_item'] = [
+    'render element' => 'element',
+    'file' => 'escort.theme',
+  ];
+  $themes['escort_plugin_local_task'] = [
     'render element' => 'element',
   ];
-  return $items;
+  return $themes;
+}
+
+// function escort_preprocess_page(&$variables) {
+//   if (\Drupal::moduleHandler()->moduleExists('ux')) {
+//     ksm($variables);
+//     $variables['page']['#theme_wrappers']['ux_wrapper']['#attributes']['class'][] = 'poop';
+//   }
+// }
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function escort_element_info_alter(&$type) {
+  if (isset($type['page'])) {
+    if (!\Drupal::moduleHandler()->moduleExists('ux')) {
+      $type['page']['#theme_wrappers']['escort_wrapper'] = [
+        '#attributes' => ['class' => ['escort-wrapper', 'escort-wrapper-scroll']],
+        '#weight' => -1000,
+      ];
+    }
+  }
 }
 
 /**
- * Implements hook_page_top().
- *
- * Add admin escort to the bottom of the page automatically.
+ * Implements hook_ux_wrapper_alter().
  */
-function escort_page_top(array &$page_top) {
+function escort_ux_wrapper_alter(&$wrapper) {
+  $wrapper['#attributes']['class'][] = 'escort-wrapper';
+}
+
+/**
+ * Return the escort render array.
+ */
+function escort_render() {
   $cacheable_metadata_list = [];
   $regions = \Drupal::service('escort.repository')->getEscortsPerRegion($cacheable_metadata_list);
-  $page_top['escort'] = array(
+  $escort = array(
     '#type' => 'escort',
     '#access' => \Drupal::currentUser()->hasPermission('access escort'),
     '#weight' => -1001,
@@ -66,22 +99,23 @@ function escort_page_top(array &$page_top) {
       'contexts' => ['user.permissions'],
     ],
   );
-  if (\Drupal::moduleHandler()->moduleExists('ux')) {
-    $page_top['ux']['#attributes']['class'][] = 'escort-wrapper';
-  }
-  else {
-    $page_top['escort_container'] = [
-      '#markup' => '<div class="escort-wrapper escort-wrapper-scroll">',
-      '#weight' => -1000,
-    ];
-  }
-  $merged_cacheable_metadata = CacheableMetadata::createFromRenderArray($page_top['escort']);
+  $merged_cacheable_metadata = CacheableMetadata::createFromRenderArray($escort);
   foreach ($cacheable_metadata_list as $regions) {
     foreach ($regions as $cacheable_metadata) {
       $merged_cacheable_metadata = $merged_cacheable_metadata->merge($cacheable_metadata);
     }
   }
-  $merged_cacheable_metadata->applyTo($page_top['escort']);
+  $merged_cacheable_metadata->applyTo($escort);
+  return $escort;
+}
+
+/**
+ * Implements hook_page_top().
+ *
+ * Add admin escort to the bottom of the page automatically.
+ */
+function escort_page_top(array &$page_top) {
+  $page_top['escort'] = escort_render();
 }
 
 /**
@@ -90,12 +124,12 @@ function escort_page_top(array &$page_top) {
  * Add admin escort to the bottom of the page automatically.
  */
 function escort_page_bottom(array &$page_bottom) {
-  if (!\Drupal::moduleHandler()->moduleExists('ux')) {
-    $page_bottom['escort_container'] = [
-      '#markup' => '</div>',
-      '#weight' => 1000,
-    ];
-  }
+  // if (!\Drupal::moduleHandler()->moduleExists('ux')) {
+  //   $page_bottom['escort_container'] = [
+  //     '#markup' => '</div>',
+  //     '#weight' => 1000,
+  //   ];
+  // }
 }
 
 /**
@@ -122,4 +156,11 @@ function escort_preprocess_html(&$variables) {
       }
     }
   }
+}
+
+/**
+ * Return the dialog type to use.
+ */
+function escort_dialog_type() {
+  return \Drupal::moduleHandler()->moduleExists('ux_dialog') ? 'ux_dialog' : 'modal';
 }
