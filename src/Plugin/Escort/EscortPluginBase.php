@@ -326,7 +326,7 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
    *   True if Micon module is installed.
    */
   public function hasIconSupport() {
-    return \Drupal::moduleHandler()->moduleExists('devel');
+    return \Drupal::moduleHandler()->moduleExists('micon');
   }
 
   /**
