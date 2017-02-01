@@ -15,7 +15,6 @@ use Drupal\escort\Entity\Escort;
 use Drupal\escort\Entity\EscortInterface;
 use Drupal\escort\Plugin\Escort\EscortPluginImmediateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Component\Serialization\Json;
 
 /**
  * Provides a Escort view builder.
@@ -261,17 +260,7 @@ class EscortViewBuilder extends EntityViewBuilder {
         $build['#attributes']['class'][] = 'escort-sortable';
         $build['#attributes']['data-escort-id'] = $entity->id();
         // Add entity operations.
-        $ops = array_map(function ($op) {
-          return $op += [
-            'attributes' => [
-              'class' => ['use-ajax'],
-              'data-dialog-type' => escort_dialog_type(),
-              'data-dialog-options' => Json::encode([
-                'width' => 700,
-              ]),
-            ],
-          ];
-        }, $entity->buildOps());
+        $ops = $entity->buildOps();
         $build['ops']['move']['#markup'] = '<a class="escort-drag">Reorder</a>';
         $build['ops']['links'] = [
           '#theme' => 'links',

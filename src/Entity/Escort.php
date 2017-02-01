@@ -8,6 +8,7 @@ use Drupal\escort\EscortPluginCollection;
 use Drupal\escort\Plugin\Escort\EscortPluginInterface;;
 use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\escort\EscortAjaxTrait;
 
 /**
  * Defines the Escort entity.
@@ -46,6 +47,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
  * )
  */
 class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPluginCollectionInterface {
+  use EscortAjaxTrait;
 
   /**
    * The Escort ID.
@@ -255,6 +257,11 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
       'title' => t('Delete'),
       'url' => $this->toUrl('delete-form'),
     ];
+    $links = array_map(function ($link) {
+      // Dialog ajaxify.
+      $this->ajaxLinkAttributes($link, NULL, 'attributes', FALSE);
+      return $link;
+    }, $links);
     return $links;
   }
 

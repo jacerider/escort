@@ -3,7 +3,7 @@
 namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Url;
-use Drupal\Component\Serialization\Json;
+use Drupal\escort\EscortAjaxTrait;
 
 /**
  * Defines a fallback plugin for missing block plugins.
@@ -15,6 +15,7 @@ use Drupal\Component\Serialization\Json;
  * )
  */
 class Add extends EscortPluginBase implements EscortPluginImmediateInterface {
+  use EscortAjaxTrait;
 
   /**
    * {@inheritdoc}
@@ -32,19 +33,16 @@ class Add extends EscortPluginBase implements EscortPluginImmediateInterface {
   public function build() {
     $build = [];
     $build['#tag'] = 'a';
-    $build['#attributes'] = [
-      'class' => ['use-ajax'],
-      'data-dialog-type' => 'modal',
-      'data-dialog-options' => Json::encode([
-        'width' => 700,
-      ]),
-    ];
     $build['#attributes']['href'] = Url::fromRoute('escort.escort_library', [], [
       'query' => [
         'region' => $this->configuration['region'],
       ],
     ])->toString();
     $build['#attributes']['class'][] = 'escort-add';
+
+    // Dialog ajaxify.
+    $this->ajaxLinkAttributes($build);
+
     return $build;
   }
 

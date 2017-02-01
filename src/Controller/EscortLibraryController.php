@@ -10,11 +10,13 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Drupal\escort\EscortAjaxTrait;
 
 /**
  * Provides a list of escort plugins to be added to the layout.
  */
 class EscortLibraryController extends ControllerBase {
+  use EscortAjaxTrait;
 
   /**
    * The escort manager.
@@ -126,14 +128,8 @@ class EscortLibraryController extends ControllerBase {
       $links['add'] = [
         'title' => $this->t('Create escort'),
         'url' => Url::fromRoute('escort.escort_add', ['plugin_id' => $plugin_id]),
-        'attributes' => [
-          'class' => ['use-ajax'],
-          'data-dialog-type' => 'modal',
-          'data-dialog-options' => Json::encode([
-            'width' => 700,
-          ]),
-        ],
       ];
+      $this->ajaxLinkAttributes($links['add'], NULL, 'attributes', FALSE);
       if ($region) {
         $links['add']['query']['region'] = $region;
       }

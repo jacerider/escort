@@ -5,11 +5,13 @@ namespace Drupal\escort\Form;
 use Drupal\Core\Entity\EntityConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\escort\EscortAjaxTrait;
 
 /**
  * Builds the form to disable Escort entities.
  */
 class EscortDisableForm extends EntityConfirmFormBase {
+  use EscortAjaxTrait;
 
   /**
    * {@inheritdoc}
@@ -30,6 +32,15 @@ class EscortDisableForm extends EntityConfirmFormBase {
    */
   public function getConfirmText() {
     return $this->t('Disable');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function actions(array $form, FormStateInterface $form_state) {
+    $actions = parent::actions($form, $form_state);
+    $this->ajaxSubmitAttributes($actions['submit']);
+    return $actions;
   }
 
   /**

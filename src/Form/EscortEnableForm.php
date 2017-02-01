@@ -8,11 +8,13 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\escort\Entity\EscortInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\escort\EscortAjaxTrait;
 
 /**
  * Contribute form.
  */
 class EscortEnableForm extends FormBase {
+  use EscortAjaxTrait;
 
   /**
    * The current Request object.
@@ -87,6 +89,7 @@ class EscortEnableForm extends FormBase {
         '#value' => $this->t('Place escort'),
         '#name' => $escort->id(),
       ];
+      $this->ajaxSubmitAttributes($form['escorts'][$escort_id]['operations']);
     }
 
     return $form;

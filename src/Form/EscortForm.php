@@ -11,6 +11,7 @@ use Drupal\escort\EscortManagerInterface;
 use Drupal\escort\EscortRegionManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\escort\EscortAjaxTrait;
 
 /**
  * Class EscortForm.
@@ -18,6 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @package Drupal\escort\Form
  */
 class EscortForm extends EntityForm {
+  use EscortAjaxTrait;
 
   /**
    * The escort entity.
@@ -128,6 +130,15 @@ class EscortForm extends EntityForm {
     );
 
     return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function actions(array $form, FormStateInterface $form_state) {
+    $actions = parent::actions($form, $form_state);
+    $this->ajaxSubmitAttributes($actions['submit']);
+    return $actions;
   }
 
   /**
