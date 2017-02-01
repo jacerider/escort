@@ -52,8 +52,8 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
   /**
    * {@inheritdoc}
    */
-  public function label() {
-    if (!empty($this->configuration['label'])) {
+  public function label($force_admin = FALSE) {
+    if (!$force_admin && !empty($this->configuration['label'])) {
       return $this->configuration['label'];
     }
 
@@ -307,6 +307,16 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
    */
   public function setTransliteration(TransliterationInterface $transliteration) {
     $this->transliteration = $transliteration;
+  }
+
+  /**
+   * Checks if we are in admin mode.
+   *
+   * @return bool
+   *   True if in admin mode.
+   */
+  public function isAdmin() {
+    return \Drupal::service('escort.path.matcher')->isAdmin();
   }
 
   /**
