@@ -225,7 +225,11 @@ class EscortViewBuilder extends EntityViewBuilder {
     $is_admin = \Drupal::service('escort.path.matcher')->isAdmin();
 
     $content = NULL;
-    if ($plugin->usesMultiple()) {
+    if ($is_admin && method_exists($plugin, 'preview')) {
+      $content = $plugin->preview();
+      $content['#attributes']['class'][] = 'escort-preview';
+    }
+    elseif ($plugin->usesMultiple()) {
       // A plugin can define multiple escort items. We pass each item back
       // through the buildPreRenderableEscort so each item is built out as an
       // individual escort.
@@ -272,7 +276,6 @@ class EscortViewBuilder extends EntityViewBuilder {
         $build['ops']['links'] = [
           '#theme' => 'links',
           '#links' => $ops,
-          // '#attached' => ['library' => ['core/drupal.dialog.ajax']],
           '#attached' => ['library' => [escort_dialog_library()]],
           '#attributes' => ['class' => ['escort-ops']],
         ];
@@ -319,7 +322,13 @@ class EscortViewBuilder extends EntityViewBuilder {
     // properties and rendering (for instance, its own #theme) without
     // conflicting with the properties used above, or alternate ones used by
     // alternate escort rendering approaches in contrib.
-    foreach (array('#tag', '#attributes', '#contextual_links', '#weight', '#access') as $property) {
+    foreach (array(
+      '#tag',
+      '#attributes',
+      '#contextual_links',
+      '#weight',
+      '#access',
+    ) as $property) {
       if (isset($content[$property])) {
         if (is_array($content[$property])) {
           $build[$property] += $content[$property];

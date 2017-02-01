@@ -65,7 +65,6 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->localTaskManager = $local_task_manager;
     $this->routeMatch = $route_match;
-    $this->provideMultiple = !$this->isAdmin();
   }
 
   /**
@@ -97,8 +96,11 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
    *
    * When in admin mode, we simply display the label.
    */
-  public function build() {
-    return ['#markup' => $this->label(TRUE)];
+  public function preview() {
+    return [
+      '#icon' => 'fa-th-list',
+      '#markup' => $this->label(TRUE) . ' ' . $this->t('Placeholder'),
+    ];
   }
 
   /**

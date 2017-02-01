@@ -103,6 +103,18 @@ class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInt
 
   /**
    * {@inheritdoc}
+   *
+   * When in admin mode, we simply display the label.
+   */
+  public function preview() {
+    return [
+      '#icon' => 'fa-th-list',
+      '#markup' => $this->label(TRUE) . ' ' . $this->t('Placeholder'),
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
    */
   public function buildItems() {
     $items = [];
