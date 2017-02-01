@@ -165,3 +165,10 @@ function escort_preprocess_html(&$variables) {
 function escort_dialog_type() {
   return \Drupal::moduleHandler()->moduleExists('ux_dialog') ? 'ux_dialog' : 'modal';
 }
+
+/**
+ * Return the dialog library to use.
+ */
+function escort_dialog_library() {
+  return \Drupal::moduleHandler()->moduleExists('ux_dialog') ? 'ux_dialog/ux_dialog' : 'core/drupal.dialog.ajax';
+}

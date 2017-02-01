@@ -253,12 +253,15 @@ class EscortViewBuilder extends EntityViewBuilder {
       if ($is_admin && !$entity->isTemporary()) {
         // Set admin flag for use in preprocessing and twig.
         $build['#is_escort_admin'] = TRUE;
+        // Set sortable class for use in escort.admin.js.
+        $build['#attributes']['class'][] = 'escort-sortable';
+        $build['#attributes']['data-escort-id'] = $entity->id();
         // Add entity operations.
         $ops = array_map(function ($op) {
           return $op += [
             'attributes' => [
               'class' => ['use-ajax'],
-              'data-dialog-type' => 'modal',
+              'data-dialog-type' => escort_dialog_type(),
               'data-dialog-options' => Json::encode([
                 'width' => 700,
               ]),
@@ -269,7 +272,8 @@ class EscortViewBuilder extends EntityViewBuilder {
         $build['ops']['links'] = [
           '#theme' => 'links',
           '#links' => $ops,
-          '#attached' => ['library' => ['core/drupal.dialog.ajax']],
+          // '#attached' => ['library' => ['core/drupal.dialog.ajax']],
+          '#attached' => ['library' => [escort_dialog_library()]],
           '#attributes' => ['class' => ['escort-ops']],
         ];
       }
