@@ -15,6 +15,7 @@ use Drupal\escort\Entity\Escort;
 use Drupal\escort\Entity\EscortInterface;
 use Drupal\escort\Plugin\Escort\EscortPluginImmediateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Component\Utility\NestedArray;
 
 /**
  * Provides a Escort view builder.
@@ -320,7 +321,7 @@ class EscortViewBuilder extends EntityViewBuilder {
     ) as $property) {
       if (isset($content[$property])) {
         if (is_array($content[$property])) {
-          $build[$property] += $content[$property];
+          $build[$property] = NestedArray::mergeDeep($build[$property], $content[$property]);
         }
         else {
           $build[$property] = $content[$property];
