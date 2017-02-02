@@ -3,6 +3,7 @@
 namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 
 /**
  * Defines a fallback plugin for missing block plugins.
@@ -34,6 +35,7 @@ class Dropdown extends EscortPluginMultipleBase {
     return parent::baseConfigurationDefaults() + array(
       'trigger' => '',
       'trigger_icon' => '',
+      'ajax' => FALSE,
     );
   }
 
@@ -61,6 +63,11 @@ class Dropdown extends EscortPluginMultipleBase {
       $form['trigger_icon']['#title'] = $this->t('Trigger icon');
       $form['trigger_icon']['#default_value'] = $this->configuration['trigger_icon'];
     }
+    $form['ajax'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use AJAX to display dropdown content'),
+      '#default_value' => $this->configuration['ajax'],
+    );
     return $form;
   }
 
@@ -82,6 +89,7 @@ class Dropdown extends EscortPluginMultipleBase {
   public function escortBaseSubmit($form, FormStateInterface $form_state) {
     parent::escortBaseSubmit($form, $form_state);
     $this->configuration['trigger'] = $form_state->getValue('trigger');
+    $this->configuration['ajax'] = $form_state->getValue('ajax');
     if ($this->hasIconSupport()) {
       $this->configuration['trigger_icon'] = $form_state->getValue('trigger_icon');
     }
@@ -107,7 +115,15 @@ class Dropdown extends EscortPluginMultipleBase {
     $items['link'] = $this->buildLink();
     $items['link']['#attributes']['class'][] = 'escort-dropdown-trigger';
 
-    $items['dropdown'] = $this->buildDropdown();
+    if ($this->configuration['ajax']) {
+      $items['link']['#attributes']['href'] = Url::fromRoute('escort.escort_ajax', ['escort' => $this->getEscort()->id()])->toString();
+      $items['link']['#attributes']['class'][] = escort_ajax_class();
+      $items['link']['#attached']['library'][] = escort_ajax_library();
+      $items['dropdown']['#attributes']['id'] = 'escort-ajax-' . $this->getEscort()->uuid();
+    }
+    else {
+      $items['dropdown'] = $this->buildDropdown();
+    }
     $items['dropdown']['#attributes']['class'][] = 'escort-dropdown-content';
 
     return $items;
@@ -131,6 +147,13 @@ class Dropdown extends EscortPluginMultipleBase {
     return [
       '#markup' => $this->configuration['dropdown'],
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildAjax() {
+    return $this->buildDropdown();
   }
 
 }

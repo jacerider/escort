@@ -29,7 +29,7 @@ trait EscortAjaxTrait {
    */
   protected function ajaxLinkAttributes(&$build, $width = NULL, $attribute_key = '#attributes', $attach_library = TRUE) {
     $build[$attribute_key] = isset($build[$attribute_key]) ? $build[$attribute_key] : [];
-    $build[$attribute_key]['class'][] = escort_dialog_class();
+    $build[$attribute_key]['class'][] = escort_ajax_class();
     $build[$attribute_key]['data-dialog-type'] = escort_dialog_type();
     $build[$attribute_key]['data-dialog-options'] = Json::encode([
       'width' => !is_null($width) ? $width : 700,
