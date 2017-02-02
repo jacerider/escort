@@ -7,8 +7,9 @@
 
   'use strict';
 
-  function EscortDropdowns(trigger) {
-    this.$trigger = $(trigger);
+  function EscortDropdowns(wrapper) {
+    this.$wrapper = $(wrapper);
+    this.$trigger = this.$wrapper.find('.escort-dropdown-trigger');
     this.setup();
   }
 
@@ -26,6 +27,7 @@
 
     setup: function () {
       var _this = this;
+      console.log(_this.$trigger);
     }
   });
 

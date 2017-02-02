@@ -1,0 +1,41 @@
+
+.escort-dropdown {
+  position: relative;
+
+  .escort-dropdown-content {
+    width: 300px;
+    background: $bg-color-top;
+    padding: $base-padding;
+    border: 0;
+    display: none;
+
+    > div {
+      white-space: normal;
+      line-height: normal;
+    }
+  }
+
+  &.escort-active {
+
+    .escort-dropdown-content {
+      display: block;
+    }
+  }
+}
+
+/**
+ * Top AND Bottom region
+ */
+@include get-location($type: horizontal) {
+
+  .escort-dropdown-content {
+    position: absolute;
+    top: 100%;
+  }
+}
+
+/**
+ * Left AND Right region only
+ */
+@include get-location($type: vertical) {
+}
