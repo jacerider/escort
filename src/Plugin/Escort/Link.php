@@ -32,7 +32,7 @@ class Link extends Text {
     return array(
       'url' => '',
       'target' => '',
-      'ajax' => FALSE,
+      'dialog' => FALSE,
     ) + parent::defaultConfiguration();
   }
 
