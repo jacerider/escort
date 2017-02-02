@@ -8,6 +8,7 @@
  */
 .escort-icon {
   text-align: center;
+  transition: margin 200ms;
 
   i {
     vertical-align: middle;
@@ -130,11 +131,22 @@
  */
 @include get-location($type: vertical) {
 
+  .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
+
+    &:hover {
+
+      .escort-icon {
+        margin-right: $padding / 3;
+      }
+    }
+  }
+
   .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-icon {
       width: $base-size;
       display: inline-block;
+      margin-right: 0;
 
       i {
         font-size: $font-size * 1.75;
