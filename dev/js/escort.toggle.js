@@ -29,7 +29,6 @@
   $.extend(EscortRegionToggles.prototype, /** @lends Drupal.EscortRegionToggles# */{
     lock: false,
     mini: false,
-    full: false,
 
     setup: function () {
       var _this = this;
@@ -39,11 +38,11 @@
         case 'click':
           _this.$trigger.click(function (e) {
             e.preventDefault();
-            if (_this.full) {
-              _this.hideFull();
-            }
-            else {
-              _this.showFull();
+            _this.showMini();
+          });
+          _this.$trigger.on('mouseleave', function (e) {
+            if (_this.mini) {
+              _this.hideMini();
             }
           });
           break;
@@ -56,55 +55,25 @@
             e.preventDefault();
             _this.hideMini();
           });
-          _this.$trigger.click(function (e) {
-            if (_this.full) {
-              _this.hideFull();
-            }
-            else {
-              _this.showFull();
-            }
-          });
-          _this.$region.hover(function (e) {
-            e.preventDefault();
-            _this.showFull();
-
-            // Bind body click event.
-            _this.$body.on('click.escort-' + _this.region, function (e) {
-              if (_this.full && !$(e.target).closest(_this.$region).length) {
-                _this.hideFull();
-              }
-            });
-          });
           break;
       }
     },
 
     showMini: function (e) {
-      if (!this.mini) {
-        this.mini = true;
-        this.$body.addClass('show-escort-mini-' + this.region);
+      var _this = this;
+      if (!_this.mini) {
+        _this.mini = true;
+        _this.$body.addClass('show-escort-mini-' + _this.region);
+        _this.$body.trigger('escort-toggle-mini:show', [_this.$region]);
       }
     },
 
     hideMini: function (e) {
-      if (this.mini) {
-        this.mini = false;
-        this.$body.removeClass('show-escort-mini-' + this.region);
-      }
-    },
-
-    showFull: function () {
-      if (!this.full) {
-        this.full = true;
-        this.$body.addClass('show-escort-full-' + this.region);
-      }
-    },
-
-    hideFull: function () {
-      if (this.full) {
-        this.full = false;
-        this.$body.removeClass('show-escort-full-' + this.region);
-        this.$body.off('click.escort-' + this.region);
+      var _this = this;
+      if (_this.mini) {
+        _this.mini = false;
+        _this.$body.removeClass('show-escort-mini-' + _this.region);
+        _this.$body.trigger('escort-region-mini:hide', [_this.$region]);
       }
     }
   });
