@@ -5,6 +5,7 @@ namespace Drupal\escort;
 use Drupal\Component\Plugin\Exception\PluginException;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Plugin\DefaultSingleLazyPluginCollection;
+use Drupal\escort\Entity\EscortInterface;
 
 /**
  * Provides a collection of escort plugins.
@@ -12,11 +13,11 @@ use Drupal\Core\Plugin\DefaultSingleLazyPluginCollection;
 class EscortPluginCollection extends DefaultSingleLazyPluginCollection {
 
   /**
-   * The escort ID this plugin collection belongs to.
+   * The escort entity this plugin collection belongs to.
    *
-   * @var string
+   * @var \Drupal\escort\Entity\EscortInterface
    */
-  protected $escortItemId;
+  protected $escort;
 
   /**
    * Constructs a new EscortPluginCollection.
@@ -27,13 +28,12 @@ class EscortPluginCollection extends DefaultSingleLazyPluginCollection {
    *   The ID of the plugin instance.
    * @param array $configuration
    *   An array of configuration.
-   * @param string $escort_id
-   *   The unique ID of the escort entity using this plugin.
+   * @param \Drupal\escort\Entity\EscortInterface $escort
+   *   The escort entity using this plugin.
    */
-  public function __construct(PluginManagerInterface $manager, $instance_id, array $configuration, $escort_id) {
+  public function __construct(PluginManagerInterface $manager, $instance_id, array $configuration, EscortInterface $escort) {
     parent::__construct($manager, $instance_id, $configuration);
-
-    $this->escortItemId = $escort_id;
+    $this->escort = $escort;
   }
 
   /**
@@ -43,7 +43,9 @@ class EscortPluginCollection extends DefaultSingleLazyPluginCollection {
    *   The plugin.
    */
   public function &get($instance_id) {
-    return parent::get($instance_id);
+    $plugin = parent::get($instance_id);
+    $plugin->setEscort($this->escort);
+    return $plugin;
   }
 
   /**
@@ -51,7 +53,7 @@ class EscortPluginCollection extends DefaultSingleLazyPluginCollection {
    */
   protected function initializePlugin($instance_id) {
     if (!$instance_id) {
-      throw new PluginException("The escort '{$this->escortItemId}' did not specify a plugin.");
+      throw new PluginException("The escort '{$this->escort->id()}' did not specify a plugin.");
     }
 
     try {

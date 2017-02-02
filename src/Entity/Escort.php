@@ -166,7 +166,7 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
    */
   protected function getPluginCollection() {
     if (!$this->pluginCollection) {
-      $this->pluginCollection = new EscortPluginCollection(\Drupal::service('plugin.manager.escort'), $this->plugin, $this->get('settings'), $this->id());
+      $this->pluginCollection = new EscortPluginCollection(\Drupal::service('plugin.manager.escort'), $this->plugin, $this->get('settings'), $this);
     }
     return $this->pluginCollection;
   }

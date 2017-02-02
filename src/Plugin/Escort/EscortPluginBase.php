@@ -12,6 +12,7 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Plugin\PluginWithFormsInterface;
 use Drupal\Core\Plugin\PluginWithFormsTrait;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\escort\Entity\EscortInterface;
 use Drupal\Component\Transliteration\TransliterationInterface;
 
 /**
@@ -27,6 +28,13 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
 
   use RefinableCacheableDependencyTrait;
   use PluginWithFormsTrait;
+
+  /**
+   * The escort entity this plugin belongs to.
+   *
+   * @var \Drupal\escort\Entity\EscortInterface
+   */
+  protected $escort;
 
   /**
    * The transliteration service.
@@ -211,8 +219,6 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
     ];
   }
 
-
-
   /**
    * {@inheritdoc}
    */
@@ -316,6 +322,21 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
    */
   public function setTransliteration(TransliterationInterface $transliteration) {
     $this->transliteration = $transliteration;
+  }
+
+  /**
+   * Sets the escort entity this plugin belongs to.
+   */
+  public function setEscort(EscortInterface $escort) {
+    $this->escort = $escort;
+    return $this;
+  }
+
+  /**
+   * Sets the escort entity this plugin belongs to.
+   */
+  public function getEscort() {
+    return $this->escort;
   }
 
   /**
