@@ -139,17 +139,24 @@ function escort_preprocess_html(&$variables) {
 }
 
 /**
+ * Return the ajax class to use.
+ */
+function escort_ajax_class() {
+  return \Drupal::moduleHandler()->moduleExists('ux_dialog') ? 'use-ux-ajax' : 'use-ajax';
+}
+
+/**
+ * Return the ajax library to use.
+ */
+function escort_ajax_library() {
+  return \Drupal::moduleHandler()->moduleExists('ux') ? 'ux/ux.ajax' : 'core/drupal.ajax';
+}
+
+/**
  * Return the dialog type to use.
  */
 function escort_dialog_type() {
   return \Drupal::moduleHandler()->moduleExists('ux_dialog') ? 'ux_dialog' : 'modal';
-}
-
-/**
- * Return the dialog class to use.
- */
-function escort_dialog_class() {
-  return \Drupal::moduleHandler()->moduleExists('ux_dialog') ? 'use-ux-ajax' : 'use-ajax';
 }
 
 /**
