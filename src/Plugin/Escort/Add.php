@@ -36,6 +36,7 @@ class Add extends EscortPluginBase implements EscortPluginImmediateInterface {
     $build['#attributes']['href'] = Url::fromRoute('escort.escort_library', [], [
       'query' => [
         'region' => $this->configuration['region'],
+        'weight' => 200,
       ],
     ])->toString();
     $build['#attributes']['class'][] = 'escort-add';
