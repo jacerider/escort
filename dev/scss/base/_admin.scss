@@ -5,6 +5,11 @@
 
 .is-escort-admin {
 
+  .escort-left-bottom,
+  .escort-right-bottom {
+    border-top: 0;
+  }
+
   @each $region, $settings in $regions {
 
     /**

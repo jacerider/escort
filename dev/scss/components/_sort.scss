@@ -36,12 +36,19 @@
     }
   }
 
+  @include get-location($type: horizontal) {
+
+    .escort-placeholder {
+      padding: $padding;
+      width: $base-size * 3 !important;
+    }
+  }
+
   @include get-location($type: horizontal, $region: top) {
 
     .escort-placeholder {
       color: smart-scale($bg-color-top, $scale: 35%);
       outline-color: smart-scale($bg-color-top, $scale: 25%);
-      padding: $padding;
     }
   }
 
@@ -50,7 +57,6 @@
     .escort-placeholder {
       color: smart-scale($bg-color-bottom, $scale: 35%);
       outline-color: smart-scale($bg-color-bottom, $scale: 25%);
-      padding: $padding;
     }
   }
 
