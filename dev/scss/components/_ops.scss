@@ -93,12 +93,12 @@
     background-color: $bg-color-left;
 
     > :first-child {
-      border-left: 1px solid rgba(smart-scale($bg-color-left), 0.2); // sass-lint:disable-line no-color-literals
-      border-right: 1px solid rgba(smart-scale($bg-color-left), 0.2); // sass-lint:disable-line no-color-literals
+      border-left: 1px solid smart-scale($bg-color-left);
+      border-right: 1px solid smart-scale($bg-color-left);
     }
 
     > :last-child {
-      border-left: 1px solid rgba(smart-scale($bg-color-left), 0.2); // sass-lint:disable-line no-color-literals
+      border-left: 1px solid smart-scale($bg-color-left);
     }
   }
 }
@@ -116,12 +116,12 @@
     background-color: $bg-color-right;
 
     > :first-child {
-      border-left: 1px solid rgba(smart-scale($bg-color-right), 0.2); // sass-lint:disable-line no-color-literals
-      border-right: 1px solid rgba(smart-scale($bg-color-right), 0.2); // sass-lint:disable-line no-color-literals
+      border-left: 1px solid smart-scale($bg-color-right);
+      border-right: 1px solid smart-scale($bg-color-right);
     }
 
     > :last-child {
-      border-left: 1px solid rgba(smart-scale($bg-color-right), 0.2); // sass-lint:disable-line no-color-literals
+      border-left: 1px solid smart-scale($bg-color-right);
     }
   }
 }
