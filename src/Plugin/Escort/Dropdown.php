@@ -30,10 +30,18 @@ class Dropdown extends EscortPluginMultipleBase {
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
-    return array(
+  protected function baseConfigurationDefaults() {
+    return parent::baseConfigurationDefaults() + array(
       'trigger' => '',
       'trigger_icon' => '',
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function defaultConfiguration() {
+    return array(
       'dropdown' => '',
     );
   }
@@ -41,7 +49,8 @@ class Dropdown extends EscortPluginMultipleBase {
   /**
    * {@inheritdoc}
    */
-  public function escortForm($form, FormStateInterface $form_state) {
+  public function escortBaseForm($form, FormStateInterface $form_state) {
+    $form = parent::escortBaseForm($form, $form_state);
     $form['trigger'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Trigger title'),
@@ -52,6 +61,13 @@ class Dropdown extends EscortPluginMultipleBase {
       $form['trigger_icon']['#title'] = $this->t('Trigger icon');
       $form['trigger_icon']['#default_value'] = $this->configuration['trigger_icon'];
     }
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function escortForm($form, FormStateInterface $form_state) {
     $form['dropdown'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Dropdown content'),
@@ -63,9 +79,18 @@ class Dropdown extends EscortPluginMultipleBase {
   /**
    * {@inheritdoc}
    */
-  public function escortSubmit($form, FormStateInterface $form_state) {
+  public function escortBaseSubmit($form, FormStateInterface $form_state) {
+    parent::escortBaseSubmit($form, $form_state);
     $this->configuration['trigger'] = $form_state->getValue('trigger');
-    $this->configuration['trigger_icon'] = $form_state->getValue('trigger_icon');
+    if ($this->hasIconSupport()) {
+      $this->configuration['trigger_icon'] = $form_state->getValue('trigger_icon');
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function escortSubmit($form, FormStateInterface $form_state) {
     $this->configuration['dropdown'] = $form_state->getValue('dropdown');
   }
 

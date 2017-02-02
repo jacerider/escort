@@ -26,7 +26,6 @@
 
     setup: function () {
       var _this = this;
-      console.log('setup');
     }
   });
 
