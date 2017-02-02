@@ -55,13 +55,6 @@ function escort_theme() {
   return $themes;
 }
 
-// function escort_preprocess_page(&$variables) {
-//   if (\Drupal::moduleHandler()->moduleExists('ux')) {
-//     ksm($variables);
-//     $variables['page']['#theme_wrappers']['ux_wrapper']['#attributes']['class'][] = 'poop';
-//   }
-// }
-
 /**
  * Implements hook_element_info_alter().
  */
@@ -119,20 +112,6 @@ function escort_page_top(array &$page_top) {
 }
 
 /**
- * Implements hook_page_bottom().
- *
- * Add admin escort to the bottom of the page automatically.
- */
-function escort_page_bottom(array &$page_bottom) {
-  // if (!\Drupal::moduleHandler()->moduleExists('ux')) {
-  //   $page_bottom['escort_container'] = [
-  //     '#markup' => '</div>',
-  //     '#weight' => 1000,
-  //   ];
-  // }
-}
-
-/**
  * Implements hook_preprocess_html().
  */
 function escort_preprocess_html(&$variables) {
@@ -164,6 +143,13 @@ function escort_preprocess_html(&$variables) {
  */
 function escort_dialog_type() {
   return \Drupal::moduleHandler()->moduleExists('ux_dialog') ? 'ux_dialog' : 'modal';
+}
+
+/**
+ * Return the dialog class to use.
+ */
+function escort_dialog_class() {
+  return \Drupal::moduleHandler()->moduleExists('ux_dialog') ? 'use-ux-ajax' : 'use-ajax';
 }
 
 /**
