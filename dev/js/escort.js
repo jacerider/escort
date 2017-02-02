@@ -29,31 +29,34 @@
 
     setup: function () {
       var _this = this;
-      _this.$region.hover(function (e) {
+      _this.$region.on('mouseenter', function (e) {
         e.preventDefault();
         _this.showFull();
+      });
+    },
 
+    showFull: function () {
+      var _this = this;
+      if (!_this.full) {
+        _this.full = true;
+        _this.$body.addClass('show-escort-full-' + _this.region);
         // Bind body click event.
         _this.$body.on('click.escort-' + _this.region, function (e) {
           if (_this.full && !$(e.target).closest(_this.$region).length) {
             _this.hideFull();
           }
         });
-      });
-    },
-
-    showFull: function () {
-      if (!this.full) {
-        this.full = true;
-        this.$body.addClass('show-escort-full-' + this.region);
+        _this.$body.trigger('escort-region:show');
       }
     },
 
     hideFull: function () {
-      if (this.full) {
-        this.full = false;
-        this.$body.removeClass('show-escort-full-' + this.region);
-        this.$body.off('click.escort-' + this.region);
+      var _this = this;
+      if (_this.full) {
+        _this.full = false;
+        _this.$body.removeClass('show-escort-full-' + _this.region);
+        _this.$body.off('click.escort-' + _this.region);
+        _this.$body.trigger('escort-region:hide', [_this.$region]);
       }
     }
   });

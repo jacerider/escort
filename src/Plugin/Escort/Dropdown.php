@@ -117,9 +117,14 @@ class Dropdown extends EscortPluginMultipleBase {
 
     if ($this->configuration['ajax']) {
       $items['link']['#attributes']['href'] = Url::fromRoute('escort.escort_ajax', ['escort' => $this->getEscort()->id()])->toString();
-      $items['link']['#attributes']['class'][] = escort_ajax_class();
-      $items['link']['#attached']['library'][] = escort_ajax_library();
-      $items['dropdown']['#attributes']['id'] = 'escort-ajax-' . $this->getEscort()->uuid();
+      $items['link']['#attributes']['data-escort-ajax'] = '';
+      $items['link']['#attached']['library'][] = 'core/drupal.ajax';
+      $items['dropdown']['replace'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#value' => $this->t('Hello World'),
+        '#attributes' => ['id' => 'escort-ajax-' . $this->getEscort()->uuid()],
+      ];
     }
     else {
       $items['dropdown'] = $this->buildDropdown();
