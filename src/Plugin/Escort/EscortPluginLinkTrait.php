@@ -33,7 +33,31 @@ trait EscortPluginLinkTrait {
    */
   public function buildLink($title, $uri) {
 
+    list($title, $icon) = $this->titleToTitleIcon($title);
     $attributes = $this->getUriAsAttributes($uri);
+
+    $attributes['title'] = $title;
+
+    return [
+      '#tag' => 'a',
+      '#icon' => $icon,
+      '#attributes' => $attributes,
+      '#markup' => $title,
+    ];
+  }
+
+  /**
+   * Given a title, return an array containing title and icon.
+   *
+   * @param string $title
+   *   The title of the link.
+   *
+   * @return array
+   *   An array containing a title and icon key.
+   */
+  public function titleToTitleIcon($title) {
+    $title = $title;
+    $icon = '';
 
     // Icon support.
     if ($this->hasIconSupport()) {
@@ -49,14 +73,8 @@ trait EscortPluginLinkTrait {
       }
       $title = $title->getTitle();
     }
-    $attributes['title'] = $title;
 
-    return [
-      '#tag' => 'a',
-      '#icon' => $icon,
-      '#attributes' => $attributes,
-      '#markup' => $title,
-    ];
+    return [$title, $icon];
   }
 
   /**
