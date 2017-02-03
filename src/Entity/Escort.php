@@ -245,15 +245,15 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
    */
   public function buildOps() {
     $links = [];
-    $links[] = [
+    $links['edit'] = [
       'title' => t('Edit'),
       'url' => $this->toUrl(),
     ];
-    $links[] = [
+    $links['disable'] = [
       'title' => t('Disable'),
       'url' => $this->toUrl('disable-form'),
     ];
-    $links[] = [
+    $links['delete'] = [
       'title' => t('Delete'),
       'url' => $this->toUrl('delete-form'),
     ];

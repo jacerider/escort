@@ -157,7 +157,6 @@ class EscortViewBuilder extends EntityViewBuilder {
     $build = [
       '#theme' => 'escort_item',
       '#tag' => 'div',
-      '#icon' => '',
       '#attributes' => [],
       // All escorts get a "Configure escort" contextual link.
       '#contextual_links' => [
@@ -261,8 +260,11 @@ class EscortViewBuilder extends EntityViewBuilder {
         $build['#attributes']['class'][] = 'escort-sortable';
         $build['#attributes']['data-escort-id'] = $entity->id();
         // Add entity operations.
-        $ops = $entity->buildOps();
-        $build['ops']['move']['#markup'] = '<a class="escort-drag">Reorder</a>';
+        $ops = [
+          'drag' => [
+            'title' => t('Drag'),
+          ]
+        ] + $entity->buildOps();
         $build['ops']['links'] = [
           '#theme' => 'links',
           '#links' => $ops,
