@@ -138,27 +138,27 @@
 @include get-location($type: vertical, $region: left) {
 
   .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
-    border-top: 1px solid lighten($bg-color-left, 4%); // sass-lint:disable-line no-color-literals
-    border-bottom: 1px solid darken($bg-color-left, 4%); // sass-lint:disable-line no-color-literals
+    border-top: 1px solid lighten($bg-color-left, 5%); // sass-lint:disable-line no-color-literals
+    border-bottom: 1px solid darken($bg-color-left, 5%); // sass-lint:disable-line no-color-literals
   }
 
   .escort-group {
 
     &:first-child {
-      border-top: 1px solid lighten($bg-color-left, 4%);
+      border-top: 1px solid lighten($bg-color-left, 5%);
     }
 
     &:last-child {
-      border-bottom: 1px solid lighten($bg-color-left, 4%);
+      border-bottom: 1px solid lighten($bg-color-left, 5%);
     }
   }
 
   .escort-left-bottom {
-    border-top: 1px solid darken($bg-color-left, 4%);
+    border-top: 1px solid darken($bg-color-left, 5%);
 
     .escort-group {
-      border-top: 1px solid darken($bg-color-left, 4%);
-      border-bottom: 1px solid darken($bg-color-left, 4%);
+      border-top: 1px solid darken($bg-color-left, 5%);
+      border-bottom: 1px solid darken($bg-color-left, 5%);
 
       &:first-child {
         border-top: 0;
@@ -188,27 +188,27 @@
 @include get-location($type: vertical, $region: right) {
 
   .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
-    border-top: 1px solid lighten($bg-color-right, 4%); // sass-lint:disable-line no-color-literals
-    border-bottom: 1px solid darken($bg-color-right, 4%); // sass-lint:disable-line no-color-literals
+    border-top: 1px solid lighten($bg-color-right, 5%); // sass-lint:disable-line no-color-literals
+    border-bottom: 1px solid darken($bg-color-right, 5%); // sass-lint:disable-line no-color-literals
   }
 
   .escort-group {
 
     &:first-child {
-      border-top: 1px solid lighten($bg-color-right, 4%);
+      border-top: 1px solid lighten($bg-color-right, 5%);
     }
 
     &:last-child {
-      border-bottom: 1px solid lighten($bg-color-right, 4%);
+      border-bottom: 1px solid lighten($bg-color-right, 5%);
     }
   }
 
   .escort-right-bottom {
-    border-top: 1px solid darken($bg-color-right, 4%);
+    border-top: 1px solid darken($bg-color-right, 5%);
 
     .escort-group {
-      border-top: 1px solid darken($bg-color-right, 4%);
-      border-bottom: 1px solid darken($bg-color-right, 4%);
+      border-top: 1px solid darken($bg-color-right, 5%);
+      border-bottom: 1px solid darken($bg-color-right, 5%);
 
       &:first-child {
         border-top: 0;

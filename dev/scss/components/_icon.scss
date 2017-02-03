@@ -22,18 +22,35 @@
     &:hover {
 
       .escort-content {
-        display: block;
+        opacity: 1;
+        height: auto;
+        overflow: visible;
+
+        &::before {
+          opacity: 1;
+        }
       }
     }
 
     .escort-content {
       margin: 0 !important;
-      display: none;
+      height: 0;
+      display: block;
+      overflow: hidden;
       position: absolute;
-      line-height: $base-size / 2;
+      z-index: 1;
+      line-height: $base-size * 0.75;
       min-width: 100%;
       left: 0;
-      padding: ($padding / 4) $padding;
+      padding: 0 $padding;
+      opacity: 0;
+      box-shadow: 0 2px 5px rgba($black, 0.5); // sass-lint:disable-line no-color-literals
+      transition: opacity 200ms, top 300ms, bottom 300ms;
+
+      &::before {
+        opacity: 0;
+        transition: opacity 100ms;
+      }
     }
   }
 }
@@ -60,16 +77,37 @@
 
     .escort-link.has-icon:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
+      &:hover {
+
+        .escort-content {
+          top: 100%;
+        }
+      }
+
       .escort-content {
-        @include css-triangle($base-size / 4.5, smart-scale($bg-color-top, 20%), up, before) {
+        @include css-triangle($base-size / 4, smart-scale($bg-color-top, 20%), up, before) {
           bottom: 100%;
           position: absolute;
         };
 
         background-color: smart-scale($bg-color-top, 20%);
-        top: 100%;
+        top: 90%;
         border-bottom-left-radius: $border-radius;
         border-bottom-right-radius: $border-radius;
+      }
+    }
+
+    .escort-top-left {
+
+      .escort-link.has-icon:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+        .escort-content {
+
+          &::before {
+            left: 0;
+            border-left-width: 0;
+          }
+        }
       }
     }
 
@@ -81,8 +119,9 @@
           left: auto;
           right: 0;
 
-          &:before {
-            right: $margin;
+          &::before {
+            right: 0;
+            border-right-width: 0;
           }
         }
       }
@@ -96,16 +135,37 @@
 
     .escort-link.has-icon:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
+      &:hover {
+
+        .escort-content {
+          bottom: 100%;
+        }
+      }
+
       .escort-content {
-        @include css-triangle($base-size / 4.5, smart-scale($bg-color-bottom, 20%), down, before) {
+        @include css-triangle($base-size / 4, smart-scale($bg-color-bottom, 20%), down, before) {
           top: 100%;
           position: absolute;
         };
 
         background-color: smart-scale($bg-color-bottom, 20%);
-        bottom: 100%;
+        bottom: 90%;
         border-top-left-radius: $border-radius;
         border-top-right-radius: $border-radius;
+      }
+    }
+
+    .escort-bottom-left {
+
+      .escort-link.has-icon:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+        .escort-content {
+
+          &::before {
+            left: 0;
+            border-left-width: 0;
+          }
+        }
       }
     }
 
@@ -117,8 +177,9 @@
           left: auto;
           right: 0;
 
-          &:before {
-            right: $margin;
+          &::before {
+            right: 0;
+            border-right-width: 0;
           }
         }
       }
