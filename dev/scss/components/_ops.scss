@@ -12,7 +12,35 @@
   &:hover {
 
     .escort-ops {
-      display: block;
+      display: table;
+    }
+
+    .escort-item:hover {
+
+      .escort-ops {
+        width: 100%;
+        opacity: 1;
+      }
+
+      a {
+        color: $white;
+        transition: none;
+        text-shadow: 0 1px 3px transparentize($black, 0.75);
+      }
+
+      li {
+        width: 33%;
+        background-color: $bg-color-edit;
+      }
+
+      li + li {
+        display: table-cell;
+        background-color: $bg-color-disable;
+      }
+
+      li:last-child {
+        background-color: $bg-color-delete;
+      }
     }
   }
 }
@@ -25,9 +53,19 @@
   padding: 0;
   list-style-type: none;
   z-index: 1;
+  opacity: 0.75;
+
+  a {
+    display: block;
+  }
 
   li {
-    display: inline-flex;
+    display: table-cell;
+    text-align: center;
+
+    &+ li {
+      display: none;
+    }
   }
 }
 
@@ -60,8 +98,7 @@
     top: 0;
 
     a {
-      padding: 0 ($padding / 2);
-      line-height: $base-size;
+      padding: ($padding * 1.25) ($padding / 2);
     }
 
     > :first-child {
@@ -90,15 +127,18 @@
     //   display: none;
     //   box-shadow: 0 1px 10px transparent;
     // };
-    background-color: $bg-color-left;
+    li {
+      background-color: $bg-color-left;
+    }
 
     > :first-child {
-      border-left: 1px solid smart-scale($bg-color-left);
-      border-right: 1px solid smart-scale($bg-color-left);
+      border-left: 1px solid smart-scale($bg-color-left, 5%);
+      border-right: 1px solid smart-scale($bg-color-left, 5%);
     }
 
     > :last-child {
-      border-left: 1px solid smart-scale($bg-color-left);
+      border-left: 1px solid smart-scale($bg-color-left, 5%);
+      border-right: 1px solid smart-scale($bg-color-left, 5%);
     }
   }
 }
@@ -113,15 +153,18 @@
     //   display: none;
     //   box-shadow: 0 1px 10px transparent;
     // };
-    background-color: $bg-color-right;
+    li {
+      background-color: $bg-color-right;
+    }
 
     > :first-child {
-      border-left: 1px solid smart-scale($bg-color-right);
-      border-right: 1px solid smart-scale($bg-color-right);
+      border-left: 1px solid smart-scale($bg-color-right, 5%);
+      border-right: 1px solid smart-scale($bg-color-right, 5%);
     }
 
     > :last-child {
-      border-left: 1px solid smart-scale($bg-color-right);
+      border-left: 1px solid smart-scale($bg-color-right, 5%);
+      border-right: 1px solid smart-scale($bg-color-right, 5%);
     }
   }
 }
