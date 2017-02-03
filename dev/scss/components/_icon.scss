@@ -85,7 +85,7 @@
       }
 
       .escort-content {
-        @include css-triangle($base-size / 3, smart-scale($bg-color-top, 20%), up, before) {
+        @include css-triangle($base-size / 4, smart-scale($bg-color-top, 20%), up, before) {
           bottom: 100%;
           position: absolute;
         };
@@ -143,7 +143,7 @@
       }
 
       .escort-content {
-        @include css-triangle($base-size / 4.5, smart-scale($bg-color-bottom, 20%), down, before) {
+        @include css-triangle($base-size / 4, smart-scale($bg-color-bottom, 20%), down, before) {
           top: 100%;
           position: absolute;
         };
