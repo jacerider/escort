@@ -17,12 +17,6 @@
  *   - escort-[module]: The module generating the escort. For example, the user
  *     module is responsible for handling the default user navigation escort. In
  *     that case the class would be 'escort-user'.
- * - $title_prefix (array): An array containing additional output populated by
- *   modules, intended to be displayed in front of the main title tag that
- *   appears in the template.
- * - $title_suffix (array): An array containing additional output populated by
- *   modules, intended to be displayed after the main title tag that appears in
- *   the template.
  *
  * Helper variables:
  * - $classes_array: Array of html class attribute values. It is flattened
@@ -45,32 +39,25 @@
  * @see template_process()
  */
 #}
-{%
-  set classes = [
-    icon ? 'has-icon',
-  ]
-%}
-<{{tag}}{{ attributes.addClass(classes) }}>
-  <div>
-  {% if icon %}
-    <span{{ icon_attributes.addClass('escort-icon') }}>{{ icon }}</span>
-  {% endif %}
+<{{tag}}{{ attributes }}>
+  <div class="escort-inner">
+    {% if prefix %}
+      <span{{ prefix_attributes.addClass('escort-prefix') }}>{{ prefix }}</span>
+    {% endif %}
 
-  {{ title_prefix }}
-  {% if label %}
-    <h2{{ title_attributes.addClass('escort-title') }}>{{ label }}</h2>
-  {% endif %}
-  {{ title_suffix }}
+    <span{{ content_attributes.addClass('escort-content') }}>
+      {% block content %}
+        {{ content }}
+      {% endblock %}
+    </span>
 
-  <span{{ content_attributes.addClass('escort-content') }}>
-    {% block content %}
-      {{ content }}
-    {% endblock %}
-  </span>
+    {% if suffix %}
+      <span{{ prefix_attributes.addClass('escort-suffix') }}>{{ suffix }}</span>
+    {% endif %}
 
-  {% if ops %}
-    {{ ops }}
-  {% endif %}
-</div>
+    {% if ops %}
+      {{ ops }}
+    {% endif %}
+  </div>
 </{{tag}}>
 

@@ -22,30 +22,47 @@ class Dropdown extends EscortPluginMultipleBase {
   protected $provideMultiple = TRUE;
 
   /**
-   * Whether the escort provides multiple sub-escorts.
+   * {@inheritdoc}
+   */
+  protected $usesIcon = FALSE;
+
+  /**
+   * Whether the escort allows trigger text/icon configuration.
    *
    * @var bool
    */
-  protected $usesIcon = FALSE;
+  protected $usesTrigger = TRUE;
+
+  /**
+   * Checks whether the escort allows trigger text/icon configuration.
+   *
+   * @return bool
+   *   True if icon should be used.
+   */
+  public function usesTrigger() {
+    return $this->hasIconSupport() && $this->usesTrigger;
+  }
 
   /**
    * {@inheritdoc}
    */
   protected function baseConfigurationDefaults() {
-    return parent::baseConfigurationDefaults() + array(
-      'trigger' => '',
-      'trigger_icon' => '',
-      'ajax' => FALSE,
-    );
+    $defaults = parent::baseConfigurationDefaults();
+    if ($this->usesTrigger()) {
+      $defaults['trigger'] = '';
+      $defaults['trigger_icon'] = '';
+    }
+    $defaults['ajax'] = FALSE;
+    return $defaults;
   }
 
   /**
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return array(
+    return [
       'dropdown' => '',
-    );
+    ];
   }
 
   /**
@@ -53,15 +70,13 @@ class Dropdown extends EscortPluginMultipleBase {
    */
   public function escortBaseForm($form, FormStateInterface $form_state) {
     $form = parent::escortBaseForm($form, $form_state);
-    $form['trigger'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Trigger title'),
-      '#default_value' => $this->configuration['trigger'],
-    ];
-    if ($this->hasIconSupport()) {
-      $form['trigger_icon'] = $this->escortIconForm($form, $form_state);
-      $form['trigger_icon']['#title'] = $this->t('Trigger icon');
-      $form['trigger_icon']['#default_value'] = $this->configuration['trigger_icon'];
+    if ($this->usesTrigger()) {
+      $form['trigger'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Trigger title'),
+        '#default_value' => $this->configuration['trigger'],
+      ];
+      $form['trigger_icon'] = $this->escortIconForm($form, $form_state, $this->t('Trigger icon'), $this->configuration['trigger_icon']);
     }
     $form['ajax'] = array(
       '#type' => 'checkbox',
@@ -90,7 +105,7 @@ class Dropdown extends EscortPluginMultipleBase {
     parent::escortBaseSubmit($form, $form_state);
     $this->configuration['trigger'] = $form_state->getValue('trigger');
     $this->configuration['ajax'] = $form_state->getValue('ajax');
-    if ($this->hasIconSupport()) {
+    if ($this->usesTrigger()) {
       $this->configuration['trigger_icon'] = $form_state->getValue('trigger_icon');
     }
   }
@@ -122,7 +137,6 @@ class Dropdown extends EscortPluginMultipleBase {
       $items['dropdown']['replace'] = [
         '#type' => 'html_tag',
         '#tag' => 'div',
-        '#value' => $this->t('Hello World'),
         '#attributes' => ['id' => 'escort-ajax-' . $this->getEscort()->uuid()],
       ];
     }

@@ -51,7 +51,7 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
   protected $provideMultiple = FALSE;
 
   /**
-   * Whether the escort provides multiple sub-escorts.
+   * Whether the escort support a base icon.
    *
    * @var bool
    */
@@ -104,12 +104,15 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
    *   An associative array with the default configuration.
    */
   protected function baseConfigurationDefaults() {
-    return array(
+    $defaults = array(
       'id' => $this->getPluginId(),
       'label' => '',
-      'icon' => '',
       'provider' => $this->pluginDefinition['provider'],
     );
+    if ($this->usesIcon()) {
+      $defaults['icon'] = '';
+    }
+    return $defaults;
   }
 
   /**
@@ -202,8 +205,8 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
       '#default_value' => $this->label(),
       '#required' => TRUE,
     ];
-    if ($this->usesIcon && $this->hasIconSupport()) {
-      $form['icon'] = $this->escortIconForm($form, $form_state);
+    if ($this->usesIcon()) {
+      $form['icon'] = $this->escortIconForm($form, $form_state, $this->t('Icon'), $this->configuration['icon']);
     }
     return $form;
   }
@@ -211,11 +214,11 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
   /**
    * {@inheritdoc}
    */
-  public function escortIconForm($form, FormStateInterface $form_state) {
+  public function escortIconForm($form, FormStateInterface $form_state, $title, $default_value) {
     return [
       '#type' => 'micon',
-      '#title' => $this->t('Icon'),
-      '#default_value' => $this->configuration['icon'],
+      '#title' => $title,
+      '#default_value' => $default_value,
     ];
   }
 
@@ -347,6 +350,16 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
    */
   public function isAdmin() {
     return \Drupal::service('escort.path.matcher')->isAdmin();
+  }
+
+  /**
+   * Checks if plugin defines an icon to use.
+   *
+   * @return bool
+   *   True if icon should be used.
+   */
+  public function usesIcon() {
+    return $this->hasIconSupport() && $this->usesIcon;
   }
 
   /**

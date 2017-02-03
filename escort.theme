@@ -20,8 +20,8 @@ function template_preprocess_escort(&$variables) {
   // Prepare the escort attributes.
   $variables['attributes'] = $element['#attributes'];
 
-  foreach (Element::children($element) as $key) {
-    $variables['content'][$key] = $element[$key];
+  foreach (Element::children($element) as $prefix) {
+    $variables['content'][$prefix] = $element[$prefix];
   }
 }
 
@@ -40,8 +40,8 @@ function template_preprocess_escort_region(&$variables) {
   // Prepare the escort attributes.
   $variables['attributes'] = $element['#attributes'];
 
-  foreach (Element::children($element) as $key) {
-    $variables['content'][$key] = $element[$key];
+  foreach (Element::children($element) as $prefix) {
+    $variables['content'][$prefix] = $element[$prefix];
   }
 }
 
@@ -60,8 +60,8 @@ function template_preprocess_escort_section(&$variables) {
   // Prepare the escort attributes.
   $variables['attributes'] = $element['#attributes'];
 
-  foreach (Element::children($element) as $key) {
-    $variables['content'][$key] = $element[$key];
+  foreach (Element::children($element) as $prefix) {
+    $variables['content'][$prefix] = $element[$prefix];
   }
 }
 
@@ -85,9 +85,42 @@ function template_preprocess_escort_item(&$variables) {
   $variables['tag'] = !empty($variables['element']['#tag']) ? $variables['element']['#tag'] : 'div';
   $variables['ops'] = !empty($variables['element']['ops']) ? $variables['element']['ops'] : '';
   $variables['is_escort_admin'] = $variables['element']['#is_escort_admin'];
+  $variables['prefix_attributes'] = [];
+
+  $variables['image'] = '';
+  // Image can be set within element content.
+  if (!empty($variables['element']['content']['#image'])) {
+    $variables['image'] = $variables['element']['content']['#image'];
+  }
+  // If image not set within content, it may also be set within configuration.
+  else if (!empty($variables['configuration']['image'])) {
+    $variables['image'] = $variables['configuration']['image'];
+  }
+
+  // Theme our image if it is a URL.
+  if (!empty($variables['image']) && is_string($variables['image']) && $scheme = file_uri_scheme($variables['image'])) {
+    switch ($scheme) {
+      case 'public':
+      case 'private':
+        $variables['prefix'][] = [
+          '#theme' => 'image_style',
+          '#style_name' => 'escort',
+          '#uri' => $variables['image'],
+        ];
+        break;
+
+      default:
+        $variables['prefix'][] = [
+          '#theme' => 'image',
+          '#uri' => $variables['image'],
+        ];
+        break;
+    }
+    $variables['attributes']['class'][] = 'has-image';
+    $variables['prefix_attributes']['class'][] = 'escort-image';
+  }
 
   $variables['icon'] = '';
-  $variables['icon_attributes'] = new Attribute();
   // Icon can be set within element content.
   if (!empty($variables['element']['content']['#icon'])) {
     $variables['icon'] = $variables['element']['content']['#icon'];
@@ -98,17 +131,13 @@ function template_preprocess_escort_item(&$variables) {
   }
 
   // Let micon theme our icon.
-  if (!empty($variables['icon'])) {
-    $variables['icon'] = [
+  if (!empty($variables['icon']) && is_string($variables['icon'])) {
+    $variables['prefix'] = [
       '#theme' => 'micon',
       '#icon' => $variables['icon'],
     ];
-  }
-
-  // A escort's label is configuration: it is static. Allow dynamic labels to be
-  // set in the render array.
-  if (isset($variables['element']['content']['#title']) && !empty($variables['configuration']['label_display'])) {
-    $variables['label'] = $variables['element']['content']['#title'];
+    $variables['attributes']['class'][] = 'has-icon';
+    $variables['prefix_attributes']['class'][] = 'escort-icon';
   }
 
   // Add base class
@@ -137,6 +166,7 @@ function template_preprocess_escort_item(&$variables) {
       $variables['tag'] = 'div';
     }
   }
+  $variables['prefix_attributes'] = new Attribute($variables['prefix_attributes']);
 }
 
 
@@ -149,7 +179,7 @@ function template_preprocess_escort_item(&$variables) {
  *   An associative array containing:
  *   - element: A render element containing:
  *     - #link: A menu link array with 'title', 'url', and (optionally)
- *       'localized_options' keys.
+ *       'localized_options' prefixs.
  *     - #active: A boolean indicating whether the local task is active.
  */
 function template_preprocess_escort_plugin_local_task(&$variables) {

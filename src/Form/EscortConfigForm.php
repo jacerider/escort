@@ -8,6 +8,10 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\escort\EscortRegionManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\image\Entity\ImageStyle;
 
 /**
  * Class EscortConfigForm.
@@ -31,12 +35,20 @@ class EscortConfigForm extends ConfigFormBase {
   protected $escortRegionManager;
 
   /**
+   * The module handler to invoke the alter hook.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManager $entity_type_manager, EscortRegionManagerInterface $escort_region_manager) {
+  public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManager $entity_type_manager, EscortRegionManagerInterface $escort_region_manager, ModuleHandlerInterface $module_handler) {
     parent::__construct($config_factory);
     $this->entityTypeManager = $entity_type_manager;
     $this->escortRegionManager = $escort_region_manager;
+    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -46,7 +58,8 @@ class EscortConfigForm extends ConfigFormBase {
     return new static(
       $container->get('config.factory'),
       $container->get('entity_type.manager'),
-      $container->get('escort.region_manager')
+      $container->get('escort.region_manager'),
+      $container->get('module_handler')
     );
   }
 
@@ -97,6 +110,51 @@ class EscortConfigForm extends ConfigFormBase {
       }
     }
 
+    // User entity picture support.
+    $has_picture = user_picture_enabled();
+    $form['user_picture'] = [
+      '#type' => 'details',
+      '#title' => $this->t('User Profile Picture'),
+      '#open' => !$has_picture,
+    ];
+    if ($has_picture) {
+      $form['user_picture']['remove'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Remove user picture field'),
+        '#submit' => array([$this, 'submitUserPictureRemove']),
+      ];
+    }
+    else {
+      $form['user_picture']['add'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Create user picture field'),
+        '#submit' => array([$this, 'submitUserPictureAdd']),
+      ];
+    }
+
+    // Image style used within plugins.
+    $style = ImageStyle::load('escort');
+    $form['image_style'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Image Style'),
+      '#open' => !$style,
+      '#tree' => TRUE,
+    ];
+    if ($style) {
+      $form['image_style']['remove'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Remove escort image style'),
+        '#submit' => array([$this, 'submitImageStyleRemove']),
+      ];
+    }
+    else {
+      $form['image_style']['add'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Add escort image style'),
+        '#submit' => array([$this, 'submitImageStyleAdd']),
+      ];
+    }
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -123,6 +181,164 @@ class EscortConfigForm extends ConfigFormBase {
       ->set('enabled', array_filter($form_state->getValue('enabled')))
       ->set('regions', array_filter($regions))
       ->save();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitUserPictureAdd(array &$form, FormStateInterface $form_state) {
+    $bundles = ['user'];
+
+    $fields['user_picture'] = [
+      'type' => 'image',
+      'entity_type' => 'user',
+      'bundle' => 'user',
+      'label' => 'User picture',
+      'description' => 'Your virtual face or picture.',
+      'required' => FALSE,
+      'widget' => [
+        'type' => 'image_image',
+        'settings' => [
+          'progress_indicator' => 'throbber',
+          'preview_image_style' => 'thumbnail',
+        ],
+      ],
+      'formatter' => [
+        'default' => [
+          'type' => 'image',
+          'label' => 'hidden',
+          'settings' => [
+            'image_style' => 'thumbnail',
+            'image_link' => 'content',
+          ],
+        ],
+      ],
+      'settings' => [
+        'file_extensions' => 'png gif jpg jpeg',
+        'file_directory' => 'pictures/[date:custom:Y]-[date:custom:m]',
+        'max_filesize' => '30 KB',
+        'max_resolution' => '128x128',
+        'alt_field' => FALSE,
+        'title_field' => FALSE,
+        'alt_field_required' => FALSE,
+        'title_field_required' => FALSE,
+      ],
+    ];
+
+    foreach ($fields as $field_name => $config) {
+      $field_storage = FieldStorageConfig::loadByName($config['entity_type'], $field_name);
+      if (empty($field_storage)) {
+        FieldStorageConfig::create(array(
+          'field_name' => $field_name,
+          'entity_type' => $config['entity_type'],
+          'type' => $config['type'],
+        ))->save();
+      }
+    }
+
+    foreach ($bundles as $bundle) {
+      foreach ($fields as $field_name => $config) {
+        $config_array = array(
+          'field_name' => $field_name,
+          'entity_type' => $config['entity_type'],
+          'bundle' => $bundle,
+          'label' => $config['label'],
+          'required' => $config['required'],
+        );
+      }
+
+      if (isset($config['settings'])) {
+        $config_array['settings'] = $config['settings'];
+      }
+
+      $field = FieldConfig::loadByName($config['entity_type'], $bundle, $field_name);
+      if (empty($field) && $bundle !== "" && !empty($bundle)) {
+        FieldConfig::create($config_array)->save();
+      }
+
+      if ($bundle !== "" && !empty($bundle)) {
+        if (!empty($field)) {
+          $field->setLabel($config['label'])->save();
+          $field->setRequired($config['required'])->save();
+        }
+        if ($config['widget']) {
+          entity_get_form_display($config['entity_type'], $bundle, 'default')
+            ->setComponent($field_name, $config['widget'])
+            ->save();
+        }
+        if ($config['formatter']) {
+          foreach ($config['formatter'] as $view => $formatter) {
+            $view_modes = \Drupal::entityManager()->getViewModes($config['entity_type']);
+            if (isset($view_modes[$view]) || $view == 'default') {
+              entity_get_display($config['entity_type'], $bundle, $view)
+                ->setComponent($field_name, !is_array($formatter) ? $config['formatter']['default'] : $formatter)
+                ->save();
+            }
+          }
+        }
+      }
+    }
+    drupal_set_message($this->t('A user picture field has been created within the user entity type.'));
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitUserPictureRemove(array &$form, FormStateInterface $form_state) {
+    $bundles = ['user'];
+
+    $fields['user_picture'] = [
+      'entity_type' => 'user',
+    ];
+
+    foreach ($bundles as $bundle) {
+      foreach ($fields as $field_name => $config) {
+        $field = FieldConfig::loadByName($config['entity_type'], $bundle, $field_name);
+        if (!empty($field)) {
+          $field->delete();
+        }
+      }
+    }
+
+    foreach ($fields as $field_name => $config) {
+      $field_storage = FieldStorageConfig::loadByName($config['entity_type'], $field_name);
+      if (!empty($field_storage)) {
+        $field_storage->delete();
+      }
+    }
+    drupal_set_message($this->t('The user picture field has been removed from the user entity type.'));
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitImageStyleAdd(array &$form, FormStateInterface $form_state) {
+    $style = ImageStyle::load('escort');
+    if (!$style) {
+      $style = ImageStyle::create(array('name' => 'escort', 'label' => 'Escort'));
+      $effect = [
+        'id' => 'image_scale_and_crop',
+        'data' => [
+          'width' => 128,
+          'height' => 128,
+        ],
+      ];
+      if ($this->moduleHandler->moduleExists('focal_point')) {
+        $effect['id'] = 'focal_point_scale_and_crop';
+      }
+      $style->addImageEffect($effect);
+      $style->save();
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitImageStyleRemove(array &$form, FormStateInterface $form_state) {
+    $style = ImageStyle::load('escort');
+    if ($style) {
+      $style->delete();
+    }
   }
 
 }
