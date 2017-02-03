@@ -139,10 +139,17 @@ function escort_preprocess_html(&$variables) {
 }
 
 /**
+ * Check if UX dialog module is installed.
+ */
+function escort_ux_dialog_exists() {
+  return \Drupal::moduleHandler()->moduleExists('ux_dialog');
+}
+
+/**
  * Return the ajax class to use.
  */
 function escort_ajax_class() {
-  return \Drupal::moduleHandler()->moduleExists('ux_dialog') ? 'use-ux-ajax' : 'use-ajax';
+  return escort_ux_dialog_exists() ? 'use-ux-ajax' : 'use-ajax';
 }
 
 /**
@@ -156,12 +163,12 @@ function escort_ajax_library() {
  * Return the dialog type to use.
  */
 function escort_dialog_type() {
-  return \Drupal::moduleHandler()->moduleExists('ux_dialog') ? 'ux_dialog' : 'modal';
+  return escort_ux_dialog_exists() ? 'ux_dialog' : 'modal';
 }
 
 /**
  * Return the dialog library to use.
  */
 function escort_dialog_library() {
-  return \Drupal::moduleHandler()->moduleExists('ux_dialog') ? 'ux_dialog/ux_dialog' : 'core/drupal.dialog.ajax';
+  return escort_ux_dialog_exists() ? 'ux_dialog/ux_dialog' : 'core/drupal.dialog.ajax';
 }

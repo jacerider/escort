@@ -6,9 +6,10 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormStateInterface;
 
 use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\ux_dialog\Ajax\CloseUxDialogCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Ajax\PrependCommand;
+use Drupal\Core\Ajax\CloseDialogCommand;
+use Drupal\ux_dialog\Ajax\CloseUxDialogCommand;
 
 /**
  * A trait that provides dialog utilities.
@@ -55,7 +56,12 @@ trait EscortAjaxTrait {
    */
   public function ajaxCallbackRefreshEscort($form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
-    $response->addCommand(new CloseUxDialogCommand());
+    if (escort_ux_dialog_exists()) {
+      $response->addCommand(new CloseUxDialogCommand());
+    }
+    else {
+      $response->addCommand(new CloseDialogCommand());
+    }
     $response->addCommand(new ReplaceCommand('#escort', escort_render()));
     $response->addCommand(new PrependCommand('#ux-document', ['#type' => 'status_messages']));
     return $response;
