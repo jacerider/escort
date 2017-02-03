@@ -63,15 +63,15 @@
  */
 @include get-location($type: vertical) {
 
-  .escort-dropdown {
+  // .escort-dropdown {
 
-    &.escort-active {
+  //   &.escort-active {
 
-      .escort-dropdown-trigger {
-        border: 0;
-      }
-    }
-  }
+  //     .escort-dropdown-trigger {
+  //       border: 0;
+  //     }
+  //   }
+  // }
 
   .escort-dropdown-content {
     width: 100%;
