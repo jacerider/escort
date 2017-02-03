@@ -3,44 +3,49 @@
 // -----------------------------------------------------------------------------
 // Styles for operation buttons for each escort widget on the admin page
 
-.escort-region {
+.is-escort-admin {
 
-  // .escort-ops {
-  //   display: block !important;
-  // }
-
-  &:hover {
+  .escort-region:hover { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-ops {
       display: table;
+
+      .drag {
+        cursor: move;
+      }
+    }
+  }
+
+  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+
+    .escort-ops {
+      width: 100%;
+      opacity: 1;
     }
 
-    .escort-item:hover {
+    a,
+    li {
+      color: $white;
+      transition: none;
+      text-shadow: 0 1px 3px transparentize($black, 0.75);
+    }
 
-      .escort-ops {
-        width: 100%;
-        opacity: 1;
-      }
+    li {
+      width: 25%;
+      background-color: $primary-color;
+      display: table-cell;
+    }
 
-      a {
-        color: $white;
-        transition: none;
-        text-shadow: 0 1px 3px transparentize($black, 0.75);
-      }
+    .edit { // sass-lint:disable-line force-pseudo-nesting
+      background-color: $bg-color-edit;
+    }
 
-      li {
-        width: 33%;
-        background-color: $bg-color-edit;
-      }
+    .disable { // sass-lint:disable-line force-pseudo-nesting
+      background-color: $bg-color-disable;
+    }
 
-      li + li {
-        display: table-cell;
-        background-color: $bg-color-disable;
-      }
-
-      li:last-child {
-        background-color: $bg-color-delete;
-      }
+    .delete { // sass-lint:disable-line force-pseudo-nesting
+      background-color: $bg-color-delete;
     }
   }
 }
@@ -60,12 +65,12 @@
   }
 
   li {
-    display: table-cell;
+    display: none;
     text-align: center;
+  }
 
-    &+ li {
-      display: none;
-    }
+  li:nth-child(2) {
+    display: table-cell;
   }
 }
 
@@ -136,6 +141,10 @@
       border-right: 1px solid smart-scale($bg-color-left, 5%);
     }
 
+    > :nth-child(2) {
+      border-right: 1px solid smart-scale($bg-color-left, 5%);
+    }
+
     > :last-child {
       border-left: 1px solid smart-scale($bg-color-left, 5%);
       border-right: 1px solid smart-scale($bg-color-left, 5%);
@@ -159,6 +168,10 @@
 
     > :first-child {
       border-left: 1px solid smart-scale($bg-color-right, 5%);
+      border-right: 1px solid smart-scale($bg-color-right, 5%);
+    }
+
+    > :nth-child(2) {
       border-right: 1px solid smart-scale($bg-color-right, 5%);
     }
 

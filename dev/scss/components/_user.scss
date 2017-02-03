@@ -1,0 +1,31 @@
+////////////////////////////////////////////////////////////////////////////////
+// ADD
+// -----------------------------------------------------------------------------
+// Styles for add escort widget button on the admin page
+
+.escort-type-user {
+
+  .escort-item {
+    height: $base-size;
+  }
+
+  .escort-image {
+    display: block;
+    width: $base-size * 1.5;
+    height: $base-size * 1.5;
+    margin-top: $margin * -0.75;
+    overflow: hidden;
+    border-radius: 50%;
+    float: left;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    &+ .escort-content {
+      float: right;
+      margin-left: $margin;
+    }
+  }
+}
