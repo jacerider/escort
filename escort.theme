@@ -142,6 +142,7 @@ function template_preprocess_escort_item(&$variables) {
 
   // Add base class
   $variables['attributes']['class'][] = 'escort-item';
+  $variables['attributes']['class'][] = 'escort-type-' . $variables['plugin_id'];
   if ($variables['tag'] == 'a') {
     $variables['attributes']['class'][] = 'escort-link';
   }
@@ -149,7 +150,7 @@ function template_preprocess_escort_item(&$variables) {
   // Create a valid HTML ID and make sure it is unique.
   if (!empty($variables['element']['#id']) && empty($variables['content']['#escort_group'])) {
     $variables['attributes']['id'] = Html::getUniqueId('escort-item-' . $variables['element']['#id']);
-    $variables['attributes']['class'][] = $variables['attributes']['id'];
+    // $variables['attributes']['class'][] = $variables['attributes']['id'];
   }
 
   // Proactively add aria-describedby if possible to improve accessibility.

@@ -153,7 +153,7 @@ class EscortRegionManager implements EscortRegionManagerInterface {
    *   The region id.
    *
    * @return string
-   *   The region base id.
+   *   The region group id.
    */
   public function getGroupId($region_id) {
     foreach (static::rawRegions() as $group_id => $group) {
@@ -173,7 +173,7 @@ class EscortRegionManager implements EscortRegionManagerInterface {
    *   The region id.
    *
    * @return string
-   *   The region base id.
+   *   The region section id.
    */
   public function getSectionId($region_id) {
     foreach (static::rawRegions() as $group_id => $group) {
@@ -184,6 +184,44 @@ class EscortRegionManager implements EscortRegionManagerInterface {
       }
     }
     return NULL;
+  }
+
+  /**
+   * Get the label from the group_id OR group_id . section_id.
+   *
+   * @var $region_or_group_id string
+   *   The region id.
+   *
+   * @return string
+   *   The region group label.
+   */
+  public function getGroupLabel($region_or_group_id) {
+    $regions = static::rawRegions();
+    $title = '';
+    $group_id = isset($regions[$region_or_group_id]) ? $region_or_group_id : $this->getGroupId($region_or_group_id);
+    if ($group_id && isset($regions[$group_id])) {
+      $title = $regions[$group_id]['label'];
+    }
+    return $title;
+  }
+
+  /**
+   * Get the type from the group_id OR group_id . section_id.
+   *
+   * @var $region_or_group_id string
+   *   The region id.
+   *
+   * @return string
+   *   The region group type.
+   */
+  public function getGroupType($region_or_group_id) {
+    $regions = static::rawRegions();
+    $type = '';
+    $group_id = isset($regions[$region_or_group_id]) ? $region_or_group_id : $this->getGroupId($region_or_group_id);
+    if ($group_id && isset($regions[$group_id])) {
+      $type = $regions[$group_id]['type'];
+    }
+    return $type;
   }
 
 }

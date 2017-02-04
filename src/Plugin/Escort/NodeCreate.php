@@ -39,7 +39,7 @@ class NodeCreate extends Dropdown implements ContainerFactoryPluginInterface {
    *
    * @var \Drupal\Core\EntityTypeManagerInterface
    */
-  protected $entityManager;
+  protected $entityTypeManager;
 
   /**
    * The renderer service.

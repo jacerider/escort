@@ -97,6 +97,11 @@ class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface
   public function build() {
     $build = [];
     $build['#tag'] = 'a';
+    $escort = $this->getEscort();
+    $type = $this->escortRegionManager->getGroupType($escort->getRegion());
+    if ($this->configuration['event'] == 'click' || $type == 'vertical') {
+      $build['#markup'] = $this->t('Toggle ' . $this->escortRegionManager->getGroupLabel($this->configuration['region']));
+    }
     $build['#attached']['library'][] = 'escort/escort.toggle';
     $build['#attributes']['class'][] = 'escort-toggle';
     $build['#attributes']['data-region'] = $this->configuration['region'];

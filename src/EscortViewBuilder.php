@@ -317,12 +317,16 @@ class EscortViewBuilder extends EntityViewBuilder {
     foreach (array(
       '#tag',
       '#attributes',
+      '#attached',
       '#contextual_links',
       '#weight',
       '#access',
     ) as $property) {
       if (isset($content[$property])) {
-        if (is_array($content[$property])) {
+        if (!isset($build[$property])) {
+          $build[$property] = $content[$property];
+        }
+        elseif (is_array($content[$property])) {
           $build[$property] = NestedArray::mergeDeep($build[$property], $content[$property]);
         }
         else {

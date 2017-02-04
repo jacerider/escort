@@ -45,11 +45,13 @@
       <span{{ prefix_attributes.addClass('escort-prefix') }}>{{ prefix }}</span>
     {% endif %}
 
-    <span{{ content_attributes.addClass('escort-content') }}>
-      {% block content %}
-        {{ content }}
-      {% endblock %}
-    </span>
+    {% if content %}
+      <span{{ content_attributes.addClass('escort-content') }}>
+        {% block content %}
+          {{ content }}
+        {% endblock %}
+      </span>
+    {% endif %}
 
     {% if suffix %}
       <span{{ prefix_attributes.addClass('escort-suffix') }}>{{ suffix }}</span>
