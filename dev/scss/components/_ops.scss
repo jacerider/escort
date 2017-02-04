@@ -69,7 +69,7 @@
     text-align: center;
   }
 
-  li:nth-child(2) {
+  li:nth-child(2) { // sass-lint:disable-line force-pseudo-nesting
     display: table-cell;
   }
 }

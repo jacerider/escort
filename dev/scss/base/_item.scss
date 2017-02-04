@@ -46,10 +46,10 @@
  */
 @include get-location($type: horizontal, $region: top) {
 
-  .escort-item {
-    border-right: 1px dashed smart-scale($bg-color-top, $scale: 25%);
-    border-left: 1px dashed smart-scale($bg-color-top, $scale: 25%);
-  }
+  // .escort-item {
+  //   border-right: 1px dashed smart-scale($bg-color-top, $scale: 25%);
+  //   border-left: 1px dashed smart-scale($bg-color-top, $scale: 25%);
+  // }
 
   .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
@@ -66,6 +66,13 @@
     }
   }
 
+  .escort-active {
+
+    .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+      background: smart-scale($bg-color-top, $scale: -12%);
+    }
+  }
+
   .escort-content {
     color: smart-scale($bg-color-top, $scale: 60%);
     text-shadow: 0 1px 2px adjust-color($bg-color-top, $lightness: -25%);
@@ -77,10 +84,10 @@
  */
 @include get-location($type: horizontal, $region: bottom) {
 
-  .escort-item {
-    border-right: 1px dashed smart-scale($bg-color-bottom, $scale: 25%);
-    border-left: 1px dashed smart-scale($bg-color-bottom, $scale: 25%);
-  }
+  // .escort-item {
+  //   border-right: 1px dashed smart-scale($bg-color-bottom, $scale: 25%);
+  //   border-left: 1px dashed smart-scale($bg-color-bottom, $scale: 25%);
+  // }
 
   .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
@@ -94,6 +101,13 @@
 
     &.is-active {
       background: smart-scale($bg-color-bottom, $scale: 5%);
+    }
+  }
+
+  .escort-active {
+
+    .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+      background: smart-scale($bg-color-bottom, $scale: -12%);
     }
   }
 

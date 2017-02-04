@@ -7,9 +7,14 @@
   position: relative;
 
   .escort-dropdown-content {
-    padding: $base-padding;
+    padding: 0 $base-padding;
     border: 0;
-    display: none;
+    opacity: 0;
+    transition: opacity 200ms, top 300ms, bottom 300ms, padding 300ms;
+    height: 0;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
 
     > div {
       white-space: normal;
@@ -20,7 +25,10 @@
   &.escort-active {
 
     .escort-dropdown-content {
-      display: block;
+      opacity: 1;
+      height: auto !important;
+      padding: 0 $base-padding;
+      visibility: visible;
     }
   }
 }
@@ -32,8 +40,15 @@
 
   .escort-dropdown-content {
     position: absolute;
-    top: 100%;
-    width: $base-size-active;
+    width: $base-size-active * 0.75;
+  }
+
+  .escort-top-right,
+  .escort-bottom-right {
+
+    .escort-dropdown-content {
+      right: 0;
+    }
   }
 }
 
@@ -42,8 +57,22 @@
  */
 @include get-location($type: horizontal, $region: top) {
 
+  .escort-dropdown {
+
+    &.escort-active {
+
+      .escort-dropdown-content {
+        top: 100%;
+      }
+    }
+  }
+
   .escort-dropdown-content {
+    top: 90%;
+    box-shadow: 0 3px 6px transparentize($black, 0.75);
     background: smart-scale($bg-color-top, $scale: -12%);
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
   }
 }
 
@@ -52,8 +81,22 @@
  */
 @include get-location($type: horizontal, $region: bottom) {
 
+  .escort-dropdown {
+
+    &.escort-active {
+
+      .escort-dropdown-content {
+        bottom: 100%;
+      }
+    }
+  }
+
   .escort-dropdown-content {
+    bottom: 90%;
+    box-shadow: 0 -3px 6px transparentize($black, 0.75);
     background: smart-scale($bg-color-bottom, $scale: -12%);
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
   }
 }
 

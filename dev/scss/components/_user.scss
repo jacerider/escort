@@ -1,31 +1,144 @@
 ////////////////////////////////////////////////////////////////////////////////
-// ADD
+// User
 // -----------------------------------------------------------------------------
-// Styles for add escort widget button on the admin page
+// Styles for User escort and dropdown modifications
 
 .escort-type-user {
-
-  .escort-item {
-    height: $base-size;
-  }
 
   .escort-image {
     display: block;
     width: $base-size * 1.5;
     height: $base-size * 1.5;
-    margin-top: $margin * -0.75;
     overflow: hidden;
     border-radius: 50%;
-    float: left;
+    position: relative;
+    z-index: 1;
 
     img {
       width: 100%;
       height: auto;
     }
+  }
+}
 
-    &+ .escort-content {
-      float: right;
-      margin-left: $margin;
+/**
+ * Top AND Bottom region
+ */
+@include get-location($type: horizontal) {
+
+  .escort-type-user {
+
+    &.escort-active {
+
+      .escort-image {
+        box-shadow: 0 2px 8px transparentize($black, 0.5);
+      }
+    }
+
+    .escort-item {
+      height: $base-size;
+    }
+
+    .escort-image {
+      display: block;
+      width: $base-size * 1.25;
+      height: $base-size * 1.25;
+      margin-top: $margin * -0.5;
+      overflow: hidden;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px transparentize($black, 0.75);
+      transition: margin 300ms, box-shadow 300ms;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .escort-top-left,
+  .escort-bottom-left {
+
+    .escort-type-user {
+
+      .escort-image {
+        float: left;
+
+        &+ .escort-content {
+          margin-left: $margin;
+          float: right;
+        }
+      }
+
+      .escort-list {
+
+        i {
+          float: right;
+          margin-left: $margin / 2;
+          font-size: $font-size * 1.5;
+        }
+
+        a {
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  .escort-top-right,
+  .escort-bottom-right {
+
+    .escort-type-user {
+
+      .escort-image {
+        float: right;
+
+        &+ .escort-content {
+          margin-right: $margin;
+          float: left;
+        }
+      }
+
+      .escort-list {
+
+        i {
+          margin-right: $margin / 2;
+          font-size: $font-size * 1.5;
+          float: left;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Bottom region
+ */
+@include get-location($type: horizontal, $region: top) {
+
+  .escort-type-user {
+
+    &.escort-active {
+
+      .escort-image {
+        margin-top: $margin;
+      }
+    }
+  }
+}
+
+/**
+ * Bottom region
+ */
+@include get-location($type: horizontal, $region: bottom) {
+
+  .escort-type-user {
+
+    &.escort-active {
+
+      .escort-image {
+        margin-top: $margin * -2;
+      }
     }
   }
 }
