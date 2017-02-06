@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @Escort(
  *   id = "branding",
  *   admin_label = @Translation("Branding"),
+ *   category = @Translation("Basic"),
  * )
  */
 class Branding extends EscortPluginBase implements ContainerFactoryPluginInterface {
@@ -162,14 +163,24 @@ class Branding extends EscortPluginBase implements ContainerFactoryPluginInterfa
     $theme = $theme_config->get('default');
 
     // Make link to homepage.
-    $attributes = $this->getUriAsAttributes('internal:/');
     $build['#tag'] = 'a';
-    $build['#attributes'] = $attributes;
+    $build['#attributes'] = $this->getUriAsAttributes('internal:/');
     $build['#attributes']['title'] = $this->t('Site homepage');
+
+    $site_logo_uri = theme_get_setting('logo.url', $theme);
+    if (\Drupal::moduleHandler()->moduleExists('real_favicon')) {
+      $favicon_themes = $this->configFactory->get('real_favicon.settings')->get('themes');
+      if (isset($favicon_themes[$theme])) {
+        $real_favicon = \Drupal\real_favicon\Entity\RealFavicon::load($favicon_themes[$theme]);
+        if ($real_favicon) {
+          $site_logo_uri = $real_favicon->getThumbnail('android-chrome-192x192.png');
+        }
+      }
+    }
 
     $build['site_logo'] = array(
       '#theme' => 'image',
-      '#uri' => theme_get_setting('logo.url', $theme),
+      '#uri' => $site_logo_uri,
       '#alt' => $this->t('Home'),
       '#attributes' => ['class' => ['escort-site-logo']],
       '#access' => $this->configuration['use_site_logo'],
