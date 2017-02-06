@@ -97,17 +97,15 @@ class EscortConfigForm extends ConfigFormBase {
     ];
     $region_settings = $config->get('regions');
     foreach ($this->escortRegionManager->getRaw(TRUE) as $group_id => $group) {
-      if ($group['type'] == 'horizontal') {
-        $form['regions'][$group_id] = [
-          '#type' => 'fieldset',
-          '#title' => $this->t('%region settings', ['%region' => $group['label']]),
-        ];
-        $form['regions'][$group_id]['icon_only'] = [
-          '#type' => 'checkbox',
-          '#title' => $this->t('Icon only'),
-          '#default_value' => !empty($region_settings[$group_id]['icon_only']),
-        ];
-      }
+      $form['regions'][$group_id] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('%region settings', ['%region' => $group['label']]),
+      ];
+      $form['regions'][$group_id]['icon_only'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Icon only'),
+        '#default_value' => !empty($region_settings[$group_id]['icon_only']),
+      ];
     }
 
     // User entity picture support.
