@@ -9,6 +9,10 @@
   min-width: $base-size;
   transition: border 300ms, width 300ms;
 
+  &.escort-hidden {
+    display: none;
+  }
+
   > div {
     display: block;
     white-space: nowrap;

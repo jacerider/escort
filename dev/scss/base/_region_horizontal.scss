@@ -18,7 +18,9 @@
   .escort-section {
     display: inline-flex;
 
-    &:last-child {
+    &.escort-top-right,
+    &.escort-mini-right,
+    &.escort-bottom-right {
       margin-left: auto;
     }
   }
