@@ -31,7 +31,7 @@
     &.escort-active {
 
       .escort-image {
-        box-shadow: 0 2px 8px transparentize($black, 0.5);
+        box-shadow: 0 2px 8px transparentize($black, 0.25);
       }
     }
 
@@ -46,7 +46,7 @@
       margin-top: $margin * -0.5;
       overflow: hidden;
       border-radius: 50%;
-      box-shadow: 0 2px 5px transparentize($black, 0.75);
+      box-shadow: 0 2px 5px transparentize($black, 0.66);
       transition: margin 300ms, box-shadow 300ms;
 
       img {
@@ -59,7 +59,12 @@
   .escort-top-left,
   .escort-bottom-left {
 
-    .escort-type-user {
+    > .escort-type-user {
+      padding-left: 0 !important;
+    }
+
+    .escort-type-user:not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
+      padding-left: $padding / 2;
 
       .escort-image {
         float: left;
@@ -88,7 +93,12 @@
   .escort-top-right,
   .escort-bottom-right {
 
-    .escort-type-user {
+    > .escort-type-user {
+      padding-right: 0 !important;;
+    }
+
+    .escort-type-user:not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
+      padding-right: $padding / 2;
 
       .escort-image {
         float: right;
@@ -121,7 +131,7 @@
     &.escort-active {
 
       .escort-image {
-        margin-top: $margin;
+        margin-top: $margin * 1.25;
       }
     }
   }
@@ -137,7 +147,7 @@
     &.escort-active {
 
       .escort-image {
-        margin-top: $margin * -2;
+        margin-top: $margin * -2.25;
       }
     }
   }

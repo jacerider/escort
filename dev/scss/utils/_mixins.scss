@@ -146,14 +146,14 @@
   }
 
   @if $region == 'left' {
-    box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -20%);
+    box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -10%);
 
     &:hover {
-      box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -40%);
+      box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -30%);
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-left), 0.1), rgba(smart-scale($bg-color-left), 0.33), bottom);
+      @include linear-gradient(rgba(smart-scale($bg-color-left), 0.1), rgba(smart-scale($bg-color-left), 0.2), bottom);
       color: smart-scale($bg-color-left, $scale: 50%);
 
       &:visited,
