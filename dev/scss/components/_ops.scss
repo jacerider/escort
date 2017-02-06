@@ -12,6 +12,7 @@
 
       .drag {
         cursor: move;
+        vertical-align: middle;
       }
     }
   }
@@ -32,20 +33,7 @@
 
     li {
       width: 25%;
-      background-color: $primary-color;
       display: table-cell;
-    }
-
-    .edit { // sass-lint:disable-line force-pseudo-nesting
-      background-color: $bg-color-edit;
-    }
-
-    .disable { // sass-lint:disable-line force-pseudo-nesting
-      background-color: $bg-color-disable;
-    }
-
-    .delete { // sass-lint:disable-line force-pseudo-nesting
-      background-color: $bg-color-delete;
     }
   }
 }
@@ -61,12 +49,18 @@
   opacity: 0.75;
 
   a {
-    display: block;
+    @extend %button;
+    background-color: transparent;
+    transition: none;
   }
 
   li {
     display: none;
     text-align: center;
+  }
+
+  .drag {
+    color: $primary-color !important;
   }
 
   li:nth-child(2) { // sass-lint:disable-line force-pseudo-nesting
@@ -82,6 +76,19 @@
   .escort-ops {
     top: 100%;
   }
+
+  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+      
+    .escort-ops {
+      
+      a {
+        @include button-style($region: top, $transparent: true) {
+          display: block;
+          padding: $padding / 2;
+        };
+      }  
+    }
+  }
 }
 
 /**
@@ -92,6 +99,19 @@
   .escort-ops {
     bottom: 100%;
   }
+
+  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+      
+    .escort-ops {
+      
+      a {
+        @include button-style($region: bottom, $transparent: true) {
+          display: block;
+          padding: $padding / 2;
+        };
+      }  
+    }
+  }
 }
 
 /**
@@ -101,6 +121,10 @@
 
   .escort-ops {
     top: 0;
+
+    li {
+      padding: 0;
+    }
 
     a {
       padding: ($padding * 1.25) ($padding / 2);
@@ -120,6 +144,16 @@
       }
     }
   }
+
+  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+
+    .escort-ops {
+
+      li {
+        padding: $padding / 2;
+      }
+    }
+  }
 }
 
 /**
@@ -127,27 +161,34 @@
  */
 @include get-location($type: vertical, $region: left) {
 
-  .escort-ops {
-    // @include button-style($region: left, $transparent: true) {
-    //   display: none;
-    //   box-shadow: 0 1px 10px transparent;
-    // };
-    li {
-      background-color: $bg-color-left;
-    }
+  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+      
+    .escort-ops {
 
-    > :first-child {
-      border-left: 1px solid smart-scale($bg-color-left, 5%);
-      border-right: 1px solid smart-scale($bg-color-left, 5%);
-    }
+      li {
+        background-color: $bg-color-left;
+      }
 
-    > :nth-child(2) {
-      border-right: 1px solid smart-scale($bg-color-left, 5%);
-    }
+      > :first-child {
+        border-left: 1px solid smart-scale($bg-color-left, 5%);
+        border-right: 1px solid smart-scale($bg-color-left, 5%);
+      }
 
-    > :last-child {
-      border-left: 1px solid smart-scale($bg-color-left, 5%);
-      border-right: 1px solid smart-scale($bg-color-left, 5%);
+      > :nth-child(2) {
+        border-right: 1px solid smart-scale($bg-color-left, 5%);
+      }
+
+      > :last-child {
+        border-left: 1px solid smart-scale($bg-color-left, 5%);
+        border-right: 0;
+      }
+
+      a {
+        @include button-style($region: left, $transparent: true) {
+          display: block;
+          padding: $padding / 2;
+        };
+      }  
     }
   }
 }
@@ -157,27 +198,34 @@
  */
 @include get-location($type: vertical, $region: right) {
 
-  .escort-ops {
-    // @include button-style($region: right, $transparent: true) {
-    //   display: none;
-    //   box-shadow: 0 1px 10px transparent;
-    // };
-    li {
-      background-color: $bg-color-right;
-    }
+  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+      
+    .escort-ops {
 
-    > :first-child {
-      border-left: 1px solid smart-scale($bg-color-right, 5%);
-      border-right: 1px solid smart-scale($bg-color-right, 5%);
-    }
+      li {
+        background-color: $bg-color-right;
+      }
 
-    > :nth-child(2) {
-      border-right: 1px solid smart-scale($bg-color-right, 5%);
-    }
+      > :first-child {
+        border-left: 1px solid smart-scale($bg-color-right, 5%);
+        border-right: 1px solid smart-scale($bg-color-right, 5%);
+      }
 
-    > :last-child {
-      border-left: 1px solid smart-scale($bg-color-right, 5%);
-      border-right: 1px solid smart-scale($bg-color-right, 5%);
+      > :nth-child(2) {
+        border-right: 1px solid smart-scale($bg-color-right, 5%);
+      }
+
+      > :last-child {
+        border-left: 1px solid smart-scale($bg-color-right, 5%);
+        border-right: 0;
+      }
+
+      a {
+        @include button-style($region: left, $transparent: true) {
+          display: block;
+          padding: $padding / 2;
+        };
+      }  
     }
   }
 }

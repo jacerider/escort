@@ -91,7 +91,7 @@
 // ---------
 @mixin button-style($region, $transparent: false) {
   @include linear-gradient($primary-color, darken($primary-color, 8%), bottom);
-  color: smart-scale($primary-color, $scale: 66%);
+  color: smart-scale($primary-color, $scale: 50%);
 
   &:hover {
     @include linear-gradient(lighten($primary-color, 5%), $primary-color, bottom);
@@ -146,20 +146,20 @@
   }
 
   @if $region == 'left' {
-    box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -10%);
+    box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -15%);
 
     &:hover {
-      box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -30%);
+      box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -35%);
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-left), 0.1), rgba(smart-scale($bg-color-left), 0.2), bottom);
-      color: smart-scale($bg-color-left, $scale: 50%);
+      @include linear-gradient(rgba(smart-scale($bg-color-left), 0.1), rgba(smart-scale($bg-color-left), 0.25), bottom);
+      color: smart-scale($bg-color-left, $scale: 66%);
 
       &:visited,
       &:active,
       &:focus {
-        color: smart-scale($bg-color-left, $scale: 50%);
+        color: smart-scale($bg-color-left, $scale: 66%);
       }
 
       &:hover {
@@ -167,32 +167,32 @@
         color: smart-scale($primary-color, $scale: 80%);
 
         a {
-          color: smart-scale($primary-color, $scale: 80%);
+          color: smart-scale($primary-color, $scale: 85%);
         }
       }
     }
   }
 
   @if $region == 'right' {
-    box-shadow: 0 1px 10px adjust-color($bg-color-right, $saturation: 0%, $lightness: -20%);
+    box-shadow: 0 1px 10px adjust-color($bg-color-right, $saturation: 0%, $lightness: -15%);
 
     &:hover {
-      box-shadow: 0 3px 15px adjust-color($bg-color-right, $saturation: 0%, $lightness: -40%);
+      box-shadow: 0 3px 15px adjust-color($bg-color-right, $saturation: 0%, $lightness: -35%);
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-right), 0.1), rgba(smart-scale($bg-color-right), 0.33), bottom);
-      color: smart-scale($primary-color, $scale: 50%);
+      @include linear-gradient(rgba(smart-scale($bg-color-right), 0.1), rgba(smart-scale($bg-color-right), 0.25), bottom);
+      color: smart-scale($bg-color-right, $scale: 66%);
 
       &:visited,
       &:active,
       &:focus {
-        color: smart-scale($primary-color, $scale: 100%);
+        color: smart-scale($bg-color-right, $scale: 100%);
       }
 
       &:hover {
         background-color: lighten($primary-color, 10%);
-        color: smart-scale($primary-color, $scale: 80%);
+        color: smart-scale($primary-color, $scale: 85%);
 
         a {
           color: smart-scale($primary-color, $scale: 80%);

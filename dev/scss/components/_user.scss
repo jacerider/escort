@@ -79,7 +79,7 @@
 
         i {
           float: right;
-          margin-left: $margin / 2;
+          margin-left: $margin * 0.75;
           font-size: $font-size * 1.5;
         }
 
@@ -112,7 +112,7 @@
       .escort-list {
 
         i {
-          margin-right: $margin / 2;
+          margin-right: $margin * 0.75;
           font-size: $font-size * 1.5;
           float: left;
         }
