@@ -49,9 +49,6 @@ function escort_theme() {
     'render element' => 'element',
     'file' => 'escort.theme',
   ];
-  $themes['escort_plugin_local_task'] = [
-    'render element' => 'element',
-  ];
   return $themes;
 }
 
