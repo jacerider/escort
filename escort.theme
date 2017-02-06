@@ -142,7 +142,7 @@ function template_preprocess_escort_item(&$variables) {
 
   // Add base class
   $variables['attributes']['class'][] = 'escort-item';
-  $variables['attributes']['class'][] = 'escort-type-' . $variables['plugin_id'];
+  $variables['attributes']['class'][] = Html::cleanCssIdentifier('escort-type-' . $variables['plugin_id']);
   if ($variables['tag'] == 'a') {
     $variables['attributes']['class'][] = 'escort-link';
   }
