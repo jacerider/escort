@@ -90,6 +90,25 @@
 }
 
 /**
+ * Mini region only
+ */
+@include get-location($type: horizontal, $region: mini) {
+
+  .escort-item {
+
+    .escort-grid {
+
+      a {
+        @include button-style($region: top) {
+          padding: $padding ($padding / 2);
+          margin: $margin / 2;
+        }
+      }
+    }
+  }
+}
+
+/**
  * Left region only
  */
 @include get-location($type: vertical, $region: left) {
