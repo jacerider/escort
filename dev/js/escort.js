@@ -29,10 +29,19 @@
 
     setup: function () {
       var _this = this;
-      _this.$region.on('mouseenter', function (e) {
-        e.preventDefault();
-        _this.showFull();
-      });
+
+      // Remove empty.
+      if (!_this.$region.find('.escort-item').length) {
+        _this.$region.remove();
+        _this.$body.removeClass('has-escort-' + this.region);
+      }
+      else {
+        // Vertical display.
+        _this.$region.filter('.escort-vertical').on('mouseenter', function (e) {
+          e.preventDefault();
+          _this.showFull();
+        });
+      }
     },
 
     showFull: function () {

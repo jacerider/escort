@@ -24,6 +24,13 @@ escort.dropdown:
   dependencies:
     - escort/escort
 
+escort.escape:
+  version: VERSION
+  js:
+    js/escort.escape.js: { minified: true }
+  dependencies:
+    - escort/escort
+
 escort.active:
   version: VERSION
   js:
