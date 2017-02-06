@@ -168,14 +168,8 @@ class Branding extends EscortPluginBase implements ContainerFactoryPluginInterfa
     $build['#attributes']['title'] = $this->t('Site homepage');
 
     $site_logo_uri = theme_get_setting('logo.url', $theme);
-    if (\Drupal::moduleHandler()->moduleExists('real_favicon')) {
-      $favicon_themes = $this->configFactory->get('real_favicon.settings')->get('themes');
-      if (isset($favicon_themes[$theme])) {
-        $real_favicon = \Drupal\real_favicon\Entity\RealFavicon::load($favicon_themes[$theme]);
-        if ($real_favicon) {
-          $site_logo_uri = $real_favicon->getThumbnail('android-chrome-192x192.png');
-        }
-      }
+    if (\Drupal::moduleHandler()->moduleExists('real_favicon') && $real_favicon = real_favicon_load_by_theme($theme)) {
+      $site_logo_uri = $real_favicon->getThumbnail('android-chrome-192x192.png');
     }
 
     $build['site_logo'] = array(
