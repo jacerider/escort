@@ -34,7 +34,7 @@
       .escort-mini {
         @content;
       }
-    }
+    } 
 
     @if $region == 'top' {
       .escort-top {
@@ -62,7 +62,7 @@
       .escort-right {
         @content;
       }
-    }
+    } 
 
     @if $region == 'left' {
       .escort-left {
@@ -98,7 +98,7 @@
 // ---------
 @mixin button-style($region, $transparent: false) {
   @include linear-gradient($primary-color, darken($primary-color, 8%), bottom);
-  color: smart-scale($primary-color, $scale: 50%);
+  color: smart-scale($primary-color, $scale: 75%);
 
   &:hover {
     @include linear-gradient(lighten($primary-color, 5%), $primary-color, bottom);

@@ -1,13 +1,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 // ITEM
 // -----------------------------------------------------------------------------
-// Styles that apply globally to escort items. All position-specific styles
+// Styles that apply globally to escort items. All position-specific styles 
 // should be added in the region specific style section.
 
 .escort-item {
   position: relative;
   min-width: $base-size;
-  transition: border 300ms;
+  transition: border 300ms, width 300ms;
 
   > div {
     display: block;
@@ -25,10 +25,10 @@
 @include get-location($type: horizontal) {
 
   .escort-item {
-    line-height: $base-size;
     padding: 0 $padding;
     text-align: center;
     display: block;
+    line-height: $base-size;
     float: left;
 
     &.escort-group {
@@ -55,43 +55,9 @@
   //   border-left: 1px dashed smart-scale($bg-color-top, $scale: 25%);
   // }
 
-  .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
-
-    &:hover {
-      background: smart-scale($bg-color-top, $scale: -12%);
-
-      .escort-content {
-        color: smart-scale($bg-color-top, $scale: 80%);
-      }
-    }
-
-    &.is-active {
-      background: smart-scale($bg-color-top, $scale: 5%);
-    }
+  .escort-item {
+    line-height: $base-size;
   }
-
-  .escort-active {
-
-    .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
-      background: smart-scale($bg-color-top, $scale: -12%);
-    }
-  }
-
-  .escort-content {
-    color: smart-scale($bg-color-top, $scale: 60%);
-    text-shadow: 0 1px 2px adjust-color($bg-color-top, $lightness: -25%);
-  }
-}
-
-/**
- * Mini region only
- */
-@include get-location($type: horizontal, $region: mini) {
-
-  // .escort-item {
-  //   border-right: 1px dashed smart-scale($bg-color-top, $scale: 25%);
-  //   border-left: 1px dashed smart-scale($bg-color-top, $scale: 25%);
-  // }
 
   .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
@@ -160,9 +126,56 @@
 }
 
 /**
+ * Mini region only
+ */
+@include get-location($type: horizontal, $region: mini) {
+
+  // .escort-item {
+  //   border-right: 1px dashed smart-scale($bg-color-top, $scale: 25%);
+  //   border-left: 1px dashed smart-scale($bg-color-top, $scale: 25%);
+  // }
+
+  .escort-item {
+    line-height: $base-size * 0.75;
+  }
+
+  .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+    &:hover {
+      background: smart-scale($bg-color-top, $scale: -12%);
+
+      .escort-content {
+        color: smart-scale($bg-color-top, $scale: 80%);
+      }
+    }
+
+    &.is-active {
+      background: smart-scale($bg-color-top, $scale: 5%);
+    }
+  }
+
+  .escort-active {
+
+    .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+      background: smart-scale($bg-color-top, $scale: -12%);
+    }
+  }
+
+  .escort-content {
+    color: smart-scale($bg-color-top, $scale: 60%);
+    text-shadow: 0 1px 2px adjust-color($bg-color-top, $lightness: -25%);
+  }
+}
+
+/**
  * Left AND Right region only
  */
 @include get-location($type: vertical) {
+
+  .escort-item:not(.escort-type-user) { // sass-lint:disable-line force-pseudo-nesting
+    width: $base-size;
+    overflow: hidden;
+  }
 
   .escort-item {
     padding: $padding 0;
@@ -192,6 +205,14 @@
  * Left region only
  */
 @include get-location($type: vertical, $region: left) {
+
+  .show-escort-full-left &,
+  .is-escort-admin & {
+
+    .escort-item:not(.escort-type-user) { // sass-lint:disable-line force-pseudo-nesting
+      width: $base-size-active;
+    }
+  }
 
   .escort-item:not(.escort-add):not(.escort-group):not(.escort-dropdown-content):not(.escort-dropdown) { // sass-lint:disable-line force-pseudo-nesting
     border-top: 1px solid lighten($bg-color-left, 5%); // sass-lint:disable-line no-color-literals
@@ -242,6 +263,14 @@
  * Right region only
  */
 @include get-location($type: vertical, $region: right) {
+
+  .show-escort-full-right &,
+  .is-escort-admin & {
+
+    .escort-item:not(.escort-type-user) { // sass-lint:disable-line force-pseudo-nesting
+      width: $base-size-active;
+    }
+  }
 
   .escort-item:not(.escort-add):not(.escort-group):not(.escort-dropdown-content):not(.escort-dropdown) { // sass-lint:disable-line force-pseudo-nesting
     border-top: 1px solid lighten($bg-color-right, 5%); // sass-lint:disable-line no-color-literals

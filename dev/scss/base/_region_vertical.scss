@@ -8,8 +8,7 @@
   top: 0;
   bottom: 0;
   width: $base-size;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: visible;
   z-index: 5;
   font-size: $font-size * 1.1;
   box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals
@@ -82,7 +81,7 @@
      * If region is vertical.
      */
     @if map-get($settings, type) == 'vertical' {
-
+      
       /**
        * Vertical regions can be offset by horizontal regions. We loop through
        * all regions again, and add offset.
@@ -90,7 +89,7 @@
       @each $r, $s in $regions {
 
         @if map-get($s, type) == 'horizontal' {
-
+          
           @if map-get($s, position) == 'top' {
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,

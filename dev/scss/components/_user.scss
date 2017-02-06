@@ -6,13 +6,12 @@
 .escort-type-user {
 
   .escort-image {
-    display: block;
-    width: $base-size * 1.5;
-    height: $base-size * 1.5;
+    display: inline-block;
     overflow: hidden;
     border-radius: 50%;
     position: relative;
     z-index: 1;
+    transition: box-shadow 300ms;
 
     img {
       width: 100%;
@@ -46,7 +45,6 @@
       margin-top: $margin * -0.5;
       overflow: hidden;
       border-radius: 50%;
-      box-shadow: 0 2px 5px transparentize($black, 0.66);
       transition: margin 300ms, box-shadow 300ms;
 
       img {
@@ -122,7 +120,7 @@
 }
 
 /**
- * Bottom region
+ * Top region
  */
 @include get-location($type: horizontal, $region: top) {
 
@@ -133,6 +131,17 @@
       .escort-image {
         margin-top: $margin * 1.25;
       }
+    }
+
+    &:hover {
+
+      .escort-image {
+        box-shadow: 0 3px 15px adjust-color($bg-color-top, $saturation: 0%, $lightness: -20%);
+      }
+    }
+
+    .escort-image {
+      box-shadow: 0 1px 10px adjust-color($bg-color-top, $saturation: 0%, $lightness: -10%);
     }
   }
 }
@@ -149,6 +158,99 @@
       .escort-image {
         margin-top: $margin * -2.25;
       }
+    }
+
+    &:hover {
+
+      .escort-image {
+        box-shadow: 0 3px 15px adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -20%);
+      }
+    }
+
+    .escort-image {
+      box-shadow: 0 1px 10px adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -10%);
+    }
+  }
+}
+
+/**
+ * Left AND Right region
+ */
+@include get-location($type: vertical) {
+
+  .escort-type-user {
+    text-align: center;
+
+    &.escort-group {
+
+      .escort-content {
+
+        .escort-content {
+          display: block;
+        }
+      }
+    }
+
+    .escort-image {
+      margin-left: $margin * -0.66;
+      width: $base-size * 1.33;
+      height: $base-size * 1.33;
+    }
+  }
+}
+
+/**
+ * Left region
+ */
+@include get-location($type: vertical, $region: left) {
+
+  .show-escort-full-left &,
+  .is-escort-admin & {
+
+    .escort-image {
+      margin: 0 auto;
+    }
+  }
+
+  .escort-type-user {
+
+    &:hover {
+
+      .escort-image {
+        box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -20%);
+      }
+    }
+
+    .escort-image {
+      box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -12%);
+    }
+  }
+}
+
+/**
+ * Right region
+ */
+@include get-location($type: vertical, $region: right) {
+
+  .show-escort-full-right &,
+  .is-escort-admin & {
+
+    .escort-image {
+      margin: 0 auto;
+    }
+  }
+
+  .escort-type-user {
+
+    &:hover {
+
+      .escort-image {
+        box-shadow: 0 3px 15px adjust-color($bg-color-right, $saturation: 0%, $lightness: -20%);
+      }
+    }
+
+    .escort-image {
+      box-shadow: 0 1px 10px adjust-color($bg-color-right, $saturation: 0%, $lightness: -12%);
     }
   }
 }
