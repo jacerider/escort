@@ -51,6 +51,7 @@ class Escort extends RenderElement {
    */
   public static function preRenderEscort($element) {
     $view_builder = \Drupal::service('entity_type.manager')->getViewBuilder('escort');
+    $regionManager = \Drupal::service('escort.region_manager');
     $regions = \Drupal::service('escort.repository')->getEscortsPerRegion();
     $config = \Drupal::config('escort.config')->get('regions');
     $is_admin = \Drupal::service('escort.path.matcher')->isAdmin();
@@ -65,6 +66,7 @@ class Escort extends RenderElement {
           'aria-label' => t('Site administration toolbar'),
           'class' => [
             Html::cleanCssIdentifier('escort-' . $group_id),
+            Html::cleanCssIdentifier('escort-' . $regionManager->getGroupType($group_id)),
           ],
           'data-region' => $group_id,
         ),
