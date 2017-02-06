@@ -125,25 +125,30 @@ class Dropdown extends EscortPluginMultipleBase {
 
     // Add a wrapper class.
     $items['#attributes']['class'][] = 'escort-dropdown';
-    $items['#attached']['library'][] = 'escort/escort.dropdown';
 
     $items['link'] = $this->buildLink();
     $items['link']['#attributes']['class'][] = 'escort-dropdown-trigger';
 
-    if ($this->configuration['ajax']) {
-      $items['link']['#attributes']['href'] = Url::fromRoute('escort.escort_ajax', ['escort' => $this->getEscort()->id()])->toString();
-      $items['link']['#attributes']['data-escort-ajax'] = '';
-      $items['link']['#attached']['library'][] = 'core/drupal.ajax';
-      $items['dropdown']['replace'] = [
-        '#type' => 'html_tag',
-        '#tag' => 'div',
-        '#attributes' => ['id' => 'escort-ajax-' . $this->getEscort()->uuid()],
-      ];
+    if (!$this->isAdmin()) {
+      // Only add dropdown libraries and content when user is not in the
+      // admin mode.
+      $items['#attached']['library'][] = 'escort/escort.dropdown';
+
+      if ($this->configuration['ajax']) {
+        $items['link']['#attributes']['href'] = Url::fromRoute('escort.escort_ajax', ['escort' => $this->getEscort()->id()])->toString();
+        $items['link']['#attributes']['data-escort-ajax'] = '';
+        $items['link']['#attached']['library'][] = 'core/drupal.ajax';
+        $items['dropdown']['replace'] = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#attributes' => ['id' => 'escort-ajax-' . $this->getEscort()->uuid()],
+        ];
+      }
+      else {
+        $items['dropdown'] = $this->buildDropdown();
+      }
+      $items['dropdown']['#attributes']['class'][] = 'escort-dropdown-content';
     }
-    else {
-      $items['dropdown'] = $this->buildDropdown();
-    }
-    $items['dropdown']['#attributes']['class'][] = 'escort-dropdown-content';
 
     return $items;
   }
