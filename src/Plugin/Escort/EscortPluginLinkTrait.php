@@ -18,7 +18,7 @@ trait EscortPluginLinkTrait {
    *
    * @var string
    */
-  protected $defaultLinkIcon = 'fa-chevron-right';
+  protected $defaultLinkIcon = 'fa-circle-o';
 
   /**
    * Build a link given a title and uri or Drupal\Core\Url.
@@ -63,13 +63,13 @@ trait EscortPluginLinkTrait {
     if ($this->hasIconSupport()) {
       // Check if title has already been MiconIfied.
       if (!$title instanceof MiconIconize) {
-        $title = MiconIconize::iconize($title);
+        $title = MiconIconize::iconize($title)->setMatchPrefix('escort');
       }
       if ($icon = $title->getIcon()) {
         $icon = $icon->getSelector();
       }
       else {
-        $icon = $this->defaultLinkIcon;
+        $icon = $this->getDefaultLinkIcon();
       }
       $title = $title->getTitle();
     }
