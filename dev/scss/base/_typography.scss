@@ -21,5 +21,17 @@
       color: $secondary-color;
       text-decoration: none;
     }
+
+    &:link,
+    &:visited,
+    &:active {
+      text-decoration: none;
+      border: 0;
+    }
+
+    span {
+      text-decoration: none;
+      border: 0;
+    }
   }
 }

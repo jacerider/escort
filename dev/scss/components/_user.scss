@@ -1,0 +1,154 @@
+////////////////////////////////////////////////////////////////////////////////
+// User
+// -----------------------------------------------------------------------------
+// Styles for User escort and dropdown modifications
+
+.escort-type-user {
+
+  .escort-image {
+    display: block;
+    width: $base-size * 1.5;
+    height: $base-size * 1.5;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+/**
+ * Top AND Bottom region
+ */
+@include get-location($type: horizontal) {
+
+  .escort-type-user {
+
+    &.escort-active {
+
+      .escort-image {
+        box-shadow: 0 2px 8px transparentize($black, 0.25);
+      }
+    }
+
+    .escort-item {
+      height: $base-size;
+    }
+
+    .escort-image {
+      display: block;
+      width: $base-size * 1.25;
+      height: $base-size * 1.25;
+      margin-top: $margin * -0.5;
+      overflow: hidden;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px transparentize($black, 0.66);
+      transition: margin 300ms, box-shadow 300ms;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .escort-top-left,
+  .escort-bottom-left {
+
+    > .escort-type-user {
+      padding-left: 0 !important;
+    }
+
+    .escort-type-user:not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
+      padding-left: $padding / 2;
+
+      .escort-image {
+        float: left;
+
+        &+ .escort-content {
+          margin-left: $margin;
+          float: right;
+        }
+      }
+
+      .escort-list {
+
+        i {
+          float: right;
+          margin-left: $margin * 0.75;
+          font-size: $font-size * 1.5;
+        }
+
+        a {
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  .escort-top-right,
+  .escort-bottom-right {
+
+    > .escort-type-user {
+      padding-right: 0 !important;;
+    }
+
+    .escort-type-user:not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
+      padding-right: $padding / 2;
+
+      .escort-image {
+        float: right;
+
+        &+ .escort-content {
+          margin-right: $margin;
+          float: left;
+        }
+      }
+
+      .escort-list {
+
+        i {
+          margin-right: $margin * 0.75;
+          font-size: $font-size * 1.5;
+          float: left;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Bottom region
+ */
+@include get-location($type: horizontal, $region: top) {
+
+  .escort-type-user {
+
+    &.escort-active {
+
+      .escort-image {
+        margin-top: $margin * 1.25;
+      }
+    }
+  }
+}
+
+/**
+ * Bottom region
+ */
+@include get-location($type: horizontal, $region: bottom) {
+
+  .escort-type-user {
+
+    &.escort-active {
+
+      .escort-image {
+        margin-top: $margin * -2.25;
+      }
+    }
+  }
+}

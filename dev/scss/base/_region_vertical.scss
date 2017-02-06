@@ -95,7 +95,7 @@
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,
             .show-escort-full-#{$r} & {
-              top: map-get($s, size) * 1.015;
+              top: map-get($s, size);
             }
           }
 
@@ -103,7 +103,7 @@
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,
             .show-escort-full-#{$r} & {
-              bottom: map-get($s, size) * 1.015;
+              bottom: map-get($s, size);
             }
           }
         }
