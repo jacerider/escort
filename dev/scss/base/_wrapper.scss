@@ -49,6 +49,10 @@
         @if map-get($settings, position) == 'bottom' {
           bottom: map-get($settings, size);
         }
+
+        @if map-get($settings, position) == 'mini' {
+          top: map-get($settings, size) * 2;
+        }
       }
 
       @if map-get($settings, type) == 'vertical' {

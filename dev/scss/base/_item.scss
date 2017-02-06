@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // ITEM
 // -----------------------------------------------------------------------------
-// Styles that apply globally to escort items. All position-specific styles 
+// Styles that apply globally to escort items. All position-specific styles
 // should be added in the region specific style section.
 
 .escort-item {
@@ -49,6 +49,44 @@
  * Top region only
  */
 @include get-location($type: horizontal, $region: top) {
+
+  // .escort-item {
+  //   border-right: 1px dashed smart-scale($bg-color-top, $scale: 25%);
+  //   border-left: 1px dashed smart-scale($bg-color-top, $scale: 25%);
+  // }
+
+  .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+    &:hover {
+      background: smart-scale($bg-color-top, $scale: -12%);
+
+      .escort-content {
+        color: smart-scale($bg-color-top, $scale: 80%);
+      }
+    }
+
+    &.is-active {
+      background: smart-scale($bg-color-top, $scale: 5%);
+    }
+  }
+
+  .escort-active {
+
+    .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+      background: smart-scale($bg-color-top, $scale: -12%);
+    }
+  }
+
+  .escort-content {
+    color: smart-scale($bg-color-top, $scale: 60%);
+    text-shadow: 0 1px 2px adjust-color($bg-color-top, $lightness: -25%);
+  }
+}
+
+/**
+ * Mini region only
+ */
+@include get-location($type: horizontal, $region: mini) {
 
   // .escort-item {
   //   border-right: 1px dashed smart-scale($bg-color-top, $scale: 25%);

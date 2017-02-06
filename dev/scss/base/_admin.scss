@@ -20,6 +20,11 @@
       @if map-get($settings, type) == 'vertical' {
         width: map-get($settings, size_full);
       }
+
+      @if map-get($settings, position) == 'mini' {
+        left: $base-size-active;
+        right: $base-size-active;
+      }
     }
 
     /**

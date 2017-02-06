@@ -82,6 +82,18 @@ class EscortRegionManager implements EscortRegionManagerInterface {
           ],
         ],
       ],
+      'mini' => [
+        'label' => t('Mini'),
+        'type' => 'horizontal',
+        'sections' => [
+          'left' => [
+            'label' => t('Left'),
+          ],
+          'right' => [
+            'label' => t('Right'),
+          ],
+        ],
+      ],
     ];
     return $regions;
   }
