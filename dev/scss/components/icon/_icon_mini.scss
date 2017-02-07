@@ -1,5 +1,21 @@
 @include get-location($type: horizontal, $region: mini) {
 
+  .escort-item {
+    min-width: $base-size * 0.85;
+  }
+
+  .escort-item:not(.escort-add):not(.escort-group) {
+    padding: 0 ($padding * 0.66);
+
+    .escort-icon {
+
+      i {
+        font-size: $font-size * 1.25;
+        vertical-align: sub;
+      }
+    }
+  }
+
   &.icon-only {
 
     .escort-link.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
