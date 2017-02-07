@@ -26,23 +26,29 @@ class AdminEscape extends EscortPluginBase {
    * {@inheritdoc}
    */
   public function build() {
-    $attributes = $this->getUriAsAttributes('internal:/');
-    $attributes['title'] = t('Return to site content');
-    return [
-      '#tag' => 'a',
-      '#icon' => 'fa-arrow-circle-o-left',
-      '#attributes' => $attributes,
-      '#markup' => $this->t('Back to site'),
+    $build = [
+      '#attributes' => $this->getUriAsAttributes('internal:/'),
       '#attached' => ['library' => ['escort/escort.escape']],
     ];
+
+    $build['#attributes']['title'] = t('Return to site content');
+
+    $route = \Drupal::routeMatch()->getRouteObject();
+    if (\Drupal::service('router.admin_context')->isAdminRoute($route) === TRUE) {
+      $build['#tag'] = 'a';
+      $build['#icon'] = 'fa-arrow-circle-o-left';
+      $build['#markup'] = $this->t('Back to site');
+    }
+
+    return $build;
   }
 
   /**
    * {@inheritdoc}
    */
-  protected function escortAccess(AccountInterface $account) {
-    $route = \Drupal::routeMatch()->getRouteObject();
-    return \Drupal::service('router.admin_context')->isAdminRoute($route) ? AccessResult::allowed() : AccessResult::forbidden();
-  }
+  // protected function escortAccess(AccountInterface $account) {
+  //   $route = \Drupal::routeMatch()->getRouteObject();
+  //   return \Drupal::service('router.admin_context')->isAdminRoute($route) ? AccessResult::allowed() : AccessResult::forbidden();
+  // }
 
 }
