@@ -1,0 +1,36 @@
+/**
+ * Left region only
+ */
+@include get-location($type: vertical, $region: left) {
+
+  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+      
+    .escort-ops {
+
+      li {
+        background-color: $bg-color-left;
+      }
+
+      > :first-child {
+        border-left: 1px solid smart-scale($bg-color-left, 5%);
+        border-right: 1px solid smart-scale($bg-color-left, 5%);
+      }
+
+      > :nth-child(2) {
+        border-right: 1px solid smart-scale($bg-color-left, 5%);
+      }
+
+      > :last-child {
+        border-left: 1px solid smart-scale($bg-color-left, 5%);
+        border-right: 0;
+      }
+
+      a {
+        @include button-style($region: left, $transparent: true) {
+          display: block;
+          padding: $padding / 2;
+        };
+      }  
+    }
+  }
+}

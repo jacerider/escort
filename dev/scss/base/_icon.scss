@@ -1,0 +1,66 @@
+////////////////////////////////////////////////////////////////////////////////
+// Icon
+// -----------------------------------------------------------------------------
+// Defines styles associated with all regions
+
+/**
+ * Styles that apply to all escort regions.
+ */
+.escort-icon {
+  text-align: center;
+  transition: margin 200ms;
+
+  i {
+    vertical-align: middle;
+  }
+}
+
+.icon-only {
+
+  .escort-link.has-icon:not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
+
+    &:hover {
+
+      .escort-content {
+        opacity: 1;
+        height: auto;
+        overflow: visible;
+
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
+
+    .escort-content {
+      margin: 0 !important;
+      height: 0;
+      display: block;
+      overflow: hidden;
+      position: absolute;
+      z-index: 1;
+      line-height: $base-size * 0.75;
+      min-width: 100%;
+      left: 0;
+      padding: 0 $padding;
+      opacity: 0;
+      box-shadow: 0 2px 5px rgba($black, 0.5); // sass-lint:disable-line no-color-literals
+      transition: opacity 200ms, top 300ms, bottom 300ms;
+
+      &::before {
+        opacity: 0;
+        transition: opacity 100ms;
+      }
+    }
+  }
+
+  .is-escort-admin & {
+
+    .escort-link.has-icon:not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
+      
+      .escort-content {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+/**
+ * Top AND Bottom region only
+ */
+@include get-location($type: horizontal) {
+
+  .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+    .escort-icon {
+
+      i {
+        font-size: $font-size * 1.5;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+/**
+ * Right region
+ */
+@include get-location($type: vertical, $region: right) {
+
+  .escort-dropdown {
+
+    &.escort-active {
+
+      .escort-dropdown-content {
+        border-top: 1px solid darken($bg-color-right, 10%);
+        box-shadow: inset 0 0 30px darken($bg-color-right, 15%);
+      }
+    }
+  }
+
+  .escort-dropdown-content {
+    background: smart-scale($bg-color-right, $scale: -12%);
+    box-shadow: inset 0 0 10px darken($bg-color-right, 8%);
+  }
+}

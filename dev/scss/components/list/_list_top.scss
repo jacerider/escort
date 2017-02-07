@@ -1,0 +1,27 @@
+/**
+ * Top region only
+ */
+@include get-location($type: horizontal, $region: top) {
+
+  .escort-list {
+
+    li {
+
+      &:first-child {
+
+        a {
+          border-top: 0;
+        }
+      }
+
+      a {
+        border-top: 1px solid lighten($bg-color-top, 5%); // sass-lint:disable-line no-color-literals
+        border-bottom: 1px solid darken($bg-color-top, 5%); // sass-lint:disable-line no-color-literals
+      }
+
+      .icon-label {
+        color: smart-scale($bg-color-top, $scale: 80%);
+      }
+    }
+  }
+}

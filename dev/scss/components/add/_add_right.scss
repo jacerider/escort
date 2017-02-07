@@ -1,0 +1,26 @@
+/**
+ * Right region only
+ */
+@include get-location($type: vertical, $region: right) {
+
+  .escort-add {
+
+    > div {
+      @include button-style($region: right);
+    }
+  }
+
+  .escort-right-top {
+    
+    .escort-add {
+      border-top: 1px solid lighten($bg-color-right, 4%); // sass-lint:disable-line no-color-literals
+    }
+  }
+
+  .escort-right-bottom {
+    
+    .escort-add {
+      border-bottom: 1px solid darken($bg-color-right, 4%); // sass-lint:disable-line no-color-literals
+    }
+  }
+}

@@ -1,0 +1,34 @@
+////////////////////////////////////////////////////////////////////////////////
+// Dropdown
+// -----------------------------------------------------------------------------
+// Dropdown styles
+
+.escort-dropdown {
+  position: relative;
+
+  .escort-dropdown-content:not(.escort-active) { // sass-lint:disable-line force-pseudo-nesting
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    transition: opacity 200ms, box-shadow 300ms, max-height 200ms, top 300ms, bottom 300ms, padding 200ms, visibility 200ms;
+    max-height: 0;
+    height: auto !important;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+
+    > div {
+      white-space: normal;
+      line-height: normal;
+    }
+  }
+
+  &.escort-active {
+
+    .escort-dropdown-content {
+      opacity: 1;
+      max-height: $base-size-active * 4;
+      visibility: visible;
+    }
+  }
+}

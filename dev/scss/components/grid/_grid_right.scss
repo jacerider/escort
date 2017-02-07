@@ -1,0 +1,18 @@
+/**
+ * Right region only
+ */
+@include get-location($type: vertical, $region: right) {
+
+  .escort-item {
+
+    .escort-grid {
+
+      a {
+        @include button-style($region: right) {
+          padding: $padding ($padding / 2);
+          margin: $margin / 2;
+        }
+      }
+    }
+  }
+}
