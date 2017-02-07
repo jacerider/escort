@@ -1,11 +1,6 @@
 @include get-location($type: horizontal, $region: mini) {
 
-  .escort-item {
-    min-width: $base-size * 0.85;
-  }
-
   .escort-item:not(.escort-add):not(.escort-group) {
-    padding: 0 ($padding * 0.66);
 
     .escort-icon {
 
@@ -28,12 +23,12 @@
       }
 
       .escort-content {
-        @include css-triangle($base-size / 4, smart-scale($bg-color-top, 20%), up, before) {
+        @include css-triangle($base-size / 4, smart-scale($bg-color-mini, 20%), up, before) {
           bottom: 100%;
           position: absolute;
         };
 
-        background-color: smart-scale($bg-color-top, 20%);
+        background-color: smart-scale($bg-color-mini, 20%);
         top: 90%;
         border-bottom-left-radius: $border-radius;
         border-bottom-right-radius: $border-radius;

@@ -15,12 +15,12 @@
     &:hover {
 
       .escort-image {
-        box-shadow: 0 3px 15px adjust-color($bg-color-top, $saturation: 0%, $lightness: -20%);
+        box-shadow: 0 3px 15px adjust-color($bg-color-mini, $saturation: 0%, $lightness: -20%);
       }
     }
 
     .escort-image {
-      box-shadow: 0 1px 10px adjust-color($bg-color-top, $saturation: 0%, $lightness: -10%);
+      box-shadow: 0 1px 10px adjust-color($bg-color-mini, $saturation: 0%, $lightness: -10%);
     }
 
     .escort-item {
