@@ -10,6 +10,60 @@ escort:
     - core/jquery.once
     - core/drupal
 
+# Region libraries that are toolbar specific
+escort.region.horizontal:
+  version: VERSION
+  css:
+    component:
+      css/escort.horizontal.css: {}
+
+escort.region.vertical:
+  version: VERSION
+  css:
+    component:
+      css/escort.vertical.css: {}
+
+escort.region.top:
+  version: VERSION
+  css:
+    component:
+      css/escort.top.css: {}
+    dependencies:
+      - escort/escort.region.horizontal
+
+escort.region.bottom:
+  version: VERSION
+  css:
+    component:
+      css/escort.bottom.css: {}
+    dependencies:
+      - escort/escort.region.horizontal
+
+escort.region.mini:
+  version: VERSION
+  css:
+    component:
+      css/escort.mini.css: {}
+    dependencies:
+      - escort/escort.region.horizontal
+
+escort.region.left:
+  version: VERSION
+  css:
+    component:
+      css/escort.left.css: {}
+    dependencies:
+      - escort/escort.region.vertical
+
+escort.region.right:
+  version: VERSION
+  css:
+    component:
+      css/escort.right.css: {}
+    dependencies:
+      - escort/escort.region.vertical
+
+# JS libraries
 escort.toggle:
   version: VERSION
   js:
