@@ -1,0 +1,10 @@
+.escort-sorting {
+
+  @include get-location($type: horizontal) {
+
+    .escort-placeholder {
+      padding: $padding;
+      width: $base-size * 3 !important;
+    }
+  }
+}

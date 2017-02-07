@@ -1,0 +1,54 @@
+@include get-location($type: horizontal, $region: top) {
+
+  .escort-type-branding {
+
+    &:hover {
+    
+      .escort-site-slogan {
+        top: 100%;
+      }
+    }
+
+    .escort-site-slogan {
+      @include css-triangle($base-size / 4, smart-scale($bg-color-bottom, 20%), up, before) {
+        position: absolute;
+        bottom: 100%;
+      };
+
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      background-color: smart-scale($bg-color-top, 20%);
+      top: 90%;
+    }
+  }
+
+  .escort-top-left {
+
+    .escort-content {
+
+      .escort-site-slogan {
+
+        &::before {
+          left: 0;
+          border-left-width: 0;
+        }
+      }
+    }
+  }
+
+  .escort-top-right {
+
+    .escort-content {
+
+      .escort-site-slogan {
+        right: 0;
+        left: auto;
+
+        &::before {
+          right: 0;
+          border-right-width: 0;
+        }
+      }
+    }
+  }
+}

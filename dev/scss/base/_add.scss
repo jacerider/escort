@@ -1,0 +1,23 @@
+////////////////////////////////////////////////////////////////////////////////
+// ADD
+// -----------------------------------------------------------------------------
+// Styles for add escort widget button on the admin page
+
+.escort-item {
+
+  &.escort-add {
+    text-align: center;
+
+    > div {
+      @extend %button;
+    }
+
+    .escort-icon {
+
+      i {
+        font-size: $font-size * 0.75;
+        vertical-align: baseline;
+      }
+    }
+  }
+}

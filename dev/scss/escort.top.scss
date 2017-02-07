@@ -11,23 +11,18 @@
 @import 'utils/breakpoints';
 
 ////////////////////////////////////////////////////////////////////////////////
-// Base
+// COMPONENT
 // -----------------------------------------------------------------------------
-// The base/ folder holds what we might call the boilerplate stuff.
+// For smaller components, there is the components/ folder.
 
-@import 'base/typography';
-@import 'base/wrapper';
-@import 'base/region';
-@import 'base/item';
-
-@import 'base/add';
-@import 'base/admin';
-@import 'base/branding';
-@import 'base/dropdown';
-@import 'base/grid';
-@import 'base/icon';
-@import 'base/item';
-@import 'base/list';
-@import 'base/ops';
-@import 'base/sort';
-@import 'base/user';
+@import 'components/add/add_top';
+@import 'components/branding/branding_top';
+@import 'components/dropdown/dropdown_top';
+@import 'components/grid/grid_top';
+@import 'components/icon/icon_top';
+@import 'components/item/item_top';
+@import 'components/list/list_top';
+@import 'components/ops/ops_top';
+@import 'components/region/region_top';
+@import 'components/sort/sort_top';
+@import 'components/user/user_top';

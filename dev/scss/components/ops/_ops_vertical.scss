@@ -1,0 +1,41 @@
+/**
+ * Left region only
+ */
+@include get-location($type: vertical) {
+
+  .escort-ops {
+    top: 0;
+
+    li {
+      padding: 0;
+    }
+
+    a {
+      padding: ($padding * 1.25) ($padding / 2);
+    }
+
+    > :first-child {
+
+      a {
+        padding-left: $padding / 2;
+      }
+    }
+
+    > :last-child {
+
+      a {
+        padding-right: $padding / 2;
+      }
+    }
+  }
+
+  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+
+    .escort-ops {
+
+      li {
+        padding: $padding / 2;
+      }
+    }
+  }
+}

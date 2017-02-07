@@ -1,0 +1,69 @@
+////////////////////////////////////////////////////////////////////////////////
+// Ops
+// -----------------------------------------------------------------------------
+// Styles for operation buttons for each escort widget on the admin page
+
+.is-escort-admin {
+
+  .escort-region:hover { // sass-lint:disable-line force-pseudo-nesting
+
+    .escort-ops {
+      display: table;
+
+      .drag {
+        cursor: move;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+
+    .escort-ops {
+      width: 100%;
+      opacity: 1;
+    }
+
+    a,
+    li {
+      color: $white;
+      transition: none;
+      text-shadow: 0 1px 3px transparentize($black, 0.75);
+    }
+
+    li {
+      width: 25%;
+      display: table-cell;
+    }
+  }
+}
+
+.escort-ops {
+  display: none;
+  position: absolute;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  z-index: 1;
+  opacity: 0.75;
+
+  a {
+    @extend %button;
+    background-color: transparent;
+    transition: none;
+  }
+
+  li {
+    display: none;
+    text-align: center;
+  }
+
+  .drag {
+    color: $primary-color !important;
+  }
+
+  li:nth-child(2) { // sass-lint:disable-line force-pseudo-nesting
+    display: table-cell;
+  }
+}

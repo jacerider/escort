@@ -1,0 +1,57 @@
+/**
+ * Right region only
+ */
+@include get-location($type: vertical, $region: right) {
+
+  .show-escort-full-right &,
+  .is-escort-admin & {
+
+    .escort-item:not(.escort-type-user) { // sass-lint:disable-line force-pseudo-nesting
+      width: $base-size-active;
+    }
+  }
+
+  .escort-item:not(.escort-add):not(.escort-group):not(.escort-dropdown-content):not(.escort-dropdown) { // sass-lint:disable-line force-pseudo-nesting
+    border-top: 1px solid lighten($bg-color-right, 5%); // sass-lint:disable-line no-color-literals
+    border-bottom: 1px solid darken($bg-color-right, 5%); // sass-lint:disable-line no-color-literals
+  }
+
+  .escort-group:not(.escort-dropdown) { // sass-lint:disable-line force-pseudo-nesting
+
+    &:first-child {
+      border-top: 1px solid lighten($bg-color-right, 5%);
+    }
+
+    &:last-child {
+      border-bottom: 1px solid lighten($bg-color-right, 5%);
+    }
+  }
+
+  .escort-right-bottom {
+    border-top: 1px solid darken($bg-color-right, 5%);
+
+    .escort-group:not(.escort-dropdown) { // sass-lint:disable-line force-pseudo-nesting
+      border-top: 1px solid darken($bg-color-right, 5%);
+      border-bottom: 1px solid darken($bg-color-right, 5%);
+
+      &:first-child {
+        border-top: 0;
+      }
+    }
+  }
+
+  .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+    &:hover {
+
+      .escort-content {
+        color: smart-scale($bg-color-right, $scale: 80%);
+      }
+    }
+  }
+
+  .escort-content {
+    color: smart-scale($bg-color-right, $scale: 60%);
+    text-shadow: 0 1px 2px scale-color($bg-color-right, $lightness: -25%);
+  }
+}

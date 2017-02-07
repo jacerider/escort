@@ -1,0 +1,23 @@
+/**
+ * Bottom region
+ */
+@include get-location($type: horizontal, $region: bottom) {
+
+  .escort-dropdown {
+
+    &.escort-active {
+
+      .escort-dropdown-content {
+        bottom: 100%;
+      }
+    }
+  }
+
+  .escort-dropdown-content {
+    bottom: 90%;
+    box-shadow: 0 -3px 6px transparentize($black, 0.75);
+    background: smart-scale($bg-color-bottom, $scale: -12%);
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+  }
+}

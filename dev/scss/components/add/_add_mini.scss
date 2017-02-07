@@ -1,0 +1,12 @@
+/**
+ * Mini region only
+ */
+@include get-location($type: horizontal, $region: mini) {
+
+  .escort-add {
+
+    > div {
+      @include button-style($region: top);
+    }
+  }
+}

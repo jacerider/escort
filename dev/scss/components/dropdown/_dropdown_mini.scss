@@ -1,0 +1,23 @@
+/**
+ * Mini region
+ */
+@include get-location($type: horizontal, $region: mini) {
+
+  .escort-dropdown {
+
+    &.escort-active {
+
+      .escort-dropdown-content {
+        top: 100%;
+      }
+    }
+  }
+
+  .escort-dropdown-content {
+    top: 90%;
+    box-shadow: 0 3px 6px transparentize($black, 0.75);
+    background: smart-scale($bg-color-top, $scale: -12%);
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+}

@@ -1,0 +1,10 @@
+.escort-sorting {
+
+  @include get-location($type: horizontal, $region: top) {
+
+    .escort-placeholder {
+      color: smart-scale($bg-color-top, $scale: 35%);
+      outline-color: smart-scale($bg-color-top, $scale: 25%);
+    }
+  }
+}

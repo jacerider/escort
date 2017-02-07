@@ -1,0 +1,12 @@
+/**
+ * Bottom region only
+ */
+@include get-location($type: horizontal, $region: bottom) {
+
+  .escort-add {
+
+    > div {
+      @include button-style($region: bottom);
+    }
+  }
+}

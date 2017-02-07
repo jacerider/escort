@@ -1,0 +1,20 @@
+/**
+ * Left AND Right region only
+ */
+@include get-location($type: vertical) {
+
+  // .escort-dropdown {
+
+  //   &.escort-active {
+
+  //     .escort-dropdown-trigger {
+  //       border: 0;
+  //     }
+  //   }
+  // }
+
+  .escort-dropdown-content {
+    width: 100%;
+    border-color: transparent;
+  }
+}

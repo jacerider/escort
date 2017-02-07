@@ -1,0 +1,59 @@
+////////////////////////////////////////////////////////////////////////////////
+// Branding
+// -----------------------------------------------------------------------------
+// Styles for the branding/logo widget
+
+.escort-type-branding {
+
+  &:hover {
+    
+    .escort-site-slogan {
+      opacity: 1;
+      overflow: visible;
+      height: auto;
+
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+
+  img {
+    height: $base-size * 0.9;
+    margin-top: $base-size * 0.05;
+    float: left;
+  }
+
+  .escort-site-name {
+    margin-left: $margin;
+    font-weight: bold;
+    font-size: $font-size * 1.1;
+  }
+
+  .escort-site-slogan {
+    margin: 0 !important;
+    height: 0;
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    line-height: $base-size * 0.75;
+    min-width: 100%;
+    left: 0;
+    padding: 0 $padding;
+    opacity: 0;
+    transition: opacity 200ms, top 300ms, bottom 300ms;
+
+    &::before {
+      opacity: 0;
+      transition: opacity 100ms;
+    }
+  }
+
+  .is-escort-admin & {
+
+    .escort-site-slogan {
+      display: none;
+    }
+  }
+}

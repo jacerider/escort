@@ -1,0 +1,33 @@
+/**
+ * Left AND Right region only
+ */
+@include get-location($type: vertical) {
+
+  .escort-item:not(.escort-type-user) { // sass-lint:disable-line force-pseudo-nesting
+    width: $base-size;
+    overflow: hidden;
+  }
+
+  .escort-item {
+    padding: $padding 0;
+    display: block;
+
+    &.escort-group {
+      display: block;
+      padding: 0;
+
+      .escort-content {
+        display: block;
+
+        .escort-content {
+          display: inline-block;
+        }
+      }
+    }
+
+    .escort-content {
+      display: inline-block;
+      line-height: $base-size / 2;
+    }
+  }
+}
