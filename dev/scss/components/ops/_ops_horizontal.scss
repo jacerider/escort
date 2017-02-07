@@ -1,0 +1,43 @@
+/**
+ * Top region only
+ */
+@include get-location($type: horizontal) {
+
+  &:hover { // sass-lint:disable-line force-pseudo-nesting
+
+    .escort-ops {
+      display: block;
+    }
+  }
+
+  .escort-ops {
+    padding: $padding / 3;
+    width: $base-size * 0.95;
+    z-index: 1;
+    transition: width 300ms;
+
+    li:nth-child(2) { // sass-lint:disable-line force-pseudo-nesting
+      display: block;
+      line-height: $base-size / 2 !important;
+    }
+  }
+
+  .escort-item:hover {
+
+    .escort-ops {
+      width: $base-size * 2;
+      z-index: 2;
+
+      li {
+        display: block;
+        padding: ($padding / 4) ($padding / 2);
+      }
+
+      li,
+      a {
+        line-height: $base-size / 2 !important;
+        border-radius: $border-radius;
+      }
+    }
+  }
+}

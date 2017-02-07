@@ -20,40 +20,13 @@
 
   img {
     height: $base-size * 0.9;
-    margin-top: $base-size * 0.05;
+    max-width: $base-size * 0.9;
     float: left;
   }
 
   .escort-site-name {
-    margin-left: $margin;
+    margin-left: $margin / 2;
     font-weight: bold;
     font-size: $font-size * 1.1;
-  }
-
-  .escort-site-slogan {
-    margin: 0 !important;
-    height: 0;
-    display: block;
-    overflow: hidden;
-    position: absolute;
-    z-index: 1;
-    line-height: $base-size * 0.75;
-    min-width: 100%;
-    left: 0;
-    padding: 0 $padding;
-    opacity: 0;
-    transition: opacity 200ms, top 300ms, bottom 300ms;
-
-    &::before {
-      opacity: 0;
-      transition: opacity 100ms;
-    }
-  }
-
-  .is-escort-admin & {
-
-    .escort-site-slogan {
-      display: none;
-    }
   }
 }

@@ -5,10 +5,27 @@
 
 .is-escort-admin {
 
+  .escort-top-left,
+  .escort-bottom-left,
+  .escort-mini-left {
+
+    .escort-ops {
+      left: 0;
+    }
+  }
+
+  .escort-top-right,
+  .escort-bottom-right,
+  .escort-mini-right {
+
+    .escort-ops {
+      right: 0;
+    }
+  }
+
   .escort-region:hover { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-ops {
-      display: table;
 
       .drag {
         cursor: move;
@@ -20,7 +37,6 @@
   .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-ops {
-      width: 100%;
       opacity: 1;
     }
 
@@ -29,11 +45,6 @@
       color: $white;
       transition: none;
       text-shadow: 0 1px 3px transparentize($black, 0.75);
-    }
-
-    li {
-      width: 25%;
-      display: table-cell;
     }
   }
 }
@@ -46,24 +57,13 @@
   padding: 0;
   list-style-type: none;
   z-index: 1;
-  opacity: 0.75;
-
-  a {
-    @extend %button;
-    background-color: transparent;
-    transition: none;
-  }
 
   li {
-    display: none;
     text-align: center;
+    display: none;
   }
 
   .drag {
     color: $primary-color !important;
-  }
-
-  li:nth-child(2) { // sass-lint:disable-line force-pseudo-nesting
-    display: table-cell;
   }
 }

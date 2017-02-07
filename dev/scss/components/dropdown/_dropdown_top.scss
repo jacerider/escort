@@ -15,7 +15,7 @@
 
   .escort-dropdown-content {
     top: 90%;
-    box-shadow: 0 3px 6px transparentize($black, 0.75);
+    box-shadow: 0 4px 6px transparentize($black, 0.75);
     background: smart-scale($bg-color-top, $scale: -12%);
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;

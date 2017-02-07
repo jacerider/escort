@@ -15,4 +15,14 @@
 // -----------------------------------------------------------------------------
 // The base/ folder holds what we might call the boilerplate stuff.
 
+@import 'base/add';
 @import 'base/admin';
+@import 'base/ops';
+
+////////////////////////////////////////////////////////////////////////////////
+// COMPONENT
+// -----------------------------------------------------------------------------
+// For smaller components, there is the components/ folder.
+
+@import 'components/add/*';
+@import 'components/ops/*';

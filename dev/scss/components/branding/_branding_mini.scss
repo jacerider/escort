@@ -1,8 +1,8 @@
 /**
- * Top region only
+ * Mini region only
  */
 
-@include get-location($type: horizontal, $region: top) {
+@include get-location($type: horizontal, $region: mini) {
 
   .escort-type-branding {
 
@@ -13,20 +13,25 @@
       }
     }
 
+    img {
+      height: $base-size * 0.6;
+      margin-top: $base-size * 0.05;
+    }
+
     .escort-site-slogan {
-      @include css-triangle($base-size / 4, smart-scale($bg-color-bottom, 20%), up, before) {
+      @include css-triangle($base-size / 4, smart-scale($bg-color-mini, 20%), up, before) {
         position: absolute;
         bottom: 100%;
       };
 
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
-      background-color: smart-scale($bg-color-top, 20%);
+      background-color: smart-scale($bg-color-mini, 20%);
       top: 90%;
     }
   }
 
-  .escort-top-left {
+  .escort-mini-left {
 
     .escort-content {
 
@@ -40,7 +45,7 @@
     }
   }
 
-  .escort-top-right {
+  .escort-mini-right {
 
     .escort-content {
 

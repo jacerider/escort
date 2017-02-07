@@ -3,6 +3,13 @@
  */
 @include get-location($type: vertical) {
 
+  &:hover { // sass-lint:disable-line force-pseudo-nesting
+
+    .escort-ops {
+      display: table;
+    }
+  }
+
   .escort-ops {
     top: 0;
 
@@ -10,8 +17,17 @@
       padding: 0;
     }
 
+    li:nth-child(2) { // sass-lint:disable-line force-pseudo-nesting
+      display: table-cell;
+    }
+
     a {
-      padding: ($padding * 1.25) ($padding / 2);
+      @extend %button;
+      padding: 0 ($padding / 2);
+      background-color: transparent;
+      transition: none;
+      line-height: $base-size;
+      color: $primary-color;
     }
 
     > :first-child {
@@ -32,9 +48,16 @@
   .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-ops {
+      width: 100%;
 
       li {
         padding: $padding / 2;
+        width: 25%;
+        display: table-cell;
+
+        a {
+          line-height: $base-size / 2;
+        }
       }
     }
   }

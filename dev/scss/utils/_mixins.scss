@@ -152,6 +152,32 @@
     }
   }
 
+  @if $region == 'mini' {
+    box-shadow: 0 1px 10px adjust-color($bg-color-mini, $saturation: 0%, $lightness: -20%);
+    padding: 0 ($padding * 0.66);
+    line-height: $font-size * 1.66;
+
+    &:hover {
+      box-shadow: 0 3px 15px adjust-color($bg-color-mini, $saturation: 0%, $lightness: -40%);
+    }
+
+    @if $transparent == true {
+      @include linear-gradient(rgba(smart-scale($bg-color-mini), 0.1), rgba(smart-scale($bg-color-mini), 0.33), bottom);
+      color: smart-scale($bg-color-mini, $scale: 50%);
+
+      &:visited,
+      &:active,
+      &:focus {
+        color: smart-scale($bg-color-mini, $scale: 50%);
+      }
+
+      &:hover {
+        background-color: lighten($primary-color, 10%);
+        color: smart-scale($bg-color-mini, $scale: 100%);
+      }
+    }
+  }
+
   @if $region == 'left' {
     box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -15%);
 

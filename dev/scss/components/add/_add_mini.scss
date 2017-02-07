@@ -6,7 +6,7 @@
   .escort-add {
 
     > div {
-      @include button-style($region: top);
+      @include button-style($region: mini);
     }
   }
 }
