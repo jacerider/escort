@@ -18,57 +18,10 @@
 
   .escort-section {
 
-    &:last-child {
+    &.escort-right-bottom,
+    &.escort-left-bottom {
       margin-top: auto;
     }
-  }
-}
-
-/**
- * Left region only
- */
-@include get-location($type: vertical, $region: left) {
-  left: 0;
-  background: $bg-color-left;
-  border-right: 1px solid scale-color($bg-color-left, $lightness: -10%);
-  color: smart-scale($bg-color-left);
-
-  .hide-escort-left & {
-    transform: translate(-100%, 0);
-  }
-
-  .show-escort-mini-left &,
-  .show-escort-full-left & {
-    transform: translate(0, 0);
-  }
-
-  .show-escort-full-left & {
-    width: $base-size-active;
-    box-shadow: 0 0 15px rgba($black, 0.2); // sass-lint:disable-line no-color-literals
-  }
-}
-
-/**
- * Right region only
- */
-@include get-location($type: vertical, $region: right) {
-  right: 0;
-  background: $bg-color-right;
-  border-left: 1px solid scale-color($bg-color-right, $lightness: -10%);
-  color: smart-scale($bg-color-right);
-
-  .hide-escort-right & {
-    transform: translate(100%, 0);
-  }
-
-  .show-escort-mini-right &,
-  .show-escort-full-right & {
-    transform: translate(0, 0);
-  }
-
-  .show-escort-full-right & {
-    width: $base-size-active;
-    box-shadow: 0 0 15px rgba($black, 0.2); // sass-lint:disable-line no-color-literals
   }
 }
 

@@ -1,0 +1,41 @@
+/**
+ * Mini region only
+ */
+@include get-location($type: horizontal, $region: mini) {
+
+  // .escort-item {
+  //   border-right: 1px dashed smart-scale($bg-color-top, $scale: 25%);
+  //   border-left: 1px dashed smart-scale($bg-color-top, $scale: 25%);
+  // }
+
+  .escort-item {
+    line-height: $base-size * 0.75;
+  }
+
+  .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+    &:hover {
+      background: smart-scale($bg-color-top, $scale: -12%);
+
+      .escort-content {
+        color: smart-scale($bg-color-top, $scale: 80%);
+      }
+    }
+
+    &.is-active {
+      background: smart-scale($bg-color-top, $scale: 5%);
+    }
+  }
+
+  .escort-active {
+
+    .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+      background: smart-scale($bg-color-top, $scale: -12%);
+    }
+  }
+
+  .escort-content {
+    color: smart-scale($bg-color-top, $scale: 60%);
+    text-shadow: 0 1px 2px adjust-color($bg-color-top, $lightness: -25%);
+  }
+}

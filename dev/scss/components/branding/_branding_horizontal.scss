@@ -1,0 +1,9 @@
+@include get-location($type: horizontal) {
+
+  .escort-type-branding {
+
+    .escort-site-slogan {
+      box-shadow: 0 -2px 5px rgba($black, 0.5); // sass-lint:disable-line no-color-literals
+    }
+  }
+}

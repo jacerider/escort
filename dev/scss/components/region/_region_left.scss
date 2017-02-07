@@ -1,0 +1,23 @@
+/**
+ * Left region only
+ */
+@include get-location($type: vertical, $region: left) {
+  left: 0;
+  background: $bg-color-left;
+  border-right: 1px solid scale-color($bg-color-left, $lightness: -10%);
+  color: smart-scale($bg-color-left);
+
+  .hide-escort-left & {
+    transform: translate(-100%, 0);
+  }
+
+  .show-escort-mini-left &,
+  .show-escort-full-left & {
+    transform: translate(0, 0);
+  }
+
+  .show-escort-full-left & {
+    width: $base-size-active;
+    box-shadow: 0 0 15px rgba($black, 0.2); // sass-lint:disable-line no-color-literals
+  }
+}

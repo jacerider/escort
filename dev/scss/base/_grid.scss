@@ -1,0 +1,52 @@
+////////////////////////////////////////////////////////////////////////////////
+// Grid Dropdown Layout
+// -----------------------------------------------------------------------------
+// Styles for add escort widget button on the admin page
+
+.escort-item {
+
+  .escort-grid {
+    margin: 0;
+    padding: ($padding / 2) ($padding / 2) $padding;
+    list-style: none;
+    display: flex;
+    flex-flow: wrap;
+    flex: 0 1 auto;
+
+    ul {
+      margin: 0;
+      padding: $padding / 2;
+      list-style: none;
+      display: flex;
+      flex-flow: wrap;
+      flex: 0 1 auto;
+    }
+
+    li {
+      width: 50%;
+      flex-basis: 50%;
+      text-align: center;
+      background-color: transparent;
+      padding: 0;
+    }
+
+    a {
+      @extend %button;
+      height: 88%;
+      display: block;
+      vertical-align: middle;
+    }
+
+    i {
+      display: block;
+      font-size: $font-size * 3;
+    }
+
+    .icon-label {
+      display: block;
+      margin-top: $margin / 2;
+      white-space: normal;
+      line-height: $padding * 1.25;
+    }
+  }
+}

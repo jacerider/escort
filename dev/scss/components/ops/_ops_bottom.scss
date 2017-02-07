@@ -1,0 +1,22 @@
+/**
+ * Bottom region only
+ */
+@include get-location($type: horizontal, $region: bottom) {
+
+  .escort-ops {
+    bottom: 100%;
+  }
+
+  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+      
+    .escort-ops {
+      
+      a {
+        @include button-style($region: bottom, $transparent: true) {
+          display: block;
+          padding: $padding / 2;
+        };
+      }  
+    }
+  }
+}

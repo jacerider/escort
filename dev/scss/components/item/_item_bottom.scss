@@ -1,0 +1,37 @@
+/**
+ * Bottom region only
+ */
+@include get-location($type: horizontal, $region: bottom) {
+
+  // .escort-item {
+  //   border-right: 1px dashed smart-scale($bg-color-bottom, $scale: 25%);
+  //   border-left: 1px dashed smart-scale($bg-color-bottom, $scale: 25%);
+  // }
+
+  .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+    &:hover {
+      background: smart-scale($bg-color-bottom, $scale: -12%);
+
+      .escort-content {
+        color: smart-scale($bg-color-bottom, $scale: 80%);
+      }
+    }
+
+    &.is-active {
+      background: smart-scale($bg-color-bottom, $scale: 5%);
+    }
+  }
+
+  .escort-active {
+
+    .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+      background: smart-scale($bg-color-bottom, $scale: -12%);
+    }
+  }
+
+  .escort-content {
+    color: smart-scale($bg-color-bottom, $scale: 60%);
+    text-shadow: 0 1px 2px scale-color($bg-color-bottom, $lightness: -25%);
+  }
+}

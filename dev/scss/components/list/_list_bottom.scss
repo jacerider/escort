@@ -1,0 +1,27 @@
+/**
+ * Bottom region only
+ */
+@include get-location($type: horizontal, $region: bottom) {
+
+  .escort-list {
+
+    li {
+
+      &:last-child {
+
+        a {
+          border-bottom: 0;
+        }
+      }
+
+      a {
+        border-top: 1px solid lighten($bg-color-bottom, 5%); // sass-lint:disable-line no-color-literals
+        border-bottom: 1px solid darken($bg-color-bottom, 5%); // sass-lint:disable-line no-color-literals
+      }
+
+      .icon-label {
+        color: smart-scale($bg-color-bottom, $scale: 80%);
+      }
+    }
+  }
+}

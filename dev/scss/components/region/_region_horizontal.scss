@@ -1,0 +1,47 @@
+////////////////////////////////////////////////////////////////////////////////
+// REGION Horizontal
+// -----------------------------------------------------------------------------
+// Defines styles only associated with horizontal regions
+
+/**
+ * Top AND Bottom region only
+ */
+@include get-location($type: horizontal) {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  transform: translate(0, 0);
+
+  .escort-section {
+    display: inline-flex;
+
+    &.escort-top-right,
+    &.escort-mini-right,
+    &.escort-bottom-right {
+      margin-left: auto;
+    }
+  }
+
+  /**
+   * Horizontal sections
+   */
+  .escort-section {
+
+    &:first-child {
+
+      .escort-item {
+        border-left: 0;
+      }
+    }
+
+    &:last-child {
+
+      .escort-item {
+        border-right: 0;
+      }
+    }
+  }
+}

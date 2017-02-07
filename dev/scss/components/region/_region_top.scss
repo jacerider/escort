@@ -1,0 +1,19 @@
+/**
+ * Top region only
+ */
+@include get-location($type: horizontal, $region: top) {
+  top: 0;
+  background: $bg-color-top;
+  height: $base-size;
+  border-bottom: 1px solid scale-color($bg-color-top, $lightness: -10%);
+  color: smart-scale($bg-color-top);
+
+  .hide-escort-top & {
+    transform: translate(0, -100%);
+  }
+
+  .show-escort-mini-top &,
+  .show-escort-full-top & {
+    transform: translate(0, 0);
+  }
+}

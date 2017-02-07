@@ -1,0 +1,25 @@
+/**
+ * Left AND Right region
+ */
+@include get-location($type: vertical) {
+
+  .escort-type-user {
+    text-align: center;
+
+    &.escort-group {
+
+      .escort-content {
+
+        .escort-content {
+          display: block;
+        }
+      }
+    }
+
+    .escort-image {
+      margin-left: $margin * -0.66;
+      width: $base-size * 1.33;
+      height: $base-size * 1.33;
+    }
+  }
+}

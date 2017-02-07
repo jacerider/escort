@@ -1,0 +1,16 @@
+/**
+ * Top AND Bottom region
+ */
+@include get-location($type: horizontal) {
+
+  .escort-add {
+
+    > div {
+      vertical-align: middle;
+
+      i {
+        line-height: $font-size * 0.75;
+      }
+    }
+  }
+}

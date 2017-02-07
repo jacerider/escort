@@ -1,0 +1,36 @@
+/**
+ * Mini region only
+ */
+@include get-location($type: horizontal, $region: mini) {
+  top: 0;
+  background: scale-color($bg-color-top, $lightness: -10%);
+  height: $base-size * 0.75;
+  border-bottom: 1px solid scale-color($bg-color-top, $lightness: -10%);
+  color: smart-scale($bg-color-top);
+  width: auto;
+  z-index: 4;
+
+  .has-escort-left & {
+    left: $base-size;
+  }
+
+  .hide-escort-left & {
+    left: 0;
+  }
+
+  .has-escort-right & {
+    right: $base-size;
+  }
+
+  .hide-escort-right & {
+    right: 0;
+  }
+
+  .has-escort-top & {
+    top: $base-size;
+  }
+
+  .hide-escort-top & {
+    top: 0;
+  }
+}

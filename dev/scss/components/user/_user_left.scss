@@ -1,0 +1,27 @@
+/**
+ * Left region
+ */
+@include get-location($type: vertical, $region: left) {
+
+  .show-escort-full-left &,
+  .is-escort-admin & {
+
+    .escort-image {
+      margin: 0 auto;
+    }
+  }
+
+  .escort-type-user {
+
+    &:hover {
+
+      .escort-image {
+        box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -20%);
+      }
+    }
+
+    .escort-image {
+      box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -12%);
+    }
+  }
+}

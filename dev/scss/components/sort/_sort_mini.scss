@@ -1,0 +1,12 @@
+.escort-sorting {
+
+  @include get-location($type: horizontal, $region: mini) {
+
+    .escort-placeholder {
+      color: smart-scale($bg-color-top, $scale: 35%);
+      outline-color: smart-scale($bg-color-top, $scale: 25%);
+      padding: $padding * 0.75;
+      height: $base-size * 0.75 !important;
+    }
+  }
+}

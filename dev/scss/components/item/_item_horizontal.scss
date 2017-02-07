@@ -1,0 +1,25 @@
+/**
+ * Top AND Bottom region
+ */
+@include get-location($type: horizontal) {
+
+  .escort-item {
+    padding: 0 $padding;
+    text-align: center;
+    display: block;
+    line-height: $base-size;
+    float: left;
+
+    &.escort-group {
+      border: 0;
+      padding: 0;
+    }
+
+    &.has-icon:not(.escort-add):not(.escort-toggle) { // sass-lint:disable-line force-pseudo-nesting
+
+      .escort-content {
+        margin-left: $margin / 2;
+      }
+    }
+  }
+}
