@@ -4,7 +4,7 @@
 @include get-location($type: horizontal, $region: mini) {
   top: 0;
   background: scale-color($bg-color-top, $lightness: -10%);
-  height: $base-size * 0.75;
+  height: $base-size * 0.66;
   border-bottom: 1px solid scale-color($bg-color-top, $lightness: -10%);
   color: smart-scale($bg-color-top);
   width: auto;
