@@ -2,7 +2,7 @@ escort:
   version: VERSION
   css:
     component:
-      css/escort.css: {}
+      css/escort.css: { minified: true }
   js:
     js/escort.js: { minified: true }
   dependencies:
@@ -11,57 +11,61 @@ escort:
     - core/drupal
 
 # Region libraries that are toolbar specific
-escort.region.horizontal:
+escort.type.horizontal:
   version: VERSION
   css:
     component:
-      css/escort.horizontal.css: {}
+      css/escort.horizontal.css: { minified: true }
+  dependencies:
+    - escort/escort
 
-escort.region.vertical:
+escort.type.vertical:
   version: VERSION
   css:
     component:
-      css/escort.vertical.css: {}
+      css/escort.vertical.css: { minified: true }
+  dependencies:
+    - escort/escort
 
 escort.region.top:
   version: VERSION
   css:
     component:
-      css/escort.top.css: {}
-    dependencies:
-      - escort/escort.region.horizontal
+      css/escort.top.css: { minified: true }
+  dependencies:
+    - escort/escort.type.horizontal
 
 escort.region.bottom:
   version: VERSION
   css:
     component:
-      css/escort.bottom.css: {}
-    dependencies:
-      - escort/escort.region.horizontal
+      css/escort.bottom.css: { minified: true }
+  dependencies:
+    - escort/escort.type.horizontal
 
 escort.region.mini:
   version: VERSION
   css:
     component:
-      css/escort.mini.css: {}
-    dependencies:
-      - escort/escort.region.horizontal
+      css/escort.mini.css: { minified: true }
+  dependencies:
+    - escort/escort.type.horizontal
 
 escort.region.left:
   version: VERSION
   css:
     component:
-      css/escort.left.css: {}
-    dependencies:
-      - escort/escort.region.vertical
+      css/escort.left.css: { minified: true }
+  dependencies:
+    - escort/escort.type.vertical
 
 escort.region.right:
   version: VERSION
   css:
     component:
-      css/escort.right.css: {}
-    dependencies:
-      - escort/escort.region.vertical
+      css/escort.right.css: { minified: true }
+  dependencies:
+    - escort/escort.type.vertical
 
 # JS libraries
 escort.toggle:

@@ -27,11 +27,6 @@ class Escort extends RenderElement {
       '#pre_render' => array(
         array($class, 'preRenderEscort'),
       ),
-      '#attached' => array(
-        'library' => array(
-          'escort/escort',
-        ),
-      ),
     );
   }
 
@@ -60,6 +55,7 @@ class Escort extends RenderElement {
     foreach ($regions as $group_id => $sections) {
       $element[$group_id] = [
         '#theme' => 'escort_region',
+        '#attached' => ['library' => ['escort/escort.region.' . $group_id]],
         '#attributes' => array(
           'id' => 'escort-' . $group_id,
           'role' => 'group',
