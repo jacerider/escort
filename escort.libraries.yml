@@ -100,6 +100,9 @@ escort.admin:
   version: VERSION
   js:
     js/escort.admin.js: {}
+  css:
+    component:
+      css/escort.admin.css: { minified: true }
   dependencies:
     - core/jquery
     - core/drupal

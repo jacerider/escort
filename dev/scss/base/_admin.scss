@@ -3,46 +3,50 @@
 // -----------------------------------------------------------------------------
 // Styles applied when in admin mode.
 
-.is-escort-admin {
 
-  .escort-left-bottom,
-  .escort-right-bottom {
-    border-top: 0;
-  }
+.escort-left-bottom,
+.escort-right-bottom {
+  border-top: 0;
+}
 
-  @each $region, $settings in $regions {
+@each $region, $settings in $regions {
 
-    /**
-     * In admin mode we want the vertical panels expanded by default
-     */
-    .escort-#{$region} {
+  /**
+   * In admin mode we want the vertical panels expanded by default
+   */
+  .escort-#{$region} {
 
-      @if map-get($settings, type) == 'vertical' {
-        width: map-get($settings, size_full);
+    @if map-get($settings, type) == 'vertical' {
+      width: map-get($settings, size_full);
+    }
+
+    @if map-get($settings, position) == 'mini' {
+
+      .has-escort-left & {
+        left: $base-size-active;
       }
 
-      @if map-get($settings, position) == 'mini' {
-        left: $base-size-active;
+      .has-escort-right & {
         right: $base-size-active;
       }
     }
+  }
 
-    /**
-     * In admin mode we want elements fully expanded so the wrapper needs to accomodate
-     */
-    &.has-escort-#{$region} {
+  /**
+   * In admin mode we want elements fully expanded so the wrapper needs to accomodate
+   */
+  &.has-escort-#{$region} {
 
-      .escort-wrapper {
+    .escort-wrapper {
 
-        @if map-get($settings, type) == 'vertical' {
+      @if map-get($settings, type) == 'vertical' {
 
-          @if map-get($settings, position) == 'left' {
-            left: map-get($settings, size_full);
-          }
+        @if map-get($settings, position) == 'left' {
+          margin-left: map-get($settings, size_full);
+        }
 
-          @if map-get($settings, position) == 'right' {
-            right: map-get($settings, size_full);
-          }
+        @if map-get($settings, position) == 'right' {
+          margin-right: map-get($settings, size_full);
         }
       }
     }
