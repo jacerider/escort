@@ -1,13 +1,63 @@
 /**
  * Mini region only
  */
+
 @include get-location($type: horizontal, $region: mini) {
 
   .escort-type-branding {
 
+    &:hover {
+    
+      .escort-site-slogan {
+        top: 100%;
+      }
+    }
+
     img {
       height: $base-size * 0.6;
       margin-top: $base-size * 0.05;
+    }
+
+    .escort-site-slogan {
+      @include css-triangle($base-size / 4, smart-scale($bg-color-mini, 20%), up, before) {
+        position: absolute;
+        bottom: 100%;
+      };
+
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      background-color: smart-scale($bg-color-mini, 20%);
+      top: 90%;
+    }
+  }
+
+  .escort-mini-left {
+
+    .escort-content {
+
+      .escort-site-slogan {
+
+        &::before {
+          left: 0;
+          border-left-width: 0;
+        }
+      }
+    }
+  }
+
+  .escort-mini-right {
+
+    .escort-content {
+
+      .escort-site-slogan {
+        right: 0;
+        left: auto;
+
+        &::before {
+          right: 0;
+          border-right-width: 0;
+        }
+      }
     }
   }
 }

@@ -12,7 +12,7 @@
 
   .escort-ops {
     padding: $padding / 3;
-    width: $base-size;
+    width: $base-size * 0.95;
     z-index: 1;
     transition: width 300ms;
 

@@ -8,7 +8,7 @@
     min-width: $base-size * 0.85;
   }
 
-  .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+  .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
     &:hover {
       background: smart-scale($bg-color-mini, $scale: -12%);

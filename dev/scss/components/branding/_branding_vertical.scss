@@ -1,0 +1,18 @@
+/**
+ * Left AND Right region only
+ */
+
+@include get-location($type: vertical) {
+
+  .escort-type-branding {
+    
+    .escort-content {
+      white-space: normal;
+    }
+
+    .escort-site-slogan {
+      display: block;
+      margin-left: $base-size;
+    }
+  }
+}

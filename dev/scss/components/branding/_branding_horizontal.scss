@@ -2,8 +2,40 @@
 
   .escort-type-branding {
 
+    img {
+      margin-top: $base-size * 0.05;
+    }
+
     .escort-site-slogan {
       box-shadow: 0 -2px 5px rgba($black, 0.5); // sass-lint:disable-line no-color-literals
+    }
+
+    .escort-site-slogan {
+      margin: 0 !important;
+      height: 0;
+      display: block;
+      overflow: hidden;
+      position: absolute;
+      z-index: 1;
+      line-height: $base-size * 0.75;
+      min-width: 100%;
+      left: 0;
+      padding: 0 $padding;
+      opacity: 0;
+      box-shadow: 0 -2px 5px rgba($black, 0.5); // sass-lint:disable-line no-color-literals
+      transition: opacity 200ms, top 300ms, bottom 300ms;
+
+      &::before {
+        opacity: 0;
+        transition: opacity 100ms;
+      }
+    }
+
+    .is-escort-admin & {
+
+      .escort-site-slogan {
+        display: none;
+      }
     }
   }
 }

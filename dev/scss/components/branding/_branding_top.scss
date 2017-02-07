@@ -1,3 +1,7 @@
+/**
+ * Top region only
+ */
+
 @include get-location($type: horizontal, $region: top) {
 
   .escort-type-branding {
