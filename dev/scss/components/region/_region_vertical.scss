@@ -4,7 +4,7 @@
 // Defines styles only associated with vertical toolbars
 
 @include get-location($type: vertical) {
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   width: $base-size;
@@ -34,7 +34,7 @@
      * If region is vertical.
      */
     @if map-get($settings, type) == 'vertical' {
-      
+
       /**
        * Vertical regions can be offset by horizontal regions. We loop through
        * all regions again, and add offset.
@@ -42,7 +42,7 @@
       @each $r, $s in $regions {
 
         @if map-get($s, type) == 'horizontal' {
-          
+
           @if map-get($s, position) == 'top' {
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,

@@ -3,33 +3,7 @@
 // -----------------------------------------------------------------------------
 // Defines toolbar layout and basic interactivity
 
-/**
- * hide overflow on the body
- */
-.has-escort {
-  overflow: hidden;
-}
-
-/**
- * The wrapper around the content of the page. The escort regions exists as
- * siblings to this element.
- */
-.escort-wrapper-scroll {
-  position: relative;
-  z-index: 100;
-  background: $white;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch; // sass-lint:disable-line no-misspelled-properties
-}
-
 .escort-wrapper {
-  z-index: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: auto;
 
   /**
      * Offset the main content area based on the size of each escort region
@@ -43,26 +17,26 @@
       @if map-get($settings, type) == 'horizontal' {
 
         @if map-get($settings, position) == 'top' {
-          top: map-get($settings, size);
+          margin-top: map-get($settings, size);
         }
 
         @if map-get($settings, position) == 'bottom' {
-          bottom: map-get($settings, size);
+          margin-bottom: map-get($settings, size);
         }
       }
 
       @if map-get($settings, position) == 'mini' {
-        top: map-get($settings, size) * 1.75;
+        margin-top: map-get($settings, size) * 1.75;
       }
 
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          left: map-get($settings, size);
+          margin-left: map-get($settings, size);
         }
 
         @if map-get($settings, position) == 'right' {
-          right: map-get($settings, size);
+          margin-right: map-get($settings, size);
         }
       }
     }
@@ -76,22 +50,22 @@
       @if map-get($settings, type) == 'horizontal' {
 
         @if map-get($settings, position) == 'top' {
-          top: 0;
+          margin-top: 0;
         }
 
         @if map-get($settings, position) == 'bottom' {
-          bottom: 0;
+          margin-bottom: 0;
         }
       }
 
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          left: 0;
+          margin-left: 0;
         }
 
         @if map-get($settings, position) == 'right' {
-          right: 0;
+          margin-right: 0;
         }
       }
     }
