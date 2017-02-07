@@ -42,11 +42,11 @@
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          margin-left: map-get($settings, size_full);
+          padding-left: map-get($settings, size_full);
         }
 
         @if map-get($settings, position) == 'right' {
-          margin-right: map-get($settings, size_full);
+          padding-right: map-get($settings, size_full);
         }
       }
     }
