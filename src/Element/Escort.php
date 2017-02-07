@@ -65,6 +65,7 @@ class Escort extends RenderElement {
             Html::cleanCssIdentifier('escort-' . $regionManager->getGroupType($group_id)),
           ],
           'data-region' => $group_id,
+          'data-offset-' . $regionManager->getGroupPosition($group_id) => '',
         ),
       ];
       if (!empty($config[$group_id]['icon_only'])) {
