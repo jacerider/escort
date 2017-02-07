@@ -1,0 +1,13 @@
+/**
+ * Mini region only
+ */
+@include get-location($type: horizontal, $region: mini) {
+
+  .escort-type-branding {
+
+    img {
+      height: $base-size * 0.6;
+      margin-top: $base-size * 0.05;
+    }
+  }
+}

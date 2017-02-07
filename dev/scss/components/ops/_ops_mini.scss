@@ -1,11 +1,11 @@
 /**
- * Top region only
+ * Mini region only
  */
-@include get-location($type: horizontal, $region: top) {
+@include get-location($type: horizontal, $region: mini) {
 
   .escort-ops {
     top: 100%;
-    background: smart-scale($bg-color-top, $scale: -12%);
+    background: smart-scale($bg-color-mini, $scale: -12%);
     box-shadow: 0 4px 6px transparentize($black, 0.75);
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
@@ -16,7 +16,7 @@
     .escort-ops {
       
       a {
-        @include button-style($region: top, $transparent: true) {
+        @include button-style($region: mini, $transparent: true) {
           display: block;
           padding: $padding / 2;
         };

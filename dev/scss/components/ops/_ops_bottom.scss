@@ -5,6 +5,8 @@
 
   .escort-ops {
     bottom: 100%;
+    background: smart-scale($bg-color-bottom, $scale: -12%);
+    box-shadow: 0 -4px 6px transparentize($black, 0.75);
   }
 
   .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
