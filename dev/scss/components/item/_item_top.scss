@@ -12,7 +12,7 @@
     line-height: $base-size;
   }
 
-  .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+  .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
 
     &:hover {
       background: smart-scale($bg-color-top, $scale: -12%);
