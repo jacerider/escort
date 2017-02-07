@@ -19,30 +19,30 @@
       @if map-get($settings, type) == 'horizontal' {
 
         @if map-get($settings, position) == 'top' {
-          margin-top: map-get($settings, size);
+          padding-top: map-get($settings, size);
 
           @if map-get($settings, position) == 'mini' {
-            margin-top: map-get($settings, size) * 1.66;
+            padding-top: map-get($settings, size) * 1.66;
           }
         }
 
         @if map-get($settings, position) == 'bottom' {
-          margin-bottom: map-get($settings, size);
+          padding-bottom: map-get($settings, size);
         }
       }
 
       @if map-get($settings, position) == 'mini' {
-        margin-top: map-get($settings, size) * 0.66;
+        padding-top: map-get($settings, size) * 1.66;
       }
 
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          margin-left: map-get($settings, size);
+          padding-left: map-get($settings, size);
         }
 
         @if map-get($settings, position) == 'right' {
-          margin-right: map-get($settings, size);
+          padding-right: map-get($settings, size);
         }
       }
     }
@@ -56,22 +56,22 @@
       @if map-get($settings, type) == 'horizontal' {
 
         @if map-get($settings, position) == 'top' {
-          margin-top: 0;
+          padding-top: 0;
         }
 
         @if map-get($settings, position) == 'bottom' {
-          margin-bottom: 0;
+          padding-bottom: 0;
         }
       }
 
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          margin-left: 0;
+          padding-left: 0;
         }
 
         @if map-get($settings, position) == 'right' {
-          margin-right: 0;
+          padding-right: 0;
         }
       }
     }
