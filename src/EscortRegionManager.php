@@ -37,6 +37,7 @@ class EscortRegionManager implements EscortRegionManagerInterface {
       'top' => [
         'label' => t('Top'),
         'type' => 'horizontal',
+        'position' => 'top',
         'sections' => [
           'left' => [
             'label' => t('Left'),
@@ -49,6 +50,7 @@ class EscortRegionManager implements EscortRegionManagerInterface {
       'bottom' => [
         'label' => t('Bottom'),
         'type' => 'horizontal',
+        'position' => 'bottom',
         'sections' => [
           'left' => [
             'label' => t('Left'),
@@ -61,6 +63,7 @@ class EscortRegionManager implements EscortRegionManagerInterface {
       'left' => [
         'label' => t('Left'),
         'type' => 'vertical',
+        'position' => 'left',
         'sections' => [
           'top' => [
             'label' => t('Top'),
@@ -73,6 +76,7 @@ class EscortRegionManager implements EscortRegionManagerInterface {
       'right' => [
         'label' => t('Right'),
         'type' => 'vertical',
+        'position' => 'right',
         'sections' => [
           'top' => [
             'label' => t('Top'),
@@ -85,6 +89,7 @@ class EscortRegionManager implements EscortRegionManagerInterface {
       'mini' => [
         'label' => t('Mini'),
         'type' => 'horizontal',
+        'position' => 'top',
         'sections' => [
           'left' => [
             'label' => t('Left'),
@@ -234,6 +239,25 @@ class EscortRegionManager implements EscortRegionManagerInterface {
       $type = $regions[$group_id]['type'];
     }
     return $type;
+  }
+
+  /**
+   * Get the position from the group_id OR group_id . section_id.
+   *
+   * @var $region_or_group_id string
+   *   The region id.
+   *
+   * @return string
+   *   The region group position.
+   */
+  public function getGroupPosition($region_or_group_id) {
+    $regions = static::rawRegions();
+    $position = '';
+    $group_id = isset($regions[$region_or_group_id]) ? $region_or_group_id : $this->getGroupId($region_or_group_id);
+    if ($group_id && isset($regions[$group_id])) {
+      $position = $regions[$group_id]['position'];
+    }
+    return $position;
   }
 
 }
