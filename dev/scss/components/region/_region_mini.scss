@@ -3,9 +3,9 @@
  */
 @include get-location($type: horizontal, $region: mini) {
   top: 0;
-  background: scale-color($bg-color-mini, $lightness: -10%);
-  height: $base-size * 0.66;
-  border-bottom: 1px solid scale-color($bg-color-mini, $lightness: -10%);
+  background: $bg-color-mini;
+  height: $base-size * 0.75;
+  padding: 0 ($padding / 8);
   color: smart-scale($bg-color-mini);
   width: auto;
   z-index: 4;

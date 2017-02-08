@@ -4,8 +4,25 @@
 @include get-location($type: horizontal, $region: mini) {
 
   .escort-item {
-    line-height: $base-size * 0.66;
-    min-width: $base-size * 0.85;
+    line-height: $base-size * 0.75;
+    min-width: $base-size * 0.75;
+    padding: 0 ($padding * 0.66)
+  }
+
+  .escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add):not(.is-active) {
+    padding: 0 0 0 ($padding / 3);
+
+    &:last-child {
+      padding-right: $padding / 3;
+    }
+
+    .escort-inner {
+      @include button-style($region: mini, $transparent: true) {
+        margin-top: 0 !important;
+        padding: 0 ($padding * 0.66) !important;
+        min-width: $base-size * 0.75;
+      };
+    }
   }
 
   .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
@@ -18,8 +35,17 @@
       }
     }
 
-    &.is-active {
-      background: smart-scale($bg-color-mini, $scale: 5%);
+    &.is-active,
+    &.secondary-tab {
+      background: smart-scale($bg-color-mini, $scale: 4%);
+    }
+
+    &.is-active.primary-tab {
+      margin-left: $margin / 3;
+    }
+
+    &.secondary-tab:last-child {
+      padding-right: $padding / 3;
     }
   }
 

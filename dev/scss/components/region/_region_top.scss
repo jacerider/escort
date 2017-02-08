@@ -5,6 +5,7 @@
   top: 0;
   background: $bg-color-top;
   height: $base-size;
+  padding: 0 ($padding / 3);
   border-bottom: 1px solid scale-color($bg-color-top, $lightness: -10%);
   color: smart-scale($bg-color-top);
 
