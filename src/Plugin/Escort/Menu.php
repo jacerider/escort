@@ -140,9 +140,44 @@ class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInt
       array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
     );
     $tree = $this->menuTree->transform($tree, $manipulators);
-    $items = $this->buildTree($tree);
+
+    $render = $this->menuTree->build($tree);
+    $items = $this->buildFlattenedItems($render['#items'], $this->flattenTree($tree));
+    $items['#cache'] = $render['#cache'];
 
     return $items;
+  }
+
+  /**
+   * Prepare tab for rendering.
+   *
+   * @param array $items
+   *   The renderable menu.
+   * @param array $tree
+   *   The menu tree.
+   *
+   * @return array
+   *   An array of tabs.
+   */
+  protected function buildFlattenedItems($items, $tree, $build = []) {
+    foreach ($items as $id => $item) {
+      $build_item = [];
+      $title = $item['title'];
+      $url = $item['url'];
+      $options = $url->getOptions();
+      $build_item = $this->buildLink($title, $url);
+      // Set depth class.
+      $build_item['#attributes']['class'][] = 'escort-depth-' . $tree[$id]->depth;
+      // Set active class.
+      if ($item['in_active_trail'] || !empty($options['set_active_class'])) {
+        $build_item['#attributes']['class'][] = 'is-active';
+      }
+      $build[] = $build_item;
+      if ($item['below']) {
+        $build = $this->buildFlattenedItems($item['below'], $tree, $build);
+      }
+    }
+    return $build;
   }
 
   /**
@@ -154,40 +189,15 @@ class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInt
    * @return array
    *   The items.
    */
-  protected function buildTree($tree, $items = []) {
-    foreach ($tree as $item) {
-      $items[] = $this->buildItem($item);
+  protected function flattenTree($tree, $items = []) {
+    foreach ($tree as $id => $item) {
+      // $items[] = $this->buildItem($item);
+      $items[$item->link->getPluginId()] = $item;
       if ($item->hasChildren) {
-        $items = $this->buildTree($item->subtree, $items);
+        $items = $this->flattenTree($item->subtree, $items);
       }
     }
     return $items;
-  }
-
-  /**
-   * Prepare tab for rendering.
-   *
-   * @param array $item
-   *   A menu tree item.
-   *
-   * @return array
-   *   An array of tabs.
-   */
-  protected function buildItem($item) {
-    $url = $item->link->getUrlObject();
-    $title = $item->link->getTitle();
-
-    $build = $this->buildLink($title, $url);
-
-    // Record depth.
-    $build['#attributes']['class'][] = 'depth-' . $item->depth;
-
-    // Set active class.
-    if ($item->inActiveTrail) {
-      $build['#attributes']['class'][] = 'is-active';
-    }
-
-    return $build;
   }
 
   /**

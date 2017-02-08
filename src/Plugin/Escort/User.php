@@ -5,9 +5,7 @@ namespace Drupal\escort\Plugin\Escort;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountProxy;
-use Drupal\Core\Menu\MenuActiveTrailInterface;
 use Drupal\Core\Menu\MenuLinkTreeInterface;
-use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Cache\Cache;
@@ -22,6 +20,7 @@ use Drupal\Core\Cache\Cache;
  * )
  */
 class User extends Dropdown implements ContainerFactoryPluginInterface {
+  use EscortPluginLinkTrait;
 
   /**
    * The menu used for the links.
@@ -64,13 +63,6 @@ class User extends Dropdown implements ContainerFactoryPluginInterface {
   protected $menuTree;
 
   /**
-   * The active menu trail service.
-   *
-   * @var \Drupal\Core\Menu\MenuActiveTrailInterface
-   */
-  protected $menuActiveTrail;
-
-  /**
    * The menu storage.
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
@@ -89,13 +81,12 @@ class User extends Dropdown implements ContainerFactoryPluginInterface {
    * @param \Drupal\Core\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountProxy $current_user, MenuLinkTreeInterface $menu_tree, MenuActiveTrailInterface $menu_active_trail) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountProxy $current_user, MenuLinkTreeInterface $menu_tree) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->currentUser = $current_user;
     $this->currentAccount = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
     $this->menuTree = $menu_tree;
-    $this->menuActiveTrail = $menu_active_trail;
     $this->menuStorage = $this->entityTypeManager->getStorage('menu');
   }
 
@@ -109,8 +100,7 @@ class User extends Dropdown implements ContainerFactoryPluginInterface {
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('current_user'),
-      $container->get('menu.link_tree'),
-      $container->get('menu.active_trail')
+      $container->get('menu.link_tree')
     );
   }
 
@@ -164,21 +154,22 @@ class User extends Dropdown implements ContainerFactoryPluginInterface {
       '#attributes' => ['class' => ['escort-list']],
     ];
 
-    foreach ($this->menuItems() as $item) {
-      $link = $item->link;
-      $title = $link->getTitle();
+    $render = $this->menuItems();
+    $build['#cache'] = $render['#cache'];
+    foreach ($render['#items'] as $item) {
+      $title = $item['title'];
+      $url = $item['url'];
+      $options = $url->getOptions();
       $attributes = [];
       // Icon support.
-      if ($this->hasIconSupport()) {
-        $title = micon($title)->setMatchString('menu.' . $this->menuName . '.' . $title);
-      }
+      $title = $this->titleAndUrlToIcon($title, $url);
       // Set active class.
-      if ($item->inActiveTrail) {
+      if ($item['in_active_trail'] || !empty($options['set_active_class'])) {
         $attributes['class'][] = 'is-active';
       }
       $build['#links'][] = [
         'title' => $title,
-        'url' => $link->getUrlObject(),
+        'url' => $url,
         'attributes' => $attributes,
       ];
     }
@@ -192,9 +183,7 @@ class User extends Dropdown implements ContainerFactoryPluginInterface {
   public function menuItems() {
     $items = [];
     $menu_name = $this->menuName;
-    $active_trail = $this->menuActiveTrail->getActiveTrailIds($menu_name);
-    $parameters = new MenuTreeParameters();
-    $parameters->setActiveTrail($active_trail);
+    $parameters = $this->menuTree->getCurrentRouteMenuTreeParameters($menu_name);
 
     $level = 1;
     $depth = 1;
@@ -212,7 +201,8 @@ class User extends Dropdown implements ContainerFactoryPluginInterface {
       array('callable' => 'menu.default_tree_manipulators:checkAccess'),
       array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
     );
-    $items = $this->menuTree->transform($tree, $manipulators);
+    $tree = $this->menuTree->transform($tree, $manipulators);
+    $items = $this->menuTree->build($tree);
 
     return $items;
   }

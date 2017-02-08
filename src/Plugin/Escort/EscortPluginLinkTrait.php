@@ -32,11 +32,17 @@ trait EscortPluginLinkTrait {
    *   A render array.
    */
   public function buildLink($title, $uri) {
-
+    $title = $this->titleAndUrlToIcon($title, $uri);
     list($title, $icon) = $this->titleToTitleIcon($title);
     $attributes = $this->getUriAsAttributes($uri);
+    $options = $uri->getOptions();
 
     $attributes['title'] = $title;
+
+    // Support icon set in url attributes.
+    if (!empty($options['attributes']['data-icon'])) {
+      $icon = $options['attributes']['data-icon'];
+    }
 
     return [
       '#tag' => 'a',
@@ -63,7 +69,7 @@ trait EscortPluginLinkTrait {
     if ($this->hasIconSupport()) {
       // Check if title has already been MiconIfied.
       if (!$title instanceof MiconIconize) {
-        $title = MiconIconize::iconize($title)->setMatchPrefix('escort');
+        $title = $this->titleToIcon($title);
       }
       if ($icon = $title->getIcon()) {
         $icon = $icon->getSelector();
@@ -75,6 +81,41 @@ trait EscortPluginLinkTrait {
     }
 
     return [$title, $icon];
+  }
+
+  /**
+   * Givent a title, return as Micon object.
+   *
+   * @param string $title
+   *   The title of the link.
+   */
+  public function titleToIcon($title, $prefix = 'escort') {
+    if ($this->hasIconSupport()) {
+      if (!$title instanceof MiconIconize) {
+        $title = MiconIconize::iconize($title);
+      }
+      $title->addMatchPrefix($prefix);
+    }
+    return $title;
+  }
+
+  /**
+   * Givent a title, return as Micon object.
+   *
+   * @param string $title
+   *   The title of the link.
+   */
+  public function titleAndUrlToIcon($title, $uri, $prefix = 'escort') {
+    if ($this->hasIconSupport()) {
+      $title = $this->titleToIcon($title);
+      if ($url = $this->getUrl($uri)) {
+        $options = $url->getOptions();
+        if (!empty($options['attributes']['data-icon'])) {
+          $title->setIcon($options['attributes']['data-icon']);
+        }
+      }
+    }
+    return $title;
   }
 
   /**
