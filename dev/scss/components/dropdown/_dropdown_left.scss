@@ -9,13 +9,13 @@
 
       .escort-dropdown-content {
         border-top: 1px solid darken($bg-color-left, 10%);
-        box-shadow: inset 0 0 30px darken($bg-color-left, 15%);
+        box-shadow: inset 0 0 30px adjust-color($bg-color-left, $saturation: 0%, $lightness: -8%);
       }
     }
   }
 
   .escort-dropdown-content {
     background: smart-scale($bg-color-left, $scale: -12%);
-    box-shadow: inset 0 0 10px darken($bg-color-left, 8%);
+    box-shadow: inset 0 0 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -8%);
   }
 }

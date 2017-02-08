@@ -16,12 +16,12 @@
     &:hover {
 
       .escort-image {
-        box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -20%);
+        box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -12%);
       }
     }
 
     .escort-image {
-      box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -12%);
+      box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -8%);
     }
   }
 }
