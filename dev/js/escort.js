@@ -41,7 +41,7 @@
         // Vertical display.
         _this.$region.filter('.escort-vertical').on('mouseenter.escort', function (e) {
           e.preventDefault();
-          timeoutDelay = _this.$region.hasClass('escort-instant') ? 0 : 400;
+          timeoutDelay = _this.$region.hasClass('escort-instant') ? 0 : 300;
           timeout = setTimeout(function() {
             _this.showFull();
           }, timeoutDelay);

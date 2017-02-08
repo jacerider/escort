@@ -1,8 +1,8 @@
 # Base micon_icons plugin definitions.
 # Plugin property $defaults are defined in MiconDiscoveryManager.
-menu.account.my_account:
-  text: menu.account.my account
+escort.my_account:
+  text: escort.my account
   icon: fa-user
-menu.account.log_out:
-  text: menu.account.log out
+escort.log_out:
+  text: escort.log out
   icon: fa-power-off
