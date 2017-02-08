@@ -8,6 +8,16 @@
     min-width: $base-size * 0.85;
   }
 
+  .escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add) {
+
+    .escort-inner {
+      @include button-style($region: mini, $transparent: true) {
+        margin-top: $margin / 3 !important;
+        padding: 0 ($padding * 0.66) !important;
+      };
+    }
+  }
+
   .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
 
     &:hover {

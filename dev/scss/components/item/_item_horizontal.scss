@@ -21,5 +21,13 @@
         margin-left: $margin / 2;
       }
     }
+
+    &.escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add) {
+      padding: 0 ($padding / 3);
+
+      .escort-inner {
+        @extend %button;
+      }
+    }
   }
 }

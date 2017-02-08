@@ -8,6 +8,13 @@
   //   border-left: 1px dashed smart-scale($bg-color-bottom, $scale: 25%);
   // }
 
+  .escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add) {
+
+    .escort-inner {
+      @include button-style($region: bottom, $transparent: true);
+    }
+  }
+
   .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
 
     &:hover {
