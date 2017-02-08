@@ -164,7 +164,7 @@ class User extends Dropdown implements ContainerFactoryPluginInterface {
       // Icon support.
       $title = $this->titleAndUrlToIcon($title, $url);
       // Set active class.
-      if ($item['in_active_trail'] || !empty($options['set_active_class'])) {
+      if ($item['in_active_trail']) {
         $attributes['class'][] = 'is-active';
       }
       $build['#links'][] = [

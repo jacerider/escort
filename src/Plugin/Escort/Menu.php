@@ -169,7 +169,7 @@ class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInt
       // Set depth class.
       $build_item['#attributes']['class'][] = 'escort-depth-' . $tree[$id]->depth;
       // Set active class.
-      if ($item['in_active_trail'] || !empty($options['set_active_class'])) {
+      if ($item['in_active_trail']) {
         $build_item['#attributes']['class'][] = 'is-active';
       }
       $build[] = $build_item;
