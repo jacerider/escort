@@ -5,6 +5,13 @@
 
   .escort-type-user {
 
+    .escort-dropdown-trigger {
+
+      > .escort-inner {
+        display: flex;
+      }
+    }
+
     &.escort-active {
 
       .escort-image {
@@ -44,11 +51,9 @@
       padding-left: $padding / 2;
 
       .escort-image {
-        float: left;
 
         &+ .escort-content {
           margin-left: $margin;
-          float: right;
         }
       }
 
@@ -72,18 +77,20 @@
   .escort-mini-right {
 
     > .escort-type-user {
-      padding-right: 0 !important;;
+      padding-right: 0 !important;
+
+      .escort-inner {
+        flex-direction: row-reverse;
+      }
     }
 
     .escort-type-user:not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
       padding-right: $padding / 2;
 
       .escort-image {
-        float: right;
 
         &+ .escort-content {
           margin-right: $margin;
-          float: left;
         }
       }
 

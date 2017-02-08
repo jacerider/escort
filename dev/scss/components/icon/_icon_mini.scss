@@ -18,7 +18,7 @@
       &:hover {
 
         .escort-content {
-          top: 87.5%;
+          top: 86%;
         }
       }
 
@@ -41,6 +41,10 @@
 
       .escort-link.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
 
+        .escort-inner:hover {
+          border-bottom-right-radius: 0;
+        }
+
         .escort-content {
           left: $margin / 3;
           border-top-right-radius: $border-radius;
@@ -57,6 +61,10 @@
 
       .escort-link.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
 
+        .escort-inner:hover {
+          border-bottom-left-radius: 0;
+        }
+        
         .escort-content {
           left: auto;
           right: 0;
