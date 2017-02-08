@@ -8,7 +8,8 @@
   top: 0;
   bottom: 0;
   width: $base-size;
-  overflow: visible;
+  overflow-x: hidden;
+  overflow-y: scroll;
   z-index: 5;
   font-size: $font-size * 1.1;
   box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals

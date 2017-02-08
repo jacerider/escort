@@ -1,0 +1,16 @@
+/**
+ * Right region only
+ */
+
+@include get-location($type: vertical, $region: right) {
+
+  .show-escort-full-right & {
+
+    .escort-type-branding {
+
+      .escort-content {
+        white-space: normal;
+      }
+    }
+  }
+}

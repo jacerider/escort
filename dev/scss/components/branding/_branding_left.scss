@@ -1,0 +1,16 @@
+/**
+ * Left region only
+ */
+
+@include get-location($type: vertical, $region: left) {
+
+  .show-escort-full-left & {
+
+    .escort-type-branding {
+
+      .escort-content {
+        white-space: normal;
+      }
+    }
+  }
+}
