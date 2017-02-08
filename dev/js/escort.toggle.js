@@ -33,6 +33,8 @@
     setup: function () {
       var _this = this;
 
+      _this.$region.addClass('escort-instant');
+
       // Attach events.
       switch (_this.event) {
         case 'click':

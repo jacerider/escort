@@ -36,10 +36,18 @@
         _this.$body.removeClass('has-escort-' + this.region);
       }
       else {
+        var timeout;
+        var timeoutDelay;
         // Vertical display.
-        _this.$region.filter('.escort-vertical').on('mouseenter', function (e) {
+        _this.$region.filter('.escort-vertical').on('mouseenter.escort', function (e) {
           e.preventDefault();
-          _this.showFull();
+          timeoutDelay = _this.$region.hasClass('escort-instant') ? 0 : 400;
+          timeout = setTimeout(function() {
+            _this.showFull();
+          }, timeoutDelay);
+        }).on('mouseleave', function (e) {
+          e.preventDefault();
+          clearTimeout(timeout);
         });
       }
     },
