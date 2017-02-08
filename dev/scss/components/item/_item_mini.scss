@@ -18,7 +18,7 @@
 
     .escort-inner {
       @include button-style($region: mini, $transparent: true) {
-        margin-top: $margin / 3 !important;
+        margin-top: 0 !important;
         padding: 0 ($padding * 0.66) !important;
         min-width: $base-size * 0.75;
       };
@@ -37,7 +37,7 @@
 
     &.is-active,
     &.secondary-tab {
-      background: smart-scale($bg-color-mini, $scale: 5%);
+      background: smart-scale($bg-color-mini, $scale: 4%);
     }
 
     &.is-active.primary-tab {

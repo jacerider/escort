@@ -154,7 +154,7 @@
   @if $region == 'mini' {
     box-shadow: 0 2px 10px rgba(adjust-color($bg-color-mini, $saturation: 0%, $lightness: -8%), 0);
     padding: 0 ($padding / 2);
-    line-height: $base-size * 0.6 !important;
+    line-height: $base-size * 0.55 !important;
 
     &:hover {
       box-shadow: 0 3px 15px rgba(adjust-color($bg-color-mini, $saturation: 0%, $lightness: -15%), 1);
