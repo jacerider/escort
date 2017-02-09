@@ -28,7 +28,6 @@
   .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
 
     &:hover {
-      background: smart-scale($bg-color-mini, $scale: -12%);
 
       .escort-content {
         color: smart-scale($bg-color-mini, $scale: 80%);

@@ -104,14 +104,14 @@
   }
 
   @if $region == 'top' {
-    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-top, $saturation: 0%, $lightness: -8%), 0);
+    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-top, $saturation: 0%, $lightness: -8%), 0.25);
 
     &:hover {
-      box-shadow: 0 4px 15px rgba(adjust-color($bg-color-top, $saturation: 0%, $lightness: -15%), 1);
+      box-shadow: 0 4px 15px rgba(adjust-color($bg-color-top, $saturation: 0%, $lightness: -15%), 0.66);
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-top, 50%), 0.1), rgba(smart-scale($bg-color-top, 100%), 0.1), bottom);
+      @include linear-gradient(rgba(smart-scale($bg-color-top, 33%), 0.1), rgba(smart-scale($bg-color-top, 66%), 0.1), bottom);
       color: $primary-color;
 
       &:visited,
@@ -121,21 +121,21 @@
       }
 
       &:hover {
-        @include linear-gradient(lighten($primary-color, 5%), $primary-color, bottom);
+        @include linear-gradient(rgba(smart-scale($bg-color-top, 33%), 0.2), rgba(smart-scale($bg-color-top, 66%), 0.2), bottom);
         color: smart-scale($bg-color-top, $scale: 100%);
       }
     }
   }
 
   @if $region == 'bottom' {
-    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -8%), 0);
+    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -8%), 0.25);
 
     &:hover {
-      box-shadow: 0 3px 15px rgba(adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -15%), 1);
+      box-shadow: 0 3px 15px rgba(adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -15%), 0.66);
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-bottom, 50%), 0.1), rgba(smart-scale($bg-color-bottom, 100%), 0.1), bottom);
+      @include linear-gradient(rgba(smart-scale($bg-color-bottom, 33%), 0.1), rgba(smart-scale($bg-color-bottom, 66%), 0.1), bottom);
       color: $primary-color;
 
       &:visited,
@@ -145,23 +145,23 @@
       }
 
       &:hover {
-        @include linear-gradient(lighten($primary-color, 5%), $primary-color, bottom);
+        @include linear-gradient(rgba(smart-scale($bg-color-bottom, 33%), 0.2), rgba(smart-scale($bg-color-bottom, 66%), 0.2), bottom);
         color: smart-scale($bg-color-bottom, $scale: 100%);
       }
     }
   }
 
   @if $region == 'mini' {
-    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-mini, $saturation: 0%, $lightness: -8%), 0);
+    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-mini, $saturation: 0%, $lightness: -8%), 0.25);
     padding: 0 ($padding / 2);
     line-height: $base-size * 0.55 !important;
 
     &:hover {
-      box-shadow: 0 3px 15px rgba(adjust-color($bg-color-mini, $saturation: 0%, $lightness: -15%), 1);
+      box-shadow: 0 3px 15px rgba(adjust-color($bg-color-mini, $saturation: 0%, $lightness: -15%), 0.66);
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-mini, 50%), 0.1), rgba(smart-scale($bg-color-mini, 100%), 0.1), bottom);
+      @include linear-gradient(rgba(smart-scale($bg-color-mini, 33%), 0.1), rgba(smart-scale($bg-color-mini, 66%), 0.1), bottom);
       color: $primary-color;
 
       &:visited,
@@ -171,7 +171,7 @@
       }
 
       &:hover {
-        @include linear-gradient(lighten($primary-color, 5%), $primary-color, bottom);
+        @include linear-gradient(rgba(smart-scale($bg-color-mini, 33%), 0.2), rgba(smart-scale($bg-color-mini, 66%), 0.2), bottom);
         color: smart-scale($bg-color-mini, $scale: 100%);
       }
     }

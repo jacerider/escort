@@ -31,7 +31,6 @@
   .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
 
     &:hover {
-      background: smart-scale($bg-color-top, $scale: -12%);
 
       .escort-content {
         color: smart-scale($bg-color-top, $scale: 80%);
@@ -45,6 +44,7 @@
 
     &.is-active.primary-tab {
       margin-left: $margin / 3;
+      margin-right: $margin / 3;
     }
 
     &.secondary-tab:last-child {
