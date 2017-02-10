@@ -9,6 +9,10 @@
   color: smart-scale($bg-color-mini);
   width: auto;
   z-index: 4;
+  text-transform: uppercase;
+  font-size: $font-size * 0.75;
+  font-weight: bold;
+  letter-spacing: 0.05em;
 
   .has-escort-left & {
     left: $base-size;

@@ -1,0 +1,6 @@
+@include get-location($type: horizontal) {
+
+  .escort-toggle {
+    padding: 0 ($padding * 1.5);
+  }
+}

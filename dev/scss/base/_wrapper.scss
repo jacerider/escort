@@ -22,7 +22,7 @@
           padding-top: map-get($settings, size);
 
           @if map-get($settings, position) == 'mini' {
-            padding-top: map-get($settings, size) * 1.66;
+            padding-top: map-get($settings, size) * 1.75;
           }
         }
 
@@ -32,7 +32,7 @@
       }
 
       @if map-get($settings, position) == 'mini' {
-        padding-top: map-get($settings, size) * 1.66;
+        padding-top: map-get($settings, size) * 1.75;
       }
 
       @if map-get($settings, type) == 'vertical' {
