@@ -85,7 +85,7 @@ function escort_render() {
     '#weight' => -1001,
     '#cache' => [
       'keys' => ['escort'],
-      'tags' => ['config:escort.config'],
+      'tags' => ['config:escort_list', 'config:escort.config'],
       'contexts' => ['user.permissions'],
     ],
   );
