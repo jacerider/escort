@@ -9,6 +9,10 @@
   min-width: $base-size;
   transition: border 300ms, width 300ms;
 
+  > .escort-inner {
+    max-width: 100%;
+  }
+
   &.escort-hidden {
     display: none !important;
   }
