@@ -8,14 +8,28 @@
   top: 0;
   bottom: 0;
   width: $base-size;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden;
   z-index: 5;
   font-size: $font-size * 1.1;
   box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals
   transform: translate(0, 0);
   display: flex;
   flex-direction: column;
+
+  > .escort-scroll {
+    width: $base-size + 1.5rem;
+    padding-right: $padding * 1.5;
+  }
+
+  .show-escort-full-left &,
+  .show-escort-full-right & {
+
+    > .escort-scroll {
+      overflow-x: hidden;
+      overflow-y: auto;
+      width: $base-size-active + 1.5rem;
+    }
+  }
 
   .escort-section {
 

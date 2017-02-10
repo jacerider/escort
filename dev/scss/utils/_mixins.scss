@@ -98,9 +98,11 @@
 // ---------
 @mixin button-style($region, $transparent: false) {
   @include linear-gradient($primary-color, darken($primary-color, 10%), bottom);
+  color: smart-scale($primary-color, $scale: 75%);
 
   &:hover {
     @include linear-gradient(lighten($primary-color, 5%), $primary-color, bottom);
+    color: smart-scale($primary-color, $scale: 100%);
   }
 
   @if $region == 'top' {

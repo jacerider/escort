@@ -12,8 +12,11 @@
   right: 0;
   width: 100%;
   z-index: 10;
-  display: flex;
   transform: translate(0, 0);
+
+  > .escort-scroll {
+    display: flex;
+  }
 
   .escort-section {
     display: inline-flex;

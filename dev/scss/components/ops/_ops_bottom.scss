@@ -4,7 +4,7 @@
 @include get-location($type: horizontal, $region: bottom) {
 
   .escort-ops {
-    bottom: 100%;
+    bottom: 99%;
     background: smart-scale($bg-color-bottom, $scale: -12%);
     box-shadow: 0 -4px 4px transparentize($black, 0.75);
     border-top-left-radius: $border-radius;
