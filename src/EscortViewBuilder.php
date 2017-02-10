@@ -250,7 +250,7 @@ class EscortViewBuilder extends EntityViewBuilder {
     // Remove the escort entity from the render array, to ensure that escorts
     // can be rendered without the escort config entity.
     unset($build['#escort']);
-    if ($content !== NULL && !Element::isEmpty($content)) {
+    if ($content !== NULL && !Element::isEmpty($content) && empty($content['#empty'])) {
       // Merge properties.
       $build['content'] = static::mergeProperties($build, $content);
       if ($is_admin && !$entity->isTemporary()) {
