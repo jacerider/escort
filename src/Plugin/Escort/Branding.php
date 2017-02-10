@@ -172,23 +172,29 @@ class Branding extends EscortPluginBase implements ContainerFactoryPluginInterfa
       $site_logo_uri = $real_favicon->getManifestLargeImage();
     }
 
-    $build['site_logo'] = array(
-      '#theme' => 'image',
-      '#uri' => $site_logo_uri,
-      '#alt' => $this->t('Home'),
-      '#attributes' => ['class' => ['escort-site-logo']],
-      '#access' => $this->configuration['use_site_logo'],
-    );
+    if ($this->configuration['use_site_logo']) {
+      $build['site_logo'] = array(
+        '#theme' => 'image',
+        '#uri' => $site_logo_uri,
+        '#alt' => $this->t('Home'),
+        '#attributes' => ['class' => ['escort-site-logo']],
+        '#access' => $this->configuration['use_site_logo'],
+      );
+    }
 
-    $build['site_name'] = array(
-      '#markup' => '<span class="escort-site-name">' . $site_config->get('name', $theme) . '</span>',
-      '#access' => $this->configuration['use_site_name'],
-    );
+    if ($this->configuration['use_site_name']) {
+      $build['site_name'] = array(
+        '#markup' => '<span class="escort-site-name">' . $site_config->get('name', $theme) . '</span>',
+        '#access' => $this->configuration['use_site_name'],
+      );
+    }
 
-    $build['site_slogan'] = array(
-      '#markup' => '<span class="escort-site-slogan">' . $site_config->get('slogan', $theme) . '</span>',
-      '#access' => $this->configuration['use_site_slogan'],
-    );
+    if ($this->configuration['use_site_slogan']) {
+      $build['site_slogan'] = array(
+        '#markup' => '<span class="escort-site-slogan">' . $site_config->get('slogan', $theme) . '</span>',
+        '#access' => $this->configuration['use_site_slogan'],
+      );
+    }
 
     return $build;
   }
