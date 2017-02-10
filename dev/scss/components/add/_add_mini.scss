@@ -3,7 +3,14 @@
  */
 @include get-location($type: horizontal, $region: mini) {
 
-  .escort-add {
+  .escort-item.escort-add {
+
+    .escort-icon {
+
+      i {
+        vertical-align: sub;
+      }
+    }
 
     > div {
       @include button-style($region: mini);

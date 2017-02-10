@@ -24,24 +24,4 @@
       margin-left: auto;
     }
   }
-
-  /**
-   * Horizontal sections
-   */
-  .escort-section {
-
-    &:first-child {
-
-      .escort-item {
-        border-left: 0;
-      }
-    }
-
-    &:last-child {
-
-      .escort-item {
-        border-right: 0;
-      }
-    }
-  }
 }
