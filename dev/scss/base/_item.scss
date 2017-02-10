@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // ITEM
 // -----------------------------------------------------------------------------
-// Styles that apply globally to escort items. All position-specific styles 
+// Styles that apply globally to escort items. All position-specific styles
 // should be added in the region specific style section.
 
 .escort-item {
@@ -10,7 +10,7 @@
   transition: border 300ms, width 300ms;
 
   &.escort-hidden {
-    display: none;
+    display: none !important;
   }
 
   > div {

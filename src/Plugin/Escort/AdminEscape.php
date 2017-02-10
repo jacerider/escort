@@ -2,9 +2,6 @@
 
 namespace Drupal\escort\Plugin\Escort;
 
-use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Session\AccountInterface;
-
 /**
  * Defines a fallback plugin for missing escort plugins.
  *
@@ -38,17 +35,13 @@ class AdminEscape extends EscortPluginBase {
       $build['#tag'] = 'a';
       $build['#icon'] = 'fa-arrow-circle-o-left';
       $build['#markup'] = $this->t('Back to site');
+      $build['#attributes']['class'][] = 'escort-hidden';
+    }
+    else {
+      $build['#empty'] = TRUE;
     }
 
     return $build;
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  // protected function escortAccess(AccountInterface $account) {
-  //   $route = \Drupal::routeMatch()->getRouteObject();
-  //   return \Drupal::service('router.admin_context')->isAdminRoute($route) ? AccessResult::allowed() : AccessResult::forbidden();
-  // }
 
 }

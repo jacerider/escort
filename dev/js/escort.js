@@ -25,7 +25,7 @@
   });
 
   $.extend(Escort.prototype, /** @lends Drupal.Escort# */{
-    full: false,
+    active: false,
 
     setup: function () {
       var _this = this;
@@ -42,10 +42,10 @@
         _this.$region.filter('.escort-vertical').on('mouseenter.escort', function (e) {
           e.preventDefault();
           timeoutDelay = _this.$region.hasClass('escort-instant') ? 0 : 300;
-          timeout = setTimeout(function() {
+          timeout = setTimeout(function () {
             _this.showFull();
           }, timeoutDelay);
-        }).on('mouseleave', function (e) {
+        }).on('mouseleave.escort', function (e) {
           e.preventDefault();
           clearTimeout(timeout);
         });
@@ -54,25 +54,27 @@
 
     showFull: function () {
       var _this = this;
-      if (!_this.full) {
-        _this.full = true;
+      if (!_this.active) {
+        _this.active = true;
         _this.$body.addClass('show-escort-full-' + _this.region);
         // Bind body click event.
         _this.$body.on('click.escort-' + _this.region, function (e) {
-          if (_this.full && !$(e.target).closest(_this.$region).length) {
+          if (_this.active && !$(e.target).closest(_this.$region).length) {
             _this.hideFull();
           }
         });
-        _this.$body.trigger('escort-region:show');
+        _this.$region.trigger('escort-region-full:show', [_this.$region]);
+        _this.$body.trigger('escort-region:show', [_this.$region]);
       }
     },
 
     hideFull: function () {
       var _this = this;
-      if (_this.full) {
-        _this.full = false;
+      if (_this.active) {
+        _this.active = false;
         _this.$body.removeClass('show-escort-full-' + _this.region);
         _this.$body.off('click.escort-' + _this.region);
+        _this.$region.trigger('escort-region-full:hide', [_this.$region]);
         _this.$body.trigger('escort-region:hide', [_this.$region]);
       }
     }
