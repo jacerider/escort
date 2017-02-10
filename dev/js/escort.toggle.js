@@ -82,7 +82,7 @@
         // Bind body click event.
         if (_this.event === 'click') {
           _this.$trigger.addClass('is-active');
-          setTimeout(function() {
+          setTimeout(function () {
             _this.$body.on('click.escort-mini-' + _this.region, function (e) {
               if (_this.active && !$(e.target).closest(_this.$region).length) {
                 _this.hideMini();
