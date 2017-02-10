@@ -8,6 +8,7 @@
 .escort-region {
   font-family: $font;
   font-size: $font-size;
+  font-smoothing: antialiased;
 
   a {
     text-decoration: none;
