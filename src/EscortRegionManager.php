@@ -47,6 +47,19 @@ class EscortRegionManager implements EscortRegionManagerInterface {
           ],
         ],
       ],
+      'mini' => [
+        'label' => t('Mini'),
+        'type' => 'horizontal',
+        'position' => 'top',
+        'sections' => [
+          'left' => [
+            'label' => t('Left'),
+          ],
+          'right' => [
+            'label' => t('Right'),
+          ],
+        ],
+      ],
       'bottom' => [
         'label' => t('Bottom'),
         'type' => 'horizontal',
@@ -83,19 +96,6 @@ class EscortRegionManager implements EscortRegionManagerInterface {
           ],
           'bottom' => [
             'label' => t('Bottom'),
-          ],
-        ],
-      ],
-      'mini' => [
-        'label' => t('Mini'),
-        'type' => 'horizontal',
-        'position' => 'top',
-        'sections' => [
-          'left' => [
-            'label' => t('Left'),
-          ],
-          'right' => [
-            'label' => t('Right'),
           ],
         ],
       ],
