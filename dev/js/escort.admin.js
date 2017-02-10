@@ -54,6 +54,7 @@
           connectWith: '.escort-sort',
           placeholder: 'escort-placeholder',
           // forcePlaceholderSize: true,
+          handle: '.drag',
           opacity: 0.5,
           scroll: false,
           start: function () {

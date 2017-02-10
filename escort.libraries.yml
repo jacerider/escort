@@ -9,6 +9,7 @@ escort:
     - core/jquery
     - core/jquery.once
     - core/drupal
+    - core/drupal.displace
 
 # Region libraries that are toolbar specific
 escort.type.horizontal:
