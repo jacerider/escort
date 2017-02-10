@@ -12,6 +12,7 @@ use Drupal\Core\Url;
  *   id = "dropdown",
  *   admin_label = @Translation("Dropdown"),
  *   category = @Translation("Basic"),
+ *   no_ui = TRUE,
  * )
  */
 class Dropdown extends EscortPluginMultipleBase {
