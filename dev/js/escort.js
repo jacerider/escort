@@ -3,7 +3,7 @@
  * Global Escort javascript.
  */
 
-(function ($, document) {
+(function ($, Drupal, displace) {
 
   'use strict';
 
@@ -34,6 +34,8 @@
       if (!_this.$region.find('.escort-item').length) {
         _this.$region.remove();
         _this.$body.removeClass('has-escort-' + this.region);
+        Drupal.displace(true);
+
       }
       else {
         var timeout;
@@ -97,4 +99,4 @@
   // Expose constructor in the public space.
   Drupal.Escort = Escort;
 
-}(jQuery, document));
+}(jQuery, Drupal, Drupal.displace));
