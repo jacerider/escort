@@ -12,8 +12,13 @@
     this.region = this.$trigger.data('region');
     this.event = this.$trigger.data('event');
     this.$region = $('#escort-' + this.region);
-    this.$body = $('body');
-    this.setup();
+    if (this.$region.length) {
+      this.$body = $('body');
+      this.setup();
+    }
+    else {
+      this.$trigger.remove();
+    }
   }
 
   $.extend(EscortRegionToggles, /** @lends Drupal.EscortRegionToggles */{
@@ -28,27 +33,26 @@
 
   $.extend(EscortRegionToggles.prototype, /** @lends Drupal.EscortRegionToggles# */{
     lock: false,
-    mini: false,
+    active: false,
 
     setup: function () {
       var _this = this;
 
       _this.$region.addClass('escort-instant');
 
-      // Attach events.
+      _this.$trigger.on('click', function (e) {
+        e.preventDefault();
+        if (_this.active) {
+          _this.hideMini();
+        }
+        else {
+          _this.showMini();
+        }
+      });
+
+      // Attach trigger events.
       switch (_this.event) {
-        case 'click':
-          _this.$trigger.click(function (e) {
-            e.preventDefault();
-            _this.showMini();
-          });
-          _this.$trigger.on('mouseleave', function (e) {
-            if (_this.mini) {
-              _this.hideMini();
-            }
-          });
-          break;
-        default:
+        case 'hover':
           // On hover is default state.
           _this.$trigger.hover(function (e) {
             e.preventDefault();
@@ -57,25 +61,49 @@
             e.preventDefault();
             _this.hideMini();
           });
+
+          // Attach region events.
+          _this.$region.on('escort-region-full:show', function () {
+            _this.$trigger.addClass('is-active');
+          }).on('escort-region-full:hide', function () {
+            _this.$trigger.removeClass('is-active');
+          });
           break;
       }
     },
 
     showMini: function (e) {
       var _this = this;
-      if (!_this.mini) {
-        _this.mini = true;
+      if (!_this.active) {
+        _this.active = true;
         _this.$body.addClass('show-escort-mini-' + _this.region);
         _this.$body.trigger('escort-toggle-mini:show', [_this.$region]);
+
+        // Bind body click event.
+        if (_this.event === 'click') {
+          _this.$trigger.addClass('is-active');
+          setTimeout(function() {
+            _this.$body.on('click.escort-mini-' + _this.region, function (e) {
+              if (_this.active && !$(e.target).closest(_this.$region).length) {
+                _this.hideMini();
+              }
+            });
+          }, 10);
+        }
       }
     },
 
     hideMini: function (e) {
       var _this = this;
-      if (_this.mini) {
-        _this.mini = false;
+      if (_this.active) {
+        _this.active = false;
         _this.$body.removeClass('show-escort-mini-' + _this.region);
         _this.$body.trigger('escort-region-mini:hide', [_this.$region]);
+
+        if (_this.event === 'click') {
+          _this.$trigger.removeClass('is-active');
+          _this.$body.off('click.escort-mini-' + _this.region);
+        }
       }
     }
   });
