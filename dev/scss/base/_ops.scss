@@ -5,6 +5,13 @@
 
 .is-escort-admin {
 
+  &.escort-sorting {
+
+    .escort-ops {
+      display: none !important;
+    }
+  }
+
   .escort-top-left,
   .escort-bottom-left,
   .escort-mini-left {

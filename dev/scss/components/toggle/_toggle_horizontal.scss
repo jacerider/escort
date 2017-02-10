@@ -1,6 +1,17 @@
 @include get-location($type: horizontal) {
 
   .escort-toggle {
-    padding: 0 ($padding * 1.5);
+    padding: 0 ($padding * 1.33);
+
+    &[data-event="hover"] {
+      padding: 0 ($padding * 1.5);
+    }
+  }
+
+  &.icon-only {
+
+    .escort-toggle {
+      padding: 0 ($padding * 1.5);
+    }
   }
 }
