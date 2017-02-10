@@ -328,7 +328,7 @@
 
   @if ($position == after) {
 
-    &::before {
+    &::after {
       display: block;
       width: 0;
       height: 0;
