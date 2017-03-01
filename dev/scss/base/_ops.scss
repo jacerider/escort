@@ -68,6 +68,8 @@
   li {
     text-align: center;
     display: none;
+    font-size: $font-size;
+    text-transform: none;
   }
 
   .drag {

@@ -4,7 +4,7 @@
 @include get-location($type: horizontal, $region: mini) {
 
   .escort-ops {
-    top: 99%;
+    top: 97%;
     background: smart-scale($bg-color-mini, $scale: -12%);
     box-shadow: 0 4px 4px transparentize($black, 0.75);
     border-bottom-left-radius: $border-radius;
@@ -18,7 +18,7 @@
       a {
         @include button-style($region: mini, $transparent: true) {
           display: block;
-          padding: $padding / 2;
+          padding: $padding / 3;
         };
       }  
     }

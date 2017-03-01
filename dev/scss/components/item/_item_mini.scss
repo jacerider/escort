@@ -5,15 +5,16 @@
 
   .escort-item {
     line-height: $base-size * 0.75;
+    height: $base-size * 0.75;
     min-width: $base-size * 0.75;
     padding: 0 ($padding * 0.66)
   }
 
   .escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add):not(.is-active) {
-    padding: 0 0 0 ($padding / 3);
+    padding: 0 0 0 ($padding / 2);
 
     &:last-child {
-      padding-right: $padding / 3;
+      padding-right: $padding / 2;
     }
 
     .escort-inner {
@@ -40,11 +41,11 @@
     }
 
     &.is-active.primary-tab {
-      margin-left: $margin / 3;
+      margin-left: $margin / 2;
     }
 
     &.secondary-tab:last-child {
-      padding-right: $padding / 3;
+      padding-right: $padding / 2;
     }
   }
 
