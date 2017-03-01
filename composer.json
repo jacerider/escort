@@ -1,14 +1,19 @@
 {
   "name": "drupal/escort",
   "type": "drupal-module",
-  "description": "An admin menu of extreme super awesomeness.",
-  "keywords": ["Drupal"],
   "license": "GPL-2.0+",
-  "homepage": "https://www.drupal.org/project/escort",
-  "minimum-stability": "dev",
+  "homepage": "https://github.com/jacerider/micon",
+  "authors": [
+    {
+      "name": "Cyle Carlson (JaceRider)",
+      "email": "jacerider@gmail.com",
+      "role": "Maintainer"
+    }
+  ],
   "support": {
-    "issues": "https://www.drupal.org/project/issues/escort",
-    "source": "http://cgit.drupalcode.org/escort"
+    "issues": "https://github.com/jacerider/micon/issues",
+    "source": "https://github.com/jacerider/micon"
   },
+  "minimum-stability": "dev",
   "require": { }
 }
