@@ -10,6 +10,7 @@
   function Escort(region) {
     this.$region = $(region);
     this.region = this.$region.data('region');
+    this.$document = $(document);
     this.$body = $('body');
     this.setup();
   }
@@ -60,13 +61,13 @@
         _this.active = true;
         _this.$body.addClass('show-escort-full-' + _this.region);
         // Bind body click event.
-        _this.$body.on('click.escort-' + _this.region, function (e) {
+        _this.$document.on('click.escort-' + _this.region, function (e) {
           if (_this.active && !$(e.target).closest(_this.$region).length) {
             _this.hideFull();
           }
         });
         _this.$region.trigger('escort-region-full:show', [_this.$region]);
-        _this.$body.trigger('escort-region:show', [_this.$region]);
+        _this.$document.trigger('escort-region:show', [_this.$region]);
       }
     },
 
@@ -75,9 +76,9 @@
       if (_this.active) {
         _this.active = false;
         _this.$body.removeClass('show-escort-full-' + _this.region);
-        _this.$body.off('click.escort-' + _this.region);
+        _this.$document.off('click.escort-' + _this.region);
         _this.$region.trigger('escort-region-full:hide', [_this.$region]);
-        _this.$body.trigger('escort-region:hide', [_this.$region]);
+        _this.$document.trigger('escort-region:hide', [_this.$region]);
       }
     }
   });

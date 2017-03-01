@@ -11,6 +11,7 @@
     this.$wrapper = $(wrapper);
     this.$trigger = this.$wrapper.find('.escort-dropdown-trigger');
     this.usesAjax = typeof this.$trigger.data('escort-ajax') !== 'undefined';
+    this.$document = $(document);
     this.$body = $('body');
     this.setup();
   }
@@ -73,13 +74,13 @@
         // Bind body click event.
         setTimeout(function () {
           // React to clicking on the body.
-          _this.$body.on('click.escort-dropdown', function (e) {
+          _this.$document.on('click.escort-dropdown', function (e) {
             if (!$(e.target).closest('.escort-dropdown-content').length) {
               _this.hide();
             }
           });
           // React to region visibility.
-          _this.$body.on('escort-region:show escort-region:hide', function (e, $region) {
+          _this.$document.on('escort-region:show escort-region:hide', function (e, $region) {
             _this.hide();
           });
         }, 10);
@@ -91,8 +92,8 @@
       if (_this.active) {
         _this.active = false;
         _this.$wrapper.removeClass('escort-active');
-        _this.$body.off('click.escort-dropdown');
-        _this.$body.off('escort-region:show escort-region:hide');
+        _this.$document.off('click.escort-dropdown');
+        _this.$document.off('escort-region:show escort-region:hide');
       }
     }
   });

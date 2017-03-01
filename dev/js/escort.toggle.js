@@ -13,6 +13,7 @@
     this.event = this.$trigger.data('event');
     this.$region = $('#escort-' + this.region);
     if (this.$region.length) {
+      this.$document = $(document);
       this.$body = $('body');
       this.setup();
     }
@@ -83,7 +84,7 @@
         if (_this.event === 'click') {
           _this.$trigger.addClass('is-active');
           setTimeout(function () {
-            _this.$body.on('click.escort-mini-' + _this.region, function (e) {
+            _this.$document.on('click.escort-mini-' + _this.region, function (e) {
               if (_this.active && !$(e.target).closest(_this.$region).length) {
                 _this.hideMini();
               }
@@ -102,7 +103,7 @@
 
         if (_this.event === 'click') {
           _this.$trigger.removeClass('is-active');
-          _this.$body.off('click.escort-mini-' + _this.region);
+          _this.$document.off('click.escort-mini-' + _this.region);
         }
       }
     }
