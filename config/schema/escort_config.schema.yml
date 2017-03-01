@@ -4,6 +4,12 @@ escort.config:
   type: config_object
   label: 'Escort config'
   mapping:
+    enabled:
+      type: sequence
+      label: 'Enabled Regions'
+      sequence:
+        type: string
+        label: 'Region'
     regions:
       type: sequence
       label: 'Regions'
