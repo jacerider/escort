@@ -8,6 +8,8 @@ use Drupal\Core\Url;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Access\AccessResult;
 
 /**
  * Defines a fallback plugin for missing block plugins.
@@ -92,6 +94,33 @@ class NodeCreate extends Dropdown implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
+  protected function escortAccess(AccountInterface $account) {
+    $access_control_handler = $this->entityTypeManager->getAccessControlHandler($this->entityType);
+    $entity_types = $this->entityTypeManager->getStorage($this->entityTypeBundle)->loadMultiple();
+
+    // No entity types currently exist.
+    if (empty($entity_types)) {
+      return AccessResult::neutral();
+    }
+
+    // If checking whether a entity of a particular type may be created.
+    if ($account->hasPermission('administer content types')) {
+      return AccessResult::allowed()->cachePerPermissions();
+    }
+    // If checking whether a entity of any type may be created.
+    foreach ($entity_types as $entity_type) {
+      if (($access = $access_control_handler->createAccess($entity_type->id(), $account, [], TRUE)) && $access->isAllowed()) {
+        return $access;
+      }
+    }
+
+    // No opinion.
+    return AccessResult::neutral();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function escortForm($form, FormStateInterface $form_state) {
     $options = [];
     foreach ($this->entityTypeManager->getStorage($this->entityTypeBundle)->loadMultiple() as $entity) {
@@ -130,7 +159,7 @@ class NodeCreate extends Dropdown implements ContainerFactoryPluginInterface {
       '#links' => [],
       '#attributes' => ['class' => ['escort-grid']],
       '#cache' => [
-        'tags' => $this->entityTypeManager->getDefinition('node_type')->getListCacheTags(),
+        'tags' => $this->entityTypeManager->getDefinition($this->entityTypeBundle)->getListCacheTags(),
       ],
     ];
 
@@ -148,7 +177,7 @@ class NodeCreate extends Dropdown implements ContainerFactoryPluginInterface {
     }
 
     foreach ($entities as $type) {
-      $access = $this->entityTypeManager->getAccessControlHandler('node')->createAccess($type->id(), NULL, [], TRUE);
+      $access = $this->entityTypeManager->getAccessControlHandler($this->entityType)->createAccess($type->id(), NULL, [], TRUE);
       if ($access->isAllowed()) {
         $title = $type->label();
         if ($this->hasIconSupport()) {
@@ -156,7 +185,7 @@ class NodeCreate extends Dropdown implements ContainerFactoryPluginInterface {
         }
         $build['#links'][$type->id()] = [
           'title' => $title,
-          'url' => new Url('node.add', array('node_type' => $type->id())),
+          'url' => new Url('node.add', array($this->entityTypeBundle => $type->id())),
         ];
       }
       $this->renderer->addCacheableDependency($build, $access);
