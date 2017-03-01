@@ -1,21 +1,22 @@
 # Escort
 ##### An admin menu of extreme super awesomeness.
 
-## Development Setup
+## Installation
 
-First, you will need to install [NodeJS](https://nodejs.org/en/download/package-manager/).
+Install escort within the 'modules' folder at webroot.
 
-Run the following from the command line within the /dev folder:
-
-    npm install
-
-Make a copy of dev/config/example.config.js and set your local development
+Make a copy of dev/config/example.config.json and set your local development
 settings here. Add this file to your .gitignore file to prevent breaking of
 team-members' dev setup.
 
-    cp example.config.js config.js
+    cp example.config.local.json config.json
 
-Run the following from the command line from the module directory to have gulp
+Add to gitignore, second line if module/contrib or module/custom directories used
+
+    modules/escort/dev/config/config.json
+    modules/*/dev/config/config.json
+
+Run the following from the command line from the escort/dev directory to have gulp
 compile and watch for changes to both .scss files and .js files found within
 the /dev folder.
 
