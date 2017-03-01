@@ -7,7 +7,7 @@
       &:hover {
 
         .escort-content {
-          top: 87.5%;
+          top: 95%;
         }
       }
 
@@ -35,7 +35,7 @@
         }
 
         .escort-content {
-          left: $margin / 3;
+          left: $margin / 8;
           border-top-right-radius: $border-radius;
 
           &::before {
@@ -56,7 +56,7 @@
 
         .escort-content {
           left: auto;
-          right: $margin / 3;
+          right: $margin / 8;
           border-top-left-radius: $border-radius;
 
           &::before {

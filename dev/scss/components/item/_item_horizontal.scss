@@ -4,7 +4,6 @@
 @include get-location($type: horizontal) {
 
   .escort-item {
-    padding: 0 $padding;
     text-align: center;
     display: block;
     line-height: $base-size;
@@ -21,11 +20,18 @@
       }
     }
 
-    &.escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add):not(.is-active) {
+    &:not(.escort-group) {
 
-      .escort-inner {
-        @extend %button;
+      > .escort-inner {
+        padding: 0 $padding;
       }
     }
+
+    // &.escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add):not(.is-active) {
+
+    //   .escort-inner {
+    //     @extend %button;
+    //   }
+    // }
   }
 }

@@ -49,7 +49,6 @@
     }
 
     .escort-type-user:not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
-      padding-left: $padding / 2;
 
       .escort-image {
 
@@ -86,7 +85,6 @@
     }
 
     .escort-type-user:not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
-      padding-right: $padding / 2;
 
       .escort-image {
 

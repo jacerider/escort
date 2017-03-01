@@ -10,8 +10,8 @@
   width: auto;
   z-index: 4;
   text-transform: uppercase;
-  font-size: $font-size * 0.7;
-  letter-spacing: 0.05em;
+  font-size: $font-size * 0.8;
+  letter-spacing: 0.03em;
 
   .has-escort-left & {
     left: $base-size;
@@ -22,7 +22,7 @@
   }
 
   .has-escort-right & {
-    right: $base-size;
+    right: $base-size * 1.25;
   }
 
   .hide-escort-right & {

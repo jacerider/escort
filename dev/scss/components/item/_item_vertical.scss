@@ -4,7 +4,7 @@
 @include get-location($type: vertical) {
 
   .escort-item:not(.escort-type-user) { // sass-lint:disable-line force-pseudo-nesting
-    width: $base-size;
+    width: $base-size * 1.25;
     overflow: hidden;
   }
 

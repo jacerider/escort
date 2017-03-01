@@ -113,7 +113,7 @@
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-top, 33%), 0.1), rgba(smart-scale($bg-color-top, 66%), 0.1), bottom);
+      @include linear-gradient(rgba(smart-scale($bg-color-top, 15%), 0.1), rgba(smart-scale($bg-color-top, 45%), 0.1), bottom);
       color: $primary-color;
 
       &:visited,
@@ -123,7 +123,7 @@
       }
 
       &:hover {
-        @include linear-gradient(rgba(smart-scale($bg-color-top, 33%), 0.2), rgba(smart-scale($bg-color-top, 66%), 0.2), bottom);
+        @include linear-gradient(rgba(smart-scale($bg-color-top, 15%), 0.2), rgba(smart-scale($bg-color-top, 45%), 0.2), bottom);
         color: smart-scale($bg-color-top, $scale: 100%);
       }
     }
@@ -137,7 +137,7 @@
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-bottom, 33%), 0.1), rgba(smart-scale($bg-color-bottom, 66%), 0.1), bottom);
+      @include linear-gradient(rgba(smart-scale($bg-color-bottom, 15%), 0.1), rgba(smart-scale($bg-color-bottom, 45%), 0.1), bottom);
       color: $primary-color;
 
       &:visited,
@@ -147,7 +147,7 @@
       }
 
       &:hover {
-        @include linear-gradient(rgba(smart-scale($bg-color-bottom, 33%), 0.2), rgba(smart-scale($bg-color-bottom, 66%), 0.2), bottom);
+        @include linear-gradient(rgba(smart-scale($bg-color-bottom, 15%), 0.2), rgba(smart-scale($bg-color-bottom, 45%), 0.2), bottom);
         color: smart-scale($bg-color-bottom, $scale: 100%);
       }
     }
