@@ -59,7 +59,7 @@ function escort_element_info_alter(&$type) {
   if (isset($type['page'])) {
     if (!\Drupal::moduleHandler()->moduleExists('ux')) {
       $type['page']['#theme_wrappers']['escort_wrapper'] = [
-        '#attributes' => ['class' => ['escort-wrapper', 'escort-wrapper-scroll']],
+        '#attributes' => ['class' => ['escort-wrapper', 'escort-wrapper-content']],
         '#weight' => -1000,
       ];
     }
