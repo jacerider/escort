@@ -7,10 +7,24 @@
 
     .escort-grid {
 
-      a {
-        @include button-style($region: right) {
-          padding: $padding ($padding / 2);
-          margin: $margin / 2;
+      li {
+
+        &:first-child {
+          border-right: 1px solid smart-scale($bg-color-right, 2%);
+        }
+
+        &:nth-child(2n + 3) {
+          border-right: 1px solid smart-scale($bg-color-right, 2%);
+          border-top: 1px solid smart-scale($bg-color-right, 2%);
+        }
+
+        &:nth-child(2n + 4) {
+          border-top: 1px solid smart-scale($bg-color-right, 2%);
+        }
+
+        &:first-child,
+        &:nth-child(2) {
+          border-top: 0;
         }
       }
     }

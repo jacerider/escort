@@ -1,5 +1,12 @@
 @include get-location($type: horizontal, $region: bottom) {
 
+  .escort-item:not(.escort-add) {
+
+    i {
+      width: $font-size * 1.66;
+    }
+  }
+
   &.icon-only {
 
     .escort-link.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting

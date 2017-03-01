@@ -13,7 +13,7 @@
       padding: 0;
     }
 
-    &.has-icon:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+    &.has-icon:not(.escort-type-add) { // sass-lint:disable-line force-pseudo-nesting
 
       .escort-content {
         margin-left: $margin / 2;
