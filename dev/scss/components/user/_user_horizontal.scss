@@ -25,9 +25,9 @@
 
     .escort-image {
       display: block;
-      width: $base-size * 1.25;
-      height: $base-size * 1.25;
-      margin-top: $margin * -0.5;
+      width: $base-size * 1.4;
+      height: $base-size * 1.4;
+      margin-top: $margin * -0.6;
       overflow: hidden;
       border-radius: 50%;
       z-index: 3;
@@ -49,7 +49,6 @@
     }
 
     .escort-type-user:not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
-      padding-left: $padding / 2;
 
       .escort-image {
 
@@ -86,7 +85,6 @@
     }
 
     .escort-type-user:not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
-      padding-right: $padding / 2;
 
       .escort-image {
 

@@ -18,7 +18,7 @@
       &:hover {
 
         .escort-content {
-          top: 84%;
+          top: 90%;
         }
       }
 
@@ -46,7 +46,7 @@
         }
 
         .escort-content {
-          left: $margin / 2;
+          left: 0;
           border-top-right-radius: $border-radius;
 
           &::before {

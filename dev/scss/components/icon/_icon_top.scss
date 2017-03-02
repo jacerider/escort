@@ -1,5 +1,12 @@
 @include get-location($type: horizontal, $region: top) {
 
+  .escort-item:not(.escort-add) {
+
+    i {
+      width: $font-size * 1.66;
+    }
+  }
+
   &.icon-only {
 
     .escort-link.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
@@ -7,7 +14,7 @@
       &:hover {
 
         .escort-content {
-          top: 87.5%;
+          top: 95%;
         }
       }
 
@@ -35,7 +42,7 @@
         }
 
         .escort-content {
-          left: $margin / 3;
+          left: $margin / 8;
           border-top-right-radius: $border-radius;
 
           &::before {
@@ -56,7 +63,7 @@
 
         .escort-content {
           left: auto;
-          right: $margin / 3;
+          right: $margin / 8;
           border-top-left-radius: $border-radius;
 
           &::before {

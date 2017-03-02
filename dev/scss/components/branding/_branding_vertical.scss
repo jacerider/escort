@@ -6,9 +6,15 @@
 
   .escort-type-branding {
 
+    img {
+      height: $base-size * 1.25;
+      max-width: $base-size * 1.25;
+      float: left;
+    }
+
     .escort-site-slogan {
       display: block;
-      margin-left: $base-size;
+      margin-left: $base-size * 1.4;
     }
   }
 }

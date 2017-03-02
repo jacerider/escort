@@ -7,7 +7,7 @@
   position: fixed;
   top: 0;
   bottom: 0;
-  width: $base-size;
+  width: $base-size * 2;
   overflow: hidden;
   z-index: 5;
   font-size: $font-size * 1.1;
@@ -15,6 +15,14 @@
   transform: translate(0, 0);
   display: flex;
   flex-direction: column;
+
+  &.icon-only {
+    width: $base-size;
+
+    .is-escort-admin & {
+      width: $base-size-active;
+    }
+  }
 
   > .escort-scroll {
     width: $base-size + 1.5rem;

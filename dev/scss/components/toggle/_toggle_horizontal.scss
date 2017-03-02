@@ -1,17 +1,66 @@
 @include get-location($type: horizontal) {
 
   .escort-toggle {
-    padding: 0 ($padding * 1.33);
+    padding: 0;
 
-    &[data-event="hover"] {
-      padding: 0 ($padding * 1.5);
+    // &[data-event="hover"] {
+    //   padding: 0 ($padding * 1.5);
+    // }
+
+    &.is-active {
+
+      &[data-region="left"] {
+        background-color: $bg-color-left;
+
+        &:hover {
+
+          .escort-content {
+            color: smart-scale($bg-color-left, $scale: 80%) !important;
+          }
+        }
+
+        .escort-content {
+          color: smart-scale($bg-color-left, $scale: 60%);
+          text-shadow: 0 1px 2px scale-color($bg-color-left, $lightness: -25%);
+        }
+      }
+
+      &[data-region="right"] {
+        background-color: $bg-color-right;
+
+        &:hover {
+
+          .escort-content {
+            color: smart-scale($bg-color-right, $scale: 80%) !important;
+          }
+        }
+
+        .escort-content {
+          color: smart-scale($bg-color-right, $scale: 60%);
+          text-shadow: 0 1px 2px scale-color($bg-color-right, $lightness: -25%);
+        }
+      }
     }
   }
 
   &.icon-only {
 
     .escort-toggle {
-      padding: 0 ($padding * 1.5);
+      padding: 0;
+    }
+  }
+
+  .escort-top-left {
+
+    .escort-toggle.is-active {
+      margin-right: $margin / 8;
+    }
+  }
+
+  .escort-top-right {
+    
+    .escort-toggle.is-active {
+      margin-left: $margin / 8;
     }
   }
 }

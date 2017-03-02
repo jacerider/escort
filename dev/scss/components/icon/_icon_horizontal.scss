@@ -3,13 +3,51 @@
  */
 @include get-location($type: horizontal) {
 
-  .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+  &.icon-only {
+
+    .escort-link.has-icon:not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
+
+      &:hover {
+
+        .escort-content {
+          opacity: 1;
+          height: auto;
+          overflow: visible;
+
+          &::before {
+            opacity: 1;
+          }
+        }
+      }
+
+      .escort-content {
+        margin: 0 !important;
+        height: 0;
+        display: block;
+        overflow: hidden;
+        position: absolute;
+        z-index: 1;
+        min-width: 100%;
+        left: 0;
+        padding: 0 $padding;
+        opacity: 0;
+        transition: opacity 200ms, top 300ms, bottom 300ms;
+
+        &::before {
+          opacity: 0;
+          transition: opacity 100ms;
+        }
+      }
+    }
+  }
+
+  .escort-item:not(.escort-type-add) { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-icon {
 
       i {
-        font-size: $font-size * 1.25;
-        vertical-align: sub;
+        font-size: $font-size * 1.5;
+        display: inline-block;
       }
     }
   }
