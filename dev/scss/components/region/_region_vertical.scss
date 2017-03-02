@@ -13,8 +13,6 @@
   font-size: $font-size * 1.1;
   box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals
   transform: translate(0, 0);
-  display: flex;
-  flex-direction: column;
 
   &.icon-only {
     width: $base-size;
@@ -27,6 +25,9 @@
   > .escort-scroll {
     width: $base-size + 1.5rem;
     padding-right: $padding * 1.5;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .show-escort-full-left &,
