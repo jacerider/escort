@@ -3,6 +3,16 @@
  */
 @include get-location($type: vertical) {
 
+  &.icon-only {
+
+    .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+      .escort-icon {
+        width: $base-size;
+      }
+    }
+  }
+
   .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
 
     &:hover {
@@ -16,7 +26,7 @@
   .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-icon {
-      width: $base-size * 1.25;
+      width: $base-size * 2;
       display: inline-block;
       margin-right: 0;
 

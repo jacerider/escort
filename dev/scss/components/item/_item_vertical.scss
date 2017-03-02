@@ -3,14 +3,59 @@
  */
 @include get-location($type: vertical) {
 
-  .escort-item:not(.escort-type-user) { // sass-lint:disable-line force-pseudo-nesting
-    width: $base-size * 1.25;
-    overflow: hidden;
+  &.icon-only {
+
+    .escort-item {
+      width: $base-size;
+    }
+
+    .escort-item:not(.escort-group):not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
+      padding: $padding 0;
+
+      &.escort-group {
+
+        .escort-content {
+          display: inline-block;
+
+          .escort-content {
+            display: inline-block;
+          }
+        }
+      }
+
+      .is-escort-admin & {
+        width: $base-size-active;
+      }
+
+      .escort-content {
+        display: inline-block;
+        text-align: left;
+
+        .escort-content {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .is-escort-admin & {
+
+    .escort-item {
+      padding: $padding 0;
+
+      .escort-content {
+        text-align: left;
+        display: inline-block;
+      }
+    }
   }
 
   .escort-item {
-    padding: $padding 0;
+    padding: ($padding * 0.75) 0;
     display: block;
+    width: $base-size * 2;
+    overflow: hidden;
+    text-align: left;
 
     &.escort-group {
       display: block;
@@ -20,14 +65,16 @@
         display: block;
 
         .escort-content {
-          display: inline-block;
+          display: block;
         }
       }
     }
 
     .escort-content {
-      display: inline-block;
+      display: block;
       line-height: $base-size / 2;
+      text-align: center;
+      white-space: normal;
     }
   }
 }

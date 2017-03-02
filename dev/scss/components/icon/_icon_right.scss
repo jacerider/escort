@@ -1,0 +1,18 @@
+/**
+ * Right region only
+ */
+@include get-location($type: vertical, $region: right) {
+
+  &.icon-only {
+
+    .show-escort-full-right & {
+    
+      .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
+
+        .escort-icon {
+          width: $base-size * 1.25;
+        }
+      }
+    }
+  }
+}
