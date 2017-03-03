@@ -3,7 +3,8 @@
  */
 @include get-location($type: vertical) {
 
-  &.icon-only {
+  &.icon-only,
+  .is-escort-admin & {
 
     .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 

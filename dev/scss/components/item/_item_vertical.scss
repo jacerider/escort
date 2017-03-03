@@ -6,7 +6,6 @@
   &.icon-only {
 
     .escort-item {
-      width: $base-size;
 
       .is-escort-admin & {
         width: $base-size-active;
@@ -44,7 +43,7 @@
 
   .is-escort-admin & {
 
-    .escort-item {
+    .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
       padding: $padding 0;
 
       .escort-content {

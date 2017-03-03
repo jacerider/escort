@@ -6,7 +6,7 @@
   background: $bg-color-top;
   height: $base-size;
   padding: 0;
-  border-bottom: 1px solid scale-color($bg-color-top, $lightness: -10%);
+  border-bottom: 1px solid scale-color($bg-color-top, $lightness: -15%);
   color: smart-scale($bg-color-top);
 
   .hide-escort-top & {

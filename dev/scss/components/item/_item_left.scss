@@ -15,7 +15,7 @@
     .show-escort-full-left & {
     
       .escort-item { // sass-lint:disable-line force-pseudo-nesting
-        width: $base-size * 1.25;
+        width: $base-size-active;
 
         .is-escort-admin & {
           width: $base-size-active;
