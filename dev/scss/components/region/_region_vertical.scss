@@ -20,10 +20,14 @@
     .is-escort-admin & {
       width: $base-size-active;
     }
+
+    > .escort-scroll {
+      width: $base-size + 1.5rem;
+    }
   }
 
   > .escort-scroll {
-    width: $base-size + 1.5rem;
+    width: ($base-size * 2) + 1.5rem;
     padding-right: $padding * 1.5;
     height: 100%;
     display: flex;

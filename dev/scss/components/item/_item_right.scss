@@ -20,6 +20,10 @@
         .is-escort-admin & {
           width: $base-size-active;
         }
+
+        .escort-content {
+          display: inline-block;
+        }
       }
     }
   }

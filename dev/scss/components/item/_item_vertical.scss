@@ -7,6 +7,14 @@
 
     .escort-item {
       width: $base-size;
+
+      .is-escort-admin & {
+        width: $base-size-active;
+      }
+
+      .escort-content {
+        line-height: $base-size / 2;
+      }
     }
 
     .escort-item:not(.escort-group):not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
@@ -21,10 +29,6 @@
             display: inline-block;
           }
         }
-      }
-
-      .is-escort-admin & {
-        width: $base-size-active;
       }
 
       .escort-content {
@@ -66,13 +70,14 @@
 
         .escort-content {
           display: block;
+          padding: ($padding / 6);
         }
       }
     }
 
     .escort-content {
       display: block;
-      line-height: $base-size / 2;
+      line-height: $base-size / 3;
       text-align: center;
       white-space: normal;
     }

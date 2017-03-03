@@ -29,6 +29,10 @@
 
     .escort-item { // sass-lint:disable-line force-pseudo-nesting
       width: $base-size-active;
+
+      .escort-content {
+        display: inline-block !important;
+      }
     }
   }
 
