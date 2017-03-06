@@ -22,22 +22,6 @@
     a {
       border-top: 1px solid lighten($bg-color-left, 5%); // sass-lint:disable-line no-color-literals
       border-bottom: 1px solid darken($bg-color-left, 5%); // sass-lint:disable-line no-color-literals
-
-      &:hover {
-
-        i {
-          margin-right: $padding / 3;
-        }
-      }
-
-      i {
-        width: $base-size * 0.5;
-        font-size: $font-size * 1.75;
-        margin-right: 0;
-        display: inline-block;
-        vertical-align: middle;
-        transition: margin 300ms;
-      }
     }
   }
 }

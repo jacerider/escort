@@ -186,10 +186,10 @@
   }
 
   @if $region == 'left' {
-    box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -15%);
+    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-left, $saturation: 0%, $lightness: -8%), 0.25);
 
     &:hover {
-      box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -35%);
+      box-shadow: 0 3px 15px rgba(adjust-color($bg-color-left, $saturation: 0%, $lightness: -15%), 0.66);
     }
 
     @if $transparent == true {
@@ -214,10 +214,10 @@
   }
 
   @if $region == 'right' {
-    box-shadow: 0 1px 10px adjust-color($bg-color-right, $saturation: 0%, $lightness: -15%);
+    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-right, $saturation: 0%, $lightness: -8%), 0.25);
 
     &:hover {
-      box-shadow: 0 3px 15px adjust-color($bg-color-right, $saturation: 0%, $lightness: -35%);
+      box-shadow: 0 3px 15px rgba(adjust-color($bg-color-right, $saturation: 0%, $lightness: -15%), 0.66);
     }
 
     @if $transparent == true {

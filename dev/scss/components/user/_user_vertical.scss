@@ -15,13 +15,22 @@
           margin: 0 auto;
         }
 
+        &.escort-dropdown-trigger {
+          padding: ($padding * 0.75) 0 ($padding * 2.4) !important;
+        }
+
         .escort-content {
 
           .escort-content {
             display: block;
+            width: 100%;
           }
         }
       }
+    }
+
+    .escort-type-user.escort-dropdown-trigger {
+      padding: ($padding * 0.75) 0 ($padding * 2.4) !important;
     }
   }
 
@@ -31,6 +40,10 @@
 
       .escort-image {
         margin-left: $margin * -0.9;
+      }
+
+      &.escort-dropdown-trigger {
+        padding: ($padding * 1.5) 0 !important;
       }
 
       .escort-content {
@@ -44,14 +57,17 @@
 
   .escort-type-user {
     text-align: center;
+    transition: padding 300ms, width 300ms;
 
-    &.escort-group {
+    &.escort-dropdown-trigger {
+      padding: ($padding * 0.75) 0 ($padding * 2.33) !important;
 
       .escort-content {
-
-        .escort-content {
-          display: block;
-        }
+        display: block;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        text-align: center !important;;
       }
     }
 
