@@ -3,14 +3,49 @@
  */
 @include get-location($type: horizontal) {
 
+  &:not(.icon-only) {
+
+    .escort-item {
+
+      &:not(.escort-group):not(.escort-dropdown-content) {
+
+        > .escort-inner {
+          padding: 0 $padding;
+          width: auto !important;
+        }
+      }
+    }
+  }
+
   .escort-item {
     text-align: center;
     display: block;
     line-height: $base-size;
     float: left;
 
+    &:first-child {
+
+      > .escort-inner {
+        border-right: 0;
+      }
+    }
+    
+    &:last-child {
+
+      > .escort-inner {
+        border-left: 0;
+      }
+    }
+
     &.escort-group {
       padding: 0;
+    }
+
+    &.escort-preview {
+
+      > .escort-inner {
+        padding: 0 $padding;
+      }
     }
 
     &.has-icon:not(.escort-type-add) { // sass-lint:disable-line force-pseudo-nesting
@@ -20,18 +55,22 @@
       }
     }
 
-    &:not(.escort-group) {
+    &.is-active:not(.escort-group) {
 
       > .escort-inner {
-        padding: 0 $padding;
+        padding: 0 ($padding * 1.1) 0 $padding;
       }
     }
 
-    // &.escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add):not(.is-active) {
+    &.escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add):not(.is-active) {
+      padding: 0;
 
-    //   .escort-inner {
-    //     @extend %button;
-    //   }
-    // }
+      &:last-child {
+
+        > .escort-inner {
+          width: $base-size;
+        }
+      }
+    }
   }
 }

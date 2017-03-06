@@ -7,26 +7,26 @@
 
     .escort-grid {
 
-      li {
+      // li {
 
-        &:first-child {
-          border-right: 1px solid smart-scale($bg-color-top, 2%);
-        }
+      //   &:first-child {
+      //     border-right: 1px solid smart-scale($bg-color-top, 2%);
+      //   }
 
-        &:nth-child(2n + 3) {
-          border-right: 1px solid smart-scale($bg-color-top, 2%);
-          border-top: 1px solid smart-scale($bg-color-top, 2%);
-        }
+      //   &:nth-child(2n + 3) {
+      //     border-right: 1px solid smart-scale($bg-color-top, 2%);
+      //     border-top: 1px solid smart-scale($bg-color-top, 2%);
+      //   }
 
-        &:nth-child(2n + 4) {
-          border-top: 1px solid smart-scale($bg-color-top, 2%);
-        }
+      //   &:nth-child(2n + 4) {
+      //     border-top: 1px solid smart-scale($bg-color-top, 2%);
+      //   }
 
-        &:first-child,
-        &:nth-child(2) {
-          border-top: 0;
-        }
-      }
+      //   &:first-child,
+      //   &:nth-child(2) {
+      //     border-top: 0;
+      //   }
+      // }
     }
   }
 }

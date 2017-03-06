@@ -114,6 +114,8 @@
 
     @if $transparent == true {
       @include linear-gradient(rgba(smart-scale($bg-color-top, 15%), 0.1), rgba(smart-scale($bg-color-top, 45%), 0.1), bottom);
+      border-left: 1px solid lighten($bg-color-top, 5%);
+      border-right: 1px solid darken($bg-color-top, 5%);
       color: $primary-color;
 
       &:visited,
@@ -138,6 +140,8 @@
 
     @if $transparent == true {
       @include linear-gradient(rgba(smart-scale($bg-color-bottom, 15%), 0.1), rgba(smart-scale($bg-color-bottom, 45%), 0.1), bottom);
+      border-left: 1px solid lighten($bg-color-bottom, 5%);
+      border-right: 1px solid darken($bg-color-bottom, 5%);
       color: $primary-color;
 
       &:visited,
@@ -156,7 +160,7 @@
   @if $region == 'mini' {
     box-shadow: 0 2px 10px rgba(adjust-color($bg-color-mini, $saturation: 0%, $lightness: -8%), 0.25);
     padding: 0 $padding * 0.75;
-    line-height: $base-size * 0.55 !important;
+    line-height: $base-size * 0.5 !important;
 
     &:hover {
       box-shadow: 0 3px 15px rgba(adjust-color($bg-color-mini, $saturation: 0%, $lightness: -15%), 0.66);
@@ -164,6 +168,8 @@
 
     @if $transparent == true {
       @include linear-gradient(rgba(smart-scale($bg-color-mini, 33%), 0.1), rgba(smart-scale($bg-color-mini, 66%), 0.1), bottom);
+      border-left: 1px solid lighten($bg-color-mini, 5%);
+      border-right: 1px solid darken($bg-color-mini, 5%);
       color: $primary-color;
 
       &:visited,
@@ -180,10 +186,10 @@
   }
 
   @if $region == 'left' {
-    box-shadow: 0 1px 10px adjust-color($bg-color-left, $saturation: 0%, $lightness: -15%);
+    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-left, $saturation: 0%, $lightness: -8%), 0.25);
 
     &:hover {
-      box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -35%);
+      box-shadow: 0 3px 15px rgba(adjust-color($bg-color-left, $saturation: 0%, $lightness: -15%), 0.66);
     }
 
     @if $transparent == true {
@@ -208,10 +214,10 @@
   }
 
   @if $region == 'right' {
-    box-shadow: 0 1px 10px adjust-color($bg-color-right, $saturation: 0%, $lightness: -15%);
+    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-right, $saturation: 0%, $lightness: -8%), 0.25);
 
     &:hover {
-      box-shadow: 0 3px 15px adjust-color($bg-color-right, $saturation: 0%, $lightness: -35%);
+      box-shadow: 0 3px 15px rgba(adjust-color($bg-color-right, $saturation: 0%, $lightness: -15%), 0.66);
     }
 
     @if $transparent == true {

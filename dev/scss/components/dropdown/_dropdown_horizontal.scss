@@ -35,6 +35,16 @@
     }
   }
 
+  .escort-dropdown.escort-active:not(.escort-type-user) {
+
+    > .escort-inner {
+
+      .escort-inner {
+        padding: 0 $padding;
+      }
+    }
+  }
+
   .escort-dropdown-content {
     position: absolute;
     width: $base-size-active * 0.75;

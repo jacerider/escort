@@ -3,6 +3,40 @@
  */
 @include get-location($type: vertical, $region: right) {
 
+  .show-escort-full-right &,
+  .is-escort-admin & {
+
+    .escort-item { // sass-lint:disable-line force-pseudo-nesting
+      width: $base-size-active !important;
+
+      &:not(.escort-dropdown) {
+
+        .escort-content {
+
+          .escort-content {
+            display: inline-block !important;
+          }
+        }
+      }
+
+      .escort-content {
+
+        .escort-content {
+          display: inline-block !important;
+        }
+      }
+
+      .escort-icon {
+        width: $base-size * 1.25;
+      }
+
+      .escort-content {
+        padding: 0 !important;
+        line-height: $base-size * 0.66 !important;
+      }
+    }
+  }
+
   &.icon-only {
 
     .escort-item {
@@ -20,19 +54,7 @@
         .is-escort-admin & {
           width: $base-size-active;
         }
-
-        .escort-content {
-          display: inline-block;
-        }
       }
-    }
-  }
-
-  .show-escort-full-right &,
-  .is-escort-admin & {
-
-    .escort-item { // sass-lint:disable-line force-pseudo-nesting
-      width: $base-size-active !important;
     }
   }
 
@@ -42,10 +64,6 @@
   }
 
   .escort-group:not(.escort-dropdown) { // sass-lint:disable-line force-pseudo-nesting
-
-    &:first-child {
-      border-top: 1px solid lighten($bg-color-right, 5%);
-    }
 
     &:last-child {
       border-bottom: 1px solid lighten($bg-color-right, 5%);

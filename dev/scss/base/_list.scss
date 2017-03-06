@@ -23,16 +23,16 @@
       &:first-child {
 
         a {
-          padding-top: $padding * 1.25;
           border-top: 0;
+          padding-top: $padding * 1.5;
         }
       }
 
       &:last-child {
 
         a {
-          padding-bottom: $padding * 1.25;
           border-bottom: 0;
+          padding-bottom: $padding * 1.5;
         }
       }
     }
@@ -41,6 +41,25 @@
       display: block;
       text-align: left;
       padding: $padding;
+
+      &:hover {
+
+        i {
+          margin-right: $padding / 3;
+          color: $secondary-color;
+        }
+      }
+
+      i {
+        width: $base-size * 1.1;
+        font-size: $font-size * 1.75;
+        margin-right: 0;
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        color: $primary-color;
+        transition: margin 300ms;
+      }
     }
   }
 }
