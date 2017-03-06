@@ -10,7 +10,6 @@
     &.is-active {
 
       &[data-region="left"] {
-        background-color: $bg-color-left;
 
         &:hover {
 
@@ -26,7 +25,6 @@
       }
 
       &[data-region="right"] {
-        background-color: $bg-color-right;
 
         &:hover {
 

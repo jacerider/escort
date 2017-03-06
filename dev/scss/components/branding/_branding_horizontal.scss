@@ -2,6 +2,10 @@
 
   .escort-type-branding {
 
+    > .escort-inner {
+      padding: 0 $padding;
+    }
+
     img {
       height: $base-size;
       max-width: $base-size;

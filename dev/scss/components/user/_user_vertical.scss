@@ -3,6 +3,45 @@
  */
 @include get-location($type: vertical) {
 
+  .show-escort-full-right &,
+  .show-escort-full-left &,
+  .is-escort-admin & {
+
+    &.icon-only {
+
+      .escort-type-user {
+
+        .escort-image {
+          margin: 0 auto;
+        }
+
+        .escort-content {
+
+          .escort-content {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  &.icon-only {
+
+    .escort-type-user {
+
+      .escort-image {
+        margin-left: $margin * -0.75;
+      }
+
+      .escort-content {
+        
+        .escort-content {
+          display: none !important;
+        }
+      }
+    }
+  }
+
   .escort-type-user {
     text-align: center;
 
@@ -17,9 +56,9 @@
     }
 
     .escort-image {
-      margin-left: $margin * -0.75;
       width: $base-size * 1.5;
       height: $base-size * 1.5;
+      margin: 0 auto;
       display: block;
     }
   }

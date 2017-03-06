@@ -9,6 +9,7 @@
 
       > .escort-inner {
         display: flex;
+        padding: 0 ($padding * 0.66);
       }
     }
 
@@ -25,8 +26,8 @@
 
     .escort-image {
       display: block;
-      width: $base-size * 1.4;
-      height: $base-size * 1.4;
+      width: $base-size * 1.33;
+      height: $base-size * 1.33;
       margin-top: $margin * -0.6;
       overflow: hidden;
       border-radius: 50%;

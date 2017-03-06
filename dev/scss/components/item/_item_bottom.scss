@@ -13,11 +13,9 @@
   }
 
   .escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add):not(.is-active) {
-    padding: 0 ($padding / 14);
 
     .escort-inner {
       @include button-style($region: bottom, $transparent: true);
-      width: $base-size * 0.96;
     }
   }
 

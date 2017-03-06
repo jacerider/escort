@@ -6,13 +6,24 @@
   &.icon-only {
 
     .escort-item {
+      width: $base-size;
+
+      &.escort-group {
+
+        .escort-content {
+
+          .escort-content {
+            padding: 0;
+          }
+        }
+      }
 
       .is-escort-admin & {
         width: $base-size-active;
       }
 
       .escort-content {
-        line-height: $base-size / 2;
+        line-height: $base-size * 0.66;
       }
     }
 
@@ -56,7 +67,7 @@
   .escort-item {
     padding: ($padding * 0.75) 0;
     display: block;
-    width: $base-size * 2;
+    width: $base-size * 2.2;
     overflow: hidden;
     text-align: left;
 
@@ -69,14 +80,14 @@
 
         .escort-content {
           display: block;
-          padding: ($padding / 6);
+          padding: ($padding / 3) ($padding / 4) 0;
         }
       }
     }
 
     .escort-content {
       display: block;
-      line-height: $base-size / 3;
+      line-height: $base-size * 0.4;
       text-align: center;
       white-space: normal;
     }
