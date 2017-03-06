@@ -7,7 +7,7 @@
   position: fixed;
   top: 0;
   bottom: 0;
-  width: $base-size * 2.2;
+  width: $base-size * 2.025;
   overflow: hidden;
   z-index: 5;
   font-size: $font-size * 1.1;
@@ -27,7 +27,7 @@
   }
 
   > .escort-scroll {
-    width: ($base-size * 2.2) + 1.5rem;
+    width: ($base-size * 2.025) + 1.5rem;
     padding-right: $padding * 1.5;
     height: 100%;
     display: flex;
