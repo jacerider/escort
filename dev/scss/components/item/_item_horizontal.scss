@@ -41,6 +41,13 @@
       padding: 0;
     }
 
+    &.escort-preview {
+
+      > .escort-inner {
+        padding: 0 $padding;
+      }
+    }
+
     &.has-icon:not(.escort-type-add) { // sass-lint:disable-line force-pseudo-nesting
 
       .escort-content {
