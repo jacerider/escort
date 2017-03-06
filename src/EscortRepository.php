@@ -64,6 +64,22 @@ class EscortRepository implements EscortRepositoryInterface {
   /**
    * {@inheritdoc}
    */
+  public function hasEscortOfType($type_id) {
+    foreach ($this->getEscortsPerRegion() as $group_id => $sections) {
+      foreach ($sections as $section_id => $section) {
+        foreach ($section as $escort_id => $escort) {
+          if ($escort->getPluginId() == $type_id) {
+            return TRUE;
+          }
+        }
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getEscortsPerRegion(array &$cacheable_metadata = NULL) {
     if (!isset($this->escorts) || is_array($cacheable_metadata)) {
       $cacheable_metadata = is_array($cacheable_metadata) ? $cacheable_metadata : [];
