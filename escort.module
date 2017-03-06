@@ -129,13 +129,17 @@ function escort_preprocess_html(&$variables) {
     $regions = \Drupal::service('escort.repository')->getEscortsPerRegion();
     if (!empty($regions)) {
       $is_admin = $variables['user']->hasPermission('administer escort') && \Drupal::service('escort.path.matcher')->isAdmin();
+      $config = \Drupal::config('escort.config')->get('regions');
       $variables['attributes']['class'][] = 'has-escort';
       if ($is_admin) {
         $variables['attributes']['class'][] = 'is-escort-admin';
         $variables['#attached']['library'][] = 'escort/escort.admin';
       }
-      foreach ($regions as $region_id => $sections) {
-        $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $region_id);
+      foreach ($regions as $group_id => $sections) {
+        $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $group_id);
+        if (!empty($config[$group_id]['icon_only'])) {
+          $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $group_id . '-icon-only');
+        }
         foreach ($sections as $section) {
           foreach ($section as $escort) {
             // Allow plugins to add body attributes.
