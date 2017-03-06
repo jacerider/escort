@@ -109,25 +109,39 @@ function escort_page_top(array &$page_top) {
 }
 
 /**
+ * Implements hook_preprocess_block().
+ */
+function escort_preprocess_block(&$variables) {
+  if (!empty($variables['elements']['#plugin_id']) && $variables['elements']['#plugin_id'] == 'local_tasks_block') {
+    // Hide local tasks block if user can use escort AND the local tasks plugin is enabled.
+    if (\Drupal::currentUser()->hasPermission('access escort') && \Drupal::service('escort.repository')->hasEscortOfType('local_tasks')) {
+      $variables['content']['#access'] = FALSE;
+    }
+  }
+}
+
+/**
  * Implements hook_preprocess_html().
  */
 function escort_preprocess_html(&$variables) {
-  // Add classes to body if regions have escorts.
-  $regions = \Drupal::service('escort.repository')->getEscortsPerRegion();
-  if (!empty($regions)) {
-    $is_admin = $variables['user']->hasPermission('administer escort') && \Drupal::service('escort.path.matcher')->isAdmin();
-    $variables['attributes']['class'][] = 'has-escort';
-    if ($is_admin) {
-      $variables['attributes']['class'][] = 'is-escort-admin';
-      $variables['#attached']['library'][] = 'escort/escort.admin';
-    }
-    foreach ($regions as $region_id => $sections) {
-      $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $region_id);
-      foreach ($sections as $section) {
-        foreach ($section as $escort) {
-          // Allow plugins to add body attributes.
-          if ($attributes = $escort->getPlugin()->getBodyAttributes($is_admin)) {
-            $variables['attributes'] = NestedArray::mergeDeep($variables['attributes'], $attributes);
+  if (\Drupal::currentUser()->hasPermission('access escort')) {
+    // Add classes to body if regions have escorts.
+    $regions = \Drupal::service('escort.repository')->getEscortsPerRegion();
+    if (!empty($regions)) {
+      $is_admin = $variables['user']->hasPermission('administer escort') && \Drupal::service('escort.path.matcher')->isAdmin();
+      $variables['attributes']['class'][] = 'has-escort';
+      if ($is_admin) {
+        $variables['attributes']['class'][] = 'is-escort-admin';
+        $variables['#attached']['library'][] = 'escort/escort.admin';
+      }
+      foreach ($regions as $region_id => $sections) {
+        $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $region_id);
+        foreach ($sections as $section) {
+          foreach ($section as $escort) {
+            // Allow plugins to add body attributes.
+            if ($attributes = $escort->getPlugin()->getBodyAttributes($is_admin)) {
+              $variables['attributes'] = NestedArray::mergeDeep($variables['attributes'], $attributes);
+            }
           }
         }
       }
