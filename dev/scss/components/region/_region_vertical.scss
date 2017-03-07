@@ -83,7 +83,7 @@
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,
             .show-escort-full-#{$r} & {
-              bottom: map-get($s, size);
+              bottom: map-get($s, size) * 0.975;
             }
           }
         }
