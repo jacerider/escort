@@ -2,6 +2,9 @@
 
 namespace Drupal\escort\Plugin\Escort;
 
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Access\AccessResult;
+
 /**
  * Defines a fallback plugin for missing escort plugins.
  *
@@ -42,6 +45,17 @@ class AdminEscape extends EscortPluginBase {
     }
 
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function escortAccess(AccountInterface $account) {
+    if ($account->hasPermission('access administration pages')) {
+      return AccessResult::allowed()->cachePerPermissions();
+    }
+    // No opinion.
+    return AccessResult::neutral();
   }
 
 }
