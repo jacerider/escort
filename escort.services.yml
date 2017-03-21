@@ -7,7 +7,7 @@ services:
     arguments: ['@config.factory']
   escort.repository:
     class: Drupal\escort\EscortRepository
-    arguments: ['@entity_type.manager', '@escort.region_manager', '@escort.path.matcher', '@current_user']
+    arguments: ['@entity_type.manager', '@escort.region_manager', '@context.handler', '@escort.path.matcher', '@current_user']
   escort.path.matcher:
     class: Drupal\escort\EscortPathMatcher
     arguments: ['@path.matcher', '@request_stack', '@path.current', '@current_user']

@@ -36,7 +36,6 @@
         _this.$region.remove();
         _this.$body.removeClass('has-escort-' + this.region);
         Drupal.displace(true);
-
       }
       else {
         var timeout;

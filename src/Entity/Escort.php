@@ -2,6 +2,8 @@
 
 namespace Drupal\escort\Entity;
 
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Condition\ConditionPluginCollection;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\escort\EscortPluginCollection;
@@ -43,6 +45,7 @@ use Drupal\escort\EscortAjaxTrait;
  *     "provider",
  *     "plugin",
  *     "settings",
+ *     "visibility",
  *   }
  * )
  */
@@ -85,11 +88,39 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
   protected $plugin;
 
   /**
+   * The visibility settings for this escort.
+   *
+   * @var array
+   */
+  protected $visibility = [];
+
+  /**
    * The plugin collection that holds the escort plugin for this entity.
    *
    * @var \Drupal\escort\EscortPluginCollection
    */
   protected $pluginCollection;
+
+  /**
+   * The available contexts for this escort and its visibility conditions.
+   *
+   * @var array
+   */
+  protected $contexts = [];
+
+  /**
+   * The visibility collection.
+   *
+   * @var \Drupal\Core\Condition\ConditionPluginCollection
+   */
+  protected $visibilityCollection;
+
+  /**
+   * The condition plugin manager.
+   *
+   * @var \Drupal\Core\Executable\ExecutableManagerInterface
+   */
+  protected $conditionPluginManager;
 
   /**
    * The plugin instance.
@@ -116,6 +147,22 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
     }
     else {
       $this->enable();
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    parent::postSave($storage, $update);
+
+    // Entity::postSave() calls Entity::invalidateTagsOnSave(), which only
+    // handles the regular cases. The Block entity has one special case: a
+    // newly created block may *also* appear on any page in the current theme,
+    // so we must invalidate the associated block's cache tag (which includes
+    // the theme cache tag).
+    if (!$update) {
+      Cache::invalidateTags($this->getCacheTagsToInvalidate());
     }
   }
 
@@ -177,6 +224,7 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
   public function getPluginCollections() {
     return [
       'settings' => $this->getPluginCollection(),
+      'visibility' => $this->getVisibilityConditions(),
     ];
   }
 
@@ -283,6 +331,58 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
     }
     // Sort by label.
     return strcmp($a->label(), $b->label());
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getVisibility() {
+    return $this->getVisibilityConditions()->getConfiguration();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setVisibilityConfig($instance_id, array $configuration) {
+    $conditions = $this->getVisibilityConditions();
+    if (!$conditions->has($instance_id)) {
+      $configuration['id'] = $instance_id;
+      $conditions->addInstanceId($instance_id, $configuration);
+    }
+    else {
+      $conditions->setInstanceConfiguration($instance_id, $configuration);
+    }
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getVisibilityConditions() {
+    if (!isset($this->visibilityCollection)) {
+      $this->visibilityCollection = new ConditionPluginCollection($this->conditionPluginManager(), $this->get('visibility'));
+    }
+    return $this->visibilityCollection;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getVisibilityCondition($instance_id) {
+    return $this->getVisibilityConditions()->get($instance_id);
+  }
+
+  /**
+   * Gets the condition plugin manager.
+   *
+   * @return \Drupal\Core\Executable\ExecutableManagerInterface
+   *   The condition plugin manager.
+   */
+  protected function conditionPluginManager() {
+    if (!isset($this->conditionPluginManager)) {
+      $this->conditionPluginManager = \Drupal::service('plugin.manager.condition');
+    }
+    return $this->conditionPluginManager;
   }
 
 }

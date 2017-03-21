@@ -1,3 +1,5 @@
+# Schema for the configuration files of the Escort module.
+
 escort.escort.*:
   type: config_entity
   label: 'Escort config'
@@ -16,6 +18,12 @@ escort.escort.*:
       label: 'Plugin'
     settings:
       type: escort.settings.[%parent.plugin]
+    visibility:
+      type: sequence
+      label: 'Visibility Conditions'
+      sequence:
+        type: condition.plugin.[id]
+        label: 'Visibility Condition'
     uuid:
       type: string
 
