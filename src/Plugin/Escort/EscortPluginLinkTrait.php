@@ -93,6 +93,9 @@ trait EscortPluginLinkTrait {
     if ($this->hasIconSupport()) {
       if (!$title instanceof MiconIconize) {
         $title = MiconIconize::iconize($title);
+        if (!$title->getIcon()) {
+          $title->setIcon($this->getDefaultLinkIcon());
+        }
       }
       $title->addMatchPrefix($prefix);
     }
