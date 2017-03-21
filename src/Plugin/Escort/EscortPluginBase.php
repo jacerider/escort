@@ -380,6 +380,16 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
   }
 
   /**
+   * Allow a plugin to require that another region has escorts.
+   *
+   * @return null|region_id
+   *   Return region id if plugin requires that another region has escorts.
+   */
+  public function requireRegion() {
+    return NULL;
+  }
+
+  /**
    * Returns attributes that will be added to the HTML doc body.
    *
    * @var bool $is_admin

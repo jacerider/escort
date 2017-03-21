@@ -4,7 +4,6 @@ namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\escort\Entity\EscortInterface;
 use Drupal\escort\EscortRegionManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -63,6 +62,13 @@ class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface
   /**
    * {@inheritdoc}
    */
+  public function requireRegion() {
+    return $this->configuration['region'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function escortForm($form, FormStateInterface $form_state) {
     $region = $form_state->getTemporaryValue('entity')->getRegion();
     $region = $this->escortRegionManager->getGroupId($region);
@@ -100,7 +106,8 @@ class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface
     $escort = $this->getEscort();
     $type = $this->escortRegionManager->getGroupType($escort->getRegion());
     if ($this->configuration['event'] == 'click' || $type == 'vertical') {
-      $build['#markup'] = $this->t('Toggle ' . $this->escortRegionManager->getGroupLabel($this->configuration['region']));
+      $label = $this->escortRegionManager->getGroupLabel($this->configuration['region']);
+      $build['#markup'] = $this->t('Toggle @label', array('@label' => $label));
     }
     $build['#attached']['library'][] = 'escort/escort.toggle';
     $build['#attributes']['class'][] = 'escort-toggle';

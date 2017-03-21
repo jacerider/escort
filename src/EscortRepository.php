@@ -4,6 +4,7 @@ namespace Drupal\escort;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Plugin\Context\ContextHandlerInterface;
 use Drupal\escort\Entity\Escort;
 use Drupal\Core\Session\AccountProxy;
 
@@ -54,9 +55,10 @@ class EscortRepository implements EscortRepositoryInterface {
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity manager.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, EscortRegionManagerInterface $escort_region_manager, EscortPathMatcherInterface $escort_path_matcher, AccountProxy $current_user) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EscortRegionManagerInterface $escort_region_manager, ContextHandlerInterface $context_handler, EscortPathMatcherInterface $escort_path_matcher, AccountProxy $current_user) {
     $this->escortStorage = $entity_type_manager->getStorage('escort');
     $this->escortRegionManager = $escort_region_manager;
+    $this->contextHandler = $context_handler;
     $this->escortPathMatcher = $escort_path_matcher;
     $this->currentUser = $current_user;
   }
@@ -110,21 +112,29 @@ class EscortRepository implements EscortRepositoryInterface {
 
       // Merge it with the actual values to maintain the region ordering.
       $empty = array_fill_keys(array_keys($raw_regions), array());
-      $escorts = array_filter(array_intersect_key(array_merge($empty, $full), $empty));
-      foreach ($escorts as $group_id => &$sections) {
+      $regions = array_filter(array_intersect_key(array_merge($empty, $full), $empty));
+      foreach ($regions as $group_id => &$sections) {
         $empty = array_fill_keys(array_keys($raw_regions[$group_id]['sections']), array());
         $sections = array_filter(array_intersect_key(array_merge($empty, $sections), $empty));
       }
 
       // Sort sections.
-      foreach ($escorts as $group_id => &$sections) {
-        foreach ($sections as &$escort) {
+      foreach ($regions as $group_id => &$sections) {
+        foreach ($sections as $section_id => &$escorts) {
+          // Allow escorts to remove themselves based on region requirements.
+          foreach ($escorts as $escort_id => $escort) {
+            $plugin = $escort->getPlugin();
+            $require_region = $plugin->requireRegion();
+            if ($require_region && empty($regions[$require_region])) {
+              unset($escorts[$escort_id]);
+            }
+          }
           // Suppress errors because PHPUnit will indirectly modify the
           // contents, triggering https://bugs.php.net/bug.php?id=50688.
-          @uasort($escort, 'Drupal\escort\Entity\Escort::sort');
+          @uasort($escorts, 'Drupal\escort\Entity\Escort::sort');
         }
       }
-      $this->escorts = $escorts;
+      $this->escorts = $regions;
     }
     return $this->escorts;
   }
