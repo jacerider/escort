@@ -6,7 +6,6 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Menu\MenuActiveTrailInterface;
 use Drupal\Core\Menu\MenuLinkTreeInterface;
-use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -20,14 +19,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   category = @Translation("Menu"),
  * )
  */
-class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInterface {
+class Menu extends EscortPluginBase implements ContainerFactoryPluginInterface {
   use EscortPluginLinkTrait;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $provideMultiple = TRUE;
-
 
   /**
    * {@inheritdoc}
@@ -116,13 +109,11 @@ class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInt
   /**
    * {@inheritdoc}
    */
-  public function buildItems() {
-    $items = [];
+  public function build() {
     $menu_name = $this->configuration['menu'];
-    $active_trail = $this->menuActiveTrail->getActiveTrailIds($menu_name);
-    $parameters = new MenuTreeParameters();
-    $parameters->setActiveTrail($active_trail);
+    $parameters = $this->menuTree->getCurrentRouteMenuTreeParameters($menu_name);
 
+    // Adjust the menu tree parameters based on the block's configuration.
     $level = $this->configuration['level'];
     $depth = $this->configuration['depth'];
     $parameters->setMinDepth($level);
@@ -140,12 +131,10 @@ class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInt
       array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
     );
     $tree = $this->menuTree->transform($tree, $manipulators);
-
-    $render = $this->menuTree->build($tree);
-    $items = $this->buildFlattenedItems($render['#items'], $this->flattenTree($tree));
-    $items['#cache'] = $render['#cache'];
-
-    return $items;
+    // $bla = $this->buildTreeItems($tree);
+    $build = $this->menuTree->build($tree);
+    $build['#items'] = $this->buildTreeItems($build['#items']);
+    return $build;
   }
 
   /**
@@ -153,48 +142,19 @@ class Menu extends EscortPluginMultipleBase implements ContainerFactoryPluginInt
    *
    * @param array $items
    *   The renderable menu.
-   * @param array $tree
-   *   The menu tree.
    *
    * @return array
-   *   An array of tabs.
+   *   An array of renderable items.
    */
-  protected function buildFlattenedItems($items, $tree, $build = []) {
-    foreach ($items as $id => $item) {
-      $build_item = [];
-      $title = $item['title'];
+  protected function buildTreeItems($items) {
+    foreach ($items as $id => &$item) {
+      $item['title'] = $this->titleToIcon($item['title']);
       $url = $item['url'];
       $options = $url->getOptions();
-      $build_item = $this->buildLink($title, $url);
-      // Set depth class.
-      $build_item['#attributes']['class'][] = 'escort-depth-' . $tree[$id]->depth;
-      // Set active class.
-      if ($item['in_active_trail']) {
-        $build_item['#attributes']['class'][] = 'is-active';
-      }
-      $build[] = $build_item;
+      $options['attributes']['class'][] = 'escort-item';
+      $url->setOptions($options);
       if ($item['below']) {
-        $build = $this->buildFlattenedItems($item['below'], $tree, $build);
-      }
-    }
-    return $build;
-  }
-
-  /**
-   * Loop through tree and return each item on the same level.
-   *
-   * @param array $tree
-   *   An array of menu items.
-   *
-   * @return array
-   *   The items.
-   */
-  protected function flattenTree($tree, $items = []) {
-    foreach ($tree as $id => $item) {
-      // $items[] = $this->buildItem($item);
-      $items[$item->link->getPluginId()] = $item;
-      if ($item->hasChildren) {
-        $items = $this->flattenTree($item->subtree, $items);
+        $item['below'] = $this->buildTreeItems($item['below']);
       }
     }
     return $items;
