@@ -42,7 +42,7 @@
         }
 
         .escort-content {
-          left: $margin / 8;
+          left: 0;
           border-top-right-radius: $border-radius;
 
           &::before {
@@ -63,7 +63,7 @@
 
         .escort-content {
           left: auto;
-          right: $margin / 8;
+          right: 0;
           border-top-left-radius: $border-radius;
 
           &::before {
