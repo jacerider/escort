@@ -13,6 +13,10 @@
   letter-spacing: 0.03em;
 
   .has-escort-left & {
+    left: $base-size * 2.025;
+  }
+
+  .has-escort-left-icon-only & {
     left: $base-size;
   }
 
@@ -21,6 +25,10 @@
   }
 
   .has-escort-right & {
+    right: $base-size * 2.025;
+  }
+
+  .has-escort-right-icon-only & {
     right: $base-size;
   }
 
