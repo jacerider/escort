@@ -98,9 +98,25 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
   /**
    * {@inheritdoc}
    */
-  public function buildMultipleItems() {
-    $config = $this->configuration;
+  public function escortBuildMultiple() {
+    $build = [];
     $cacheability = new CacheableMetadata();
+    $tabs = $this->buildTasks($cacheability);
+
+    $cacheability->applyTo($build);
+
+    foreach ($tabs as $key => $tab) {
+      $build[$key] = $this->buildLink($tab['#link']['title'], $tab['#link']['url'], $tab['#attributes']);
+      $build[$key]['#weight'] = $tab['#weight'];
+    }
+    return $build;
+  }
+
+  /**
+   * Build list of tasks.
+   */
+  protected function buildTasks($cacheability) {
+    $config = $this->configuration;
     $primary = [];
     $secondary = [];
 
@@ -120,9 +136,12 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
 
     $tabs = [];
     foreach ($primary as $key => $tab) {
+      $tab['#attributes']['class'][] = 'primary-tab';
       $tabs[$key] = $tab;
       if (!empty($tab['#active']) && !empty($secondary)) {
         foreach ($secondary as $secondary_key => $secondary_tab) {
+          $secondary_tab['#attributes']['class'][] = 'secondary-tab';
+          $secondary_tab['#weight'] = $tab['#weight'];
           $tabs[$secondary_key] = $secondary_tab;
         }
       }
@@ -130,15 +149,7 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
 
     // Add in secondary tabs in case primary tabs are empty.
     $tabs += $secondary;
-
-    $build = [];
-    $cacheability->applyTo($build);
-
-    foreach ($tabs as $key => $tab) {
-      $build[] = $this->buildLink($tab['#link']['title'], $tab['#link']['url']);
-    }
-
-    return $build;
+    return $tabs;
   }
 
   /**

@@ -244,20 +244,20 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    * {@inheritdoc}
    */
   public function build() {
-    return $this->buildMultipleItems();
+    return $this->escortBuildMultiple();
   }
 
   /**
    * Create an escort with multiple items.
    *
-   * By default it will output a single item from buildSingleItem().
+   * By default it will output a single item from escortBuild().
    *
    * @return array
    *   An array of renderable elements.
    */
-  protected function buildMultipleItems() {
+  protected function escortBuildMultiple() {
     return [
-      $this->buildSingleItem(),
+      $this->escortBuild(),
     ];
   }
 
@@ -267,7 +267,7 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    * @return array
    *   The renderable array representing a single escort item.
    */
-  protected function buildSingleItem() {
+  protected function escortBuild() {
     return NULL;
   }
 

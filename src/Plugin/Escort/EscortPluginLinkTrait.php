@@ -29,10 +29,10 @@ trait EscortPluginLinkTrait {
    * @return array
    *   A render array.
    */
-  public function buildLink($title, $uri) {
+  protected function buildLink($title, $uri, $attributes = array()) {
     $title = $this->titleAndUrlToIcon($title, $uri);
     list($title, $icon) = $this->titleToTitleIcon($title);
-    $attributes = $this->getUriAsAttributes($uri);
+    $attributes += $this->getUriAsAttributes($uri);
     $options = $uri->getOptions();
 
     $attributes['title'] = $title;
@@ -51,6 +51,40 @@ trait EscortPluginLinkTrait {
   }
 
   /**
+   * Givent a title, return as Micon object.
+   *
+   * @param string $title
+   *   The title of the link.
+   */
+  protected function titleAndUrlToIcon($title, $uri, $prefix = 'escort') {
+    $title = $this->titleToIcon($title);
+    if ($url = $this->getUrl($uri)) {
+      $options = $url->getOptions();
+      if (!empty($options['attributes']['data-icon'])) {
+        $title->setIcon($options['attributes']['data-icon']);
+      }
+    }
+    return $title;
+  }
+
+  /**
+   * Givent a title, return as Micon object.
+   *
+   * @param string $title
+   *   The title of the link.
+   */
+  protected function titleToIcon($title, $prefix = 'escort') {
+    if (!$title instanceof MiconIconize) {
+      $title = MiconIconize::iconize($title);
+      if (!$title->getIcon()) {
+        $title->setIcon($this->getDefaultLinkIcon());
+      }
+    }
+    $title->addMatchPrefix($prefix);
+    return $title;
+  }
+
+  /**
    * Given a title, return an array containing title and icon.
    *
    * @param string $title
@@ -59,7 +93,7 @@ trait EscortPluginLinkTrait {
    * @return array
    *   An array containing a title and icon key.
    */
-  public function titleToTitleIcon($title) {
+  protected function titleToTitleIcon($title) {
     $title = $title;
     $icon = '';
 
@@ -79,46 +113,12 @@ trait EscortPluginLinkTrait {
   }
 
   /**
-   * Givent a title, return as Micon object.
-   *
-   * @param string $title
-   *   The title of the link.
-   */
-  public function titleToIcon($title, $prefix = 'escort') {
-    if (!$title instanceof MiconIconize) {
-      $title = MiconIconize::iconize($title);
-      if (!$title->getIcon()) {
-        $title->setIcon($this->getDefaultLinkIcon());
-      }
-    }
-    $title->addMatchPrefix($prefix);
-    return $title;
-  }
-
-  /**
-   * Givent a title, return as Micon object.
-   *
-   * @param string $title
-   *   The title of the link.
-   */
-  public function titleAndUrlToIcon($title, $uri, $prefix = 'escort') {
-    $title = $this->titleToIcon($title);
-    if ($url = $this->getUrl($uri)) {
-      $options = $url->getOptions();
-      if (!empty($options['attributes']['data-icon'])) {
-        $title->setIcon($options['attributes']['data-icon']);
-      }
-    }
-    return $title;
-  }
-
-  /**
    * Convert a uri or Drupal\Core\Url into Drupal\Core\Url.
    *
    * @var mixed $uri
    *  A uri or Drupal\Core\Url.
    */
-  public function getUrl($uri) {
+  protected function getUrl($uri) {
     if ($uri instanceof Url) {
       $url = $uri;
     }
@@ -134,7 +134,7 @@ trait EscortPluginLinkTrait {
    * @var mixed $uri
    *  A uri or Drupal\Core\Url.
    */
-  public function getUriAsAttributes($uri) {
+  protected function getUriAsAttributes($uri) {
     $attributes = [];
     if ($url = $this->getUrl($uri)) {
       // External URLs can not have cacheable metadata.
@@ -166,7 +166,7 @@ trait EscortPluginLinkTrait {
   /**
    * Get the default icon.
    */
-  public function getDefaultLinkIcon() {
+  protected function getDefaultLinkIcon() {
     return $this->defaultLinkIcon;
   }
 
@@ -179,7 +179,7 @@ trait EscortPluginLinkTrait {
    * @return Drupal\Core\Access\AccessResult
    *   The access result.
    */
-  public function uriAccess($uri) {
+  protected function uriAccess($uri) {
     if (!empty($uri)) {
       if ($uri instanceof Url) {
         $url = $uri;

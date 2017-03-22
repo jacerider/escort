@@ -46,7 +46,7 @@ class Text extends EscortPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function buildSingleItem() {
+  public function escortBuild() {
     return ['#markup' => $this->configuration['text']];
   }
 

@@ -81,7 +81,7 @@ class Link extends Text {
   /**
    * {@inheritdoc}
    */
-  public function buildSingleItem() {
+  public function escortBuild() {
     $attributes = $this->getUriAsAttributes($this->configuration['url']);
     $attributes['title'] = $this->configuration['text'];
     $build = [
