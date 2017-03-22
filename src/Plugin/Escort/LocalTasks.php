@@ -2,13 +2,13 @@
 
 namespace Drupal\escort\Plugin\Escort;
 
-use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Menu\LocalTaskManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Render\Element;
 
 /**
  * Provides a "Local Tasks" escort to display the local tasks.
@@ -19,14 +19,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   category = @Translation("Menu"),
  * )
  */
-class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPluginInterface {
+class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInterface {
   use EscortPluginLinkTrait;
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $provideMultiple = TRUE;
-
 
   /**
    * {@inheritdoc}
@@ -93,86 +87,56 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
 
   /**
    * {@inheritdoc}
-   *
-   * When in admin mode, we simply display the label.
    */
   public function preview() {
     return [
       '#icon' => 'fa-th-list',
-      '#markup' => $this->label(TRUE) . ' ' . $this->t('Placeholder'),
+      '#markup' => $this->label(TRUE),
     ];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildItems() {
-    $items = [];
-
+  public function buildMultipleItems() {
     $config = $this->configuration;
     $cacheability = new CacheableMetadata();
-    $secondary_tabs = [];
-
-    // Add only selected levels for the printed output.
-    if ($config['secondary']) {
-      $links = $this->localTaskManager->getLocalTasks($this->routeMatch->getRouteName(), 1);
-      $cacheability = $cacheability->merge($links['cacheability']);
-
-      if (count(Element::getVisibleChildren($links['tabs'])) > 1) {
-        $secondary_tabs = $links['tabs'];
-      }
-    }
+    $primary = [];
+    $secondary = [];
 
     // Add only selected levels for the printed output.
     if ($config['primary']) {
       $links = $this->localTaskManager->getLocalTasks($this->routeMatch->getRouteName(), 0);
       $cacheability = $cacheability->merge($links['cacheability']);
+      // Do not display single tabs.
+      $primary = count(Element::getVisibleChildren($links['tabs'])) > 1 ? $links['tabs'] : [];
+    }
+    if ($config['secondary']) {
+      $links = $this->localTaskManager->getLocalTasks($this->routeMatch->getRouteName(), 1);
+      $cacheability = $cacheability->merge($links['cacheability']);
+      // Do not display single tabs.
+      $secondary = count(Element::getVisibleChildren($links['tabs'])) > 1 ? $links['tabs'] : [];
+    }
 
-      if (count(Element::getVisibleChildren($links['tabs'])) > 1) {
-        $tabs = $links['tabs'];
-        foreach ($tabs as $tab) {
-          $tab_build = $this->buildTab($tab);
-          $tab_build['#attributes']['class'][] = 'primary-tab';
-          $items[] = $tab_build;
-          // Set active class.
-          if (!empty($tab['#active']) && !empty($secondary_tabs)) {
-            foreach ($secondary_tabs as $secondary_tab) {
-              $secondary_tab_build = $this->buildTab($secondary_tab);
-              // Set weight to same as parent.
-              $secondary_tab_build['#weight'] = $tab_build['#weight'];
-              $secondary_tab_build['#attributes']['class'][] = 'secondary-tab';
-              $items[] = $secondary_tab_build;
-            }
-          }
+    $tabs = [];
+    foreach ($primary as $key => $tab) {
+      $tabs[$key] = $tab;
+      if (!empty($tab['#active']) && !empty($secondary)) {
+        foreach ($secondary as $secondary_key => $secondary_tab) {
+          $tabs[$secondary_key] = $secondary_tab;
         }
       }
     }
-    $cacheability->applyTo($items);
-    return $items;
-  }
 
-  /**
-   * Prepare tab for rendering.
-   *
-   * @param array $tab
-   *   A tab.
-   *
-   * @return array
-   *   A render array.
-   */
-  protected function buildTab($tab) {
-    $url = $tab['#link']['url'];
-    $title = $tab['#link']['title'];
+    // Add in secondary tabs in case primary tabs are empty.
+    $tabs += $secondary;
 
-    $build = $this->buildLink($title, $url);
+    $build = [];
+    $cacheability->applyTo($build);
 
-    // Set active class.
-    if (!empty($tab['#active'])) {
-      $build['#attributes']['class'][] = 'is-active';
+    foreach ($tabs as $key => $tab) {
+      $build[] = $this->buildLink($tab['#link']['title'], $tab['#link']['url']);
     }
-
-    $build['#access'] = $tab['#access'];
-    $build['#weight'] = $tab['#weight'];
 
     return $build;
   }
@@ -188,7 +152,6 @@ class LocalTasks extends EscortPluginMultipleBase implements ContainerFactoryPlu
       '#type' => 'details',
       '#title' => $this->t('Shown tabs'),
       '#description' => $this->t('Select tabs being shown in the escort'),
-      // Open if not set to defaults.
       '#open' => $defaults['primary'] !== $config['primary'] || $defaults['secondary'] !== $config['secondary'],
     ];
     $form['levels']['primary'] = [

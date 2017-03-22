@@ -30,7 +30,7 @@ class Add extends EscortPluginBase implements EscortPluginImmediateInterface {
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function buildSingleItem() {
     $build = [];
     $build['#tag'] = 'a';
     $build['#attributes']['href'] = Url::fromRoute('escort.escort_library', [], [

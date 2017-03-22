@@ -39,7 +39,7 @@
  * @see template_process()
  */
 #}
-<{{tag}}{{ attributes }}>
+<{{tag}}{{ attributes.addClass('escort-item') }}>
   <div class="escort-inner">
     {% if prefix %}
       <span{{ prefix_attributes.addClass('escort-prefix') }}>{{ prefix }}</span>

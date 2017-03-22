@@ -2,34 +2,27 @@
 
 namespace Drupal\escort\Plugin\Escort;
 
-use Drupal\Component\Plugin\DerivativeInspectionInterface;
-use Drupal\Core\Cache\CacheableDependencyInterface;
-use Drupal\Component\Plugin\PluginInspectionInterface;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
+use Drupal\Component\Plugin\PluginInspectionInterface;
+use Drupal\Core\Cache\CacheableDependencyInterface;
+use Drupal\Component\Plugin\DerivativeInspectionInterface;
+use Drupal\escort\Entity\EscortInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 
 /**
  * Defines the required interface for all escort plugins.
- *
- * @todo Add detailed documentation here explaining the escort system's
- *   architecture and the relationships between the various objects, including
- *   brief references to the important components that are not coupled to the
- *   interface.
  *
  * @ingroup escort_api
  */
 interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormInterface, PluginInspectionInterface, CacheableDependencyInterface, DerivativeInspectionInterface {
 
   /**
-   * Returns the user-facing escort label.
-   *
-   * @todo Provide other specific label-related methods in
-   *   https://www.drupal.org/node/2025649.
+   * Returns the admin-facing escort label.
    *
    * @return string
-   *   The escort label.
+   *   The escort admin label.
    */
   public function label();
 
@@ -78,29 +71,9 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
    * @param mixed $value
    *   The value to set for the provided key.
    *
-   * @todo This doesn't belong here. Move this into a new base class in
-   *   https://www.drupal.org/node/1764380.
-   * @todo This does not set a value in \Drupal::config(), so the name is confusing.
-   *
    * @see \Drupal\Component\Plugin\PluginBase::$configuration
    */
   public function setConfigurationValue($key, $value);
-
-  /**
-   * Returns the base configuration form elements.
-   *
-   * Escorts that need to add form elements to the normal escort configuration
-   * form should implement escortForm.
-   *
-   * @param array $form
-   *   The form definition array for the escort configuration form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
-   *
-   * @return array
-   *   The renderable form array representing the entire configuration form.
-   */
-  public function escortBaseForm($form, FormStateInterface $form_state);
 
   /**
    * Returns the configuration form elements specific to this escort plugin.
@@ -119,23 +92,6 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
   public function escortForm($form, FormStateInterface $form_state);
 
   /**
-   * Adds escort base validation for the escort form.
-   *
-   * Note that this method takes the form structure and form state for the full
-   * escort configuration form as arguments, not just the elements defined in
-   * EscortPluginInterface::escortForm().
-   *
-   * @param array $form
-   *   The form definition array for the full escort configuration form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
-   *
-   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortBaseForm()
-   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortBaseSubmit()
-   */
-  public function escortBaseValidate($form, FormStateInterface $form_state);
-
-  /**
    * Adds escort type-specific validation for the escort form.
    *
    * Note that this method takes the form structure and form state for the full
@@ -147,27 +103,10 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    *
-   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortForm()
-   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortSubmit()
+   * @see \Drupal\Core\Escort\EscortPluginInterface::escortForm()
+   * @see \Drupal\Core\Escort\EscortPluginInterface::escortSubmit()
    */
   public function escortValidate($form, FormStateInterface $form_state);
-
-  /**
-   * Adds escort base submission handling for the escort form.
-   *
-   * Note that this method takes the form structure and form state for the full
-   * escort configuration form as arguments, not just the elements defined in
-   * EscortPluginInterface::escortForm().
-   *
-   * @param array $form
-   *   The form definition array for the full escort configuration form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
-   *
-   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortBaseForm()
-   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortBaseValidate()
-   */
-  public function escortBaseSubmit($form, FormStateInterface $form_state);
 
   /**
    * Adds escort type-specific submission handling for the escort form.
@@ -181,10 +120,31 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    *
-   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortForm()
-   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortValidate()
+   * @see \Drupal\Core\Escort\EscortPluginInterface::escortForm()
+   * @see \Drupal\Core\Escort\EscortPluginInterface::escortValidate()
    */
   public function escortSubmit($form, FormStateInterface $form_state);
+
+  /**
+   * Returns attributes that will be added to the HTML doc body.
+   *
+   * @var bool $is_admin
+   *   TRUE if page is an admin page.
+   *
+   * @return array
+   *   An associative attributes array.
+   */
+  public function getBodyAttributes($is_admin);
+
+  /**
+   * Sets the escort entity this plugin belongs to.
+   */
+  public function setEscort(EscortInterface $escort);
+
+  /**
+   * Sets the escort entity this plugin belongs to.
+   */
+  public function getEscort();
 
   /**
    * Suggests a machine name to identify an instance of this escort.
@@ -197,13 +157,5 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
    *   The suggested machine name.
    */
   public function getMachineNameSuggestion();
-
-  /**
-   * Whether the display provides multiple escorts.
-   *
-   * @return bool
-   *   Defaults to FALSE.
-   */
-  public function usesMultiple();
 
 }

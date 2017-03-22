@@ -32,6 +32,7 @@ function escort_help($route_name, RouteMatchInterface $route_match) {
 function escort_theme() {
   $themes['escort_wrapper'] = [
     'variables' => ['children' => NULL, 'attributes' => NULL],
+    'file' => 'escort.theme',
   ];
   $themes['escort'] = [
     'render element' => 'element',
@@ -42,6 +43,10 @@ function escort_theme() {
     'file' => 'escort.theme',
   ];
   $themes['escort_section'] = [
+    'render element' => 'element',
+    'file' => 'escort.theme',
+  ];
+  $themes['escort_container'] = [
     'render element' => 'element',
     'file' => 'escort.theme',
   ];

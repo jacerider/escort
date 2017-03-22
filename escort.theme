@@ -66,6 +66,25 @@ function template_preprocess_escort_section(&$variables) {
 }
 
 /**
+ * Prepares variables for administration escort template.
+ *
+ * Default template: escort-section.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element.
+ */
+function template_preprocess_escort_container(&$variables) {
+  $element = $variables['element'];
+  $variables['content'] = $element['children'];
+  $variables['ops'] = !empty($element['ops']) ? $element['ops'] : '';
+  if ($element['#derivative_plugin_id']) {
+    $variables['attributes']['class'][] = Html::cleanCssIdentifier('escort-id-' . $element['#derivative_plugin_id']);
+  }
+  $variables['attributes']['class'][] = Html::cleanCssIdentifier('escort-type-' . $element['#base_plugin_id']);
+}
+
+/**
  * Prepares variables for escort templates.
  *
  * Default template: escort.html.twig.
@@ -76,21 +95,22 @@ function template_preprocess_escort_section(&$variables) {
  *     Properties used: #escort, #configuration, #children, #plugin_id.
  */
 function template_preprocess_escort_item(&$variables) {
-  $variables['configuration'] = $variables['element']['#configuration'];
-  $variables['plugin_id'] = $variables['element']['#plugin_id'];
-  $variables['base_plugin_id'] = $variables['element']['#base_plugin_id'];
-  $variables['derivative_plugin_id'] = $variables['element']['#derivative_plugin_id'];
+  $element = $variables['element'];
+  $variables['configuration'] = $element['#configuration'];
+  $variables['plugin_id'] = $element['#plugin_id'];
+  $variables['base_plugin_id'] = $element['#base_plugin_id'];
+  $variables['derivative_plugin_id'] = $element['#derivative_plugin_id'];
   $variables['label'] = !empty($variables['configuration']['label_display']) ? $variables['configuration']['label'] : '';
-  $variables['content'] = $variables['element']['content'];
-  $variables['tag'] = !empty($variables['element']['#tag']) ? $variables['element']['#tag'] : 'div';
-  $variables['ops'] = !empty($variables['element']['ops']) ? $variables['element']['ops'] : '';
-  $variables['is_escort_admin'] = $variables['element']['#is_escort_admin'];
+  $variables['content'] = $element['content'];
+  $variables['tag'] = !empty($element['#tag']) ? $element['#tag'] : 'div';
+  $variables['is_escort_admin'] = $element['#is_escort_admin'];
+  $variables['is_escort_temporary'] = $element['#is_escort_temporary'];
   $variables['prefix_attributes'] = [];
 
   $variables['image'] = '';
   // Image can be set within element content.
-  if (!empty($variables['element']['content']['#image'])) {
-    $variables['image'] = $variables['element']['content']['#image'];
+  if (!empty($element['content']['#image'])) {
+    $variables['image'] = $element['content']['#image'];
   }
   // If image not set within content, it may also be set within configuration.
   else if (!empty($variables['configuration']['image'])) {
@@ -122,8 +142,8 @@ function template_preprocess_escort_item(&$variables) {
 
   $variables['icon'] = '';
   // Icon can be set within element content.
-  if (!empty($variables['element']['content']['#icon'])) {
-    $variables['icon'] = $variables['element']['content']['#icon'];
+  if (!empty($element['content']['#icon'])) {
+    $variables['icon'] = $element['content']['#icon'];
   }
   // If icon not set within content, it may also be set within configuration.
   else if (!empty($variables['configuration']['icon'])) {
@@ -141,15 +161,13 @@ function template_preprocess_escort_item(&$variables) {
   }
 
   // Add base class
-  $variables['attributes']['class'][] = 'escort-item';
-  $variables['attributes']['class'][] = Html::cleanCssIdentifier('escort-type-' . $variables['plugin_id']);
   if ($variables['tag'] == 'a') {
     $variables['attributes']['class'][] = 'escort-link';
   }
 
   // Create a valid HTML ID and make sure it is unique.
-  if (!empty($variables['element']['#id']) && empty($variables['content']['#escort_group'])) {
-    $variables['attributes']['id'] = Html::getUniqueId('escort-item-' . $variables['element']['#id']);
+  if (!empty($element['#id']) && empty($variables['content']['#escort_group'])) {
+    $variables['attributes']['id'] = Html::getUniqueId('escort-item-' . $element['#id']);
     // $variables['attributes']['class'][] = $variables['attributes']['id'];
   }
 
@@ -160,7 +178,7 @@ function template_preprocess_escort_item(&$variables) {
   }
 
   // Changes are needed if we are in admin mode.
-  if ($variables['is_escort_admin']) {
+  if ($variables['is_escort_admin'] && !$variables['is_escort_temporary']) {
     // Because ops contain links, we need to force the element tag to be a
     // div as nested links are face breaking.
     if ($variables['tag'] == 'a') {
