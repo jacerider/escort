@@ -98,9 +98,17 @@ class Escort extends RenderElement {
           $element[$group_id][$section_id][$key] = $view_builder->view($escort);
           // Section cache add.
           $section_cacheable_metadata = $section_cacheable_metadata->merge(CacheableMetadata::createFromRenderArray($element[$group_id][$section_id][$key]));
-          // All placement of additional render arrays within the wrapper.
+          // Allow placement of additional render arrays within the region
+          // wrapper.
           if ($build_suffix = $plugin->buildRegionSuffix()) {
             $element[$group_id]['#after'][$key] = $build_suffix;
+            $section_cacheable_metadata = $section_cacheable_metadata->merge(CacheableMetadata::createFromRenderArray($build_suffix));
+          }
+          // Allow placement of additional render arrays within the element
+          // wrapper.
+          if ($build_suffix = $plugin->buildElementSuffix()) {
+            $element['#after'][$key] = $build_suffix;
+            $section_cacheable_metadata = $element_cachable_metadata->merge(CacheableMetadata::createFromRenderArray($build_suffix));
           }
         }
         // Section cache apply.

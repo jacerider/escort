@@ -62,6 +62,13 @@ class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface
   /**
    * {@inheritdoc}
    */
+  public function requireRegion() {
+    return $this->configuration['region'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function escortForm($form, FormStateInterface $form_state) {
     $region = $form_state->getTemporaryValue('entity')->getRegion();
     $region = $this->escortRegionManager->getGroupId($region);

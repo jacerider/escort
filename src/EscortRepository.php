@@ -119,19 +119,27 @@ class EscortRepository implements EscortRepositoryInterface {
       }
 
       // Sort sections.
-      foreach ($regions as $group_id => &$sections) {
-        foreach ($sections as $section_id => &$escorts) {
+      foreach ($regions as $group_id => &$groups) {
+        foreach ($groups as $section_id => &$sections) {
           // Allow escorts to remove themselves based on region requirements.
-          // foreach ($escorts as $escort_id => $escort) {
-          //   $plugin = $escort->getPlugin();
-          //   $require_region = $plugin->requireRegion();
-          //   if ($require_region && empty($regions[$require_region])) {
-          //     unset($escorts[$escort_id]);
-          //   }
-          // }
+          foreach ($sections as $escort_id => $escort) {
+            $plugin = $escort->getPlugin();
+            $require_region = $plugin->requireRegion();
+            if ($require_region && empty($regions[$require_region])) {
+              unset($sections[$escort_id]);
+            }
+          }
           // Suppress errors because PHPUnit will indirectly modify the
           // contents, triggering https://bugs.php.net/bug.php?id=50688.
-          @uasort($escorts, 'Drupal\escort\Entity\Escort::sort');
+          @uasort($sections, 'Drupal\escort\Entity\Escort::sort');
+          // Remove empty sections due to region requirements.
+          if (empty($sections)) {
+            unset($regions[$group_id][$section_id]);
+          }
+        }
+        // Remove empty groups due to region requirements.
+        if (empty($groups)) {
+          unset($regions[$group_id]);
         }
       }
       $this->escorts = $regions;
