@@ -134,8 +134,7 @@ trait EscortPluginLinkTrait {
    * @var mixed $uri
    *  A uri or Drupal\Core\Url.
    */
-  protected function getUriAsAttributes($uri) {
-    $attributes = [];
+  protected function getUriAsAttributes($uri, $attributes = []) {
     if ($url = $this->getUrl($uri)) {
       // External URLs can not have cacheable metadata.
       if ($url->isExternal()) {

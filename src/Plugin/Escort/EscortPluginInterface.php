@@ -191,6 +191,17 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
   public function isTemporary();
 
   /**
+   * Called when building the current escort repository list.
+   *
+   * If a escort should not be rendered because it has no data this method
+   * should return TRUE.
+   *
+   * @return bool
+   *   If TRUE this plugin will not be rendered.
+   */
+  public function isEmpty();
+
+  /**
    * Sets plugin as temporary.
    */
   public function enforceIsTemporary();

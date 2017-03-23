@@ -41,6 +41,8 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
    */
   protected $routeMatch;
 
+  protected static $links;
+
   /**
    * Creates a LocalTasksEscort instance.
    *
@@ -98,6 +100,13 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
   /**
    * {@inheritdoc}
    */
+  public function isEmpty() {
+    return empty($this->getLinks());
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function escortBuildMultiple() {
     $build = [];
     $cacheability = new CacheableMetadata();
@@ -112,27 +121,34 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
     return $build;
   }
 
+  protected function getLinks() {
+    if (!isset(static::$links)) {
+      static::$links = [];
+      // Add only selected levels for the printed output.
+      if ($this->configuration['primary']) {
+        $links = $this->localTaskManager->getLocalTasks($this->routeMatch->getRouteName(), 0);
+        if (count(Element::getVisibleChildren($links['tabs'])) > 1) {
+          static::$links['primary'] = $links['tabs'];
+        }
+      }
+      if ($this->configuration['secondary']) {
+        $links = $this->localTaskManager->getLocalTasks($this->routeMatch->getRouteName(), 1);
+        if (count(Element::getVisibleChildren($links['tabs'])) > 1) {
+          static::$links['primary'] = $links['tabs'];
+        }
+      }
+    }
+    return static::$links;
+  }
+
   /**
    * Build list of tasks.
    */
   protected function buildTasks(&$cacheability) {
     $config = $this->configuration;
-    $primary = [];
-    $secondary = [];
-
-    // Add only selected levels for the printed output.
-    if ($config['primary']) {
-      $links = $this->localTaskManager->getLocalTasks($this->routeMatch->getRouteName(), 0);
-      $cacheability = $cacheability->merge($links['cacheability']);
-      // Do not display single tabs.
-      $primary = count(Element::getVisibleChildren($links['tabs'])) > 1 ? $links['tabs'] : [];
-    }
-    if ($config['secondary']) {
-      $links = $this->localTaskManager->getLocalTasks($this->routeMatch->getRouteName(), 1);
-      $cacheability = $cacheability->merge($links['cacheability']);
-      // Do not display single tabs.
-      $secondary = count(Element::getVisibleChildren($links['tabs'])) > 1 ? $links['tabs'] : [];
-    }
+    $links = $this->getLinks();
+    $primary = !empty($links['primary']) ? $links['primary'] : [];
+    $secondary = !empty($links['secondary']) ? $links['secondary'] : [];
 
     $tabs = [];
     foreach ($primary as $key => $tab) {

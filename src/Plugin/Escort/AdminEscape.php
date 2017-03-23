@@ -26,24 +26,17 @@ class AdminEscape extends EscortPluginBase {
    * {@inheritdoc}
    */
   public function escortBuild() {
-    $build = [
-      '#attributes' => $this->getUriAsAttributes('internal:/'),
-      // '#attached' => ['library' => ['escort/escort.escape']],
-    ];
-
-    $build['#attributes']['title'] = t('Return to site content');
+    $build = [];
 
     $route = \Drupal::routeMatch()->getRouteObject();
     if (\Drupal::service('router.admin_context')->isAdminRoute($route) === TRUE) {
       $build['#tag'] = 'a';
       $build['#icon'] = 'fa-arrow-circle-o-left';
       $build['#markup'] = $this->t('Back to site');
+      $build['#attributes'] = $this->getUriAsAttributes('internal:/');
       $build['#attributes']['class'][] = 'escort-hidden';
+      $build['#attributes']['title'] = t('Return to site content');
     }
-    else {
-      $build['#empty'] = TRUE;
-    }
-    // ksm($build);
 
     return $build;
   }

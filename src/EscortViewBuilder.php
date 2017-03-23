@@ -251,7 +251,6 @@ class EscortViewBuilder extends EntityViewBuilder {
       // determine whether the block is empty. For instance, modifying or adding
       // entities could cause the block to no longer be empty.
       $build = array(
-        '#markup' => '',
         '#cache' => $build['#cache'],
       );
       // If $content is not empty, then it contains cacheability metadata, and
@@ -260,7 +259,7 @@ class EscortViewBuilder extends EntityViewBuilder {
       // why they are empty.
       if (!empty($content)) {
         CacheableMetadata::createFromRenderArray($build)
-          ->merge(CacheableMetadata::createFromRenderArray($build['children']))
+          ->merge(CacheableMetadata::createFromRenderArray($content))
           ->applyTo($build);
       }
     }
