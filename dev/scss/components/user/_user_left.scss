@@ -13,7 +13,8 @@
 
   .escort-type-user {
 
-    &:hover {
+    &:hover,
+    &:focus {
 
       .escort-image {
         box-shadow: 0 3px 15px adjust-color($bg-color-left, $saturation: 0%, $lightness: -12%);

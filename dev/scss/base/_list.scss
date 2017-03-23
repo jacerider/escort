@@ -42,7 +42,8 @@
       text-align: left;
       padding: $padding;
 
-      &:hover {
+      &:hover,
+      &:focus {
 
         i {
           margin-right: $padding / 3;

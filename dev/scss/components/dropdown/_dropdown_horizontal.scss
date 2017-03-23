@@ -22,7 +22,8 @@
           bottom: auto;
           box-shadow: none;
 
-          &:hover {
+          &:hover,
+          &:focus {
             top: auto;
             bottom: auto;
           }

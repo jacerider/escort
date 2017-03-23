@@ -5,7 +5,8 @@
 
 .escort-type-branding {
 
-  &:hover {
+  &:hover,
+  &:focus {
     
     .escort-site-slogan {
       opacity: 1;

@@ -87,7 +87,8 @@
 
   .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
-    &:hover {
+    &:hover,
+    &:focus {
 
       .escort-content {
         color: smart-scale($bg-color-right, $scale: 80%);
