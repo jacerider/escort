@@ -187,6 +187,7 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
         '#type' => 'micon',
         '#title' => $this->t('Icon'),
         '#default_value' => $this->configuration['icon'],
+        '#required' => TRUE,
       ];
     }
 
@@ -336,9 +337,27 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    * A renderable array placed at the end of the escort region wrapper.
    *
    * @return array
-   *   The renderable array representing a single escort item.
+   *   The renderable array.
    */
   protected function escortBuildRegionSuffix() {
+    return NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildElementSuffix() {
+    $build = $this->escortBuildElementSuffix();
+    return !empty($build) ? $build : NULL;
+  }
+
+  /**
+   * A renderable array placed at the end of the escort element wrapper.
+   *
+   * @return array
+   *   The renderable array.
+   */
+  protected function escortBuildElementSuffix() {
     return NULL;
   }
 
@@ -481,6 +500,13 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    */
   public function setTransliteration(TransliterationInterface $transliteration) {
     $this->transliteration = $transliteration;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function requireRegion() {
+    return NULL;
   }
 
   /**

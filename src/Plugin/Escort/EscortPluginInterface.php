@@ -77,9 +77,19 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
    * Will be added within the region wrapper the current plugin is assigned to.
    *
    * @return array
-   *   A renderable array representing the content of the escort.
+   *   A renderable array.
    */
   public function buildRegionSuffix();
+
+  /**
+   * Builds and returns a renderable array that is added to the element.
+   *
+   * Will be added within the global element wrapper.
+   *
+   * @return array
+   *   A renderable array.
+   */
+  public function buildElementSuffix();
 
   /**
    * Sets a particular value in the escort settings.
@@ -184,6 +194,14 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
    * Sets plugin as temporary.
    */
   public function enforceIsTemporary();
+
+  /**
+   * Allow a plugin to require that another region has escorts.
+   *
+   * @return null|region_id
+   *   Return region id if plugin requires that another region has escorts.
+   */
+  public function requireRegion();
 
   /**
    * Suggests a machine name to identify an instance of this escort.

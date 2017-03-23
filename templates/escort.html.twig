@@ -12,7 +12,17 @@
  */
 #}
 {% if content %}
+  {% if before %}
+    <div class="escort-before">
+      {{ before }}
+    </div>
+  {% endif %}
   <div{{ attributes.addClass('escort') }}>
     {{ content }}
   </div>
+  {% if after %}
+    <div class="escort-after">
+      {{ after }}
+    </div>
+  {% endif %}
 {% endif %}
