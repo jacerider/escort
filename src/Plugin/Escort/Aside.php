@@ -42,7 +42,7 @@ class Aside extends Text {
       '#options' => [
         'dropdown' => $this->t('Dropdown'),
         'shelf' => $this->t('Shelf'),
-        'dialog' => $this->t('Dialog'),
+        // 'dialog' => $this->t('Dialog'),
       ],
       '#default_value' => $this->configuration['display'],
     ];
@@ -80,6 +80,16 @@ class Aside extends Text {
       '#attributes' => ['class' => ['escort-aside-trigger']],
     ];
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function escortBuildRegionSuffix() {
+    if ($this->configuration['display'] == 'shelf') {
+      return $this->escortBuildAside();;
+    }
+    return NULL;
   }
 
   /**

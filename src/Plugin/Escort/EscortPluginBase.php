@@ -307,6 +307,24 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function buildRegionSuffix() {
+    $build = $this->escortBuildRegionSuffix();
+    return !empty($build) ? $build: NULL;
+  }
+
+  /**
+   * A renderable array placed at the end of the escort region wrapper.
+   *
+   * @return array
+   *   The renderable array representing a single escort item.
+   */
+  protected function escortBuildRegionSuffix() {
+    return NULL;
+  }
+
+  /**
    * The render array to use for escort items when within escort admin pages.
    *
    * @return array

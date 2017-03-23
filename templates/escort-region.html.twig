@@ -1,5 +1,15 @@
 <div{{ attributes.addClass('escort-region') }}>
+  {% if before %}
+    <div class="escort-before">
+      {{ before }}
+    </div>
+  {% endif %}
   <div class="escort-scroll">
   	{{ content }}
   </div>
+  {% if after %}
+    <div class="escort-after">
+      {{ after }}
+    </div>
+  {% endif %}
 </div>

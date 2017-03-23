@@ -64,6 +64,16 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
   public function build();
 
   /**
+   * Builds and returns a renderable array that is added to the region.
+   *
+   * Will be added within the region wrapper the current plugin is assigned to.
+   *
+   * @return array
+   *   A renderable array representing the content of the escort.
+   */
+  public function buildRegionSuffix();
+
+  /**
    * Sets a particular value in the escort settings.
    *
    * @param string $key
