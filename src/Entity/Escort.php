@@ -134,7 +134,7 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
    *
    * @var bool
    */
-  protected $enforceIsTemporary = FALSE;
+  protected $isTemporary = FALSE;
 
   /**
    * {@inheritdoc}
@@ -277,14 +277,16 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
    * {@inheritdoc}
    */
   public function isTemporary() {
-    return !empty($this->enforceIsTemporary);
+    return !empty($this->isTemporary);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function enforceIsTemporary($value = TRUE) {
-    $this->enforceIsTemporary = TRUE;
+  public function enforceIsTemporary() {
+    $this->isTemporary = TRUE;
+    // Set plugin as temporary as well.
+    $this->getPlugin()->enforceIsTemporary();
     return $this;
   }
 

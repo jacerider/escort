@@ -109,7 +109,7 @@ class Menu extends EscortPluginBase implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  public function escortBuild() {
+  protected function escortBuild() {
     $menu_name = $this->configuration['menu'];
     $parameters = $this->menuTree->getCurrentRouteMenuTreeParameters($menu_name);
 

@@ -14,6 +14,7 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Render\Element;
 
 /**
  * Defines a base escort implementation that most escorts plugins will extend.
@@ -244,7 +245,41 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    * {@inheritdoc}
    */
   public function build() {
-    return $this->escortBuildMultiple();
+    $plugin_id = $this->getPluginId();
+    $base_id = $this->getBaseId();
+    $derivative_id = $this->getDerivativeId();
+    $configuration = $this->getConfiguration();
+    $is_admin = $this->isAdmin();
+    $is_temporary = $this->isTemporary();
+
+    if ($is_admin && $content = $this->escortPreview()) {
+      $build = [$content];
+      $build['#attributes']['class'][] = 'escort-preview';
+    }
+    else {
+      $build = $this->escortBuildMultiple();
+    }
+
+    // Prepare built content for rendering as an escort item. At this stage, the
+    // build is an array of render arrays. We take those arrays and wrap them up
+    // as an escort_item. We preserve properties as EscortViewBuilder can
+    // merge them into the parent escort_container.
+    foreach (Element::children($build) as $key) {
+      $content = $build[$key];
+      $build[$key] = [
+        '#theme' => 'escort_item',
+        '#tag' => 'div',
+        '#attributes' => [],
+        '#configuration' => $configuration,
+        '#plugin_id' => $plugin_id,
+        '#base_plugin_id' => $base_id,
+        '#derivative_plugin_id' => $derivative_id,
+        '#is_escort_admin' => $is_admin,
+        '#is_escort_temporary' => $is_temporary,
+      ];
+      $build[$key]['content'] = $this->mergeProperties($build[$key], $content);
+    }
+    return $build;
   }
 
   /**
@@ -272,6 +307,59 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
   }
 
   /**
+   * The render array to use for escort items when within escort admin pages.
+   *
+   * @return array
+   *   The renderable array representing a single escort item.
+   */
+  protected function escortPreview() {
+    return NULL;
+  }
+
+  /**
+   * Merge properties of two render arrays.
+   *
+   * @param array $build
+   *   A render array.
+   * @param array $content
+   *   A render array.
+   *
+   * @return array
+   *   A render array.
+   */
+  protected function mergeProperties(&$build, $content) {
+    // Place the $content returned by the escort plugin into a 'content' child
+    // element, as a way to allow the plugin to have complete control of its
+    // properties and rendering (for instance, its own #theme) without
+    // conflicting with the properties used above, or alternate ones used by
+    // alternate escort rendering approaches in contrib.
+    foreach (array(
+      '#tag',
+      '#icon',
+      '#image',
+      '#attributes',
+      '#attached',
+      '#contextual_links',
+      '#weight',
+      '#access',
+    ) as $property) {
+      if (isset($content[$property])) {
+        if (!isset($build[$property])) {
+          $build[$property] = $content[$property];
+        }
+        elseif (is_array($content[$property])) {
+          $build[$property] = NestedArray::mergeDeep($build[$property], $content[$property]);
+        }
+        else {
+          $build[$property] = $content[$property];
+        }
+        unset($content[$property]);
+      }
+    }
+    return $content;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function setEscort(EscortInterface $escort) {
@@ -294,6 +382,28 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    */
   protected function usesIcon() {
     return $this->usesIcon;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isAdmin() {
+    return \Drupal::service('escort.path.matcher')->isAdmin();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isTemporary() {
+    return !empty($this->enforceIsTemporary);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function enforceIsTemporary() {
+    $this->enforceIsTemporary = TRUE;
+    return $this;
   }
 
   /**

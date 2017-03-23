@@ -88,7 +88,7 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
   /**
    * {@inheritdoc}
    */
-  public function preview() {
+  public function escortPreview() {
     return [
       '#icon' => 'fa-th-list',
       '#markup' => $this->label(TRUE),
@@ -98,7 +98,7 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
   /**
    * {@inheritdoc}
    */
-  public function escortBuildMultiple() {
+  protected function escortBuildMultiple() {
     $build = [];
     $cacheability = new CacheableMetadata();
     $tabs = $this->buildTasks($cacheability);
@@ -115,7 +115,7 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
   /**
    * Build list of tasks.
    */
-  protected function buildTasks($cacheability) {
+  protected function buildTasks(&$cacheability) {
     $config = $this->configuration;
     $primary = [];
     $secondary = [];

@@ -32,6 +32,7 @@ class Text extends EscortPluginBase {
       '#type' => 'textfield',
       '#title' => $this->t('Text'),
       '#default_value' => $this->configuration['text'],
+      '#required' => TRUE,
     ];
     return $form;
   }
@@ -46,7 +47,7 @@ class Text extends EscortPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function escortBuild() {
+  protected function escortBuild() {
     return ['#markup' => $this->configuration['text']];
   }
 

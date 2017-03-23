@@ -147,6 +147,27 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
   public function getEscort();
 
   /**
+   * Checks if we are in admin mode.
+   *
+   * @return bool
+   *   True if in admin mode.
+   */
+  public function isAdmin();
+
+  /**
+   * Checks if this is a temporary plugin.
+   *
+   * @return bool
+   *   True if temporary.
+   */
+  public function isTemporary();
+
+  /**
+   * Sets plugin as temporary.
+   */
+  public function enforceIsTemporary();
+
+  /**
    * Suggests a machine name to identify an instance of this escort.
    *
    * The escort plugin need not verify that the machine name is at all unique.

@@ -156,7 +156,7 @@ class Branding extends EscortPluginBase implements ContainerFactoryPluginInterfa
   /**
    * {@inheritdoc}
    */
-  public function escortBuild() {
+  protected function escortBuild() {
     $build = array();
     $site_config = $this->configFactory->get('system.site');
     $theme_config = $this->configFactory->get('system.theme');

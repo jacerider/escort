@@ -6,7 +6,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\escort\EscortAjaxTrait;
 use Drupal\Core\Entity\Element\EntityAutocomplete;
-use Drupal\Core\Url;
 
 /**
  * Defines a link plugin.
@@ -30,11 +29,10 @@ class Link extends Text {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    // By default, the block will contain 10 feed items.
-    return array(
+    return [
       'url' => '',
       'target' => '',
-    ) + parent::defaultConfiguration();
+    ] + parent::defaultConfiguration();
   }
 
   /**
@@ -81,7 +79,7 @@ class Link extends Text {
   /**
    * {@inheritdoc}
    */
-  public function escortBuild() {
+  protected function escortBuild() {
     $attributes = $this->getUriAsAttributes($this->configuration['url']);
     $attributes['title'] = $this->configuration['text'];
     $build = [

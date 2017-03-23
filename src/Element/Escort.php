@@ -97,6 +97,7 @@ class Escort extends RenderElement {
           $element[$group_id][$section_id][$key] = $view_builder->view($escort);
           // Section cache add.
           $section_cacheable_metadata = $section_cacheable_metadata->merge(CacheableMetadata::createFromRenderArray($element[$group_id][$section_id][$key]));
+          // ksm($escort);
         }
         // Section cache apply.
         $section_cacheable_metadata->applyTo($element[$group_id][$section_id]);

@@ -96,11 +96,12 @@ function template_preprocess_escort_container(&$variables) {
  */
 function template_preprocess_escort_item(&$variables) {
   $element = $variables['element'];
-  $variables['configuration'] = $element['#configuration'];
+  $config = $element['#configuration'];
+  $variables['configuration'] = $config;
   $variables['plugin_id'] = $element['#plugin_id'];
   $variables['base_plugin_id'] = $element['#base_plugin_id'];
   $variables['derivative_plugin_id'] = $element['#derivative_plugin_id'];
-  $variables['label'] = !empty($variables['configuration']['label_display']) ? $variables['configuration']['label'] : '';
+  $variables['label'] = !empty($config['label_display']) ? $config['label'] : '';
   $variables['content'] = $element['content'];
   $variables['tag'] = !empty($element['#tag']) ? $element['#tag'] : 'div';
   $variables['is_escort_admin'] = $element['#is_escort_admin'];
@@ -109,12 +110,12 @@ function template_preprocess_escort_item(&$variables) {
 
   $variables['image'] = '';
   // Image can be set within element content.
-  if (!empty($element['content']['#image'])) {
-    $variables['image'] = $element['content']['#image'];
+  if (!empty($element['#image'])) {
+    $variables['image'] = $element['#image'];
   }
   // If image not set within content, it may also be set within configuration.
-  else if (!empty($variables['configuration']['image'])) {
-    $variables['image'] = $variables['configuration']['image'];
+  else if (!empty($config['image'])) {
+    $variables['image'] = $config['image'];
   }
 
   // Theme our image if it is a URL.
@@ -142,12 +143,12 @@ function template_preprocess_escort_item(&$variables) {
 
   $variables['icon'] = '';
   // Icon can be set within element content.
-  if (!empty($element['content']['#icon'])) {
-    $variables['icon'] = $element['content']['#icon'];
+  if (!empty($element['#icon'])) {
+    $variables['icon'] = $element['#icon'];
   }
   // If icon not set within content, it may also be set within configuration.
-  else if (!empty($variables['configuration']['icon'])) {
-    $variables['icon'] = $variables['configuration']['icon'];
+  else if (!empty($config['icon'])) {
+    $variables['icon'] = $config['icon'];
   }
 
   // Let micon theme our icon.
@@ -168,7 +169,6 @@ function template_preprocess_escort_item(&$variables) {
   // Create a valid HTML ID and make sure it is unique.
   if (!empty($element['#id']) && empty($variables['content']['#escort_group'])) {
     $variables['attributes']['id'] = Html::getUniqueId('escort-item-' . $element['#id']);
-    // $variables['attributes']['class'][] = $variables['attributes']['id'];
   }
 
   // Proactively add aria-describedby if possible to improve accessibility.
