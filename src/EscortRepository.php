@@ -124,6 +124,9 @@ class EscortRepository implements EscortRepositoryInterface {
           // Allow escorts to remove themselves based on region requirements.
           foreach ($sections as $escort_id => $escort) {
             $plugin = $escort->getPlugin();
+            if ($plugin->isEmpty()) {
+              unset($sections[$escort_id]);
+            }
             $require_region = $plugin->requireRegion();
             if ($require_region && empty($regions[$require_region])) {
               unset($sections[$escort_id]);

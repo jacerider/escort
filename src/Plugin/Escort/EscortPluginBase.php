@@ -267,18 +267,20 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
     // merge them into the parent escort_container.
     foreach (Element::children($build) as $key) {
       $content = $build[$key];
-      $build[$key] = [
-        '#theme' => 'escort_item',
-        '#tag' => 'div',
-        '#attributes' => [],
-        '#configuration' => $configuration,
-        '#plugin_id' => $plugin_id,
-        '#base_plugin_id' => $base_id,
-        '#derivative_plugin_id' => $derivative_id,
-        '#is_escort_admin' => $is_admin,
-        '#is_escort_temporary' => $is_temporary,
-      ];
-      $build[$key]['content'] = $this->mergeProperties($build[$key], $content);
+      if (!Element::isEmpty($content)) {
+        $build[$key] = [
+          '#theme' => 'escort_item',
+          '#tag' => 'div',
+          '#attributes' => [],
+          '#configuration' => $configuration,
+          '#plugin_id' => $plugin_id,
+          '#base_plugin_id' => $base_id,
+          '#derivative_plugin_id' => $derivative_id,
+          '#is_escort_admin' => $is_admin,
+          '#is_escort_temporary' => $is_temporary,
+        ];
+        $build[$key]['content'] = $this->mergeProperties($build[$key], $content);
+      }
     }
     return $build;
   }
@@ -437,6 +439,13 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    */
   protected function usesIcon() {
     return $this->usesIcon;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isEmpty() {
+    return FALSE;
   }
 
   /**
