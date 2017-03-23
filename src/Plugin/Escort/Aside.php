@@ -3,6 +3,7 @@
 namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 
 /**
  * Defines a text plugin.
@@ -22,6 +23,7 @@ class Aside extends Text {
     return [
       'content' => '',
       'display' => 'dropdown',
+      'ajax' => FALSE,
     ] + parent::defaultConfiguration();
   }
 
@@ -46,6 +48,11 @@ class Aside extends Text {
       ],
       '#default_value' => $this->configuration['display'],
     ];
+    $form['ajax'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Use AJAX to display aside content'),
+      '#default_value' => $this->configuration['ajax'],
+    );
     return $form;
   }
 
@@ -56,6 +63,7 @@ class Aside extends Text {
     parent::escortSubmit($form, $form_state);
     $this->configuration['content'] = $form_state->getValue('content');
     $this->configuration['display'] = $form_state->getValue('display');
+    $this->configuration['ajax'] = $form_state->getValue('ajax');
   }
 
   /**
@@ -64,7 +72,7 @@ class Aside extends Text {
   public function build() {
     $build = parent::build();
     if ($this->configuration['display'] == 'dropdown') {
-      $build['aside'] = $this->escortBuildAside();;
+      $build['aside'] = $this->escortBuildAside();
     }
     return $build;
   }
@@ -77,8 +85,18 @@ class Aside extends Text {
       '#tag' => 'a',
       '#icon' => $this->configuration['icon'],
       '#markup' => $this->configuration['text'],
-      '#attributes' => ['class' => ['escort-aside-trigger']],
+      '#attributes' => [
+        'class' => ['escort-aside-trigger'],
+        'data-escort-aside' => $this->getEscort()->uuid(),
+        'data-escort-aside-display' => $this->configuration['display'],
+      ],
+      '#attached' => ['library' => ['escort/escort.aside']],
     ];
+    if ($this->configuration['ajax']) {
+      $build['#attributes']['data-escort-ajax'] = '';
+      $build['#attributes']['href'] = Url::fromRoute('escort.escort_ajax', ['escort' => $this->getEscort()->id()])->toString();
+      $build['#attached']['library'][] = 'core/drupal.ajax';
+    }
     return $build;
   }
 
@@ -106,8 +124,26 @@ class Aside extends Text {
         ],
       ],
     ];
-    $build['content']['#markup'] = $this->configuration['content'];
+    if (!$this->configuration['ajax']) {
+      $build['content'] = $this->escortBuildAsideContent();
+    }
     return $build;
+  }
+
+  /**
+   * Return aside content render array.
+   */
+  protected function escortBuildAsideContent() {
+    return [
+      '#markup' => $this->configuration['content'],
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function escortBuildAjax() {
+    return $this->escortBuildAsideContent();
   }
 
 }

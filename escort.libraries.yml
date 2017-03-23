@@ -76,10 +76,17 @@ escort.toggle:
   dependencies:
     - escort/escort
 
-escort.dropdown:
+# escort.dropdown:
+#   version: VERSION
+#   js:
+#     js/escort.dropdown.js: { minified: true }
+#   dependencies:
+#     - escort/escort
+
+escort.aside:
   version: VERSION
   js:
-    js/escort.dropdown.js: { minified: true }
+    js/escort.aside.js: { minified: true }
   dependencies:
     - escort/escort
 

@@ -64,6 +64,14 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
   public function build();
 
   /**
+   * Builds and returns a renderable array that is returned via AJAX request.
+   *
+   * @return array
+   *   A renderable array
+   */
+  public function buildAjax();
+
+  /**
    * Builds and returns a renderable array that is added to the region.
    *
    * Will be added within the region wrapper the current plugin is assigned to.

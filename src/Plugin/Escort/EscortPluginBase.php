@@ -309,9 +309,27 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
   /**
    * {@inheritdoc}
    */
+  public function buildAjax() {
+    $build = $this->escortBuildAjax();
+    return !empty($build) ? $build : [];
+  }
+
+  /**
+   * A renderable array returned on ajax request..
+   *
+   * @return array
+   *   The renderable array.
+   */
+  protected function escortBuildAjax() {
+    return NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function buildRegionSuffix() {
     $build = $this->escortBuildRegionSuffix();
-    return !empty($build) ? $build: NULL;
+    return !empty($build) ? $build : NULL;
   }
 
   /**
