@@ -9,7 +9,7 @@
     min-width: $base-size * 0.75;
   }
 
-  .escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add):not(.is-active) {
+  .escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-add):not(.is-active) {
     padding: 0 0 0 ($padding / 2);
 
     &:last-child {
