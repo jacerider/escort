@@ -38,6 +38,20 @@
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
+          padding-left: map-get($settings, size)* 2.025;
+        }
+
+        @if map-get($settings, position) == 'right' {
+          padding-right: map-get($settings, size)* 2.025;
+        }
+      }
+    }
+
+    .has-escort-#{$region}-icon-only & {
+
+      @if map-get($settings, type) == 'vertical' {
+
+        @if map-get($settings, position) == 'left' {
           padding-left: map-get($settings, size);
         }
 

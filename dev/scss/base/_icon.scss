@@ -8,11 +8,14 @@
  */
 .escort-icon {
   text-align: center;
+  line-height: 1;
   transition: margin 300ms, width 300ms;
 
   i {
     vertical-align: middle;
     text-shadow: none;
+    line-height: 1;
+    transition: margin 300ms, width 300ms;
   }
 }
 
