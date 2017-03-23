@@ -12,7 +12,7 @@
     line-height: $base-size * 0.97;
   }
 
-  .escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-type-add):not(.is-active) {
+  .escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-add):not(.is-active) {
 
     .escort-inner {
       @include button-style($region: top, $transparent: true);
