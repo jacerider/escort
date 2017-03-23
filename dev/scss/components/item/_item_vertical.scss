@@ -24,6 +24,7 @@
 
       .escort-content {
         line-height: $base-size * 0.66;
+        margin-top: 0;
       }
     }
 
@@ -89,6 +90,7 @@
       line-height: $base-size * 0.4;
       text-align: center;
       white-space: normal;
+      margin-top: $margin / 4;
     }
   }
 }
