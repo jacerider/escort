@@ -19,11 +19,19 @@ class Aside extends Text {
   /**
    * {@inheritdoc}
    */
+  protected function baseConfigurationDefaults() {
+    return [
+      'display' => 'dropdown',
+      'ajax' => FALSE,
+    ] + parent::baseConfigurationDefaults();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function defaultConfiguration() {
     return [
       'content' => '',
-      'display' => 'dropdown',
-      'ajax' => FALSE,
     ] + parent::defaultConfiguration();
   }
 
@@ -81,23 +89,49 @@ class Aside extends Text {
    * {@inheritdoc}
    */
   protected function escortBuild() {
-    $build = [
-      '#tag' => 'a',
-      '#icon' => $this->configuration['icon'],
-      '#markup' => $this->configuration['text'],
-      '#attributes' => [
-        'class' => ['escort-aside-trigger'],
-        'data-escort-aside' => $this->getEscort()->uuid(),
-        'data-escort-aside-display' => $this->configuration['display'],
-      ],
-      '#attached' => ['library' => ['escort/escort.aside']],
-    ];
+    // $build = [
+    //   '#tag' => 'a',
+    //   '#icon' => $this->configuration['icon'],
+    //   '#markup' => $this->configuration['text'],
+    //   '#attributes' => [
+    //     'class' => ['escort-aside-trigger'],
+    //     'data-escort-aside' => $this->getEscort()->uuid(),
+    //     'data-escort-aside-display' => $this->configuration['display'],
+    //   ],
+    //   '#attached' => ['library' => ['escort/escort.aside']],
+    // ];
+    $build = $this->escortBuildAsideTrigger();
+    $build['#attributes']['class'][] = 'escort-aside-trigger';
+    $build['#attributes']['data-escort-aside'] = $this->getEscort()->uuid();
+    $build['#attributes']['data-escort-aside-display'] = $this->configuration['display'];
+    $build['#attached']['library'][] = 'escort/escort.aside';
+
     if ($this->configuration['ajax']) {
       $build['#attributes']['data-escort-ajax'] = '';
       $build['#attributes']['href'] = Url::fromRoute('escort.escort_ajax', ['escort' => $this->getEscort()->id()])->toString();
       $build['#attached']['library'][] = 'core/drupal.ajax';
     }
     return $build;
+  }
+
+  /**
+   * Return aside trigger render array.
+   */
+  protected function escortBuildAsideTrigger() {
+    return [
+      '#tag' => 'a',
+      '#icon' => $this->configuration['icon'],
+      '#markup' => $this->configuration['text'],
+    ];
+  }
+
+  /**
+   * Return aside content render array.
+   */
+  protected function escortBuildAsideContent() {
+    return [
+      '#markup' => $this->configuration['content'],
+    ];
   }
 
   /**
@@ -128,15 +162,6 @@ class Aside extends Text {
       $build['content'] = $this->escortBuildAsideContent();
     }
     return $build;
-  }
-
-  /**
-   * Return aside content render array.
-   */
-  protected function escortBuildAsideContent() {
-    return [
-      '#markup' => $this->configuration['content'],
-    ];
   }
 
   /**
