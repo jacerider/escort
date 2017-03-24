@@ -5,6 +5,7 @@ namespace Drupal\escort\Plugin\Escort;
 use Drupal\Core\Url;
 use Drupal\Core\Access\AccessResult;
 use Drupal\micon\MiconIconize;
+use Drupal\Core\Template\Attribute;
 
 /**
  * A trait that provides link utilities.
@@ -241,11 +242,13 @@ trait EscortPluginLinkTrait {
    */
   protected function buildMenuTreeItems($items) {
     foreach ($items as $id => &$item) {
-      $item['title'] = $this->titleToIcon($item['title']);
+      $icon = $this->titleToIcon($item['title']);
+      $item['icon'] = $icon->setIconOnly();
+      $item['title'] = $icon->getTitle();
       $url = $item['url'];
-      $options = $url->getOptions();
-      $options['attributes']['class'][] = 'escort-item';
-      $url->setOptions($options);
+      // $bla = $this->getUriAsAttributes($url);
+      $attributes['class'][] = 'escort-item';
+      $item['link_attributes'] = new Attribute($this->getUriAsAttributes($url, $attributes));
       if ($item['below']) {
         $item['below'] = $this->buildMenuTreeItems($item['below']);
       }

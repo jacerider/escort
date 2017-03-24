@@ -38,7 +38,14 @@
     {% endif %}
     {% for item in items %}
       <li{{ item.attributes }}>
-        {{ link(item.title, item.url) }}
+        <a{{ item.link_attributes }}>
+          <span class="escort-icon escort-prefix">
+            {{ item.icon }}
+          </span>
+          <span class="escort-content">
+            {{ item.title }}
+          </span>
+        </a>
         {% if item.below %}
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
         {% endif %}
