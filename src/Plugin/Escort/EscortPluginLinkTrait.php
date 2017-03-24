@@ -76,11 +76,11 @@ trait EscortPluginLinkTrait {
   protected function titleToIcon($title, $prefix = 'escort') {
     if (!$title instanceof MiconIconize) {
       $title = MiconIconize::iconize($title);
-      if (!$title->getIcon()) {
-        $title->setIcon($this->getDefaultLinkIcon());
-      }
     }
     $title->addMatchPrefix($prefix);
+    if (!$title->getIcon()) {
+      $title->setIcon($this->getDefaultLinkIcon());
+    }
     return $title;
   }
 
@@ -189,6 +189,68 @@ trait EscortPluginLinkTrait {
       return $url->access() ? AccessResult::allowed() : AccessResult::forbidden();
     }
     return AccessResult::forbidden();
+  }
+
+  /**
+   * Render a menu for display within escort.
+   *
+   * @param string $menu_name
+   *   The menu name to render.
+   * @param string $level
+   *   The menu level to start rendering from.
+   * @param string $depth
+   *   The menu deptch to render.
+   */
+  protected function buildMenuTree($menu_name, $level = 1, $depth = 1) {
+    $parameters = $this->menuTree->getCurrentRouteMenuTreeParameters($menu_name);
+
+    // Adjust the menu tree parameters based on the block's configuration.
+    $level = $level;
+    $depth = $depth;
+    $parameters->setMinDepth($level);
+    // When the depth is configured to zero, there is no depth limit. When depth
+    // is non-zero, it indicates the number of levels that must be displayed.
+    // Hence this is a relative depth that we must convert to an actual
+    // (absolute) depth, that may never exceed the maximum depth.
+    if ($depth > 0) {
+      $parameters->setMaxDepth(min($level + $depth - 1, $this->menuTree->maxDepth()));
+    }
+
+    $tree = $this->menuTree->load($menu_name, $parameters);
+    $manipulators = array(
+      array('callable' => 'menu.default_tree_manipulators:checkAccess'),
+      array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
+    );
+    $tree = $this->menuTree->transform($tree, $manipulators);
+    $build = $this->menuTree->build($tree);
+    if ($build['#items']) {
+      $build['#items'] = $this->buildMenuTreeItems($build['#items']);
+    }
+    $build['#theme'] = 'escort_menu__' . $menu_name;
+    return $build;
+  }
+
+  /**
+   * Prepare tab for rendering.
+   *
+   * @param array $items
+   *   The renderable menu items.
+   *
+   * @return array
+   *   An array of altered menu items.
+   */
+  protected function buildMenuTreeItems($items) {
+    foreach ($items as $id => &$item) {
+      $item['title'] = $this->titleToIcon($item['title']);
+      $url = $item['url'];
+      $options = $url->getOptions();
+      $options['attributes']['class'][] = 'escort-item';
+      $url->setOptions($options);
+      if ($item['below']) {
+        $item['below'] = $this->buildMenuTreeItems($item['below']);
+      }
+    }
+    return $items;
   }
 
 }
