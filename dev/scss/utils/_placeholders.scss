@@ -24,12 +24,12 @@
   transition: background-color 300ms, color 300ms, box-shadow 300ms;
 
   &:visited,
-  &:active,
-  &:focus {
+  &:active {
     color: smart-scale($primary-color, $scale: 80%);
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: smart-scale($primary-color, $scale: 100%);
     cursor: pointer;
     text-decoration: none;

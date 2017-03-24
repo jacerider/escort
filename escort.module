@@ -32,6 +32,7 @@ function escort_help($route_name, RouteMatchInterface $route_match) {
 function escort_theme() {
   $themes['escort_wrapper'] = [
     'variables' => ['children' => NULL, 'attributes' => NULL],
+    'file' => 'escort.theme',
   ];
   $themes['escort'] = [
     'render element' => 'element',
@@ -45,9 +46,16 @@ function escort_theme() {
     'render element' => 'element',
     'file' => 'escort.theme',
   ];
+  $themes['escort_container'] = [
+    'render element' => 'element',
+    'file' => 'escort.theme',
+  ];
   $themes['escort_item'] = [
     'render element' => 'element',
     'file' => 'escort.theme',
+  ];
+  $themes['escort_menu'] = [
+    'variables' => ['menu_name' => NULL, 'items' => [], 'attributes' => []],
   ];
   return $themes;
 }
@@ -113,7 +121,8 @@ function escort_page_top(array &$page_top) {
  */
 function escort_preprocess_block(&$variables) {
   if (!empty($variables['elements']['#plugin_id']) && $variables['elements']['#plugin_id'] == 'local_tasks_block') {
-    // Hide local tasks block if user can use escort AND the local tasks plugin is enabled.
+    // Hide local tasks block if user can use escort AND the local tasks plugin
+    // is enabled.
     if (\Drupal::currentUser()->hasPermission('access escort') && \Drupal::service('escort.repository')->hasEscortOfType('local_tasks')) {
       $variables['content']['#access'] = FALSE;
     }

@@ -15,11 +15,11 @@ use Drupal\Core\Cache\Cache;
  *
  * @Escort(
  *   id = "user",
- *   admin_label = @Translation("User"),
+ *   admin_label = @Translation("Current User"),
  *   category = @Translation("User"),
  * )
  */
-class User extends Dropdown implements ContainerFactoryPluginInterface {
+class User extends Aside implements ContainerFactoryPluginInterface {
   use EscortPluginLinkTrait;
 
   /**
@@ -32,7 +32,7 @@ class User extends Dropdown implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  protected $usesTrigger = FALSE;
+  protected $usesIcon = FALSE;
 
   /**
    * The entity type manager.
@@ -129,8 +129,7 @@ class User extends Dropdown implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  protected function buildLink() {
-    $image = [];
+  protected function escortBuildAsideTrigger() {
     if (user_picture_enabled() && $image = $this->currentAccount->user_picture->entity) {
       $image = $this->currentAccount->user_picture->entity->getFileUri();
     }
@@ -145,66 +144,10 @@ class User extends Dropdown implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * Return aside content render array.
    */
-  protected function buildDropdown() {
-    $build = [
-      '#theme' => 'links',
-      '#links' => [],
-      '#attributes' => ['class' => ['escort-list']],
-    ];
-
-    $render = $this->menuItems();
-    $build['#cache'] = $render['#cache'];
-    foreach ($render['#items'] as $item) {
-      $title = $item['title'];
-      $url = $item['url'];
-      $options = $url->getOptions();
-      $attributes = [];
-      // Icon support.
-      $title = $this->titleAndUrlToIcon($title, $url);
-      // Set active class.
-      if ($item['in_active_trail']) {
-        $attributes['class'][] = 'is-active';
-      }
-      $build['#links'][] = [
-        'title' => $title,
-        'url' => $url,
-        'attributes' => $attributes,
-      ];
-    }
-
-    return $build;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function menuItems() {
-    $items = [];
-    $menu_name = $this->menuName;
-    $parameters = $this->menuTree->getCurrentRouteMenuTreeParameters($menu_name);
-
-    $level = 1;
-    $depth = 1;
-    $parameters->setMinDepth($level);
-    // When the depth is configured to zero, there is no depth limit. When depth
-    // is non-zero, it indicates the number of levels that must be displayed.
-    // Hence this is a relative depth that we must convert to an actual
-    // (absolute) depth, that may never exceed the maximum depth.
-    if ($depth > 0) {
-      $parameters->setMaxDepth(min($level + $depth - 1, $this->menuTree->maxDepth()));
-    }
-
-    $tree = $this->menuTree->load($menu_name, $parameters);
-    $manipulators = array(
-      array('callable' => 'menu.default_tree_manipulators:checkAccess'),
-      array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
-    );
-    $tree = $this->menuTree->transform($tree, $manipulators);
-    $items = $this->menuTree->build($tree);
-
-    return $items;
+  protected function escortBuildAsideContent() {
+    return $this->buildMenuTree($this->menuName, 1, 1);
   }
 
   /**

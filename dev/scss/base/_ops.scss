@@ -30,7 +30,8 @@
     }
   }
 
-  .escort-region:hover { // sass-lint:disable-line force-pseudo-nesting
+  .escort-region:hover,
+  .escort-region:focus { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-ops {
 
@@ -41,7 +42,8 @@
     }
   }
 
-  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+  .escort-container:hover,
+  .escort-container:focus { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-ops {
       opacity: 1;

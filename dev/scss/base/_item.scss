@@ -13,7 +13,8 @@
     display: none !important;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     z-index: 1;
   }
 
@@ -24,6 +25,11 @@
   > div {
     display: block;
     white-space: nowrap;
+  }
+
+  .escort-content {
+    text-decoration: none;
+    text-transform: none;
   }
 
   .is-active {

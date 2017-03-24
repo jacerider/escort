@@ -1,0 +1,7 @@
+.escort-aside-content {
+  display: none;
+
+  &.escort-active {
+    display: block;
+  }
+}

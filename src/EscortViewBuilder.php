@@ -14,6 +14,7 @@ use Drupal\Core\Render\Element;
 use Drupal\escort\Entity\Escort;
 use Drupal\escort\Entity\EscortInterface;
 use Drupal\escort\Plugin\Escort\EscortPluginImmediateInterface;
+use Drupal\Core\Plugin\ContextAwarePluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\NestedArray;
 
@@ -77,7 +78,6 @@ class EscortViewBuilder extends EntityViewBuilder {
    */
   public function viewMultiple(array $entities = array(), $view_mode = 'full', $langcode = NULL) {
     /** @var \Drupal\escort\EscortInterface[] $entities */
-
     $build = array();
     foreach ($entities as $entity) {
       $entity_id = $entity->id();
@@ -132,6 +132,21 @@ class EscortViewBuilder extends EntityViewBuilder {
   }
 
   /**
+   * The #lazy_builder callback; builds a #pre_render-able escort.
+   *
+   * @param int $entity_id
+   *   A escort config entity ID.
+   * @param string $view_mode
+   *   The view mode the escort is being viewed in.
+   *
+   * @return array
+   *   A render array with a #pre_render callback to render the escort.
+   */
+  public static function lazyBuilder($entity_id, $view_mode) {
+    return static::buildPreRenderableEscort(Escort::load($entity_id), \Drupal::service('module_handler'));
+  }
+
+  /**
    * Builds a #pre_render-able escort render array.
    *
    * @param \Drupal\escort\EscortInterface $entity
@@ -152,61 +167,34 @@ class EscortViewBuilder extends EntityViewBuilder {
     $derivative_id = $plugin->getDerivativeId();
     $configuration = $plugin->getConfiguration();
 
-    // Create the render array for the escort as a whole.
-    // @see template_preprocess_escort().
+    // Inject runtime contexts.
+    if ($plugin instanceof ContextAwarePluginInterface) {
+      $contexts = \Drupal::service('context.repository')->getRuntimeContexts($plugin->getContextMapping());
+      \Drupal::service('context.handler')->applyContextMapping($plugin, $contexts);
+    }
+
     $build = [
-      '#theme' => 'escort_item',
-      '#tag' => 'div',
-      '#attributes' => [],
-      // All escorts get a "Configure escort" contextual link.
-      '#contextual_links' => [
-        'escort' => [
-          'route_parameters' => ['escort' => $entity->id()],
-        ],
-      ],
+      '#theme' => 'escort_container',
       '#weight' => $entity->getWeight(),
       '#configuration' => $configuration,
       '#plugin_id' => $plugin_id,
       '#base_plugin_id' => $base_id,
       '#derivative_plugin_id' => $derivative_id,
       '#id' => $entity->id(),
+      '#pre_render' => [
+        static::class . '::preRender',
+      ],
       '#is_escort_admin' => FALSE,
       // Add the entity so that it can be used in the #pre_render method.
       '#escort' => $entity,
+      'children' => NULL,
     ];
 
-    // Use content render array if supplied.
-    if ($content && is_array($content)) {
-      // Merge properties.
-      $build['content'] = static::mergeProperties($build, $content);
-    }
-    else {
-      $build['#pre_render'] = [static::class . '::preRender'];
-
-      // Allow plugin to alter the escort contents.
-      $plugin->viewAlter($build);
-
-      // If an alter hook wants to modify the escort contents, it can append
-      // another #pre_render hook.
-      $module_handler->alter(['escort_view', "escort_view_$base_id"], $build, $plugin);
-    }
+    // If an alter hook wants to modify the block contents, it can append
+    // another #pre_render hook.
+    $module_handler->alter(['escort_view', "escort_view_$base_id"], $build, $plugin);
 
     return $build;
-  }
-
-  /**
-   * The #lazy_builder callback; builds a #pre_render-able escort.
-   *
-   * @param int $entity_id
-   *   A escort config entity ID.
-   * @param string $view_mode
-   *   The view mode the escort is being viewed in.
-   *
-   * @return array
-   *   A render array with a #pre_render callback to render the escort.
-   */
-  public static function lazyBuilder($entity_id, $view_mode) {
-    return static::buildPreRenderableEscort(Escort::load($entity_id), \Drupal::service('module_handler'));
   }
 
   /**
@@ -221,41 +209,25 @@ class EscortViewBuilder extends EntityViewBuilder {
   public static function preRender($build) {
     $entity = $build['#escort'];
     $plugin = $entity->getPlugin();
+    $plugin_id = $plugin->getPluginId();
+    $base_id = $plugin->getBaseId();
+    $derivative_id = $plugin->getDerivativeId();
+    $configuration = $plugin->getConfiguration();
     $is_admin = \Drupal::service('escort.path.matcher')->isAdmin();
+    $is_temporary = $entity->isTemporary();
+    $cacheability = CacheableMetadata::createFromRenderArray($build);
 
-    $content = NULL;
-    if ($is_admin && method_exists($plugin, 'preview')) {
-      $content = $plugin->preview();
-      $content['#attributes']['class'][] = 'escort-preview';
-    }
-    elseif ($plugin->usesMultiple()) {
-      // A plugin can define multiple escort items. We pass each item back
-      // through the buildPreRenderableEscort so each item is built out as an
-      // individual escort.
-      $content = $plugin->buildItems();
-      $build['#attributes']['class'][] = 'escort-group';
-      foreach (Element::children($content) as $key) {
-        $item = $content[$key];
-        $item['#escort_group'] = TRUE;
-        $item_build = static::buildPreRenderableEscort($build['#escort'], \Drupal::service('module_handler'), $item);
-        $item_build['content'] = static::mergeProperties($item_build, $item_build['content']);
-        $item_build['#is_escort_admin'] = $is_admin;
-        $content[$key] = $item_build;
-      }
-    }
-    else {
-      $content = $plugin->build();
-    }
+    $content = $plugin->build();
+    $content = static::mergeProperties($build, $content);
 
     // Remove the escort entity from the render array, to ensure that escorts
     // can be rendered without the escort config entity.
     unset($build['#escort']);
-    if ($content !== NULL && !Element::isEmpty($content) && empty($content['#empty'])) {
-      // Merge properties.
-      $build['content'] = static::mergeProperties($build, $content);
-      if ($is_admin && !$entity->isTemporary()) {
-        // Set admin flag for use in preprocessing and twig.
-        $build['#is_escort_admin'] = TRUE;
+
+    if ($content !== NULL && !Element::isEmpty($content)) {
+      $build['children'] = $content;
+      $cacheability->merge(CacheableMetadata::createFromRenderArray($content))->applyTo($build);
+      if ($is_admin && !$is_temporary) {
         // Set sortable class for use in escort.admin.js.
         $build['#attributes']['class'][] = 'escort-sortable';
         $build['#attributes']['data-escort-id'] = $entity->id();
@@ -263,7 +235,7 @@ class EscortViewBuilder extends EntityViewBuilder {
         $ops = [
           'drag' => [
             'title' => t('Drag'),
-          ]
+          ],
         ] + $entity->buildOps();
         $build['ops']['links'] = [
           '#theme' => 'links',
@@ -273,21 +245,18 @@ class EscortViewBuilder extends EntityViewBuilder {
         ];
       }
     }
-    // Either the escort's content is completely empty, or it consists only of
-    // cacheability metadata.
     else {
-      // Abort rendering: render as the empty string and ensure this escort is
+      // Abort rendering: render as the empty string and ensure this block is
       // render cached, so we can avoid the work of having to repeatedly
-      // determine whether the escort is empty. For instance, modifying or
-      // adding entities could cause the escort to no longer be empty.
+      // determine whether the block is empty. For instance, modifying or adding
+      // entities could cause the block to no longer be empty.
       $build = array(
-        '#markup' => '',
         '#cache' => $build['#cache'],
       );
       // If $content is not empty, then it contains cacheability metadata, and
       // we must merge it with the existing cacheability metadata. This allows
-      // escorts to be empty, yet still bubble cacheability metadata, to
-      // indicate why they are empty.
+      // blocks to be empty, yet still bubble cacheability metadata, to indicate
+      // why they are empty.
       if (!empty($content)) {
         CacheableMetadata::createFromRenderArray($build)
           ->merge(CacheableMetadata::createFromRenderArray($content))
@@ -315,12 +284,7 @@ class EscortViewBuilder extends EntityViewBuilder {
     // conflicting with the properties used above, or alternate ones used by
     // alternate escort rendering approaches in contrib.
     foreach (array(
-      '#tag',
       '#attributes',
-      '#attached',
-      '#contextual_links',
-      '#weight',
-      '#access',
     ) as $property) {
       if (isset($content[$property])) {
         if (!isset($build[$property])) {

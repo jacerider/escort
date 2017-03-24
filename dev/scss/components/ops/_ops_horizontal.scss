@@ -3,7 +3,8 @@
  */
 @include get-location($type: horizontal) {
 
-  &:hover { // sass-lint:disable-line force-pseudo-nesting
+  &:hover,
+  &:focus { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-ops {
       display: block;
@@ -23,7 +24,8 @@
     }
   }
 
-  .escort-item:hover {
+  .escort-container:hover,
+  .escort-container:focus {
 
     .escort-ops {
       width: $base-size * 2;

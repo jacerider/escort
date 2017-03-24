@@ -156,7 +156,7 @@ class Branding extends EscortPluginBase implements ContainerFactoryPluginInterfa
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  protected function escortBuild() {
     $build = array();
     $site_config = $this->configFactory->get('system.site');
     $theme_config = $this->configFactory->get('system.theme');
@@ -173,13 +173,7 @@ class Branding extends EscortPluginBase implements ContainerFactoryPluginInterfa
     }
 
     if ($this->configuration['use_site_logo']) {
-      $build['site_logo'] = array(
-        '#theme' => 'image',
-        '#uri' => $site_logo_uri,
-        '#alt' => $this->t('Home'),
-        '#attributes' => ['class' => ['escort-site-logo']],
-        '#access' => $this->configuration['use_site_logo'],
-      );
+      $build['#image'] = $site_logo_uri;
     }
 
     if ($this->configuration['use_site_name']) {

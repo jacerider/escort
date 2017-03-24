@@ -3,7 +3,7 @@
  */
 @include get-location($type: vertical, $region: left) {
 
-  .show-escort-full-left &,
+  .show-escort-full-left.has-escort-left-icon-only &,
   .is-escort-admin & {
 
     .escort-item { // sass-lint:disable-line force-pseudo-nesting
@@ -20,10 +20,8 @@
       }
 
       .escort-content {
-
-        .escort-content {
-          display: inline-block !important;
-        }
+        display: inline-block !important;
+        margin-top: 0;
       }
 
       .escort-icon {
@@ -46,7 +44,7 @@
       }
     }
 
-    .show-escort-full-left & {
+    .show-escort-full-left.has-escort-left-icon-only & {
     
       .escort-item { // sass-lint:disable-line force-pseudo-nesting
         width: $base-size-active;
@@ -88,8 +86,10 @@
   }
 
   .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
-
-    &:hover {
+    @include button-style($region: left, $transparent: true);
+    
+    &:hover,
+    &:focus {
 
       .escort-content {
         color: smart-scale($bg-color-left, $scale: 80%);

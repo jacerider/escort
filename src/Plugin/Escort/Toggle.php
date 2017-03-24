@@ -100,7 +100,7 @@ class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function escortBuild() {
     $build = [];
     $build['#tag'] = 'a';
     $escort = $this->getEscort();

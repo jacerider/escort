@@ -39,7 +39,9 @@ class EscortDeleteForm extends EntityConfirmFormBase {
    */
   protected function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
-    $this->ajaxSubmitAttributes($actions['submit']);
+    if (!empty($_POST['_drupal_ajax'])) {
+      $this->ajaxSubmitAttributes($actions['submit']);
+    }
     return $actions;
   }
 

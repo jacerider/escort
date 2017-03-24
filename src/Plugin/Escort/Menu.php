@@ -109,55 +109,8 @@ class Menu extends EscortPluginBase implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  public function build() {
-    $menu_name = $this->configuration['menu'];
-    $parameters = $this->menuTree->getCurrentRouteMenuTreeParameters($menu_name);
-
-    // Adjust the menu tree parameters based on the block's configuration.
-    $level = $this->configuration['level'];
-    $depth = $this->configuration['depth'];
-    $parameters->setMinDepth($level);
-    // When the depth is configured to zero, there is no depth limit. When depth
-    // is non-zero, it indicates the number of levels that must be displayed.
-    // Hence this is a relative depth that we must convert to an actual
-    // (absolute) depth, that may never exceed the maximum depth.
-    if ($depth > 0) {
-      $parameters->setMaxDepth(min($level + $depth - 1, $this->menuTree->maxDepth()));
-    }
-
-    $tree = $this->menuTree->load($menu_name, $parameters);
-    $manipulators = array(
-      array('callable' => 'menu.default_tree_manipulators:checkAccess'),
-      array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
-    );
-    $tree = $this->menuTree->transform($tree, $manipulators);
-    // $bla = $this->buildTreeItems($tree);
-    $build = $this->menuTree->build($tree);
-    $build['#items'] = $this->buildTreeItems($build['#items']);
-    return $build;
-  }
-
-  /**
-   * Prepare tab for rendering.
-   *
-   * @param array $items
-   *   The renderable menu.
-   *
-   * @return array
-   *   An array of renderable items.
-   */
-  protected function buildTreeItems($items) {
-    foreach ($items as $id => &$item) {
-      $item['title'] = $this->titleToIcon($item['title']);
-      $url = $item['url'];
-      $options = $url->getOptions();
-      $options['attributes']['class'][] = 'escort-item';
-      $url->setOptions($options);
-      if ($item['below']) {
-        $item['below'] = $this->buildTreeItems($item['below']);
-      }
-    }
-    return $items;
+  protected function escortBuild() {
+    return $this->buildMenuTree($this->configuration['menu'], $this->configuration['level'], $this->configuration['depth']);
   }
 
   /**

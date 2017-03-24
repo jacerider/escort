@@ -2,7 +2,8 @@
 
   .escort-type-branding {
 
-    &:hover {
+    &:hover,
+    &:focus {
     
       .escort-site-slogan {
         bottom: 100%;

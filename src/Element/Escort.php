@@ -3,6 +3,7 @@
 namespace Drupal\escort\Element;
 
 use Drupal\Core\Render\Element\RenderElement;
+use Drupal\Core\Render\Element;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\escort\EscortRegionManagerInterface;
@@ -93,10 +94,26 @@ class Escort extends RenderElement {
         // Section cache build.
         $section_cacheable_metadata = CacheableMetadata::createFromRenderArray($element[$group_id][$section_id]);
         foreach ($escorts as $key => $escort) {
-          // Add escort to section.
-          $element[$group_id][$section_id][$key] = $view_builder->view($escort);
+          $plugin = $escort->getPlugin();
+          $content = $view_builder->view($escort);
+          if (!Element::isEmpty($content)) {
+            // Add escort to section.
+            $element[$group_id][$section_id][$key] = $content;
+          }
           // Section cache add.
-          $section_cacheable_metadata = $section_cacheable_metadata->merge(CacheableMetadata::createFromRenderArray($element[$group_id][$section_id][$key]));
+          $section_cacheable_metadata = $section_cacheable_metadata->merge(CacheableMetadata::createFromRenderArray($content));
+          // Allow placement of additional render arrays within the region
+          // wrapper.
+          if ($build_suffix = $plugin->buildRegionSuffix()) {
+            $element[$group_id]['#after'][$key] = $build_suffix;
+            $section_cacheable_metadata = $section_cacheable_metadata->merge(CacheableMetadata::createFromRenderArray($build_suffix));
+          }
+          // Allow placement of additional render arrays within the element
+          // wrapper.
+          if ($build_suffix = $plugin->buildElementSuffix()) {
+            $element['#after'][$key] = $build_suffix;
+            $section_cacheable_metadata = $element_cachable_metadata->merge(CacheableMetadata::createFromRenderArray($build_suffix));
+          }
         }
         // Section cache apply.
         $section_cacheable_metadata->applyTo($element[$group_id][$section_id]);
@@ -107,7 +124,6 @@ class Escort extends RenderElement {
       $region_cacheable_metadata->applyTo($element[$group_id]);
       // Element cache add.
       $element_cachable_metadata = $element_cachable_metadata->merge(CacheableMetadata::createFromRenderArray($element[$group_id]));
-
     }
     // Element cache apply.
     $element_cachable_metadata->applyTo($element);

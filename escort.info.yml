@@ -3,3 +3,5 @@ type: module
 description: An admin menu of extreme super awesomeness.
 core: 8.x
 package: Escort
+dependencies:
+  - micon

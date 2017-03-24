@@ -2,8 +2,6 @@
 
 namespace Drupal\escort\Plugin\Escort;
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\Url;
 use Drupal\Core\Access\AccessResult;
 use Drupal\micon\MiconIconize;
@@ -31,10 +29,10 @@ trait EscortPluginLinkTrait {
    * @return array
    *   A render array.
    */
-  public function buildLink($title, $uri) {
+  protected function buildLink($title, $uri, $attributes = array()) {
     $title = $this->titleAndUrlToIcon($title, $uri);
     list($title, $icon) = $this->titleToTitleIcon($title);
-    $attributes = $this->getUriAsAttributes($uri);
+    $attributes += $this->getUriAsAttributes($uri);
     $options = $uri->getOptions();
 
     $attributes['title'] = $title;
@@ -53,6 +51,40 @@ trait EscortPluginLinkTrait {
   }
 
   /**
+   * Givent a title, return as Micon object.
+   *
+   * @param string $title
+   *   The title of the link.
+   */
+  protected function titleAndUrlToIcon($title, $uri, $prefix = 'escort') {
+    $title = $this->titleToIcon($title);
+    if ($url = $this->getUrl($uri)) {
+      $options = $url->getOptions();
+      if (!empty($options['attributes']['data-icon'])) {
+        $title->setIcon($options['attributes']['data-icon']);
+      }
+    }
+    return $title;
+  }
+
+  /**
+   * Givent a title, return as Micon object.
+   *
+   * @param string $title
+   *   The title of the link.
+   */
+  protected function titleToIcon($title, $prefix = 'escort') {
+    if (!$title instanceof MiconIconize) {
+      $title = MiconIconize::iconize($title);
+    }
+    $title->addMatchPrefix($prefix);
+    if (!$title->getIcon()) {
+      $title->setIcon($this->getDefaultLinkIcon());
+    }
+    return $title;
+  }
+
+  /**
    * Given a title, return an array containing title and icon.
    *
    * @param string $title
@@ -61,64 +93,23 @@ trait EscortPluginLinkTrait {
    * @return array
    *   An array containing a title and icon key.
    */
-  public function titleToTitleIcon($title) {
+  protected function titleToTitleIcon($title) {
     $title = $title;
     $icon = '';
 
-    // Icon support.
-    if ($this->hasIconSupport()) {
-      // Check if title has already been MiconIfied.
-      if (!$title instanceof MiconIconize) {
-        $title = $this->titleToIcon($title);
-      }
-      if ($icon = $title->getIcon()) {
-        $icon = $icon->getSelector();
-      }
-      else {
-        $icon = $this->getDefaultLinkIcon();
-      }
-      $title = $title->getTitle();
+    // Check if title has already been MiconIfied.
+    if (!$title instanceof MiconIconize) {
+      $title = $this->titleToIcon($title);
     }
+    if ($icon = $title->getIcon()) {
+      $icon = $icon->getSelector();
+    }
+    else {
+      $icon = $this->getDefaultLinkIcon();
+    }
+    $title = $title->getTitle();
 
     return [$title, $icon];
-  }
-
-  /**
-   * Givent a title, return as Micon object.
-   *
-   * @param string $title
-   *   The title of the link.
-   */
-  public function titleToIcon($title, $prefix = 'escort') {
-    if ($this->hasIconSupport()) {
-      if (!$title instanceof MiconIconize) {
-        $title = MiconIconize::iconize($title);
-        if (!$title->getIcon()) {
-          $title->setIcon($this->getDefaultLinkIcon());
-        }
-      }
-      $title->addMatchPrefix($prefix);
-    }
-    return $title;
-  }
-
-  /**
-   * Givent a title, return as Micon object.
-   *
-   * @param string $title
-   *   The title of the link.
-   */
-  public function titleAndUrlToIcon($title, $uri, $prefix = 'escort') {
-    if ($this->hasIconSupport()) {
-      $title = $this->titleToIcon($title);
-      if ($url = $this->getUrl($uri)) {
-        $options = $url->getOptions();
-        if (!empty($options['attributes']['data-icon'])) {
-          $title->setIcon($options['attributes']['data-icon']);
-        }
-      }
-    }
-    return $title;
   }
 
   /**
@@ -127,7 +118,7 @@ trait EscortPluginLinkTrait {
    * @var mixed $uri
    *  A uri or Drupal\Core\Url.
    */
-  public function getUrl($uri) {
+  protected function getUrl($uri) {
     if ($uri instanceof Url) {
       $url = $uri;
     }
@@ -143,8 +134,7 @@ trait EscortPluginLinkTrait {
    * @var mixed $uri
    *  A uri or Drupal\Core\Url.
    */
-  public function getUriAsAttributes($uri) {
-    $attributes = [];
+  protected function getUriAsAttributes($uri, $attributes = []) {
     if ($url = $this->getUrl($uri)) {
       // External URLs can not have cacheable metadata.
       if ($url->isExternal()) {
@@ -175,7 +165,7 @@ trait EscortPluginLinkTrait {
   /**
    * Get the default icon.
    */
-  public function getDefaultLinkIcon() {
+  protected function getDefaultLinkIcon() {
     return $this->defaultLinkIcon;
   }
 
@@ -188,7 +178,7 @@ trait EscortPluginLinkTrait {
    * @return Drupal\Core\Access\AccessResult
    *   The access result.
    */
-  public function uriAccess($uri) {
+  protected function uriAccess($uri) {
     if (!empty($uri)) {
       if ($uri instanceof Url) {
         $url = $uri;
@@ -202,118 +192,65 @@ trait EscortPluginLinkTrait {
   }
 
   /**
-   * Form element validation handler for the 'uri' element.
+   * Render a menu for display within escort.
    *
-   * Disallows saving inaccessible or untrusted URLs.
+   * @param string $menu_name
+   *   The menu name to render.
+   * @param string $level
+   *   The menu level to start rendering from.
+   * @param string $depth
+   *   The menu deptch to render.
    */
-  public static function validateUriElement($element, FormStateInterface $form_state, $form) {
-    $uri = static::getUserEnteredStringAsUri($element['#value']);
-    $form_state->setValueForElement($element, $uri);
+  protected function buildMenuTree($menu_name, $level = 1, $depth = 1) {
+    $parameters = $this->menuTree->getCurrentRouteMenuTreeParameters($menu_name);
 
-    // If getUserEnteredStringAsUri() mapped the entered value to a 'internal:'
-    // URI , ensure the raw value begins with '/', '?' or '#'.
-    // @todo '<front>' is valid input for BC reasons, may be removed by
-    //   https://www.drupal.org/node/2421941
-    if (
-      parse_url($uri, PHP_URL_SCHEME) === 'internal'
-      && !in_array($element['#value'][0], ['/', '?', '#'], TRUE)
-      && substr($element['#value'], 0, 7) !== '<front>'
-    ) {
-      $form_state->setError($element, t('Manually entered paths should start with /, ? or #.'));
-      return;
+    // Adjust the menu tree parameters based on the block's configuration.
+    $level = $level;
+    $depth = $depth;
+    $parameters->setMinDepth($level);
+    // When the depth is configured to zero, there is no depth limit. When depth
+    // is non-zero, it indicates the number of levels that must be displayed.
+    // Hence this is a relative depth that we must convert to an actual
+    // (absolute) depth, that may never exceed the maximum depth.
+    if ($depth > 0) {
+      $parameters->setMaxDepth(min($level + $depth - 1, $this->menuTree->maxDepth()));
     }
+
+    $tree = $this->menuTree->load($menu_name, $parameters);
+    $manipulators = array(
+      array('callable' => 'menu.default_tree_manipulators:checkAccess'),
+      array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
+    );
+    $tree = $this->menuTree->transform($tree, $manipulators);
+    $build = $this->menuTree->build($tree);
+    if ($build['#items']) {
+      $build['#items'] = $this->buildMenuTreeItems($build['#items']);
+    }
+    $build['#theme'] = 'escort_menu__' . $menu_name;
+    return $build;
   }
 
   /**
-   * Gets the URI without the 'internal:' or 'entity:' scheme.
+   * Prepare tab for rendering.
    *
-   * The following two forms of URIs are transformed:
-   * - 'entity:' URIs: to entity autocomplete ("label (entity id)") strings;
-   * - 'internal:' URIs: the scheme is stripped.
+   * @param array $items
+   *   The renderable menu items.
    *
-   * This method is the inverse of ::getUserEnteredStringAsUri().
-   *
-   * @param string $uri
-   *   The URI to get the displayable string for.
-   *
-   * @return string
-   *   The URL string.
-   *
-   * @see static::getUserEnteredStringAsUri()
+   * @return array
+   *   An array of altered menu items.
    */
-  protected static function getUriAsDisplayableString($uri) {
-    $scheme = parse_url($uri, PHP_URL_SCHEME);
-
-    // By default, the displayable string is the URI.
-    $displayable_string = $uri;
-
-    // A different displayable string may be chosen in case of the 'internal:'
-    // or 'entity:' built-in schemes.
-    if ($scheme === 'internal') {
-      $uri_reference = explode(':', $uri, 2)[1];
-
-      // @todo '<front>' is valid input for BC reasons, may be removed by
-      //   https://www.drupal.org/node/2421941
-      $path = parse_url($uri, PHP_URL_PATH);
-      if ($path === '/') {
-        $uri_reference = '<front>' . substr($uri_reference, 1);
-      }
-
-      $displayable_string = $uri_reference;
-    }
-    elseif ($scheme === 'entity') {
-      list($entity_type, $entity_id) = explode('/', substr($uri, 7), 2);
-      // Show the 'entity:' URI as the entity autocomplete would.
-      $entity_manager = \Drupal::entityManager();
-      if ($entity_manager->getDefinition($entity_type, FALSE) && $entity = \Drupal::entityManager()->getStorage($entity_type)->load($entity_id)) {
-        $displayable_string = EntityAutocomplete::getEntityLabels(array($entity));
+  protected function buildMenuTreeItems($items) {
+    foreach ($items as $id => &$item) {
+      $item['title'] = $this->titleToIcon($item['title']);
+      $url = $item['url'];
+      $options = $url->getOptions();
+      $options['attributes']['class'][] = 'escort-item';
+      $url->setOptions($options);
+      if ($item['below']) {
+        $item['below'] = $this->buildMenuTreeItems($item['below']);
       }
     }
-
-    return $displayable_string;
-  }
-
-  /**
-   * Gets the user-entered string as a URI.
-   *
-   * The following two forms of input are mapped to URIs:
-   * - entity autocomplete ("label (entity id)") strings: to 'entity:' URIs;
-   * - strings without a detectable scheme: to 'internal:' URIs.
-   *
-   * This method is the inverse of ::getUriAsDisplayableString().
-   *
-   * @param string $string
-   *   The user-entered string.
-   *
-   * @return string
-   *   The URI, if a non-empty $uri was passed.
-   *
-   * @see static::getUriAsDisplayableString()
-   */
-  protected static function getUserEnteredStringAsUri($string) {
-    // By default, assume the entered string is an URI.
-    $uri = $string;
-
-    // Detect entity autocomplete string, map to 'entity:' URI.
-    $entity_id = EntityAutocomplete::extractEntityIdFromAutocompleteInput($string);
-    if ($entity_id !== NULL) {
-      // @todo Support entity types other than 'node'. Will be fixed in
-      // https://www.drupal.org/node/2423093.
-      $uri = 'entity:node/' . $entity_id;
-    }
-    // Detect a schemeless string, map to 'internal:' URI.
-    elseif (!empty($string) && parse_url($string, PHP_URL_SCHEME) === NULL) {
-      // @todo '<front>' is valid input for BC reasons, may be removed by
-      //   https://www.drupal.org/node/2421941
-      // - '<front>' -> '/'
-      // - '<front>#foo' -> '/#foo'
-      if (strpos($string, '<front>') === 0) {
-        $string = '/' . substr($string, strlen('<front>'));
-      }
-      $uri = 'internal:' . $string;
-    }
-
-    return $uri;
+    return $items;
   }
 
 }

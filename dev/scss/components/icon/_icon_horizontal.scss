@@ -7,7 +7,8 @@
 
     .escort-link.has-icon:not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
 
-      &:hover {
+      &:hover,
+      &:focus {
 
         .escort-content {
           opacity: 1;
@@ -41,7 +42,7 @@
     }
   }
 
-  .escort-item:not(.escort-type-add) { // sass-lint:disable-line force-pseudo-nesting
+  .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-icon {
 

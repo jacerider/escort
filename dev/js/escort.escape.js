@@ -32,7 +32,7 @@
    */
   Drupal.behaviors.escortEscape = {
     attach: function () {
-      var $escortEscape = $('.escort-type-admin-escape').once('escortEscape');
+      var $escortEscape = $('.escort-type-admin-escape .escort-item').once('escortEscape');
       if ($escortEscape.length && pathInfo.currentPathIsAdmin) {
         if (escapeAdminPath !== null) {
           $escortEscape.attr('href', escapeAdminPath);
@@ -40,6 +40,7 @@
         else {
           $escortEscape.find('.escort-content').text(Drupal.t('Home'));
         }
+        console.log($escortEscape);
         $escortEscape.removeClass('escort-hidden');
       }
     }

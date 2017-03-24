@@ -24,11 +24,12 @@
 
       .escort-content {
         line-height: $base-size * 0.66;
+        margin-top: 0;
       }
     }
 
     .escort-item:not(.escort-group):not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
-      padding: $padding 0;
+      padding: ($padding * 0.75) 0;
 
       &.escort-group {
 
@@ -89,6 +90,7 @@
       line-height: $base-size * 0.4;
       text-align: center;
       white-space: normal;
+      margin-top: $margin / 4;
     }
   }
 }

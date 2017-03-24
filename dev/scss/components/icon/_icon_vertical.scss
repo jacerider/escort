@@ -10,13 +10,15 @@
 
       .escort-icon {
         width: $base-size;
+        text-align: center;
       }
     }
   }
 
   .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
 
-    &:hover {
+    &:hover,
+    &:focus {
 
       .escort-icon {
         margin-right: $padding / 3;
@@ -30,10 +32,7 @@
       width: $base-size * 2.025;
       display: inline-block;
       margin-right: 0;
-
-      i {
-        font-size: $font-size * 1.75;
-      }
+      font-size: $font-size * 1.75;
     }
   }
 }

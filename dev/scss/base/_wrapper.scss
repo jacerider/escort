@@ -18,12 +18,16 @@
 
       @if map-get($settings, type) == 'horizontal' {
 
+        @if map-get($settings, position) == 'mini' {
+          padding-top: map-get($settings, size) * 0.75;
+        }
+
         @if map-get($settings, position) == 'top' {
           padding-top: map-get($settings, size);
+        }
 
-          @if map-get($settings, position) == 'mini' {
-            padding-top: map-get($settings, size) * 1.75;
-          }
+        @if (map-get($settings, position) == 'top') && (map-get($settings, position) == 'mini') {
+          padding-top: map-get($settings, size) * 1.75;
         }
 
         @if map-get($settings, position) == 'bottom' {
@@ -31,9 +35,19 @@
         }
       }
 
-      @if map-get($settings, position) == 'mini' {
-        padding-top: map-get($settings, size) * 1.75;
+      @if map-get($settings, type) == 'vertical' {
+
+        @if map-get($settings, position) == 'left' {
+          padding-left: map-get($settings, size)* 2.025;
+        }
+
+        @if map-get($settings, position) == 'right' {
+          padding-right: map-get($settings, size)* 2.025;
+        }
       }
+    }
+
+    .has-escort-#{$region}-icon-only & {
 
       @if map-get($settings, type) == 'vertical' {
 
