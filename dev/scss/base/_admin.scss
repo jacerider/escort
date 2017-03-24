@@ -4,7 +4,16 @@
 // Styles applied when in admin mode.
 
 .is-escort-admin {
-  
+
+  @include get-location($type: vertical) {
+
+    > .escort-scroll {
+      overflow-x: hidden;
+      overflow-y: auto;
+      width: $base-size-active + 1.5rem;
+    }
+  }
+
   .escort-left-bottom,
   .escort-right-bottom {
     border-top: 0;

@@ -201,7 +201,7 @@
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-left), 0.1), rgba(smart-scale($bg-color-left), 0.25), bottom);
+      @include linear-gradient(rgba(smart-scale($bg-color-left, 15%), 0.1), rgba(smart-scale($bg-color-left, 45%), 0.1), bottom);
       color: smart-scale($bg-color-left, $scale: 66%);
 
       &:visited,
@@ -212,7 +212,7 @@
 
       &:hover,
       &:focus {
-        background-color: lighten($primary-color, 10%);
+        @include linear-gradient(rgba(smart-scale($bg-color-left, 15%), 0.2), rgba(smart-scale($bg-color-left, 45%), 0.2), bottom);
         color: smart-scale($primary-color, $scale: 80%);
 
         a {
@@ -231,7 +231,7 @@
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-right), 0.1), rgba(smart-scale($bg-color-right), 0.25), bottom);
+      @include linear-gradient(rgba(smart-scale($bg-color-right, 15%), 0.1), rgba(smart-scale($bg-color-right, 45%), 0.1), bottom);
       color: smart-scale($bg-color-right, $scale: 66%);
 
       &:visited,
@@ -242,7 +242,7 @@
 
       &:hover,
       &:focus {
-        background-color: lighten($primary-color, 10%);
+        @include linear-gradient(rgba(smart-scale($bg-color-right, 15%), 0.2), rgba(smart-scale($bg-color-right, 45%), 0.2), bottom);
         color: smart-scale($primary-color, $scale: 85%);
 
         a {

@@ -16,7 +16,7 @@
     transform: translate(0, 0);
   }
 
-  .show-escort-full-left & {
+  .show-escort-full-left.has-escort-left-icon-only & {
     width: $base-size-active;
     box-shadow: 0 0 15px rgba($black, 0.2); // sass-lint:disable-line no-color-literals
   }

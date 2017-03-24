@@ -5,7 +5,7 @@
 
   &.icon-only {
 
-    .show-escort-full-left & {
+    .show-escort-full-left.has-escort-left-icon-only & {
     
       .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
