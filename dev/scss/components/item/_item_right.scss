@@ -3,7 +3,7 @@
  */
 @include get-location($type: vertical, $region: right) {
 
-  .show-escort-full-right &,
+  .show-escort-full-right.has-escort-right-icon-only &,
   .is-escort-admin & {
 
     .escort-item { // sass-lint:disable-line force-pseudo-nesting
@@ -44,7 +44,7 @@
       }
     }
     
-    .show-escort-full-right & {
+    .show-escort-full-right.has-escort-right-icon-only & {
     
       .escort-item { // sass-lint:disable-line force-pseudo-nesting
         width: $base-size-active;
@@ -87,7 +87,8 @@
 
   .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
-    &:hover {
+    &:hover,
+    &:focus {
 
       .escort-content {
         color: smart-scale($bg-color-right, $scale: 80%);

@@ -11,7 +11,8 @@
     border-bottom-right-radius: $border-radius;
   }
 
-  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+  .escort-container:hover,
+  .escort-container:focus { // sass-lint:disable-line force-pseudo-nesting
       
     .escort-ops {
       
@@ -19,6 +20,7 @@
         @include button-style($region: mini, $transparent: true) {
           display: block;
           padding: $padding / 3;
+          border: 0;
         };
       }  
     }

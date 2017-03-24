@@ -3,7 +3,8 @@
  */
 @include get-location($type: vertical) {
 
-  &:hover { // sass-lint:disable-line force-pseudo-nesting
+  &:hover,
+  &:focus { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-ops {
       display: table;
@@ -46,7 +47,8 @@
     }
   }
 
-  .escort-item:hover { // sass-lint:disable-line force-pseudo-nesting
+  .escort-container:hover,
+  .escort-container:focus { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-ops {
       width: 100%;

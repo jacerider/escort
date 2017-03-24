@@ -13,7 +13,8 @@
     display: none !important;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     z-index: 1;
   }
 
