@@ -193,15 +193,15 @@
   }
 
   @if $region == 'left' {
-    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-left, $saturation: 0%, $lightness: -8%), 0.25);
+    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-left, $saturation: 0%, $lightness: -6%), 0.15);
 
     &:hover,
     &:focus {
-      box-shadow: 0 3px 15px rgba(adjust-color($bg-color-left, $saturation: 0%, $lightness: -15%), 0.66);
+      box-shadow: 0 1px 15px rgba(adjust-color($bg-color-left, $saturation: 0%, $lightness: -10%), 0.33);
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-left, 15%), 0.1), rgba(smart-scale($bg-color-left, 45%), 0.1), bottom);
+      @include linear-gradient(rgba(smart-scale($bg-color-left, 5%), 0.1), rgba(smart-scale($bg-color-left, 25%), 0.1), bottom);
       color: smart-scale($bg-color-left, $scale: 66%);
 
       &:visited,
@@ -212,7 +212,7 @@
 
       &:hover,
       &:focus {
-        @include linear-gradient(rgba(smart-scale($bg-color-left, 15%), 0.2), rgba(smart-scale($bg-color-left, 45%), 0.2), bottom);
+        @include linear-gradient(rgba(smart-scale($bg-color-left, 5%), 0.2), rgba(smart-scale($bg-color-left, 25%), 0.2), bottom);
         color: smart-scale($primary-color, $scale: 80%);
 
         a {
@@ -223,15 +223,15 @@
   }
 
   @if $region == 'right' {
-    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-right, $saturation: 0%, $lightness: -8%), 0.25);
+    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-right, $saturation: 0%, $lightness: -6%), 0.15);
 
     &:hover,
     &:focus {
-      box-shadow: 0 3px 15px rgba(adjust-color($bg-color-right, $saturation: 0%, $lightness: -15%), 0.66);
+      box-shadow: 0 1px 15px rgba(adjust-color($bg-color-right, $saturation: 0%, $lightness: -10%), 0.33);
     }
 
     @if $transparent == true {
-      @include linear-gradient(rgba(smart-scale($bg-color-right, 15%), 0.1), rgba(smart-scale($bg-color-right, 45%), 0.1), bottom);
+      @include linear-gradient(rgba(smart-scale($bg-color-right, 5%), 0.1), rgba(smart-scale($bg-color-right, 25%), 0.1), bottom);
       color: smart-scale($bg-color-right, $scale: 66%);
 
       &:visited,
@@ -242,7 +242,7 @@
 
       &:hover,
       &:focus {
-        @include linear-gradient(rgba(smart-scale($bg-color-right, 15%), 0.2), rgba(smart-scale($bg-color-right, 45%), 0.2), bottom);
+        @include linear-gradient(rgba(smart-scale($bg-color-right, 5%), 0.2), rgba(smart-scale($bg-color-right, 25%), 0.2), bottom);
         color: smart-scale($primary-color, $scale: 85%);
 
         a {

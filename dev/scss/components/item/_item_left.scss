@@ -86,7 +86,8 @@
   }
 
   .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
-
+    @include button-style($region: left, $transparent: true);
+    
     &:hover,
     &:focus {
 
