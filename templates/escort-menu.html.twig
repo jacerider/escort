@@ -31,14 +31,27 @@
 {% macro menu_links(items, attributes, menu_level) %}
   {% import _self as menus %}
   {% if items %}
-    {% if menu_level == 0 %}
-      <ul{{ attributes }}>
-    {% else %}
-      <ul>
-    {% endif %}
+    <ul class="escort-menu escort-lvl{{menu_level}} {{ attributes.class }}" {{ attributes|without('class') }}>
     {% for item in items %}
-      <li{{ item.attributes }}>
-        {{ link(item.title, item.url) }}
+      {%
+        set classes = [
+          item.is_expanded ? 'escort-active',
+          item.is_collapsed ? 'escort-collapsed',
+          item.in_active_trail ? 'escort-active-trail',
+        ]
+      %}
+      <li{{ item.attributes.addClass(classes) }}>
+        {% if item.prefix %}
+          {{ item.prefix }}
+        {% endif %}
+        {% if item.url.toString()|length %}
+          {{ link(item.title, item.url) }}
+        {% else %}
+          <a {{ item.link_attributes.addClass('escort-nolink') }}>{{ item.title|raw }}</a>
+        {% endif %}
+        {% if item.suffix %}
+          {{ item.suffix }}
+        {% endif %}
         {% if item.below %}
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
         {% endif %}
