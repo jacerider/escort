@@ -24,10 +24,10 @@
 
         @if map-get($settings, position) == 'top' {
           padding-top: map-get($settings, size);
-        }
 
-        @if (map-get($settings, position) == 'top') && (map-get($settings, position) == 'mini') {
-          padding-top: map-get($settings, size) * 1.75;
+          @if map-get($settings, position) == 'mini' {
+            padding-top: map-get($settings, size) * 1.75 !important;
+          }
         }
 
         @if map-get($settings, position) == 'bottom' {
