@@ -1,12 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////
-// ADMIN
+// Container - Horizontal
 // -----------------------------------------------------------------------------
-// Styles applied to the aside display mode for widgets/escorts.
+// Styles applied
 
-.escort-aside-content {
-  display: none;
+@include get-location($type: horizontal) {
 
-  &.escort-active {
-    display: block;
+  .escort-container {
+
+    &.escort-preview {
+      padding: 0 $padding;
+    }
   }
 }

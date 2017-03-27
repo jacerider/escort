@@ -24,10 +24,6 @@
 
         @if map-get($settings, position) == 'top' {
           padding-top: map-get($settings, size);
-
-          @if map-get($settings, position) == 'mini' {
-            padding-top: map-get($settings, size) * 1.75 !important;
-          }
         }
 
         @if map-get($settings, position) == 'bottom' {
@@ -89,5 +85,10 @@
         }
       }
     }
+  }
+
+  .has-escort-top.has-escort-mini:not(.hide-escort-mini) &,
+  .has-escort-top.has-escort-mini:not(.hide-escort-top) & {
+    padding-top: $base-size * 1.75;
   }
 }

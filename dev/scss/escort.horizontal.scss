@@ -15,7 +15,9 @@
 // -----------------------------------------------------------------------------
 // For smaller components, there is the components/ folder.
 
+@import 'components/aside/aside_horizontal';
 @import 'components/branding/branding_horizontal';
+@import 'components/container/container_horizontal';
 @import 'components/dropdown/dropdown_horizontal';
 @import 'components/icon/icon_horizontal';
 @import 'components/item/item_horizontal';
