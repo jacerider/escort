@@ -7,9 +7,20 @@
 
     .escort-aside-trigger {
 
+      .escort-active & {
+        background: none !important;
+        box-shadow: none !important;
+      }
+
       > .escort-inner {
         display: flex;
         padding: 0 $padding;
+
+        &:hover,
+        .escort-active & {
+          background: none !important;
+          box-shadow: none !important;
+        }
       }
     }
 
@@ -32,7 +43,6 @@
       overflow: hidden;
       border-radius: 50%;
       z-index: 3;
-      transition: margin 300ms, box-shadow 300ms;
 
       img {
         width: 100%;

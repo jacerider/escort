@@ -22,9 +22,9 @@
   }
 
   .escort-aside-display-dropdown {
-    top: 90%;
-    box-shadow: 0 4px 6px transparentize($black, 0.75);
-    background: smart-scale($bg-color-top, $scale: -12%);
+    top: 98%;
+    box-shadow: 0 5px 6px transparentize($black, 0.75);
+    background: smart-scale($bg-color-top, $scale: 1%);
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
   }

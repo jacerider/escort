@@ -9,7 +9,7 @@
     .escort-region-after {
       
       .escort-aside-display-shelf {
-        right: $base-size-active;
+        right: $base-size-active * 0.996;
       }
     }
   }
@@ -18,7 +18,7 @@
 
     .escort-aside-display-shelf {
       background-color: $bg-color-right;
-      right: $base-size * 2;
+      right: $base-size * 1.975;
 
       &.escort-active {
         box-shadow: -10px 0 15px rgba($black, 0.2); // sass-lint:disable-line no-color-literals

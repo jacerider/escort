@@ -5,6 +5,7 @@
   left: 0;
   background: $bg-color-left;
   border-right: 1px solid scale-color($bg-color-left, $lightness: -10%);
+  border-left: 1px solid scale-color($bg-color-left, $lightness: -10%);
   color: smart-scale($bg-color-left);
 
   .hide-escort-left & {
