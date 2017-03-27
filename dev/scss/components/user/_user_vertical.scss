@@ -15,7 +15,7 @@
           margin: 0 auto;
         }
 
-        &.escort-dropdown-trigger {
+        &.escort-aside-trigger {
           padding: ($padding * 0.75) 0 ($padding * 2.4) !important;
         }
 
@@ -29,8 +29,11 @@
       }
     }
 
-    .escort-type-user.escort-dropdown-trigger {
-      padding: ($padding * 0.75) 0 ($padding * 2.4) !important;
+    .escort-type-user {
+
+      .escort-aside-trigger {
+        padding: ($padding * 0.75) 0 ($padding * 2.4) !important;
+      }
     }
   }
 
@@ -42,7 +45,7 @@
         margin-left: $margin * -0.9;
       }
 
-      &.escort-dropdown-trigger {
+      .escort-aside-trigger {
         padding: ($padding * 1.5) 0 !important;
       }
 
@@ -59,7 +62,7 @@
     text-align: center;
     transition: padding 300ms, width 300ms;
 
-    &.escort-dropdown-trigger {
+    .escort-aside-trigger {
       padding: ($padding * 0.75) 0 ($padding * 2.33) !important;
 
       .escort-content {

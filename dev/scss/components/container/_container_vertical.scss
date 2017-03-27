@@ -1,0 +1,31 @@
+////////////////////////////////////////////////////////////////////////////////
+// Container - Horizontal
+// -----------------------------------------------------------------------------
+// Styles applied
+
+@include get-location($type: vertical) {
+
+  > .escort-container {
+    overflow: hidden;
+    height: 100%;
+  }
+
+  // &.icon-only {
+
+  //   .escort-container {
+  //     width: $base-size;
+  //     overflow: hidden;
+  //   }
+
+  //   .is-escort-admin & {
+
+  //     .escort-scroll {
+  //       width: $base-size-active + 1.5rem;
+  //     }
+  //   }
+
+  //   .escort-scroll {
+  //     width: $base-size + 1.5rem;
+  //   }
+  // }
+}

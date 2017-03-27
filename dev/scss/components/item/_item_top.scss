@@ -16,6 +16,7 @@
 
     .escort-inner {
       @include button-style($region: top, $transparent: true);
+      max-height: $base-size;
     }
   }
 

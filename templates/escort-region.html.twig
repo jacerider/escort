@@ -4,12 +4,16 @@
       {{ before }}
     </div>
   {% endif %}
-  <div class="escort-scroll">
-  	{{ content }}
+  <div class="escort-container">
+    <div class="escort-scroll">
+    	{{ content }}
+    </div>
   </div>
   {% if after %}
     <div class="escort-region-after">
-      {{ after }}
+      <div class="escort-scroll">
+        {{ after }}
+      </div>
     </div>
   {% endif %}
 </div>

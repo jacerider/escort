@@ -5,17 +5,20 @@
 
 .escort-type-user {
 
-  .escort-image {
-    display: inline-block;
-    overflow: hidden;
-    border-radius: 50%;
-    position: relative;
-    z-index: 1;
-    transition: box-shadow 300ms;
+  .escort-aside-trigger.has-image {
 
-    img {
-      width: 100%;
-      height: auto;
+    .escort-image {
+      display: inline-block;
+      overflow: hidden;
+      border-radius: 50%;
+      position: relative;
+      z-index: 1;
+      transition: box-shadow 300ms;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
     }
   }
 }

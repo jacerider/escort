@@ -1,0 +1,32 @@
+/**
+ * Left AND Right region only
+ */
+
+@include get-location($type: vertical, $region: right) {
+
+  &.icon-only {
+
+    .escort-region-after {
+      
+      .escort-aside-display-shelf {
+        right: $base-size-active;
+      }
+    }
+  }
+
+  .escort-region-after {
+
+    .escort-aside-display-shelf {
+      background-color: $bg-color-right;
+      right: $base-size * 2;
+
+      &.escort-active {
+        box-shadow: -10px 0 15px rgba($black, 0.2); // sass-lint:disable-line no-color-literals
+      }
+
+      > * {
+        color: smart-scale($bg-color-right, $scale: 66%);
+      }
+    }
+  }
+}

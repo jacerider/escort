@@ -13,11 +13,16 @@
   //   }
   // }
 
-  .escort-dropdown-content {
+  .escort-aside-display-dropdown {
     width: 100%;
+    height: 0;
     border-color: transparent;
 
-    .escort-content {
+    &.escort-active {
+      height: auto;
+    }
+
+    > div {
       width: 100%;
     }
   }

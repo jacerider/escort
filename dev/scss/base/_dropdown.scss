@@ -3,10 +3,10 @@
 // -----------------------------------------------------------------------------
 // Dropdown styles
 
-.escort-dropdown {
+.escort-type-aside.escort-container {
   position: relative;
 
-  .escort-dropdown-content:not(.escort-active) { // sass-lint:disable-line force-pseudo-nesting
+  .escort-aside-display-dropdown:not(.escort-active) { // sass-lint:disable-line force-pseudo-nesting
     padding: 0;
     border: 0;
     opacity: 0;
@@ -23,7 +23,7 @@
     }
   }
 
-  .escort-dropdown-content {
+  .escort-aside-display-dropdown {
 
     > .escort-inner {
       padding: 0;
@@ -32,7 +32,7 @@
 
   &.escort-active {
 
-    .escort-dropdown-content {
+    .escort-aside-display-dropdown {
       opacity: 1;
       max-height: $base-size-active * 4;
       visibility: visible;

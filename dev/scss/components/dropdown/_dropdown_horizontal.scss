@@ -5,7 +5,7 @@
 
   &.icon-only {
 
-    .escort-dropdown.escort-active {
+    .escort-type-aside.escort-container.escort-active {
 
       .has-icon:not(.escort-add):not(.escort-toggle) { // sass-lint:disable-line force-pseudo-nesting
 
@@ -36,7 +36,7 @@
     }
   }
 
-  .escort-dropdown.escort-active:not(.escort-type-user) {
+  .escort-type-aside.escort-container.escort-active:not(.escort-type-user) {
 
     > .escort-inner {
 
@@ -46,7 +46,7 @@
     }
   }
 
-  .escort-dropdown-content {
+  .escort-aside-display-dropdown {
     position: absolute;
     width: $base-size-active * 0.75;
   }
@@ -55,7 +55,7 @@
   .escort-mini-right,
   .escort-bottom-right {
 
-    .escort-dropdown-content {
+    .escort-aside-display-dropdown {
       right: 0;
     }
   }

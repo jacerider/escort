@@ -4,9 +4,16 @@
 // Styles applied to the aside display mode for widgets/escorts.
 
 .escort-aside-content {
-  display: none;
+  opacity: 0;
 
   &.escort-active {
-    display: block;
+    opacity: 1;
+  }
+}
+
+.escort-region-after {
+
+  .escort-aside-display-shelf {
+    transition: width 300ms, padding 300ms, left 300ms, right 300ms, box-shadow 300ms;
   }
 }

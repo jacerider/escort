@@ -5,10 +5,13 @@
 
 @include get-location($type: horizontal) {
 
-  .escort-container {
+  &.icon-only {
 
-    &.escort-preview {
-      padding: 0 $padding;
+    .escort-container {
+
+      &.escort-preview {
+        padding: 0 $padding;
+      }
     }
   }
 }

@@ -7,8 +7,8 @@
   position: fixed;
   top: 0;
   bottom: 0;
-  width: $base-size * 2.025;
-  overflow: hidden;
+  width: $base-size * 2;
+  overflow: visible;
   z-index: 5;
   font-size: $font-size * 1.1;
   box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals
@@ -17,18 +17,18 @@
   &.icon-only {
     width: $base-size;
 
-    .is-escort-admin & {
-      width: $base-size-active;
+    .escort-scroll {
+      width: $base-size + 1.5rem;
     }
 
-    > .escort-scroll {
-      width: $base-size + 1.5rem;
+    .is-escort-admin & {
+      width: $base-size-active;
     }
 
     .show-escort-full-left &,
     .show-escort-full-right & {
 
-      > .escort-scroll {
+      .escort-scroll {
         overflow-x: hidden;
         overflow-y: auto;
         width: $base-size-active + 1.5rem;
@@ -36,12 +36,13 @@
     }
   }
 
-  > .escort-scroll {
-    width: ($base-size * 2.025) + 1.5rem;
+  .escort-scroll {
+    width: ($base-size * 2) + 1.5rem;
     padding-right: $padding * 1.5;
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: scroll;
   }
 
   .escort-section {

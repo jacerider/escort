@@ -3,18 +3,18 @@
  */
 @include get-location($type: vertical, $region: right) {
 
-  .escort-dropdown {
+  .escort-type-aside.escort-container {
 
     &.escort-active {
 
-      .escort-dropdown-content {
+      .escort-aside-display-dropdown {
         border-top: 1px solid darken($bg-color-right, 10%);
         box-shadow: inset 0 0 20px adjust-color($bg-color-right, $saturation: 0%, $lightness: -6%);
       }
     }
   }
 
-  .escort-dropdown-content {
+  .escort-aside-display-dropdown {
     background: smart-scale($bg-color-right, $scale: -12%);
     box-shadow: inset 0 0 10px adjust-color($bg-color-right, $saturation: 0%, $lightness: -6%);
   }
