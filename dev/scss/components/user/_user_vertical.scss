@@ -12,19 +12,11 @@
       .escort-type-user {
 
         .escort-image {
-          margin: 0 auto;
+          margin: 0 $margin;
         }
 
         &.escort-aside-trigger {
-          padding: ($padding * 0.75) 0 ($padding * 2.4) !important;
-        }
-
-        .escort-content {
-
-          .escort-content {
-            display: block;
-            width: 100%;
-          }
+          padding: ($padding * 0.75) 0 !important;
         }
       }
     }
@@ -32,7 +24,7 @@
     .escort-type-user {
 
       .escort-aside-trigger {
-        padding: ($padding * 0.75) 0 ($padding * 2.4) !important;
+        padding: ($padding * 0.75) 0 !important;
       }
     }
   }
@@ -42,18 +34,17 @@
     .escort-type-user {
 
       .escort-image {
-        margin-left: $margin * -0.9;
+        margin-left: $margin * -0.8;
+        float: left;
       }
 
       .escort-aside-trigger {
-        padding: ($padding * 1.5) 0 !important;
+        padding: $padding 0 !important;
       }
 
       .escort-content {
-        
-        .escort-content {
-          display: none !important;
-        }
+        line-height: $padding * 4;
+        width: auto;
       }
     }
   }
@@ -63,15 +54,14 @@
     transition: padding 300ms, width 300ms;
 
     .escort-aside-trigger {
-      padding: ($padding * 0.75) 0 ($padding * 2.33) !important;
+      padding: ($padding * 0.75) 0 !important;
+    }
 
-      .escort-content {
-        display: block;
-        width: 100%;
-        position: absolute;
-        left: 0;
-        text-align: center !important;;
-      }
+    .escort-content {
+      display: block;
+      width: 100%;
+      left: 0;
+      text-align: center !important;;
     }
 
     .escort-image {
