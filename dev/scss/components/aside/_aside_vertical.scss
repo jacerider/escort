@@ -1,0 +1,29 @@
+/**
+ * Left AND Right region only
+ */
+
+@include get-location($type: vertical) {
+
+  .escort-region-after {
+
+    .escort-scroll {
+      overflow: hidden;
+      width: $base-size-active + 1.5rem;
+    }
+
+    .escort-aside-display-shelf {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 0;
+      overflow: hidden;
+      padding: $padding 0;
+      box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals
+
+      &.escort-active {
+        width: $base-size-active * 2;
+        padding: $padding;
+      }
+    }
+  }
+}

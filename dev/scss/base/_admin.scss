@@ -7,7 +7,7 @@
 
   @include get-location($type: vertical) {
 
-    > .escort-scroll {
+    .escort-scroll {
       overflow-x: hidden;
       overflow-y: auto;
       width: $base-size-active + 1.5rem;

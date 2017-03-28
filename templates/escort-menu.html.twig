@@ -32,12 +32,19 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes }}>
+      <ul class="escort-menu escort-lvl{{menu_level}} {{ attributes.class }}" {{ attributes|without('class') }}>
     {% else %}
       <ul>
     {% endif %}
     {% for item in items %}
-      <li{{ item.attributes }}>
+      {%
+        set classes = [
+          item.is_expanded ? 'escort-active',
+          item.is_collapsed ? 'escort-collapsed',
+          item.in_active_trail ? 'escort-active-trail',
+        ]
+      %}
+      <li{{ item.attributes.addClass(classes) }}>
         <a{{ item.link_attributes }}>
           <span class="escort-icon escort-prefix">
             {{ item.icon }}

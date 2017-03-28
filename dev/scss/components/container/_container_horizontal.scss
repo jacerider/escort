@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+// Container - Horizontal
+// -----------------------------------------------------------------------------
+// Styles applied
+
+@include get-location($type: horizontal) {
+
+  &.icon-only {
+
+    .escort-container {
+
+      &.escort-preview {
+        padding: 0 $padding;
+      }
+    }
+  }
+}

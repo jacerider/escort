@@ -1,0 +1,23 @@
+/**
+ * Top AND Bottom region only
+ */
+
+@include get-location($type: horizontal) {
+
+  .escort-region-after {
+
+    .escort-aside-display-shelf {
+      position: absolute;
+      height: 0;
+      width: 100%;
+      overflow: hidden;
+      padding: $padding 0;
+      box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals
+
+      &.escort-active {
+        height: $base-size-active * 2;
+        padding: $padding;
+      }
+    }
+  }
+}

@@ -5,11 +5,22 @@
 
   .escort-type-user {
 
-    .escort-dropdown-trigger {
+    .escort-aside-trigger {
+
+      .escort-active & {
+        background: none !important;
+        box-shadow: none !important;
+      }
 
       > .escort-inner {
         display: flex;
         padding: 0 $padding;
+
+        &:hover,
+        .escort-active & {
+          background: none !important;
+          box-shadow: none !important;
+        }
       }
     }
 
@@ -32,7 +43,6 @@
       overflow: hidden;
       border-radius: 50%;
       z-index: 3;
-      transition: margin 300ms, box-shadow 300ms;
 
       img {
         width: 100%;
@@ -49,7 +59,7 @@
       padding-left: 0 !important;
     }
 
-    .escort-type-user:not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
+    .escort-type-user:not(.escort-aside-display-dropdown) { // sass-lint:disable-line force-pseudo-nesting
 
       .escort-image {
 
@@ -85,7 +95,7 @@
       }
     }
 
-    .escort-type-user:not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
+    .escort-type-user:not(.escort-aside-display-dropdown) { // sass-lint:disable-line force-pseudo-nesting
 
       .escort-image {
 

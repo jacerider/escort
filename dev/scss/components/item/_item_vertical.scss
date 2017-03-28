@@ -28,7 +28,7 @@
       }
     }
 
-    .escort-item:not(.escort-group):not(.escort-dropdown-content) { // sass-lint:disable-line force-pseudo-nesting
+    .escort-item:not(.escort-group):not(.escort-aside-display-dropdown) { // sass-lint:disable-line force-pseudo-nesting
       padding: ($padding * 0.75) 0;
 
       &.escort-group {

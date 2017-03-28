@@ -3,15 +3,15 @@
  */
 @include get-location($type: horizontal, $region: top) {
 
-  .escort-dropdown {
+  .escort-type-aside.escort-container {
 
     &.escort-active {
 
-      .escort-dropdown-content {
+      .escort-aside-display-dropdown {
         top: 100%;
       }
 
-      .escort-dropdown-trigger {
+      .escort-aside-trigger {
 
         .escort-inner {
           // background: smart-scale($bg-color-top, $scale: -12%) !important;
@@ -21,10 +21,10 @@
     }
   }
 
-  .escort-dropdown-content {
-    top: 90%;
-    box-shadow: 0 4px 6px transparentize($black, 0.75);
-    background: smart-scale($bg-color-top, $scale: -12%);
+  .escort-aside-display-dropdown {
+    top: 98%;
+    box-shadow: 0 5px 6px transparentize($black, 0.75);
+    background: smart-scale($bg-color-top, $scale: 1%);
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
   }

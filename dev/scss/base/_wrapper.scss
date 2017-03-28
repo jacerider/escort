@@ -26,10 +26,6 @@
           padding-top: map-get($settings, size);
         }
 
-        @if (map-get($settings, position) == 'top') && (map-get($settings, position) == 'mini') {
-          padding-top: map-get($settings, size) * 1.75;
-        }
-
         @if map-get($settings, position) == 'bottom' {
           padding-bottom: map-get($settings, size);
         }
@@ -38,11 +34,11 @@
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          padding-left: map-get($settings, size)* 2.025;
+          padding-left: map-get($settings, size) * 2;
         }
 
         @if map-get($settings, position) == 'right' {
-          padding-right: map-get($settings, size)* 2.025;
+          padding-right: map-get($settings, size) * 2;
         }
       }
     }
@@ -89,5 +85,10 @@
         }
       }
     }
+  }
+
+  .has-escort-top.has-escort-mini:not(.hide-escort-mini) &,
+  .has-escort-top.has-escort-mini:not(.hide-escort-top) & {
+    padding-top: $base-size * 1.75;
   }
 }
