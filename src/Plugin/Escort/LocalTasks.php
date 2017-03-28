@@ -117,6 +117,7 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
     foreach ($tabs as $key => $tab) {
       $build[$key] = $this->buildLink($tab['#link']['title'], $tab['#link']['url'], $tab['#attributes']);
       $build[$key]['#weight'] = $tab['#weight'];
+      $build[$key]['#access'] = $tab['#access'];
     }
     return $build;
   }
