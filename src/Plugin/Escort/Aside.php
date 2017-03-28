@@ -29,23 +29,8 @@ class Aside extends Text {
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
-    return [
-      'content' => '',
-    ] + parent::defaultConfiguration();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function escortForm($form, FormStateInterface $form_state) {
-    $form = parent::escortForm($form, $form_state);
-    $form['content'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Content'),
-      '#default_value' => $this->configuration['content'],
-      '#required' => TRUE,
-    ];
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+    $form = parent::buildConfigurationForm($form, $form_state);
     $form['display'] = [
       '#type' => 'select',
       '#title' => $this->t('Display type'),
@@ -66,11 +51,13 @@ class Aside extends Text {
   /**
    * {@inheritdoc}
    */
-  public function escortSubmit($form, FormStateInterface $form_state) {
-    parent::escortSubmit($form, $form_state);
-    $this->configuration['content'] = $form_state->getValue('content');
-    $this->configuration['display'] = $form_state->getValue('display');
-    $this->configuration['ajax'] = $form_state->getValue('ajax');
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+    parent::submitConfigurationForm($form, $form_state);
+    // Process the escort's submission handling if no errors occurred only.
+    if (!$form_state->getErrors()) {
+      $this->configuration['display'] = $form_state->getValue('display');
+      $this->configuration['ajax'] = $form_state->getValue('ajax');
+    }
   }
 
   /**
@@ -89,17 +76,6 @@ class Aside extends Text {
    * {@inheritdoc}
    */
   protected function escortBuild() {
-    // $build = [
-    //   '#tag' => 'a',
-    //   '#icon' => $this->configuration['icon'],
-    //   '#markup' => $this->configuration['text'],
-    //   '#attributes' => [
-    //     'class' => ['escort-aside-trigger'],
-    //     'data-escort-aside' => $this->getEscort()->uuid(),
-    //     'data-escort-aside-display' => $this->configuration['display'],
-    //   ],
-    //   '#attached' => ['library' => ['escort/escort.aside']],
-    // ];
     $build = $this->escortBuildAsideTrigger();
     $build['#attributes']['class'][] = 'escort-aside-trigger';
     $build['#attributes']['data-escort-aside'] = $this->getEscort()->uuid();
@@ -118,6 +94,9 @@ class Aside extends Text {
    * Return aside trigger render array.
    */
   protected function escortBuildAsideTrigger() {
+    if (empty($this->configuration['text'])) {
+      return [];
+    }
     return [
       '#tag' => 'a',
       '#icon' => $this->configuration['icon'],
@@ -129,9 +108,7 @@ class Aside extends Text {
    * Return aside content render array.
    */
   protected function escortBuildAsideContent() {
-    return [
-      '#markup' => $this->configuration['content'],
-    ];
+    return [];
   }
 
   /**

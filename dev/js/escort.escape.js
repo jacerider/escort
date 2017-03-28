@@ -40,7 +40,6 @@
         else {
           $escortEscape.find('.escort-content').text(Drupal.t('Home'));
         }
-        console.log($escortEscape);
         $escortEscape.removeClass('escort-hidden');
       }
     }

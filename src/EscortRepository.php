@@ -87,6 +87,7 @@ class EscortRepository implements EscortRepositoryInterface {
       $cacheable_metadata = is_array($cacheable_metadata) ? $cacheable_metadata : [];
       $raw_regions = $this->escortRegionManager->getRaw(TRUE);
       $regions = $this->escortRegionManager->getRegions(TRUE);
+      $is_admin = $this->escortPathMatcher->isAdmin();
       $full = array();
       foreach ($this->escortStorage->loadByProperties(array('region' => array_keys($regions))) as $escort_id => $escort) {
         /** @var \Drupal\escort\Entity\EscortInterface $escort */
@@ -124,7 +125,7 @@ class EscortRepository implements EscortRepositoryInterface {
           // Allow escorts to remove themselves based on region requirements.
           foreach ($sections as $escort_id => $escort) {
             $plugin = $escort->getPlugin();
-            if ($plugin->isEmpty()) {
+            if (!$is_admin && $plugin->isEmpty()) {
               unset($sections[$escort_id]);
             }
             $require_region = $plugin->requireRegion();

@@ -7,7 +7,6 @@ use Drupal\Core\Form\FormStateInterface;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Ajax\PrependCommand;
 use Drupal\Core\Ajax\CloseDialogCommand;
 use Drupal\ux_dialog\Ajax\CloseUxDialogCommand;
 
@@ -63,7 +62,7 @@ trait EscortAjaxTrait {
       $response->addCommand(new CloseDialogCommand());
     }
     $response->addCommand(new ReplaceCommand('#escort', escort_render()));
-    $response->addCommand(new PrependCommand('#ux-document', ['#type' => 'status_messages']));
+    $response->addCommand(new ReplaceCommand('#escort-messages', ['#type' => 'status_messages']));
     return $response;
   }
 

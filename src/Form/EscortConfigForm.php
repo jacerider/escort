@@ -85,6 +85,8 @@ class EscortConfigForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('escort.config');
 
+    $form['messages']['#markup'] = '<div id="escort-messages"></div>';
+
     $form['enabled'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Regions'),
