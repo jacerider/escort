@@ -110,7 +110,21 @@ class Menu extends EscortPluginBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   protected function escortBuild() {
-    return $this->buildMenuTree($this->configuration['menu'], $this->configuration['level'], $this->configuration['depth']);
+    $build = $this->buildMenuTree($this->configuration['menu'], $this->configuration['level'], $this->configuration['depth']);
+    if ($build['#items']) {
+      $build['#items'] = $this->escortMenuTreeItems($build['#items']);
+    }
+    return $build;
+  }
+
+  protected function escortMenuTreeItems($items, $depth = 0) {
+    foreach ($items as $id => &$item) {
+      if ($item['below']) {
+        $item['wrapper_attributes']->addClass('escort-aside-display-dropdown');
+        $item['below'] = $this->escortMenuTreeItems($item['below'], $depth + 1);
+      }
+    }
+    return $items;
   }
 
   /**

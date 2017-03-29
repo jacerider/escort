@@ -31,14 +31,7 @@
 {% macro menu_links(items, attributes, menu_level) %}
   {% import _self as menus %}
   {% if items %}
-    {% if menu_level == 0 %}
-      <ul class="escort-lvl{{menu_level}} {{ attributes.class }}" {{ attributes|without('class') }}>
-    {% elseif menu_level > 0 %}
-      <div class="escort-aside-display-dropdown">
-      <ul class="escort-menu escort-lvl{{menu_level}} {{ attributes.class }}" {{ attributes|without('class') }}>
-    {% else %}
-      <ul>
-    {% endif %}
+    <ul class="escort-lvl{{menu_level}} {{ attributes.class }}" {{ attributes|without('class') }}>
     {% for item in items %}
       {%
         set classes = [
@@ -59,15 +52,10 @@
           </div>
         </a>
         {% if item.below %}
-          {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+          {{ menus.menu_links(item.below, item.wrapper_attributes, menu_level + 1) }}
         {% endif %}
       </li>
     {% endfor %}
-    {% if menu_level > 0 %}
-      </ul>
-      </div>
-    {% else %}
-      </ul>
-    {% endif %}
+    </ul>
   {% endif %}
 {% endmacro %}
