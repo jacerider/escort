@@ -31,6 +31,7 @@
 
   $.extend(EscortAsides.prototype, /** @lends Drupal.EscortAsides# */{
     active: false,
+    usedAjax: false,
 
     setup: function () {
       var _this = this;
@@ -73,18 +74,24 @@
       var _this = this;
       if (!_this.active) {
         _this.active = true;
+        if (_this.usesAjax && !_this.usedAjax) {
+          // The ajax click event prevents the document click from firing which
+          // keeps other asides open. We trigger the click manually.
+          _this.$document.trigger('click.escort-aside');
+          _this.usedAjax = true;
+        }
         _this.$wrapper.addClass('escort-active');
         _this.$content.addClass('escort-active');
         // Bind body click event.
         setTimeout(function () {
           // React to clicking on the body.
-          _this.$document.on('click.escort-aside', function (e) {
+          _this.$document.on('click.escort-aside.' + _this.id, function (e) {
             if (!$(e.target).closest('.escort-aside-content').length) {
               _this.hide();
             }
           });
           // React to region visibility.
-          _this.$document.on('escort-region:show escort-region:hide', function (e, $region) {
+          _this.$document.on('escort-region:show.' + _this.id + ' escort-region:hide.' + _this.id, function (e, $region) {
             _this.hide();
           });
         }, 10);
@@ -97,8 +104,8 @@
         _this.active = false;
         _this.$wrapper.removeClass('escort-active');
         _this.$content.removeClass('escort-active');
-        _this.$document.off('click.escort-aside');
-        _this.$document.off('escort-region:show escort-region:hide');
+        _this.$document.off('click.escort-aside.' + _this.id);
+        _this.$document.off('escort-region:show.' + _this.id + ' escort-region:hide.' + _this.id);
       }
     }
   });
