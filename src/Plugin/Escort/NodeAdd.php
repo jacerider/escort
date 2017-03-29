@@ -184,7 +184,7 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
       $access = $this->entityTypeManager->getAccessControlHandler($this->entityType)->createAccess($type->id(), NULL, [], TRUE);
       if ($access->isAllowed()) {
         $title = $type->label();
-        $title = MiconIconize::iconize($title)->setMatchString('content_type:' . $title);
+        $title = MiconIconize::iconize($title)->addMatchPrefix('content_type');
         $build['#links'][$type->id()] = [
           'title' => $title,
           'url' => new Url('node.add', array($this->entityTypeBundle => $type->id())),
