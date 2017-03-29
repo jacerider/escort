@@ -64,12 +64,16 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
   public function build();
 
   /**
-   * Builds and returns a renderable array that is returned via AJAX request.
+   * Builds and returns a renderable array of additional content.
+   *
+   * This is often called to load content via ajax.
    *
    * @return array
    *   A renderable array
+   *
+   * @see \Drupal\escort\Controller\EscortController::render
    */
-  public function buildAjax();
+  public function buildContent();
 
   /**
    * Builds and returns a renderable array that is added to the region.

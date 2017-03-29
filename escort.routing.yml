@@ -82,10 +82,10 @@ escort.escort_list_update:
     _permission: 'administer escorts'
     _method: POST
 
-escort.escort_ajax:
+escort.escort_render:
   path: '/api/escort/{escort}'
   defaults:
-    _controller: '\Drupal\escort\Controller\EscortController::ajax'
+    _controller: '\Drupal\escort\Controller\EscortController::render'
     _title: 'Escort'
   requirements:
     _permission: 'access escort'

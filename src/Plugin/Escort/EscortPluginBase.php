@@ -349,8 +349,8 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
   /**
    * {@inheritdoc}
    */
-  public function buildAjax() {
-    $build = $this->escortBuildAjax();
+  public function buildContent() {
+    $build = $this->escortBuildContent();
     return !empty($build) ? $build : [];
   }
 
@@ -360,8 +360,8 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    * @return array
    *   The renderable array.
    */
-  protected function escortBuildAjax() {
-    return NULL;
+  protected function escortBuildContent() {
+    return $this->escortBuild();
   }
 
   /**
