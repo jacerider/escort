@@ -5,7 +5,7 @@
 
   .escort-add {
 
-    > div {
+    > .escort-inner {
       @include button-style($region: bottom);
     }
   }

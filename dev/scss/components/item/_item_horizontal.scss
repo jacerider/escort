@@ -7,12 +7,9 @@
 
     .escort-item {
 
-      &:not(.escort-dropdown-content) {
-
-        > .escort-inner {
-          padding: 0 $padding;
-          width: auto !important;
-        }
+      > .escort-inner {
+        padding: 0 $padding;
+        width: auto !important;
       }
     }
   }

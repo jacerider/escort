@@ -3,8 +3,7 @@
 // -----------------------------------------------------------------------------
 // Dropdown styles
 
-.escort-type-aside.escort-container {
-  position: relative;
+.escort-container {
 
   .escort-aside-display-dropdown:not(.escort-active) { // sass-lint:disable-line force-pseudo-nesting
     padding: 0;
@@ -12,7 +11,6 @@
     opacity: 0;
     transition: opacity 200ms, box-shadow 300ms, max-height 200ms, top 300ms, bottom 300ms, padding 200ms, visibility 200ms;
     max-height: 0;
-    height: auto !important;
     display: block;
     overflow: hidden;
     visibility: hidden;
@@ -34,7 +32,7 @@
 
     .escort-aside-display-dropdown {
       opacity: 1;
-      max-height: $base-size-active * 4;
+      max-height: auto;
       visibility: visible;
     }
   }
