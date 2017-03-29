@@ -13,7 +13,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\micon\MiconIconize;
 
 /**
- * Defines a fallback plugin for missing block plugins.
+ * Defines a plugin for adding content.
  *
  * @Escort(
  *   id = "node_add",
