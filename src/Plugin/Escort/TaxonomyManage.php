@@ -86,7 +86,7 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    */
   public function defaultConfiguration() {
     return array(
-      'text' => $this->t('Manager Terms'),
+      'text' => $this->t('Manage Terms'),
       'icon' => 'fa-tags',
       'bundles' => [],
       'type' => 'include',
