@@ -7,7 +7,7 @@
   position: fixed;
   top: 0;
   bottom: 0;
-  width: $base-size * 1.99;
+  width: $base-size * 1.95;
   overflow: visible;
   z-index: 5;
   font-size: $font-size * 1.1;
@@ -35,12 +35,13 @@
   }
 
   .escort-scroll {
-    width: ($base-size * 1.99) + 1.25rem;
+    width: ($base-size * 1.9) + 1.25rem;
     padding-right: $padding * 1.25;
     height: 100%;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   .escort-section {

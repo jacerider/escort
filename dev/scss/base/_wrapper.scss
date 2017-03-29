@@ -34,11 +34,11 @@
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          padding-left: map-get($settings, size) * 2;
+          padding-left: map-get($settings, size) * 1.9;
         }
 
         @if map-get($settings, position) == 'right' {
-          padding-right: map-get($settings, size) * 2;
+          padding-right: map-get($settings, size) * 1.9;
         }
       }
     }
