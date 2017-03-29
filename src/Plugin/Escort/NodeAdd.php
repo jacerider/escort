@@ -150,6 +150,7 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function escortSubmit($form, FormStateInterface $form_state) {
+    parent::escortSubmit($form, $form_state);
     $this->configuration['bundles'] = array_filter($form_state->getValue('bundles'));
     $this->configuration['type'] = $form_state->getValue('type');
   }

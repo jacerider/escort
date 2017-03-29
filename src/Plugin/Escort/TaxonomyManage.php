@@ -4,7 +4,6 @@ namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -44,13 +43,6 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
   protected $entityTypeManager;
 
   /**
-   * The renderer service.
-   *
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected $renderer;
-
-  /**
    * Creates a LocalTasksEscort instance.
    *
    * @param array $configuration
@@ -62,10 +54,9 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    * @param \Drupal\Core\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
-    $this->renderer = $renderer;
   }
 
   /**
@@ -76,8 +67,7 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('renderer')
+      $container->get('entity_type.manager')
     );
   }
 
@@ -150,6 +140,7 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function escortSubmit($form, FormStateInterface $form_state) {
+    parent::escortSubmit($form, $form_state);
     $this->configuration['bundles'] = array_filter($form_state->getValue('bundles'));
     $this->configuration['type'] = $form_state->getValue('type');
   }
