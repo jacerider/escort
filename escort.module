@@ -163,6 +163,16 @@ function escort_preprocess_html(&$variables) {
 }
 
 /**
+ * Implements hook_entity_type_alter().
+ */
+function escort_entity_type_alter(array &$entity_types) {
+  // @var $entity_types \Drupal\Core\Entity\EntityTypeInterface[]
+  if (isset($entity_types['node'])) {
+    $entity_types['node']->setHandlerClass('escort_list_builder', 'Drupal\escort\EscortEntityListBuilder');
+  }
+}
+
+/**
  * Check if UX dialog module is installed.
  */
 function escort_ux_dialog_exists() {
