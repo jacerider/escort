@@ -12,7 +12,7 @@
       }
     }
 
-    > div {
+    > .escort-inner {
       @include button-style($region: mini);
     }
   }

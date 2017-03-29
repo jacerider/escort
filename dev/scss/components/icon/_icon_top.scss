@@ -9,69 +9,72 @@
 
   &.icon-only {
 
-    .escort-item.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
-
-      &:hover,
-      &:focus {
-
-        .escort-content {
-          top: 95%;
-        }
-      }
-
-      .escort-content {
-        @include css-triangle($base-size / 5, smart-scale($bg-color-top, 20%), up, before) {
-          bottom: 100%;
-          position: absolute;
-        };
-
-        background-color: smart-scale($bg-color-top, 20%);
-        top: 84%;
-        line-height: $base-size * 0.66;
-        box-shadow: 0 2px 5px rgba($black, 0.5); // sass-lint:disable-line no-color-literals
-        border-bottom-left-radius: $border-radius;
-        border-bottom-right-radius: $border-radius;
-      }
-    }
-
-    .escort-top-left {
+    .escort-container:not(.escort-preview) {
 
       .escort-item.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
 
-        .escort-inner:hover,
-        .escort-inner:focus {
-          border-bottom-right-radius: 0;
+        &:hover,
+        &:focus {
+
+          .escort-content {
+            top: 95%;
+          }
         }
 
         .escort-content {
-          left: 0;
-          border-top-right-radius: $border-radius;
+          @include css-triangle($base-size / 5, smart-scale($bg-color-top, 20%), up, before) {
+            bottom: 100%;
+            position: absolute;
+          };
 
-          &::before {
+          background-color: smart-scale($bg-color-top, 20%);
+          top: 84%;
+          line-height: $base-size * 0.66;
+          box-shadow: 0 2px 5px rgba($black, 0.5); // sass-lint:disable-line no-color-literals
+          border-bottom-left-radius: $border-radius;
+          border-bottom-right-radius: $border-radius;
+        }
+      }
+
+      .escort-top-left {
+
+        .escort-item.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
+
+          .escort-inner:hover,
+          .escort-inner:focus {
+            border-bottom-right-radius: 0;
+          }
+
+          .escort-content {
             left: 0;
-            border-left-width: 0;
+            border-top-right-radius: $border-radius;
+
+            &::before {
+              left: 0;
+              border-left-width: 0;
+            }
           }
         }
       }
-    }
 
-    .escort-top-right {
+      .escort-top-right {
 
-      .escort-item.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
+        .escort-item.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
 
-        .escort-inner:hover,
-        .escort-inner:focus {
-          border-bottom-left-radius: 0;
-        }
+          .escort-inner:hover,
+          .escort-inner:focus {
+            border-bottom-left-radius: 0;
+          }
 
-        .escort-content {
-          left: auto;
-          right: 0;
-          border-top-left-radius: $border-radius;
-
-          &::before {
+          .escort-content {
+            left: auto;
             right: 0;
-            border-right-width: 0;
+            border-top-left-radius: $border-radius;
+
+            &::before {
+              right: 0;
+              border-right-width: 0;
+            }
           }
         }
       }

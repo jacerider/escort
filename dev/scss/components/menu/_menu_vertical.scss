@@ -10,7 +10,7 @@
     }
   }
 
-  .escort-type-menu.escort-container {
+  .escort-type-menu.escort-container:not(.escort-preview) {
 
     > .escort-item {
       padding: 0 !important;

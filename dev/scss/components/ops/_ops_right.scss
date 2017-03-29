@@ -3,21 +3,25 @@
  */
 @include get-location($type: vertical, $region: right) {
 
-  .escort-container:hover,
-  .escort-container:focus { // sass-lint:disable-line force-pseudo-nesting
-      
-    .escort-ops {
+  .escort-sort {
 
-      li {
-        background-color: $bg-color-right;
+    .escort-container:hover,
+    .escort-container:focus { // sass-lint:disable-line force-pseudo-nesting
+        
+      .escort-ops {
+        border-bottom: 1px solid darken($bg-color-right, 5%);
+
+        li {
+          background-color: $bg-color-right;
+        }
+
+        a {
+          @include button-style($region: right, $transparent: true) {
+            display: block;
+            padding: $padding / 2;
+          };
+        }  
       }
-
-      a {
-        @include button-style($region: left, $transparent: true) {
-          display: block;
-          padding: $padding / 2;
-        };
-      }  
     }
   }
 }

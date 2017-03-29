@@ -32,7 +32,7 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul class="escort-menu escort-lvl{{menu_level}} {{ attributes.class }}" {{ attributes|without('class') }}>
+      <ul class="escort-lvl{{menu_level}} {{ attributes.class }}" {{ attributes|without('class') }}>
     {% elseif menu_level > 0 %}
       <div class="escort-aside-display-dropdown">
       <ul class="escort-menu escort-lvl{{menu_level}} {{ attributes.class }}" {{ attributes|without('class') }}>

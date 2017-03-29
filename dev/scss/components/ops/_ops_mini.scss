@@ -11,18 +11,21 @@
     border-bottom-right-radius: $border-radius;
   }
 
-  .escort-container:hover,
-  .escort-container:focus { // sass-lint:disable-line force-pseudo-nesting
-      
-    .escort-ops {
-      
-      a {
-        @include button-style($region: mini, $transparent: true) {
-          display: block;
-          padding: $padding / 3;
-          border: 0;
-        };
-      }  
+  .escort-sort {
+
+    .escort-container:hover,
+    .escort-container:focus { // sass-lint:disable-line force-pseudo-nesting
+        
+      .escort-ops {
+        
+        a {
+          @include button-style($region: mini, $transparent: true) {
+            display: block;
+            padding: $padding / 3;
+            border: 0;
+          };
+        }  
+      }
     }
   }
 }

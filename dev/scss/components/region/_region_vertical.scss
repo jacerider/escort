@@ -7,7 +7,7 @@
   position: fixed;
   top: 0;
   bottom: 0;
-  width: $base-size * 2;
+  width: $base-size * 1.99;
   overflow: visible;
   z-index: 5;
   font-size: $font-size * 1.1;
@@ -18,7 +18,7 @@
     width: $base-size;
 
     .escort-scroll {
-      width: $base-size + 1.5rem;
+      width: ($base-size * 0.95) + 1.25rem;
     }
 
     .is-escort-admin & {
@@ -29,16 +29,14 @@
     .show-escort-full-right & {
 
       .escort-scroll {
-        overflow-x: hidden;
-        overflow-y: auto;
-        width: $base-size-active + 1.5rem;
+        width: ($base-size-active * 0.99) + 1.25rem;
       }
     }
   }
 
   .escort-scroll {
-    width: ($base-size * 2) + 1.5rem;
-    padding-right: $padding * 1.5;
+    width: ($base-size * 1.99) + 1.25rem;
+    padding-right: $padding * 1.25;
     height: 100%;
     display: flex;
     flex-direction: column;

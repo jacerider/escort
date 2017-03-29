@@ -17,6 +17,10 @@
     z-index: 1;
     transition: width 300ms;
 
+    li {
+      display: none;
+    }
+
     li:nth-child(2) { // sass-lint:disable-line force-pseudo-nesting
       display: block;
       line-height: $base-size / 2 !important;
@@ -24,23 +28,26 @@
     }
   }
 
-  .escort-container:hover,
-  .escort-container:focus {
+  .escort-sort {
+    
+    .escort-container:hover,
+    .escort-container:focus {
 
-    .escort-ops {
-      width: $base-size * 2;
-      z-index: 2;
+      .escort-ops {
+        width: $base-size * 2;
+        z-index: 2;
 
-      li {
-        display: block;
-        padding: ($padding / 4) ($padding / 2);
-      }
+        li {
+          display: block;
+          padding: ($padding / 4) ($padding / 2);
+        }
 
-      li,
-      a {
-        line-height: $base-size / 2 !important;
-        border-radius: $border-radius;
-        margin-top: 0;
+        li,
+        a {
+          line-height: $base-size / 2 !important;
+          border-radius: $border-radius;
+          margin-top: 0;
+        }
       }
     }
   }
