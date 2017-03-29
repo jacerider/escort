@@ -7,7 +7,7 @@
 
     .escort-item {
 
-      &:not(.escort-group):not(.escort-dropdown-content) {
+      &:not(.escort-dropdown-content) {
 
         > .escort-inner {
           padding: 0 $padding;
@@ -55,14 +55,14 @@
       }
     }
 
-    &.is-active:not(.escort-group) {
+    &.is-active {
 
       > .escort-inner {
         padding: 0 ($padding * 1.1) 0 $padding;
       }
     }
 
-    &.escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-add):not(.is-active) {
+    &.escort-container:not(.escort-type-user):not(.escort-type-branding):not(.escort-add):not(.is-active) {
       padding: 0;
 
       &:last-child {

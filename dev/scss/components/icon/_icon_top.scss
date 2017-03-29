@@ -9,7 +9,7 @@
 
   &.icon-only {
 
-    .escort-link.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
+    .escort-item.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
 
       &:hover,
       &:focus {
@@ -36,7 +36,7 @@
 
     .escort-top-left {
 
-      .escort-link.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
+      .escort-item.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
 
         .escort-inner:hover,
         .escort-inner:focus {
@@ -57,7 +57,7 @@
 
     .escort-top-right {
 
-      .escort-link.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
+      .escort-item.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
 
         .escort-inner:hover,
         .escort-inner:focus {

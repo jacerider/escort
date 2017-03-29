@@ -61,11 +61,11 @@
 .escort-ops {
   display: none;
   position: absolute;
-  right: 0;
+  left: 0;
   margin: 0;
   padding: 0;
   list-style-type: none;
-  z-index: 1;
+  z-index: 4;
 
   li {
     text-align: center;

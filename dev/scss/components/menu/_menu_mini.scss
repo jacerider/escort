@@ -1,0 +1,19 @@
+/**
+ * Top AND Bottom region
+ */
+@include get-location($type: horizontal, $region: mini) {
+
+  .escort-menu {
+
+    > li {
+
+      > ul {
+        top: 98%;
+        box-shadow: 0 5px 6px transparentize($black, 0.75);
+        background: smart-scale($bg-color-mini, $scale: 1%);
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+      }
+    }
+  }
+}

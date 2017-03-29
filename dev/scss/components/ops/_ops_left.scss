@@ -3,6 +3,14 @@
  */
 @include get-location($type: vertical, $region: left) {
 
+  &:hover,
+  &:focus { // sass-lint:disable-line force-pseudo-nesting
+
+    .escort-ops {
+      border-bottom: 1px solid $bg-color-left;
+    }
+  }
+
   .escort-container:hover,
   .escort-container:focus { // sass-lint:disable-line force-pseudo-nesting
       

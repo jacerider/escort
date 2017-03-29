@@ -1,0 +1,48 @@
+/**
+ * Top AND Bottom region
+ */
+@include get-location($type: horizontal) {
+
+  .escort-menu {
+
+    > li {
+      display: inline-block;
+      float: left;
+
+      &:hover {
+
+        > ul {
+          opacity: 1;
+          max-height: $base-size-active * 4;
+          visibility: visible;
+        }
+      }
+
+      > ul {
+        position: absolute;
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        visibility: hidden;
+        transition: opacity 200ms, box-shadow 300ms, max-height 200ms, top 300ms, bottom 300ms, padding 200ms, visibility 200ms;
+      }
+    }
+  }
+
+  .escort-type-menu.escort-container {
+
+    > .escort-item {
+      float: none;
+      line-height: 0;
+      display: inline-block;
+
+      > .escort-inner {
+        background: none !important;
+        border: 0 !important;
+        padding: 0;
+        margin: 0;
+        box-shadow: none !important;
+      }
+    }
+  }
+}

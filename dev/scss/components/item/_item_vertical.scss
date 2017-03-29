@@ -8,16 +8,6 @@
     .escort-item {
       width: $base-size;
 
-      &.escort-group {
-
-        .escort-content {
-
-          .escort-content {
-            padding: 0;
-          }
-        }
-      }
-
       .is-escort-admin & {
         width: $base-size-active;
       }
@@ -28,19 +18,8 @@
       }
     }
 
-    .escort-item:not(.escort-group):not(.escort-aside-display-dropdown) { // sass-lint:disable-line force-pseudo-nesting
+    .escort-item:not(.escort-aside-display-dropdown) { // sass-lint:disable-line force-pseudo-nesting
       padding: ($padding * 0.75) 0;
-
-      &.escort-group {
-
-        .escort-content {
-          display: inline-block;
-
-          .escort-content {
-            display: inline-block;
-          }
-        }
-      }
 
       .escort-content {
         display: inline-block;
@@ -54,7 +33,7 @@
 
   .is-escort-admin & {
 
-    .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
+    .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
       padding: $padding 0;
 
       .escort-content {
@@ -70,20 +49,6 @@
     width: $base-size * 2.025;
     overflow: hidden;
     text-align: left;
-
-    &.escort-group {
-      display: block;
-      padding: 0;
-
-      .escort-content {
-        display: block;
-
-        .escort-content {
-          display: block;
-          padding: ($padding / 3) ($padding / 4) 0;
-        }
-      }
-    }
 
     .escort-content {
       display: block;

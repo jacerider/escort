@@ -45,13 +45,15 @@
         ]
       %}
       <li{{ item.attributes.addClass(classes) }}>
-        <a{{ item.link_attributes }}>
-          <span class="escort-icon escort-prefix">
-            {{ item.icon }}
-          </span>
-          <span class="escort-content">
-            {{ item.title }}
-          </span>
+        <a{{ item.link_attributes.addClass('has-icon') }}>
+          <div class="escort-inner">
+            <span class="escort-icon escort-prefix">
+              {{ item.icon }}
+            </span>
+            <span class="escort-content">
+              {{ item.title }}
+            </span>
+          </div>
         </a>
         {% if item.below %}
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}

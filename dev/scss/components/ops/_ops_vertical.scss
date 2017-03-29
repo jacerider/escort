@@ -43,6 +43,23 @@
 
       a {
         padding-right: $padding / 2;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+      }
+    }
+
+    > :nth-child(2) {
+
+      a {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+
+    > *:not(:last-child):not(:first-child):not(:nth-child(2)) {
+
+      a {
+        border-radius: 0;
       }
     }
   }
@@ -54,7 +71,7 @@
       width: 100%;
 
       li {
-        padding: $padding ($padding / 3);
+        padding: ($padding * 0.975) ($padding * 0.05);
         width: 25%;
         display: table-cell;
 

@@ -1,0 +1,20 @@
+/**
+ * Left AND Right region
+ */
+@include get-location($type: vertical) {
+
+  .escort-menu {
+
+    > li {
+      display: block;
+    }
+  }
+
+  .escort-type-menu.escort-container {
+
+    > .escort-item {
+      padding: 0 !important;
+      border: 0 !important;
+    }
+  }
+}

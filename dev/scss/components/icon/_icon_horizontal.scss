@@ -5,7 +5,7 @@
 
   &.icon-only {
 
-    .escort-link.has-icon:not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
+    .escort-item.has-icon:not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
 
       &:hover,
       &:focus {

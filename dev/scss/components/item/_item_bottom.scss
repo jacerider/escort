@@ -12,7 +12,7 @@
     line-height: $base-size * 0.97;
   }
 
-  .escort-link:not(.escort-type-user):not(.escort-type-branding):not(.escort-add):not(.is-active) {
+  .escort-container:not(.escort-type-user):not(.escort-type-branding):not(.escort-add):not(.is-active) {
 
     .escort-inner {
       @include button-style($region: bottom, $transparent: true);
@@ -20,7 +20,7 @@
     }
   }
 
-  .escort-item:not(.escort-add):not(.escort-group) { // sass-lint:disable-line force-pseudo-nesting
+  .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
     &:hover,
     &:focus {
