@@ -5,7 +5,7 @@
 
   &.icon-only {
 
-    .escort-type-aside.escort-container.escort-active {
+    .escort-container.escort-active {
 
       .has-icon:not(.escort-add):not(.escort-toggle) { // sass-lint:disable-line force-pseudo-nesting
 
@@ -36,7 +36,7 @@
     }
   }
 
-  .escort-type-aside.escort-container.escort-active:not(.escort-type-user) {
+  .escort-container.escort-active:not(.escort-type-user) {
 
     > .escort-inner {
 
