@@ -8,7 +8,7 @@ escort.list:
   base_route: escort.escort_config_form
   title: 'List'
 
-# escort.list:
-#   route_name: entity.escort.collection
-#   base_route: escort.escort_config_form
-#   title: 'List'
+escort.test:
+  route_name: escort.escort_test
+  base_route: escort.escort_config_form
+  title: 'Test'

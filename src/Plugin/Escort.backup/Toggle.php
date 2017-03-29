@@ -62,15 +62,6 @@ class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface
   /**
    * {@inheritdoc}
    */
-  public function mockConfiguration() {
-    return [
-      'region' => 'top',
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function requireRegion() {
     return $this->configuration['region'];
   }
@@ -109,7 +100,7 @@ class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface
   /**
    * {@inheritdoc}
    */
-  public function escortBuild() {
+  public function build() {
     $build = [];
     $build['#tag'] = 'a';
     $escort = $this->getEscort();

@@ -29,6 +29,15 @@ class Aside extends Text {
   /**
    * {@inheritdoc}
    */
+  public function mockConfiguration() {
+    return [
+      'ajax' => FALSE,
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
     $form['display'] = [

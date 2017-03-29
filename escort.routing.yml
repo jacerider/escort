@@ -17,6 +17,22 @@ escort.escort_list:
   requirements:
     _permission: 'administer escorts'
 
+escort.escort_test:
+  path: '/admin/config/escort/test'
+  defaults:
+    _controller: '\Drupal\escort\Controller\EscortTestController::listing'
+    _title: 'Escort test'
+  requirements:
+    _permission: 'administer escorts'
+
+escort.escort_test_plugin:
+  path: '/admin/config/escort/test/{plugin_id}'
+  defaults:
+    _controller: '\Drupal\escort\Controller\EscortTestController::test'
+    _title: 'Escort test'
+  requirements:
+    _permission: 'administer escorts'
+
 escort.escort_library:
   path: '/admin/config/escort/library'
   defaults:
