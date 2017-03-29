@@ -1,0 +1,14 @@
+uuid: 09664d8e-e375-4566-a73d-787fecf9c746
+langcode: en
+status: true
+dependencies: {  }
+name: escort
+label: Escort
+effects:
+  f4afefe7-5de8-4204-a050-b7751098bfc0:
+    uuid: f4afefe7-5de8-4204-a050-b7751098bfc0
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 128
+      height: 128
