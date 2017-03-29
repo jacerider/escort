@@ -99,7 +99,7 @@ class Menu extends EscortPluginBase implements ContainerFactoryPluginInterface {
    *
    * When in admin mode, we simply display the label.
    */
-  public function preview() {
+  public function escortPreview() {
     return [
       '#icon' => 'fa-th-list',
       '#markup' => $this->label(TRUE) . ' ' . $this->t('Placeholder'),
