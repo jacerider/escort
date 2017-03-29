@@ -22,7 +22,16 @@
      *
      * @type {Array.<Drupal.Escort>}
      */
-    instances: []
+    instances: [],
+
+    /**
+     * Hide full version of all instances.
+     */
+    hideFull: function () {
+      for (var i = 0, len = this.instances.length; i < len; i++) {
+        this.instances[i].hideFull();
+      }
+    }
   });
 
   $.extend(Escort.prototype, /** @lends Drupal.Escort# */{
