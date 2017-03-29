@@ -4,7 +4,6 @@ namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Url;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -13,29 +12,29 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\micon\MiconIconize;
 
 /**
- * Defines a plugin for adding content.
+ * Defines a plugin for managing taxonomy terms.
  *
  * @Escort(
- *   id = "node_add",
- *   admin_label = @Translation("Node Add"),
- *   category = @Translation("Node"),
+ *   id = "taxonomy_manage",
+ *   admin_label = @Translation("Taxonomy Manage"),
+ *   category = @Translation("Taxonomy"),
  * )
  */
-class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
+class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
 
   /**
    * The entity type.
    *
    * @var string
    */
-  protected $entityType = 'node';
+  protected $entityType = 'taxonomy_term';
 
   /**
    * The entity type bundle.
    *
    * @var string
    */
-  protected $entityTypeBundle = 'node_type';
+  protected $entityTypeBundle = 'taxonomy_vocabulary';
 
   /**
    * The entity type manager.
@@ -52,7 +51,7 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
   protected $renderer;
 
   /**
-   * Adds a LocalTasksEscort instance.
+   * Creates a LocalTasksEscort instance.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
@@ -87,18 +86,17 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
    */
   public function defaultConfiguration() {
     return array(
-      'text' => $this->t('Add Content'),
-      'icon' => 'fa-plus-circle',
+      'text' => $this->t('Manager Terms'),
+      'icon' => 'fa-tags',
       'bundles' => [],
       'type' => 'include',
-    ) + parent::defaultConfiguration();
+    );
   }
 
   /**
    * {@inheritdoc}
    */
   protected function escortAccess(AccountInterface $account) {
-    $access_control_handler = $this->entityTypeManager->getAccessControlHandler($this->entityType);
     $entity_types = $this->entityTypeManager->getStorage($this->entityTypeBundle)->loadMultiple();
 
     // No entity types currently exist.
@@ -107,13 +105,16 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
     }
 
     // If checking whether a entity of a particular type may be created.
-    if ($account->hasPermission('administer content types')) {
+    if ($account->hasPermission('administer taxonomy')) {
       return AccessResult::allowed()->cachePerPermissions();
     }
+
     // If checking whether a entity of any type may be created.
-    foreach ($entity_types as $entity_type) {
-      if (($access = $access_control_handler->createAccess($entity_type->id(), $account, [], TRUE)) && $access->isAllowed()) {
-        return $access;
+    if (\Drupal::moduleHandler()->moduleExists('taxonomy_access_fix')) {
+      foreach ($entity_types as $entity_type) {
+        if (taxonomy_access_fix_access('list terms', $entity_type)) {
+          return AccessResult::allowed()->cachePerPermissions();
+        }
       }
     }
 
@@ -125,7 +126,6 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function escortForm($form, FormStateInterface $form_state) {
-    $form = parent::escortForm($form, $form_state);
     $options = [];
     foreach ($this->entityTypeManager->getStorage($this->entityTypeBundle)->loadMultiple() as $entity) {
       $options[$entity->id()] = $entity->label();
@@ -164,6 +164,7 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
       '#attributes' => ['class' => ['escort-grid']],
       '#cache' => [
         'tags' => $this->entityTypeManager->getDefinition($this->entityTypeBundle)->getListCacheTags(),
+        'contexts' => ['user.permissions'],
       ],
     ];
 
@@ -180,17 +181,22 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
       }
     }
 
+    $access = \Drupal::currentUser()->hasPermission('administer taxonomy');
+    $has_taxonomy_access_fix = \Drupal::moduleHandler()->moduleExists('taxonomy_access_fix');
+
     foreach ($entities as $type) {
-      $access = $this->entityTypeManager->getAccessControlHandler($this->entityType)->createAccess($type->id(), NULL, [], TRUE);
-      if ($access->isAllowed()) {
+      $type_access = $access;
+      if (!$type_access && $has_taxonomy_access_fix) {
+        $type_access = taxonomy_access_fix_access('list terms', $type);
+      }
+      if ($type_access) {
         $title = $type->label();
-        $title = MiconIconize::iconize($title)->addMatchPrefix('content_type');
+        $title = MiconIconize::iconize($title)->addMatchPrefix('vocabulary');
         $build['#links'][$type->id()] = [
           'title' => $title,
-          'url' => new Url('node.add', array($this->entityTypeBundle => $type->id())),
+          'url' => $type->toUrl('overview-form'),
         ];
       }
-      $this->renderer->addCacheableDependency($build, $access);
     }
     return $build;
   }

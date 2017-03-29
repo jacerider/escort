@@ -22,7 +22,7 @@ class Aside extends Text {
   protected function baseConfigurationDefaults() {
     return [
       'display' => 'dropdown',
-      'ajax' => FALSE,
+      'ajax' => TRUE,
     ] + parent::baseConfigurationDefaults();
   }
 
