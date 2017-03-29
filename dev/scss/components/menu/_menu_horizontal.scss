@@ -11,14 +11,14 @@
 
       &:hover {
 
-        > ul {
+        > .escort-aside-display-dropdown {
           opacity: 1;
           max-height: $base-size-active * 4;
           visibility: visible;
         }
       }
 
-      > ul {
+      > .escort-aside-display-dropdown {
         position: absolute;
         opacity: 0;
         max-height: 0;

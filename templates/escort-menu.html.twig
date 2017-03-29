@@ -34,7 +34,8 @@
     {% if menu_level == 0 %}
       <ul class="escort-menu escort-lvl{{menu_level}} {{ attributes.class }}" {{ attributes|without('class') }}>
     {% elseif menu_level > 0 %}
-      <ul class="escort-menu escort-aside-display-dropdown escort-lvl{{menu_level}} {{ attributes.class }}" {{ attributes|without('class') }}>
+      <div class="escort-aside-display-dropdown">
+      <ul class="escort-menu escort-lvl{{menu_level}} {{ attributes.class }}" {{ attributes|without('class') }}>
     {% else %}
       <ul>
     {% endif %}
@@ -62,6 +63,11 @@
         {% endif %}
       </li>
     {% endfor %}
-    </ul>
+    {% if menu_level > 0 %}
+      </ul>
+      </div>
+    {% else %}
+      </ul>
+    {% endif %}
   {% endif %}
 {% endmacro %}

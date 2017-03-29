@@ -48,7 +48,19 @@
 
   .escort-aside-display-dropdown {
     position: absolute;
-    width: $base-size-active * 0.75;
+    min-width: $base-size-active * 0.75;
+
+    .escort-menu {
+
+      li {
+        float: none;
+        display: block;
+
+        > .escort-item {
+          text-align: left;
+        }
+      }
+    }
   }
 
   .escort-top-right,
