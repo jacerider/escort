@@ -20,7 +20,6 @@ function template_preprocess_escort(&$variables) {
   // Prepare the escort attributes.
   $variables['attributes'] = $element['#attributes'];
   $variables['after'] = !empty($element['#after']) ? $element['#after'] : NULL;
-  $variables['before'] = !empty($element['#before']) ? $element['#before'] : NULL;
 
   foreach (Element::children($element) as $prefix) {
     $variables['content'][$prefix] = $element[$prefix];
@@ -42,7 +41,6 @@ function template_preprocess_escort_region(&$variables) {
   // Prepare the escort attributes.
   $variables['attributes'] = $element['#attributes'];
   $variables['after'] = !empty($element['#after']) ? $element['#after'] : NULL;
-  $variables['before'] = !empty($element['#before']) ? $element['#before'] : NULL;
 
   foreach (Element::children($element) as $prefix) {
     $variables['content'][$prefix] = $element[$prefix];
