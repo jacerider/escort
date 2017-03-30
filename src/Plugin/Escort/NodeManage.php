@@ -9,6 +9,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
+use Drupal\micon\MiconIconize;
 
 /**
  * Defines a plugin for managing content.
@@ -125,10 +126,10 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
     $form = parent::escortForm($form, $form_state);
     $options = [];
     foreach ($this->entityTypeManager->getStorage($this->entityTypeBundle)->loadMultiple() as $entity) {
-      $options[$entity->id()] = $entity->label();
+      $options[$entity->id()] = MiconIconize::iconize($entity->label())->addMatchPrefix('content_type');
     }
     $form['bundle'] = [
-      '#type' => 'select',
+      '#type' => 'radios',
       '#title' => $this->t('Bundle'),
       '#options' => $options,
       '#required' => TRUE,
