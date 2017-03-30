@@ -112,11 +112,15 @@ class Escort extends RenderElement {
           // wrapper.
           if ($build_suffix = $plugin->buildElementSuffix()) {
             $element['#after'][$key] = $build_suffix;
-            $section_cacheable_metadata = $element_cachable_metadata->merge(CacheableMetadata::createFromRenderArray($build_suffix));
+            $element_cachable_metadata = $element_cachable_metadata->merge(CacheableMetadata::createFromRenderArray($build_suffix));
           }
         }
         // Section cache apply.
         $section_cacheable_metadata->applyTo($element[$group_id][$section_id]);
+        // If #after is not empty we need to add cache data
+        if (!empty($element[$group_id]['#after'])) {
+          $section_cacheable_metadata->applyTo($element[$group_id]['#after']);
+        }
         // Region cache add.
         $region_cacheable_metadata = $region_cacheable_metadata->merge(CacheableMetadata::createFromRenderArray($element[$group_id][$section_id]));
       }
@@ -127,6 +131,10 @@ class Escort extends RenderElement {
     }
     // Element cache apply.
     $element_cachable_metadata->applyTo($element);
+    // If #after is not empty we need to add cache data
+    if (!empty($element['#after'])) {
+      $section_cacheable_metadata->applyTo($element['#after']);
+    }
     return $element;
   }
 
