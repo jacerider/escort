@@ -54,6 +54,7 @@ class Aside extends Text {
         'modal' => $this->t('Modal'),
       ],
       '#default_value' => $this->configuration['display'],
+      '#required' => TRUE,
     ];
     $form['display_size'] = [
       '#type' => 'textfield',
