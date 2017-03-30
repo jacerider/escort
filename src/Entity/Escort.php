@@ -123,13 +123,6 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
   protected $conditionPluginManager;
 
   /**
-   * The plugin instance.
-   *
-   * @var \Drupal\escort\Plugin\Escort\EscortPluginInterface
-   */
-  protected $pluginInstance;
-
-  /**
    * Flag that indicates if escort is dynamic/temporary.
    *
    * @var bool
@@ -199,10 +192,7 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
    * {@inheritdoc}
    */
   public function getPlugin() {
-    if (!isset($this->pluginInstance)) {
-      $this->pluginInstance = $this->getPluginCollection()->get($this->plugin);
-    }
-    return $this->pluginInstance;
+    return $this->getPluginCollection()->get($this->plugin);
   }
 
   /**
