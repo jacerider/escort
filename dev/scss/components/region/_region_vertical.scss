@@ -10,7 +10,7 @@
   width: $base-size * 1.95;
   overflow: visible;
   z-index: 5;
-  font-size: $font-size * 1.1;
+  font-size: $font-size;
   box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals
   transform: translate(0, 0);
 

@@ -3,24 +3,27 @@
  */
 @include get-location($type: horizontal) {
 
-  .escort-menu:not(.escort-lvl0) {
+  &.icon-only {
 
-    .escort-item.has-icon:not(.escort-add):not(.is-active) {
+    .escort-menu:not(.escort-lvl0) {
 
-      .escort-content {
-        position: relative;
-        background: none;
-        box-shadow: none;
-        padding: 0;
-        top: auto;
-        display: inline-block;
-        visibility: visible;
-        opacity: 1;
-        height: auto;
-        line-height: $base-size * 0.97;
+      .escort-item.has-icon:not(.escort-add):not(.is-active) {
 
-        &:before {
-          display: none;
+        .escort-content {
+          position: relative;
+          background: none;
+          box-shadow: none;
+          padding: 0;
+          top: auto;
+          display: inline-block;
+          visibility: visible;
+          opacity: 1;
+          height: auto;
+          line-height: $base-size * 0.97;
+
+          &:before {
+            display: none;
+          }
         }
       }
     }
