@@ -2,27 +2,34 @@
 
 namespace Drupal\escort\Plugin\Escort;
 
-use Drupal\Component\Plugin\ConfigurablePluginInterface;
-use Drupal\Core\Plugin\PluginFormInterface;
-use Drupal\Component\Plugin\PluginInspectionInterface;
-use Drupal\Core\Cache\CacheableDependencyInterface;
 use Drupal\Component\Plugin\DerivativeInspectionInterface;
-use Drupal\escort\Entity\EscortInterface;
+use Drupal\Core\Cache\CacheableDependencyInterface;
+use Drupal\Component\Plugin\PluginInspectionInterface;
+use Drupal\Component\Plugin\ConfigurablePluginInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\Core\Session\AccountInterface;
 
 /**
  * Defines the required interface for all escort plugins.
+ *
+ * @todo Add detailed documentation here explaining the escort system's
+ *   architecture and the relationships between the various objects, including
+ *   brief references to the important components that are not coupled to the
+ *   interface.
  *
  * @ingroup escort_api
  */
 interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormInterface, PluginInspectionInterface, CacheableDependencyInterface, DerivativeInspectionInterface {
 
   /**
-   * Returns the admin-facing escort label.
+   * Returns the user-facing escort label.
+   *
+   * @todo Provide other specific label-related methods in
+   *   https://www.drupal.org/node/2025649.
    *
    * @return string
-   *   The escort admin label.
+   *   The escort label.
    */
   public function label();
 
@@ -64,38 +71,6 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
   public function build();
 
   /**
-   * Builds and returns a renderable array of additional content.
-   *
-   * This is often called to load content via ajax.
-   *
-   * @return array
-   *   A renderable array
-   *
-   * @see \Drupal\escort\Controller\EscortController::render
-   */
-  public function buildContent();
-
-  /**
-   * Builds and returns a renderable array that is added to the region.
-   *
-   * Will be added within the region wrapper the current plugin is assigned to.
-   *
-   * @return array
-   *   A renderable array.
-   */
-  public function buildRegionSuffix();
-
-  /**
-   * Builds and returns a renderable array that is added to the element.
-   *
-   * Will be added within the global element wrapper.
-   *
-   * @return array
-   *   A renderable array.
-   */
-  public function buildElementSuffix();
-
-  /**
    * Sets a particular value in the escort settings.
    *
    * @param string $key
@@ -103,9 +78,29 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
    * @param mixed $value
    *   The value to set for the provided key.
    *
+   * @todo This doesn't belong here. Move this into a new base class in
+   *   https://www.drupal.org/node/1764380.
+   * @todo This does not set a value in \Drupal::config(), so the name is confusing.
+   *
    * @see \Drupal\Component\Plugin\PluginBase::$configuration
    */
   public function setConfigurationValue($key, $value);
+
+  /**
+   * Returns the base configuration form elements.
+   *
+   * Escorts that need to add form elements to the normal escort configuration
+   * form should implement escortForm.
+   *
+   * @param array $form
+   *   The form definition array for the escort configuration form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return array
+   *   The renderable form array representing the entire configuration form.
+   */
+  public function escortBaseForm($form, FormStateInterface $form_state);
 
   /**
    * Returns the configuration form elements specific to this escort plugin.
@@ -124,6 +119,23 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
   public function escortForm($form, FormStateInterface $form_state);
 
   /**
+   * Adds escort base validation for the escort form.
+   *
+   * Note that this method takes the form structure and form state for the full
+   * escort configuration form as arguments, not just the elements defined in
+   * EscortPluginInterface::escortForm().
+   *
+   * @param array $form
+   *   The form definition array for the full escort configuration form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortBaseForm()
+   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortBaseSubmit()
+   */
+  public function escortBaseValidate($form, FormStateInterface $form_state);
+
+  /**
    * Adds escort type-specific validation for the escort form.
    *
    * Note that this method takes the form structure and form state for the full
@@ -135,10 +147,27 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    *
-   * @see \Drupal\Core\Escort\EscortPluginInterface::escortForm()
-   * @see \Drupal\Core\Escort\EscortPluginInterface::escortSubmit()
+   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortForm()
+   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortSubmit()
    */
   public function escortValidate($form, FormStateInterface $form_state);
+
+  /**
+   * Adds escort base submission handling for the escort form.
+   *
+   * Note that this method takes the form structure and form state for the full
+   * escort configuration form as arguments, not just the elements defined in
+   * EscortPluginInterface::escortForm().
+   *
+   * @param array $form
+   *   The form definition array for the full escort configuration form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortBaseForm()
+   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortBaseValidate()
+   */
+  public function escortBaseSubmit($form, FormStateInterface $form_state);
 
   /**
    * Adds escort type-specific submission handling for the escort form.
@@ -152,97 +181,10 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    *
-   * @see \Drupal\Core\Escort\EscortPluginInterface::escortForm()
-   * @see \Drupal\Core\Escort\EscortPluginInterface::escortValidate()
+   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortForm()
+   * @see \Drupal\escort\Plugin\Escort\EscortPluginInterface::escortValidate()
    */
   public function escortSubmit($form, FormStateInterface $form_state);
-
-  /**
-   * Returns attributes that will be added to the HTML doc body.
-   *
-   * @var bool $is_admin
-   *   TRUE if page is an admin page.
-   *
-   * @return array
-   *   An associative attributes array.
-   */
-  public function getBodyAttributes($is_admin);
-
-  /**
-   * Sets the escort entity this plugin belongs to.
-   */
-  public function setEscort(EscortInterface $escort);
-
-  /**
-   * Sets the escort entity this plugin belongs to.
-   */
-  public function getEscort();
-
-  /**
-   * Called when building the current escort repository list.
-   *
-   * If a escort should not be rendered because it has no data this method
-   * should return TRUE.
-   *
-   * @return bool
-   *   If TRUE this plugin will not be rendered.
-   */
-  public function isEmpty();
-
-  /**
-   * Checks if we are in admin mode.
-   *
-   * @return bool
-   *   True if in admin mode.
-   */
-  public function isAdmin();
-
-  /**
-   * Checks if this is a temporary plugin.
-   *
-   * @return bool
-   *   True if temporary.
-   */
-  public function isTemporary();
-
-  /**
-   * Sets plugin as temporary.
-   */
-  public function enforceIsTemporary();
-
-  /**
-   * Checks if this is an immediate plugin.
-   *
-   * @return bool
-   *   True if immediate.
-   */
-  public function isImmediate();
-
-  /**
-   * Sets plugin as immediate. It will render without using a lazy loader.
-   */
-  public function enforceIsImmediate();
-
-  /**
-   * Checks if this is a test plugin.
-   *
-   * @return bool
-   *   True if test.
-   */
-  public function isTest();
-
-  /**
-   * Sets plugin as test. Used when testing plugin output.
-   */
-  public function enforceIsTest();
-
-  /**
-   * Allow a plugin to require that another region has escorts.
-   *
-   * @return null|region_id
-   *   Return region id if plugin requires that another region has escorts.
-   */
-  public function requireRegion();
 
   /**
    * Suggests a machine name to identify an instance of this escort.
@@ -255,5 +197,13 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
    *   The suggested machine name.
    */
   public function getMachineNameSuggestion();
+
+  /**
+   * Whether the display provides multiple escorts.
+   *
+   * @return bool
+   *   Defaults to FALSE.
+   */
+  public function usesMultiple();
 
 }

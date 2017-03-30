@@ -73,14 +73,15 @@ class EscortPathMatcher implements EscortPathMatcherInterface {
         $this->isAdmin = FALSE;
       }
       else {
-        $pages = ['/admin/config/escort', '/admin/config/escort/*'];
+        $include = ['/admin/config/escort', '/admin/config/escort/*'];
+        $exclude = ['/admin/config/escort/test/*'];
         $request = $this->requestStack->getCurrentRequest();
         // Compare the lowercase path alias (if any) and internal path.
         $path = $this->currentPath->getPath($request);
         // Do not trim a trailing slash if that is the complete path.
         $path = $path === '/' ? $path : rtrim($path, '/');
         // Set static variable.
-        $this->isAdmin = $this->pathMatcher->matchPath($path, implode($pages, "\n"));
+        $this->isAdmin = $this->pathMatcher->matchPath($path, implode($include, "\n")) && !$this->pathMatcher->matchPath($path, implode($exclude, "\n"));
       }
     }
     return $this->isAdmin;

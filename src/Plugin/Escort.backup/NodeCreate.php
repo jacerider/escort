@@ -4,36 +4,37 @@ namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
-use Drupal\micon\MiconIconize;
 
 /**
- * Defines a plugin for managing taxonomy terms.
+ * Defines a fallback plugin for missing block plugins.
  *
  * @Escort(
- *   id = "taxonomy_manage",
- *   admin_label = @Translation("Taxonomy Manage"),
- *   category = @Translation("Taxonomy"),
+ *   id = "node_create",
+ *   admin_label = @Translation("Node Create"),
+ *   category = @Translation("Node"),
  * )
  */
-class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
+class NodeCreate extends Dropdown implements ContainerFactoryPluginInterface {
 
   /**
    * The entity type.
    *
    * @var string
    */
-  protected $entityType = 'taxonomy_term';
+  protected $entityType = 'node';
 
   /**
    * The entity type bundle.
    *
    * @var string
    */
-  protected $entityTypeBundle = 'taxonomy_vocabulary';
+  protected $entityTypeBundle = 'node_type';
 
   /**
    * The entity type manager.
@@ -41,6 +42,13 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    * @var \Drupal\Core\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
+
+  /**
+   * The renderer service.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
 
   /**
    * Creates a LocalTasksEscort instance.
@@ -54,9 +62,10 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    * @param \Drupal\Core\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
+    $this->renderer = $renderer;
   }
 
   /**
@@ -67,7 +76,8 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('renderer')
     );
   }
 
@@ -76,8 +86,6 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    */
   public function defaultConfiguration() {
     return array(
-      'text' => $this->t('Manage Terms'),
-      'icon' => 'fa-tags',
       'bundles' => [],
       'type' => 'include',
     );
@@ -87,6 +95,7 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   protected function escortAccess(AccountInterface $account) {
+    $access_control_handler = $this->entityTypeManager->getAccessControlHandler($this->entityType);
     $entity_types = $this->entityTypeManager->getStorage($this->entityTypeBundle)->loadMultiple();
 
     // No entity types currently exist.
@@ -95,16 +104,13 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
     }
 
     // If checking whether a entity of a particular type may be created.
-    if ($account->hasPermission('administer taxonomy')) {
+    if ($account->hasPermission('administer content types')) {
       return AccessResult::allowed()->cachePerPermissions();
     }
-
     // If checking whether a entity of any type may be created.
-    if (\Drupal::moduleHandler()->moduleExists('taxonomy_access_fix')) {
-      foreach ($entity_types as $entity_type) {
-        if (taxonomy_access_fix_access('list terms', $entity_type)) {
-          return AccessResult::allowed()->cachePerPermissions();
-        }
+    foreach ($entity_types as $entity_type) {
+      if (($access = $access_control_handler->createAccess($entity_type->id(), $account, [], TRUE)) && $access->isAllowed()) {
+        return $access;
       }
     }
 
@@ -140,7 +146,6 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function escortSubmit($form, FormStateInterface $form_state) {
-    parent::escortSubmit($form, $form_state);
     $this->configuration['bundles'] = array_filter($form_state->getValue('bundles'));
     $this->configuration['type'] = $form_state->getValue('type');
   }
@@ -148,14 +153,13 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  protected function escortBuildAsideContent() {
+  protected function buildDropdown() {
     $build = [
       '#theme' => 'links',
       '#links' => [],
       '#attributes' => ['class' => ['escort-grid']],
       '#cache' => [
         'tags' => $this->entityTypeManager->getDefinition($this->entityTypeBundle)->getListCacheTags(),
-        'contexts' => ['user.permissions'],
       ],
     ];
 
@@ -172,22 +176,19 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
       }
     }
 
-    $access = \Drupal::currentUser()->hasPermission('administer taxonomy');
-    $has_taxonomy_access_fix = \Drupal::moduleHandler()->moduleExists('taxonomy_access_fix');
-
     foreach ($entities as $type) {
-      $type_access = $access;
-      if (!$type_access && $has_taxonomy_access_fix) {
-        $type_access = taxonomy_access_fix_access('list terms', $type);
-      }
-      if ($type_access) {
+      $access = $this->entityTypeManager->getAccessControlHandler($this->entityType)->createAccess($type->id(), NULL, [], TRUE);
+      if ($access->isAllowed()) {
         $title = $type->label();
-        $title = MiconIconize::iconize($title)->addMatchPrefix('vocabulary');
+        if ($this->hasIconSupport()) {
+          $title = micon($title)->setMatchString('content_type:' . $title);
+        }
         $build['#links'][$type->id()] = [
           'title' => $title,
-          'url' => $type->toUrl('overview-form'),
+          'url' => new Url('node.add', array($this->entityTypeBundle => $type->id())),
         ];
       }
+      $this->renderer->addCacheableDependency($build, $access);
     }
     return $build;
   }

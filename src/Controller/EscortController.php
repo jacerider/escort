@@ -4,8 +4,6 @@ namespace Drupal\escort\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\escort\Entity\EscortInterface;
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\HtmlCommand;
 
 /**
  * Controller for building the escort add form.
@@ -21,13 +19,9 @@ class EscortController extends ControllerBase {
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The ajax response.
    */
-  public function ajax(EscortInterface $escort = NULL) {
+  public function render(EscortInterface $escort = NULL) {
     $plugin = $escort->getPlugin();
-    $build = $plugin->buildAjax();
-    $id = '#escort-ajax-' . $escort->uuid();
-    $response = new AjaxResponse();
-    $response->addCommand(new HtmlCommand($id, $build));
-    return $response;
+    return $plugin->buildContent();
   }
 
 }

@@ -4,6 +4,9 @@ namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Defines a text plugin.
@@ -12,6 +15,7 @@ use Drupal\Core\Url;
  *   id = "aside",
  *   admin_label = @Translation("Aside"),
  *   category = @Translation("Basic"),
+ *   no_ui = TRUE
  * )
  */
 class Aside extends Text {
@@ -22,8 +26,18 @@ class Aside extends Text {
   protected function baseConfigurationDefaults() {
     return [
       'display' => 'dropdown',
+      'display_size' => 700,
       'ajax' => TRUE,
     ] + parent::baseConfigurationDefaults();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function mockConfiguration() {
+    return [
+      'ajax' => FALSE,
+    ];
   }
 
   /**
@@ -37,8 +51,20 @@ class Aside extends Text {
       '#options' => [
         'dropdown' => $this->t('Dropdown'),
         'shelf' => $this->t('Shelf'),
+        'modal' => $this->t('Modal'),
       ],
       '#default_value' => $this->configuration['display'],
+    ];
+    $form['display_size'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Display size'),
+      '#field_suffix' => 'px',
+      '#default_value' => $this->configuration['display_size'],
+      '#states' => [
+        'visible' => [
+          'select[name="settings[display]"]' => ['value' => 'modal'],
+        ],
+      ],
     ];
     $form['ajax'] = array(
       '#type' => 'checkbox',
@@ -82,9 +108,18 @@ class Aside extends Text {
     $build['#attributes']['data-escort-aside-display'] = $this->configuration['display'];
     $build['#attached']['library'][] = 'escort/escort.aside';
 
+    // Modal specific additions.
+    if ($this->configuration['display'] == 'modal') {
+      $build['#attached']['library'][] = escort_dialog_library();
+      $build['#attributes']['data-dialog-type'] = escort_dialog_type();
+      $build['#attributes']['data-dialog-options'] = Json::encode([
+        'width' => $this->configuration['display_size'],
+      ]);
+    }
+
     if ($this->configuration['ajax']) {
       $build['#attributes']['data-escort-ajax'] = '';
-      $build['#attributes']['href'] = Url::fromRoute('escort.escort_ajax', ['escort' => $this->getEscort()->id()])->toString();
+      $build['#attributes']['href'] = Url::fromRoute('escort.escort_render', ['escort' => $this->getEscort()->id()])->toString();
       $build['#attached']['library'][] = 'core/drupal.ajax';
     }
     return $build;
@@ -144,8 +179,17 @@ class Aside extends Text {
   /**
    * {@inheritdoc}
    */
-  public function escortBuildAjax() {
-    return $this->escortBuildAsideContent();
+  public function escortBuildContent() {
+    $build = $this->escortBuildAsideContent();
+    if ($this->configuration['display'] == 'modal') {
+      return $build;
+    }
+    $id = '#escort-ajax-' . $this->getEscort()->uuid();
+    $response = new AjaxResponse();
+    if (!empty($build)) {
+      $response->addCommand(new HtmlCommand($id, $build));
+    }
+    return $response;
   }
 
 }

@@ -53,6 +53,27 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
   protected $usesIcon = TRUE;
 
   /**
+   * Flag that indicates if escort is dynamic/temporary.
+   *
+   * @var bool
+   */
+  protected $isTemporary = FALSE;
+
+  /**
+   * Flag that indicates if escort is rendered without a lazy loader.
+   *
+   * @var bool
+   */
+  protected $isImmediate = FALSE;
+
+  /**
+   * Flag that indicates if escort should use test content.
+   *
+   * @var bool
+   */
+  protected $isTest = FALSE;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition) {
@@ -78,6 +99,12 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    * {@inheritdoc}
    */
   public function getConfiguration() {
+    if ($this->isTest()) {
+      $this->configuration = NestedArray::mergeDeep(
+        $this->configuration,
+        $this->mockConfiguration()
+      );
+    }
     return $this->configuration;
   }
 
@@ -114,6 +141,16 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
+    return [];
+  }
+
+  /**
+   * Return configuration used when testing and mocking a plugin isntance.
+   *
+   * @return array
+   *   An associative array with the mock configuration.
+   */
+  protected function mockConfiguration() {
     return [];
   }
 
@@ -249,9 +286,9 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
     $plugin_id = $this->getPluginId();
     $base_id = $this->getBaseId();
     $derivative_id = $this->getDerivativeId();
-    $configuration = $this->getConfiguration();
     $is_admin = $this->isAdmin();
     $is_temporary = $this->isTemporary();
+    $configuration = $this->getConfiguration();
 
     if ($is_admin && $content = $this->escortPreview()) {
       $build = [$content];
@@ -312,8 +349,8 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
   /**
    * {@inheritdoc}
    */
-  public function buildAjax() {
-    $build = $this->escortBuildAjax();
+  public function buildContent() {
+    $build = $this->escortBuildContent();
     return !empty($build) ? $build : [];
   }
 
@@ -323,8 +360,8 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    * @return array
    *   The renderable array.
    */
-  protected function escortBuildAjax() {
-    return NULL;
+  protected function escortBuildContent() {
+    return $this->escortBuild();
   }
 
   /**
@@ -370,6 +407,16 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    *   The renderable array representing a single escort item.
    */
   protected function escortPreview() {
+    return NULL;
+  }
+
+  /**
+   * The render array to use for escort testing.
+   *
+   * @return array
+   *   The renderable array representing a single escort item.
+   */
+  protected function escortTest() {
     return NULL;
   }
 
@@ -467,6 +514,36 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    */
   public function enforceIsTemporary() {
     $this->enforceIsTemporary = TRUE;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isImmediate() {
+    return !empty($this->enforceIsImmediate);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function enforceIsImmediate() {
+    $this->enforceIsImmediate = TRUE;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isTest() {
+    return !empty($this->enforceIsTest);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function enforceIsTest() {
+    $this->enforceIsTest = TRUE;
     return $this;
   }
 

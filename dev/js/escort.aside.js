@@ -11,6 +11,7 @@
     this.$wrapper = $(wrapper);
     this.$trigger = this.$wrapper.find('.escort-aside-trigger');
     this.id = this.$trigger.data('escort-aside');
+    this.dialogType = this.$trigger.data('dialog-type');
     this.display = this.$trigger.data('escort-aside-display');
     this.$content = $('#escort-ajax-' + this.id);
     this.usesAjax = typeof this.$trigger.data('escort-ajax') !== 'undefined';
@@ -38,12 +39,18 @@
       _this.ajax();
       _this.$trigger.on('click.aside', function (e) {
         e.preventDefault();
-        _this.$trigger.off('click.aside.ajax');
 
         if (_this.active) {
           _this.hide();
         }
         else {
+          // Only unbind if link not handled by Drupal modal.
+          if (_this.dialogType) {
+            Drupal.Escort.hideFull();
+          }
+          else {
+            _this.$trigger.off('click.aside.ajax');
+          }
           _this.show();
         }
       });
@@ -61,8 +68,10 @@
           // than the usual location.
           element_settings.url = $(this).attr('href');
           element_settings.event = 'click.aside.ajax';
-          element_settings.dialogType = $(this).data('dialog-type');
-          element_settings.dialog = $(this).data('dialog-options');
+          if (_this.dialogType) {
+            element_settings.dialogType = _this.dialogType;
+            element_settings.dialog = $(this).data('dialog-options');
+          }
           element_settings.base = $(this).attr('id');
           element_settings.element = this;
           Drupal.ajax(element_settings);

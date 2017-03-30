@@ -20,30 +20,20 @@ class Text extends EscortPluginBase {
    */
   public function defaultConfiguration() {
     return array(
-      'text' => '',
+      'title' => '',
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function mockConfiguration() {
-    return [
-      'text' => 'Escort Text',
-      'icon' => 'fa-empire',
-    ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function escortForm($form, FormStateInterface $form_state) {
-    $form['text'] = [
+    $form['title'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Text'),
-      '#default_value' => $this->configuration['text'],
-      '#required' => TRUE,
+      '#title' => $this->t('Title'),
+      '#default_value' => $this->configuration['title'],
     ];
+
     return $form;
   }
 
@@ -51,14 +41,14 @@ class Text extends EscortPluginBase {
    * {@inheritdoc}
    */
   public function escortSubmit($form, FormStateInterface $form_state) {
-    $this->configuration['text'] = $form_state->getValue('text');
+    $this->configuration['title'] = $form_state->getValue('title');
   }
 
   /**
    * {@inheritdoc}
    */
-  protected function escortBuild() {
-    return ['#markup' => $this->configuration['text']];
+  public function build() {
+    return ['#markup' => $this->configuration['title']];
   }
 
 }

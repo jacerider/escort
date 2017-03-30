@@ -38,6 +38,17 @@ class Link extends Text {
   /**
    * {@inheritdoc}
    */
+  public function mockConfiguration() {
+    return [
+      'text' => 'Escort Links',
+      'icon' => 'fa-rebel',
+      'url' => 'http://www.github.com/jacerider/escort',
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function escortForm($form, FormStateInterface $form_state) {
     $form = parent::escortForm($form, $form_state);
     $form['url'] = [

@@ -4,24 +4,22 @@ namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Url;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
-use Drupal\micon\MiconIconize;
 
 /**
- * Defines a plugin for adding content.
+ * Defines a plugin for managing content.
  *
  * @Escort(
- *   id = "node_add",
- *   admin_label = @Translation("Node Add"),
+ *   id = "node_manage",
+ *   admin_label = @Translation("Node Manage"),
  *   category = @Translation("Node"),
  * )
  */
-class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
+class NodeManage extends Aside implements ContainerFactoryPluginInterface {
 
   /**
    * The entity type.
@@ -52,7 +50,7 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
   protected $renderer;
 
   /**
-   * Adds a LocalTasksEscort instance.
+   * Manages a LocalTasksEscort instance.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
@@ -87,10 +85,9 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
    */
   public function defaultConfiguration() {
     return array(
-      'text' => $this->t('Add Content'),
-      'icon' => 'fa-plus-circle',
-      'bundles' => [],
-      'type' => 'include',
+      'text' => $this->t('Manage [TYPE]'),
+      'icon' => 'fa-edit',
+      'bundle' => '',
     ) + parent::defaultConfiguration();
   }
 
@@ -130,18 +127,12 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
     foreach ($this->entityTypeManager->getStorage($this->entityTypeBundle)->loadMultiple() as $entity) {
       $options[$entity->id()] = $entity->label();
     }
-    $form['bundles'] = [
-      '#type' => 'checkboxes',
-      '#title' => $this->t('Bundles'),
+    $form['bundle'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Bundle'),
       '#options' => $options,
-      '#default_value' => $this->configuration['bundles'],
-    ];
-    $form['type'] = [
-      '#type' => 'radios',
-      '#title' => $this->t('Type'),
-      '#options' => ['include' => $this->t('Include'), 'exclude' => $this->t('Exclude')],
-      '#default_value' => $this->configuration['type'],
       '#required' => TRUE,
+      '#default_value' => $this->configuration['bundle'],
     ];
     return $form;
   }
@@ -151,48 +142,15 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
    */
   public function escortSubmit($form, FormStateInterface $form_state) {
     parent::escortSubmit($form, $form_state);
-    $this->configuration['bundles'] = array_filter($form_state->getValue('bundles'));
-    $this->configuration['type'] = $form_state->getValue('type');
+    $this->configuration['bundle'] = $form_state->getValue('bundle');
   }
 
   /**
    * {@inheritdoc}
    */
   protected function escortBuildAsideContent() {
-    $build = [
-      '#theme' => 'links',
-      '#links' => [],
-      '#attributes' => ['class' => ['escort-grid']],
-      '#cache' => [
-        'tags' => $this->entityTypeManager->getDefinition($this->entityTypeBundle)->getListCacheTags(),
-      ],
-    ];
-
-    $entities = $this->entityTypeManager->getStorage($this->entityTypeBundle)->loadMultiple();
-    if ($bundles = $this->configuration['bundles']) {
-      switch ($this->configuration['type']) {
-        case 'include':
-          $entities = array_intersect_key($entities, $bundles);
-          break;
-
-        case 'exclude':
-          $entities = array_diff_key($entities, $bundles);
-          break;
-      }
-    }
-
-    foreach ($entities as $type) {
-      $access = $this->entityTypeManager->getAccessControlHandler($this->entityType)->createAccess($type->id(), NULL, [], TRUE);
-      if ($access->isAllowed()) {
-        $title = $type->label();
-        $title = MiconIconize::iconize($title)->addMatchPrefix('content_type');
-        $build['#links'][$type->id()] = [
-          'title' => $title,
-          'url' => new Url('node.add', array($this->entityTypeBundle => $type->id())),
-        ];
-      }
-      $this->renderer->addCacheableDependency($build, $access);
-    }
+    $build = [];
+    $build['list'] = $this->entityTypeManager->getHandler($this->entityType, 'escort_list_builder')->setTypes([$this->configuration['bundle']])->render();
     return $build;
   }
 

@@ -4,22 +4,22 @@ namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
-use Drupal\micon\MiconIconize;
 
 /**
- * Defines a plugin for managing taxonomy terms.
+ * Defines a fallback plugin for missing block plugins.
  *
  * @Escort(
- *   id = "taxonomy_manage",
+ *   id = "taxonomy",
  *   admin_label = @Translation("Taxonomy Manage"),
  *   category = @Translation("Taxonomy"),
  * )
  */
-class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
+class Taxonomy extends Dropdown implements ContainerFactoryPluginInterface {
 
   /**
    * The entity type.
@@ -43,6 +43,13 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
   protected $entityTypeManager;
 
   /**
+   * The renderer service.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
    * Creates a LocalTasksEscort instance.
    *
    * @param array $configuration
@@ -54,9 +61,10 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    * @param \Drupal\Core\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
+    $this->renderer = $renderer;
   }
 
   /**
@@ -67,7 +75,8 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('renderer')
     );
   }
 
@@ -76,8 +85,6 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    */
   public function defaultConfiguration() {
     return array(
-      'text' => $this->t('Manage Terms'),
-      'icon' => 'fa-tags',
       'bundles' => [],
       'type' => 'include',
     );
@@ -140,7 +147,6 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function escortSubmit($form, FormStateInterface $form_state) {
-    parent::escortSubmit($form, $form_state);
     $this->configuration['bundles'] = array_filter($form_state->getValue('bundles'));
     $this->configuration['type'] = $form_state->getValue('type');
   }
@@ -148,7 +154,7 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  protected function escortBuildAsideContent() {
+  protected function buildDropdown() {
     $build = [
       '#theme' => 'links',
       '#links' => [],
@@ -182,7 +188,9 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
       }
       if ($type_access) {
         $title = $type->label();
-        $title = MiconIconize::iconize($title)->addMatchPrefix('vocabulary');
+        if ($this->hasIconSupport()) {
+          $title = micon($title)->setMatchString('vocabulary:' . $title);
+        }
         $build['#links'][$type->id()] = [
           'title' => $title,
           'url' => $type->toUrl('overview-form'),

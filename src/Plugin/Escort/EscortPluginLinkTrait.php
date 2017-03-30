@@ -6,6 +6,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Access\AccessResult;
 use Drupal\micon\MiconIconize;
 use Drupal\Core\Template\Attribute;
+use Drupal\Core\Menu\MenuTreeParameters;
 
 /**
  * A trait that provides link utilities.
@@ -203,7 +204,7 @@ trait EscortPluginLinkTrait {
    *   The menu deptch to render.
    */
   protected function buildMenuTree($menu_name, $level = 1, $depth = 1) {
-    $parameters = $this->menuTree->getCurrentRouteMenuTreeParameters($menu_name);
+    $parameters = new MenuTreeParameters();
 
     // Adjust the menu tree parameters based on the block's configuration.
     $level = $level;
@@ -248,6 +249,7 @@ trait EscortPluginLinkTrait {
       $url = $item['url'];
       // $bla = $this->getUriAsAttributes($url);
       $attributes['class'][] = 'escort-item';
+      $item['wrapper_attributes'] = new Attribute();
       $item['link_attributes'] = new Attribute($this->getUriAsAttributes($url, $attributes));
       if ($item['below']) {
         $item['below'] = $this->buildMenuTreeItems($item['below']);

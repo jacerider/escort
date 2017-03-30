@@ -50,6 +50,16 @@ class EscortRepository implements EscortRepositoryInterface {
   protected $currentUser;
 
   /**
+   * A plugin id used for testing.
+   *
+   * If this plugin will be dynaimcally generated and placed into each possible
+   * region. Used for testing only.
+   *
+   * @var string
+   */
+  protected $isTest;
+
+  /**
    * Constructs a new EscortRepository.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -83,6 +93,10 @@ class EscortRepository implements EscortRepositoryInterface {
    * {@inheritdoc}
    */
   public function getEscortsPerRegion(array &$cacheable_metadata = NULL) {
+    // Allow testing
+    if ($this->isTest) {
+      return $this->getEscortsTest();
+    }
     if (!isset($this->escorts) || is_array($cacheable_metadata)) {
       $cacheable_metadata = is_array($cacheable_metadata) ? $cacheable_metadata : [];
       $raw_regions = $this->escortRegionManager->getRaw(TRUE);
@@ -176,6 +190,32 @@ class EscortRepository implements EscortRepositoryInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function enforceIsTest($plugin_id) {
+    $this->isTest = $plugin_id;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEscortsTest() {
+    $escorts = [];
+    $raw_regions = $this->escortRegionManager->getRaw(TRUE);
+    foreach ($raw_regions as $group_id => $group) {
+      foreach ($group['sections'] as $section_id => $section) {
+        // Create 'add' escort to every available region.
+        $escort = $this->createEscort($this->isTest, [
+          'region' => $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $section_id,
+        ], $group_id, $section_id);
+        $escort->getPlugin()->enforceIsImmediate()->enforceIsTest();
+        $escorts[$group_id][$section_id]['test'] = $escort;
+      }
+    }
+    return $escorts;
+  }
+
+  /**
    * Create a dynamic escort.
    */
   protected function createEscort($plugin_id, $plugin_settings, $group_id, $section_id, $weight = 0) {
@@ -188,6 +228,7 @@ class EscortRepository implements EscortRepositoryInterface {
       'weight' => $weight,
       'region' => $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $section_id,
     ])->setPlugin($plugin)->enforceIsTemporary();
+    $plugin->setEscort($escort);
     return $escort;
   }
 

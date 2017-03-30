@@ -108,7 +108,7 @@ class EscortViewBuilder extends EntityViewBuilder {
       // Allow altering of cacheability metadata or setting #create_placeholder.
       $this->moduleHandler->alter(['escort_build', "escort_build_" . $plugin->getBaseId()], $build[$entity_id], $plugin);
 
-      if ($plugin instanceof EscortPluginImmediateInterface) {
+      if ($plugin instanceof EscortPluginImmediateInterface || $plugin->isImmediate()) {
         // Immediately build a #pre_render-able escort, since this escort cannot
         // be built lazily.
         $build[$entity_id] += static::buildPreRenderableEscort($entity, $this->moduleHandler());
@@ -214,7 +214,7 @@ class EscortViewBuilder extends EntityViewBuilder {
     $derivative_id = $plugin->getDerivativeId();
     $configuration = $plugin->getConfiguration();
     $is_admin = \Drupal::service('escort.path.matcher')->isAdmin();
-    $is_temporary = $entity->isTemporary();
+    $is_temporary = $plugin->isTemporary();
     $cacheability = CacheableMetadata::createFromRenderArray($build);
 
     $content = $plugin->build();
