@@ -114,10 +114,9 @@ class EscortForm extends EntityForm {
 
     $form['#tree'] = TRUE;
     $form['settings'] = [];
-    $form['visibility'] = $this->buildVisibilityInterface([], $form_state);
-
     $subform_state = SubformState::createForSubform($form['settings'], $form, $form_state);
     $form['settings'] = $this->getPluginForm($entity->getPlugin())->buildConfigurationForm($form['settings'], $subform_state);
+    $form['visibility'] = $this->buildVisibilityInterface([], $form_state);
 
     // If creating a new escort, calculate a safe default machine name.
     $form['id'] = array(
