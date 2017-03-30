@@ -7,6 +7,8 @@ use Drupal\Core\Url;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheableMetadata;
 
 /**
  * Defines a text plugin.
@@ -180,8 +182,40 @@ class Aside extends Text {
   /**
    * {@inheritdoc}
    */
-  public function escortBuildContent() {
-    $build = $this->escortBuildAsideContent();
+  public function buildContent() {
+    $build = $this->escortBuildContent();
+    return !empty($build) ? $build : [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function escortBuildContent() {
+    $build = [];
+
+    $escort = $this->getEscort();
+
+    $cache_tags = Cache::mergeTags(['escort_view'], $escort->getCacheTags());
+    $cache_tags = Cache::mergeTags($cache_tags, $this->getCacheTags());
+
+    $build['#cache'] = [
+      'keys' => ['escort_view', 'escort', $escort->id()],
+      'contexts' => Cache::mergeContexts(
+        $escort->getCacheContexts(),
+        $this->getCacheContexts()
+      ),
+      'tags' => $cache_tags,
+      'max-age' => $this->getCacheMaxAge(),
+    ];
+
+    $content = $this->escortBuildAsideContent();
+    $build['content'] = $content;
+
+    $cachable_metadata = CacheableMetadata::createFromRenderArray($build);
+    $cachable_metadata = $cachable_metadata->merge(CacheableMetadata::createFromRenderArray($content));
+    $cachable_metadata->applyTo($build);
+
+    // $build = $this->escortBuildAsideContent();
     if ($this->configuration['display'] == 'modal') {
       return $build;
     }
