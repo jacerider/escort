@@ -70,6 +70,18 @@ class View extends Aside implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
+  public function mockConfiguration() {
+    return [
+      'text' => 'Escort View',
+      'icon' => 'fa-rebel',
+      'view_id' => 'who_s_online',
+      'view_display_id' => 'default',
+    ] + parent::mockConfiguration();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function escortForm($form, FormStateInterface $form_state) {
     $form = parent::escortForm($form, $form_state);
 
