@@ -1,7 +1,7 @@
 .is-escort-admin {
 
   .escort-item {
-    
+
     .escort-drag {
       position: absolute;
       top: 0;
@@ -18,6 +18,18 @@
 }
 
 .escort-sorting {
+
+  // When sorting we need to be able to see the item if it is dragged
+  // outside of the escort section.
+  .escort-scroll,
+  .escort-container {
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+
+  .ui-sortable-helper {
+    background: $primary-color;
+  }
 
   .escort-placeholder {
     display: block;
