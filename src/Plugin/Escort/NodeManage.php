@@ -96,22 +96,14 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   protected function escortAccess(AccountInterface $account) {
-    $access_control_handler = $this->entityTypeManager->getAccessControlHandler($this->entityType);
-    $entity_types = $this->entityTypeManager->getStorage($this->entityTypeBundle)->loadMultiple();
 
-    // No entity types currently exist.
-    if (empty($entity_types)) {
-      return AccessResult::neutral();
-    }
-
-    // If checking whether a entity of a particular type may be created.
     if ($account->hasPermission('administer content types')) {
       return AccessResult::allowed()->cachePerPermissions();
     }
-    // If checking whether a entity of any type may be created.
-    foreach ($entity_types as $entity_type) {
-      if (($access = $access_control_handler->createAccess($entity_type->id(), $account, [], TRUE)) && $access->isAllowed()) {
-        return $access;
+
+    if ($bundle = $this->configuration['bundle']) {
+      if ($account->hasPermission("edit any $bundle content") || $account->hasPermission("edit own $bundle content")) {
+        return AccessResult::allowed()->cachePerPermissions();
       }
     }
 
@@ -131,8 +123,8 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
     $form['bundle'] = [
       '#type' => 'radios',
       '#title' => $this->t('Bundle'),
+      '#description' => $this->t('If no bundle is selected, all bundles will be available.'),
       '#options' => $options,
-      '#required' => TRUE,
       '#default_value' => $this->configuration['bundle'],
     ];
     return $form;
