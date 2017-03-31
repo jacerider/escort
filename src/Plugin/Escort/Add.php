@@ -24,6 +24,7 @@ class Add extends EscortPluginBase implements EscortPluginImmediateInterface {
     return array(
       'region' => NULL,
       'icon' => 'fa-plus',
+      'weight' => 200,
     );
   }
 
@@ -36,7 +37,7 @@ class Add extends EscortPluginBase implements EscortPluginImmediateInterface {
     $build['#attributes']['href'] = Url::fromRoute('escort.escort_library', [], [
       'query' => [
         'region' => $this->configuration['region'],
-        'weight' => 200,
+        'weight' => $this->configuration['weight'],
       ],
     ])->toString();
     $build['#attributes']['class'][] = 'escort-add';

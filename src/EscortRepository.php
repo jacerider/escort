@@ -93,7 +93,7 @@ class EscortRepository implements EscortRepositoryInterface {
    * {@inheritdoc}
    */
   public function getEscortsPerRegion(array &$cacheable_metadata = NULL) {
-    // Allow testing
+    // Allow testing.
     if ($this->isTest) {
       return $this->getEscortsTest();
     }
@@ -178,15 +178,52 @@ class EscortRepository implements EscortRepositoryInterface {
       foreach ($raw_regions as $group_id => $group) {
         $offset = 1;
         foreach ($group['sections'] as $section_id => $section) {
+          $weight = 0;
+          if (isset($escorts[$group_id][$section_id]) && count($escorts[$group_id][$section_id])) {
+            if ($offset == 1) {
+              $weight = $this->getWeight($escorts[$group_id][$section_id], 'max') + 1;
+            }
+            else {
+              $weight = $this->getWeight($escorts[$group_id][$section_id], 'min') - 1;
+            }
+          }
           // Create 'add' escort to every available region.
           $escort = $this->createEscort('add', [
             'region' => $group_id . EscortRegionManagerInterface::ESCORT_REGION_SECTION_SEPARATOR . $section_id,
-          ], $group_id, $section_id, 1000 * $offset);
+            'weight' => $weight,
+          ], $group_id, $section_id, $weight);
           $escorts[$group_id][$section_id]['add'] = $escort;
           $offset = -1;
         }
       }
     }
+  }
+
+  /**
+   * Get the max or min weight of escorts within a collection.
+   *
+   * @var array $escorts
+   *   An array of \Drupal\escort\Entity\EscortInterface
+   * @var array $type
+   *   Either min or max
+   *
+   * @return int
+   *   The min or max weight.
+   */
+  protected function getWeight($escorts, $type = 'min') {
+    $weight = 0;
+    foreach ($escorts as $escort) {
+      $w = $escort->getWeight();
+      switch ($type) {
+        case 'min':
+          $weight = $w < $weight ? $w : $weight;
+          break;
+        case 'max':
+          $weight = $w > $weight ? $w : $weight;
+          break;
+      }
+    }
+    return $weight;
   }
 
   /**
