@@ -16,6 +16,9 @@
 
         .escort-site-name {
           display: inline-block;
+          line-height: $base-size * 1.5;
+          margin-left: $margin / 2;
+          margin-bottom: 0;
         }
 
         .escort-content {
@@ -32,6 +35,8 @@
 
       .escort-site-name {
         display: block;
+        line-height: $base-size / 2;
+        margin-bottom: $margin / 2;
       }
 
       img {
