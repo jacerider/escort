@@ -11,10 +11,6 @@
 
       .escort-type-user {
 
-        .escort-image {
-          margin: 0 $margin;
-        }
-
         &.escort-aside-trigger {
           padding: ($padding * 0.75) 0 !important;
         }
@@ -34,7 +30,7 @@
     .escort-type-user {
 
       .escort-image {
-        margin-left: $margin * -0.8;
+        margin-left: $margin * -0.95;
         float: left;
       }
 
@@ -43,8 +39,8 @@
       }
 
       .escort-content {
-        line-height: $padding * 4;
         width: auto;
+        display: none;
       }
     }
   }
@@ -61,7 +57,25 @@
       display: block;
       width: 100%;
       left: 0;
-      text-align: center !important;;
+      text-align: center !important;
+    }
+
+    .escort-aside-display-dropdown {
+      border: 0;
+    }
+
+    .escort-menu {
+      
+      li:first-child {
+
+        a {
+          border-top: 0;
+        }
+      }
+
+      .escort-content {
+        line-height: $base-size * 0.66 !important;
+      }
     }
 
     .escort-image {
