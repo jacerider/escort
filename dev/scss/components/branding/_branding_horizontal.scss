@@ -7,13 +7,18 @@
     }
 
     img {
-      height: $base-size;
+      max-height: $base-size;
       max-width: $base-size;
       float: left;
     }
 
     .escort-site-slogan {
       box-shadow: 0 -2px 5px rgba($black, 0.5); // sass-lint:disable-line no-color-literals
+    }
+
+    .escort-site-name {
+      margin-left: $margin / 2;
+      margin-right: $margin;
     }
 
     .escort-site-slogan {
