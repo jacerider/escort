@@ -7,10 +7,6 @@
 
     &.escort-active {
 
-      .escort-aside-display-dropdown {
-        top: $base-size;
-      }
-
       .escort-aside-trigger {
 
         .escort-inner {
@@ -22,10 +18,18 @@
   }
 
   .escort-aside-display-dropdown {
-    top: $base-size * 0.9;
+    top: $base-size * 0.97;
     box-shadow: 0 5px 6px transparentize($black, 0.75);
-    background: smart-scale($bg-color-top, $scale: 1%);
+    background: darken($bg-color-top, 2.5%);
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
+
+    @include css-triangle($base-size / 4, darken($bg-color-top, 2.5%), up, before) {
+      content: '';
+      position: absolute;
+      left: $padding;
+      top: ($base-size / 5) * -1;
+      z-index: 1;
+    }
   }
 }

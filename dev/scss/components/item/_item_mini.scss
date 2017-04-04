@@ -15,14 +15,6 @@
     &:last-child {
       padding-right: $padding / 2;
     }
-
-    // .escort-inner {
-    //   @include button-style($region: mini, $transparent: true) {
-    //     margin-top: 0 !important;
-    //     padding: 0 ($padding * 0.66) !important;
-    //     min-width: $base-size * 0.75;
-    //   };
-    // }
   }
 
   .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
@@ -48,14 +40,7 @@
       padding-right: $padding / 2;
     }
   }
-
-  .escort-active {
-
-    .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
-      background: smart-scale($bg-color-mini, $scale: -12%);
-    }
-  }
-
+  
   .escort-content {
     color: smart-scale($bg-color-mini, $scale: 60%);
     text-shadow: 0 1px 2px adjust-color($bg-color-mini, $lightness: -25%);

@@ -5,15 +5,14 @@
 
   .escort-menu {
 
-    > li {
+    // > li {
 
-      > ul {
-        top: $base-size * 0.9;
-        box-shadow: 0 5px 6px transparentize($black, 0.75);
-        background: smart-scale($bg-color-top, $scale: 1%);
-        border-bottom-left-radius: $border-radius;
-        border-bottom-right-radius: $border-radius;
-      }
-    }
+    //   > ul {
+    //     top: $base-size;
+    //     box-shadow: 0 5px 6px transparentize($black, 0.75);
+    //     border-bottom-left-radius: $border-radius;
+    //     border-bottom-right-radius: $border-radius;
+    //   }
+    // }
   }
 }

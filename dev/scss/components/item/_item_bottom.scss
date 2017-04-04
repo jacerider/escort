@@ -39,14 +39,7 @@
       padding-right: $padding * 0.66;
     }
   }
-
-  .escort-active {
-
-    .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
-      background: smart-scale($bg-color-bottom, $scale: -12%);
-    }
-  }
-
+  
   .escort-content {
     color: smart-scale($bg-color-bottom, $scale: 60%);
     text-shadow: 0 1px 2px scale-color($bg-color-bottom, $lightness: -25%);

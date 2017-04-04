@@ -12,10 +12,6 @@
 
         .escort-item.has-icon:not(.escort-add):not(.escort-toggle) { // sass-lint:disable-line force-pseudo-nesting
 
-          > .escort-inner {
-            max-height: none;
-          }
-
           .escort-content {
             opacity: 1;
             position: relative;
@@ -58,11 +54,17 @@
 
   .escort-aside-display-dropdown {
     position: absolute;
-    overflow: hidden;
     min-width: $base-size-active * 0.75;
 
     .escort-inner {
       padding: 0 $padding;
+      background: transparent;
+      background-image: none !important;
+      box-shadow: none !important;
+
+      &:hover {
+        box-shadow: none;
+      }
     }
 
     .escort-item {
@@ -88,6 +90,11 @@
 
     .escort-aside-display-dropdown {
       right: 0;
+
+      &::before {
+        left: auto;
+        right: $padding * 0.9;
+      }
     }
   }
 }

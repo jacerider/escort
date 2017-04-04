@@ -3,20 +3,9 @@
  */
 @include get-location($type: vertical) {
 
-  // .escort-dropdown {
-
-  //   &.escort-active {
-
-  //     .escort-dropdown-trigger {
-  //       border: 0;
-  //     }
-  //   }
-  // }
-
   .escort-aside-display-dropdown {
     width: 100%;
     height: 0;
-    overflow: hidden;
     border-color: transparent;
 
     &.escort-active {

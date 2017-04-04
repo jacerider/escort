@@ -8,7 +8,7 @@
     > li {
 
       > ul {
-        bottom: $base-size * 0.9;
+        bottom: $base-size;
         box-shadow: 0 -5px 6px transparentize($black, 0.75);
         background: smart-scale($bg-color-bottom, $scale: 1%);
         border-top-left-radius: $border-radius;

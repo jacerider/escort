@@ -23,7 +23,6 @@
         position: absolute;
         opacity: 0;
         max-height: 0;
-        overflow: hidden;
         visibility: hidden;
         transition: opacity 200ms, box-shadow 300ms, max-height 200ms, top 300ms, bottom 300ms, padding 200ms, visibility 200ms;
       

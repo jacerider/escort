@@ -12,7 +12,7 @@
     transition: opacity 200ms, box-shadow 300ms, max-height 200ms, top 300ms, bottom 300ms, padding 200ms, visibility 200ms;
     max-height: 0;
     display: block;
-    overflow: hidden;
+    z-index: 1;
     visibility: hidden;
 
     > div {
