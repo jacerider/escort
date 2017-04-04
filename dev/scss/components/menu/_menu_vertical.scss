@@ -15,6 +15,13 @@
     > .escort-item {
       padding: 0 !important;
       border: 0 !important;
+
+      > .escort-inner {
+
+        > .escort-content {
+          margin: 0;
+        }
+      }
     }
   }
 }

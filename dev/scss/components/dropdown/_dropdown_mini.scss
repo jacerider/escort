@@ -8,13 +8,13 @@
     &.escort-active {
 
       .escort-aside-display-dropdown {
-        top: 100%;
+        top: $base-size;
       }
     }
   }
 
   .escort-aside-display-dropdown {
-    top: 90%;
+    top: $base-size * 0.9;
     box-shadow: 0 4px 6px transparentize($black, 0.75);
     background: smart-scale($bg-color-mini, $scale: -12%);
     border-bottom-left-radius: $border-radius;

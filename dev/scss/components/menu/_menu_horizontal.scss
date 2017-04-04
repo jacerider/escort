@@ -3,37 +3,12 @@
  */
 @include get-location($type: horizontal) {
 
-  &.icon-only {
-
-    .escort-menu:not(.escort-lvl0) {
-
-      .escort-item.has-icon:not(.escort-add):not(.is-active) {
-
-        .escort-content {
-          position: relative;
-          background: none;
-          box-shadow: none;
-          padding: 0;
-          top: auto;
-          display: inline-block;
-          visibility: visible;
-          opacity: 1;
-          height: auto;
-          line-height: $base-size * 0.97;
-
-          &:before {
-            display: none;
-          }
-        }
-      }
-    }
-  }
-
   .escort-menu {
 
     > li {
       display: inline-block;
       float: left;
+      position: relative;
 
       &:hover {
 
@@ -51,6 +26,10 @@
         overflow: hidden;
         visibility: hidden;
         transition: opacity 200ms, box-shadow 300ms, max-height 200ms, top 300ms, bottom 300ms, padding 200ms, visibility 200ms;
+      
+        .escort-item {
+          float: none;
+        }
       }
     }
   }

@@ -5,31 +5,41 @@
 
   &.icon-only {
 
-    .escort-container.escort-active {
+    .escort-container.escort-active,
+    .escort-type-menu.escort-container {
 
-      .has-icon:not(.escort-add):not(.escort-toggle) { // sass-lint:disable-line force-pseudo-nesting
+      .escort-aside-display-dropdown {
 
-        .escort-content {
-          opacity: 1;
-          position: relative;
-          display: inline;
-          background-color: transparent !important;
-          padding: 0 !important;
-          margin-left: $margin !important;
-          min-width: auto;
-          height: auto;
-          top: auto;
-          bottom: auto;
-          box-shadow: none;
+        .escort-item.has-icon:not(.escort-add):not(.escort-toggle) { // sass-lint:disable-line force-pseudo-nesting
 
-          &:hover,
-          &:focus {
-            top: auto;
-            bottom: auto;
+          > .escort-inner {
+            max-height: none;
           }
 
-          &::before {
-            display: none;
+          .escort-content {
+            opacity: 1;
+            position: relative;
+            display: inline;
+            background-color: transparent !important;
+            padding: 0 !important;
+            margin-left: $margin !important;
+            min-width: auto;
+            height: auto;
+            top: auto;
+            bottom: auto;
+            box-shadow: none;
+            line-height: $base-size * 0.97;
+
+            &:hover,
+            &:focus {
+              top: auto;
+              bottom: auto;
+              position: relative;
+            }
+
+            &::before {
+              display: none !important;
+            }
           }
         }
       }
@@ -48,7 +58,16 @@
 
   .escort-aside-display-dropdown {
     position: absolute;
+    overflow: hidden;
     min-width: $base-size-active * 0.75;
+
+    .escort-inner {
+      padding: 0 $padding;
+    }
+
+    .escort-item {
+      text-align: left;
+    }
 
     .escort-menu {
 

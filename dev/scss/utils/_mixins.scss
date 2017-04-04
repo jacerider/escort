@@ -120,12 +120,7 @@
       border-right: 1px solid darken($bg-color-top, 5%);
       color: smart-scale($bg-color-top, $scale: 66%);
 
-      &:visited,
       &:active,
-      &:focus {
-        color: $primary-color;
-      }
-
       &:hover,
       &:focus {
         @include linear-gradient(rgba(smart-scale($bg-color-top, 15%), 0.2), rgba(smart-scale($bg-color-top, 45%), 0.2), bottom);
@@ -148,14 +143,9 @@
       border-right: 1px solid darken($bg-color-bottom, 5%);
       color: smart-scale($bg-color-bottom, $scale: 66%);
 
-      &:visited,
       &:active,
-      &:focus {
-        color: $primary-color;
-      }
-
-      &:hover,
-      &:focus {
+      &:focus,
+      &:hover {
         @include linear-gradient(rgba(smart-scale($bg-color-bottom, 15%), 0.2), rgba(smart-scale($bg-color-bottom, 45%), 0.2), bottom);
         color: $primary-color;
       }
@@ -178,14 +168,9 @@
       border-right: 1px solid darken($bg-color-mini, 5%);
       color: smart-scale($bg-color-mini, $scale: 66%);
 
-      &:visited,
       &:active,
-      &:focus {
-        color: smart-scale($bg-color-mini, $scale: 50%);
-      }
-
-      &:hover,
-      &:focus {
+      &:focus,
+      &:hover {
         @include linear-gradient(rgba(smart-scale($bg-color-mini, 33%), 0.2), rgba(smart-scale($bg-color-mini, 66%), 0.2), bottom);
         color: $primary-color;
       }
@@ -204,14 +189,9 @@
       @include linear-gradient(rgba(smart-scale($bg-color-left, 5%), 0.1), rgba(smart-scale($bg-color-left, 25%), 0.1), bottom);
       color: smart-scale($bg-color-left, $scale: 66%);
 
-      &:visited,
       &:active,
-      &:focus {
-        color: smart-scale($bg-color-left, $scale: 66%);
-      }
-
-      &:hover,
-      &:focus {
+      &:focus,
+      &:hover {
         @include linear-gradient(rgba(smart-scale($bg-color-left, 5%), 0.2), rgba(smart-scale($bg-color-left, 25%), 0.2), bottom);
         color: $primary-color;
 
@@ -234,12 +214,7 @@
       @include linear-gradient(rgba(smart-scale($bg-color-right, 5%), 0.1), rgba(smart-scale($bg-color-right, 25%), 0.1), bottom);
       color: smart-scale($bg-color-right, $scale: 66%);
 
-      &:visited,
       &:active,
-      &:focus {
-        color: smart-scale($bg-color-right, $scale: 66%);
-      }
-
       &:hover,
       &:focus {
         @include linear-gradient(rgba(smart-scale($bg-color-right, 5%), 0.2), rgba(smart-scale($bg-color-right, 25%), 0.2), bottom);

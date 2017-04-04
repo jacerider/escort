@@ -8,7 +8,7 @@
     &.escort-active {
 
       .escort-aside-display-dropdown {
-        top: 100%;
+        top: $base-size;
       }
 
       .escort-aside-trigger {
@@ -22,7 +22,7 @@
   }
 
   .escort-aside-display-dropdown {
-    top: 98%;
+    top: $base-size * 0.9;
     box-shadow: 0 5px 6px transparentize($black, 0.75);
     background: smart-scale($bg-color-top, $scale: 1%);
     border-bottom-left-radius: $border-radius;
