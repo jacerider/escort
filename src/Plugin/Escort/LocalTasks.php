@@ -135,7 +135,7 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
       if ($this->configuration['secondary']) {
         $links = $this->localTaskManager->getLocalTasks($this->routeMatch->getRouteName(), 1);
         if (count(Element::getVisibleChildren($links['tabs'])) > 1) {
-          static::$links['primary'] = $links['tabs'];
+          static::$links['secondary'] = $links['tabs'];
         }
       }
     }
