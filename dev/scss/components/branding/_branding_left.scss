@@ -4,12 +4,18 @@
 
 @include get-location($type: vertical, $region: left) {
 
-  .show-escort-full-left & {
+  .show-escort-full-left &,
+  .is-escort-admin & {
 
     .escort-type-branding {
 
       .escort-content {
+        display: inline-block;
         white-space: normal;
+      }
+
+      .escort-site-slogan {
+        display: block;
       }
     }
   }

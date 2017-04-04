@@ -9,18 +9,15 @@
     .escort-item { // sass-lint:disable-line force-pseudo-nesting
       width: $base-size-active !important;
 
-      &:not(.escort-aside-display-dropdown) {
+      .escort-content {
 
         .escort-content {
-
-          .escort-content {
-            display: inline-block !important;
-          }
+          display: inline-block;
         }
       }
 
       .escort-content {
-        display: inline-block !important;
+        display: inline-block;
         margin-top: 0;
       }
 

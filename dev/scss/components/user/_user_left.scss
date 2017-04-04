@@ -6,6 +6,23 @@
   .show-escort-full-left &,
   .is-escort-admin & {
 
+    &.icon-only {
+
+      .escort-type-user {
+
+        .escort-aside-trigger {
+
+          .escort-image {
+            margin: 0 $margin;
+          }
+
+          .escort-content {
+            line-height: $padding * 5.5 !important;
+          }
+        }
+      }
+    }
+
     .escort-image {
       margin: 0 auto;
     }

@@ -4,17 +4,49 @@
 
 @include get-location($type: vertical) {
 
+  &.icon-only {
+
+    .escort-type-branding {
+
+      .escort-item {
+
+        img {
+          float: left;
+        }
+
+        .escort-site-name {
+          display: inline-block;
+          line-height: $base-size * 1.5;
+          margin-left: $margin / 2;
+          margin-bottom: 0;
+        }
+
+        .escort-content {
+          display: none;
+          text-align: left;
+        }
+      }
+    }
+  }
+
   .escort-type-branding {
 
-    img {
-      height: $base-size * 1.25;
-      max-width: $base-size * 1.25;
-      float: left;
-    }
+    .escort-item {
 
-    .escort-site-slogan {
-      display: block;
-      margin-left: $base-size * 1.4;
+      .escort-site-name {
+        display: block;
+        line-height: $base-size / 2;
+        margin-bottom: $margin / 2;
+      }
+
+      img {
+        max-height: $base-size * 1.25;
+        max-width: $base-size * 1.25;
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
     }
   }
 }

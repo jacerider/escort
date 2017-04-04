@@ -118,18 +118,18 @@
       @include linear-gradient(rgba(smart-scale($bg-color-top, 15%), 0.1), rgba(smart-scale($bg-color-top, 45%), 0.1), bottom);
       border-left: 1px solid lighten($bg-color-top, 5%);
       border-right: 1px solid darken($bg-color-top, 5%);
-      color: $primary-color;
+      color: smart-scale($bg-color-top, $scale: 66%);
 
       &:visited,
       &:active,
       &:focus {
-        color: smart-scale($bg-color-top, $scale: 50%);
+        color: $primary-color;
       }
 
       &:hover,
       &:focus {
         @include linear-gradient(rgba(smart-scale($bg-color-top, 15%), 0.2), rgba(smart-scale($bg-color-top, 45%), 0.2), bottom);
-        color: smart-scale($bg-color-top, $scale: 100%);
+        color: $primary-color;
       }
     }
   }
@@ -146,18 +146,18 @@
       @include linear-gradient(rgba(smart-scale($bg-color-bottom, 15%), 0.1), rgba(smart-scale($bg-color-bottom, 45%), 0.1), bottom);
       border-left: 1px solid lighten($bg-color-bottom, 5%);
       border-right: 1px solid darken($bg-color-bottom, 5%);
-      color: $primary-color;
+      color: smart-scale($bg-color-bottom, $scale: 66%);
 
       &:visited,
       &:active,
       &:focus {
-        color: smart-scale($bg-color-bottom, $scale: 50%);
+        color: $primary-color;
       }
 
       &:hover,
       &:focus {
         @include linear-gradient(rgba(smart-scale($bg-color-bottom, 15%), 0.2), rgba(smart-scale($bg-color-bottom, 45%), 0.2), bottom);
-        color: smart-scale($bg-color-bottom, $scale: 100%);
+        color: $primary-color;
       }
     }
   }
@@ -176,7 +176,7 @@
       @include linear-gradient(rgba(smart-scale($bg-color-mini, 33%), 0.1), rgba(smart-scale($bg-color-mini, 66%), 0.1), bottom);
       border-left: 1px solid lighten($bg-color-mini, 5%);
       border-right: 1px solid darken($bg-color-mini, 5%);
-      color: $primary-color;
+      color: smart-scale($bg-color-mini, $scale: 66%);
 
       &:visited,
       &:active,
@@ -187,7 +187,7 @@
       &:hover,
       &:focus {
         @include linear-gradient(rgba(smart-scale($bg-color-mini, 33%), 0.2), rgba(smart-scale($bg-color-mini, 66%), 0.2), bottom);
-        color: smart-scale($bg-color-mini, $scale: 100%);
+        color: $primary-color;
       }
     }
   }
@@ -213,10 +213,10 @@
       &:hover,
       &:focus {
         @include linear-gradient(rgba(smart-scale($bg-color-left, 5%), 0.2), rgba(smart-scale($bg-color-left, 25%), 0.2), bottom);
-        color: smart-scale($primary-color, $scale: 80%);
+        color: $primary-color;
 
         a {
-          color: smart-scale($primary-color, $scale: 85%);
+          color: $primary-color;
         }
       }
     }
@@ -237,16 +237,16 @@
       &:visited,
       &:active,
       &:focus {
-        color: smart-scale($bg-color-right, $scale: 100%);
+        color: smart-scale($bg-color-right, $scale: 66%);
       }
 
       &:hover,
       &:focus {
         @include linear-gradient(rgba(smart-scale($bg-color-right, 5%), 0.2), rgba(smart-scale($bg-color-right, 25%), 0.2), bottom);
-        color: smart-scale($primary-color, $scale: 85%);
+        color: $primary-color;
 
         a {
-          color: smart-scale($primary-color, $scale: 80%);
+          color: $primary-color;
         }
       }
     }
