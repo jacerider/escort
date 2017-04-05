@@ -12,11 +12,14 @@
     line-height: $base-size * 0.97;
   }
 
-  .escort-link:not(.escort-add):not(.is-active) {
+  .escort-container:not(.escort-wrap):not(.escort-active) {
 
-    .escort-inner {
-      @include button-style($region: top, $transparent: true);
-      max-height: $base-size * 0.975;
+    .escort-link:not(.escort-add) {
+
+      .escort-inner {
+        @include button-style($region: top, $transparent: true);
+        max-height: $base-size * 0.975;
+      }
     }
   }
 

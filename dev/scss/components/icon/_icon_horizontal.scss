@@ -5,9 +5,9 @@
 
   &.icon-only {
 
-    .escort-container:not(.escort-preview) {
+    .escort-container:not(.escort-wrap):not(.escort-preview):not(.escort-active) {
 
-      .escort-item.has-icon:not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
+      .escort-item.has-icon { // sass-lint:disable-line force-pseudo-nesting
 
         &:hover,
         &:focus {

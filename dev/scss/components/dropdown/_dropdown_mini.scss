@@ -4,7 +4,7 @@
 @include get-location($type: horizontal, $region: mini) {
 
   .escort-aside-display-dropdown {
-    top: $base-size * 0.97;
+    top: $base-size * 0.75;
     box-shadow: 0 4px 6px transparentize($black, 0.75);
     background: darken($bg-color-mini, 2.5%);
     border-bottom-left-radius: $border-radius;
@@ -13,9 +13,13 @@
     @include css-triangle($base-size / 4, darken($bg-color-mini, 2.5%), up, before) {
       content: '';
       position: absolute;
-      left: $padding;
-      top: ($base-size / 5) * -1;
+      left: 0;
+      top: ($base-size / 4.25) * -1;
       z-index: 1;
+    }
+
+    &::before {
+      border-left-width: 0;
     }
   }
 }

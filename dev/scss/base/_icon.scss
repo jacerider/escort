@@ -18,16 +18,3 @@
     transition: margin 300ms, width 300ms;
   }
 }
-
-.icon-only {
-
-  .is-escort-admin & {
-
-    .escort-link.has-icon:not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
-      
-      .escort-content {
-        display: none;
-      }
-    }
-  }
-}

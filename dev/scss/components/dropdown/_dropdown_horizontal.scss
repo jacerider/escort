@@ -5,7 +5,7 @@
 
   &.icon-only {
 
-    .escort-container.escort-active,
+    .escort-container.escort-active:not(.escort-wrap),
     .escort-type-menu.escort-container {
 
       .escort-aside-display-dropdown {
@@ -17,13 +17,13 @@
             position: relative;
             display: inline;
             background-color: transparent !important;
-            padding: 0 !important;
+            padding: 0;
             margin-left: $margin !important;
             min-width: auto;
             height: auto;
-            top: auto;
+            top: auto !important;
             bottom: auto;
-            box-shadow: none;
+            box-shadow: none !important;
             line-height: $base-size * 0.97;
 
             &:hover,
@@ -42,7 +42,7 @@
     }
   }
 
-  .escort-container.escort-active:not(.escort-type-user) {
+  .escort-container.escort-active:not(.escort-type-user):not(.escort-wrap) {
 
     > .escort-inner {
 
@@ -58,6 +58,7 @@
 
     .escort-inner {
       padding: 0 $padding;
+      border: 0 !important;
       background: transparent;
       background-image: none !important;
       box-shadow: none !important;
@@ -93,7 +94,9 @@
 
       &::before {
         left: auto;
-        right: $padding * 0.9;
+        right: 0;
+        border-left-width: $base-size / 3;
+        border-right-width: 0;
       }
     }
   }

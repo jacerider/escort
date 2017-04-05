@@ -9,7 +9,7 @@
     min-width: $base-size * 0.75;
   }
 
-  .escort-container:not(.escort-type-user):not(.escort-type-branding):not(.escort-add):not(.is-active) {
+  .escort-container:not(.escort-type-user):not(.escort-type-branding):not(.escort-add):not(.escort-active) {
     padding: 0 0 0 ($padding / 2);
 
     &:last-child {
@@ -40,7 +40,7 @@
       padding-right: $padding / 2;
     }
   }
-  
+
   .escort-content {
     color: smart-scale($bg-color-mini, $scale: 60%);
     text-shadow: 0 1px 2px adjust-color($bg-color-mini, $lightness: -25%);

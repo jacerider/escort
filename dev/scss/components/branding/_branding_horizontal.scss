@@ -2,8 +2,12 @@
 
   .escort-type-branding {
 
-    > .escort-inner {
-      padding: 0 $padding;
+    .escort-item {
+
+      .escort-inner {
+        background-image: none;
+        border: 0;
+      }
     }
 
     img {

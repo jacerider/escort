@@ -40,7 +40,7 @@
 
     .escort-preview & {
 
-      > .escort-inner {
+      .escort-inner {
         padding: 0 $padding;
       }
     }
@@ -52,14 +52,14 @@
       }
     }
 
-    &.is-active {
+    .escort-active & {
 
       > .escort-inner {
         padding: 0 ($padding * 1.1) 0 $padding;
       }
     }
 
-    &.escort-container:not(.escort-type-user):not(.escort-type-branding):not(.escort-add):not(.is-active) {
+    &.escort-container:not(.escort-wrap):not(.escort-type-user):not(.escort-type-branding):not(.escort-add):not(.is-active) {
       padding: 0;
 
       &:last-child {
