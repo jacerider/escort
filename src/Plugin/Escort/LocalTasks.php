@@ -111,7 +111,6 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
     $build = [];
     $cacheability = new CacheableMetadata();
     $tabs = $this->buildTasks($cacheability);
-
     $cacheability->applyTo($build);
 
     foreach ($tabs as $key => $tab) {
@@ -129,13 +128,13 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
       if ($this->configuration['primary']) {
         $links = $this->localTaskManager->getLocalTasks($this->routeMatch->getRouteName(), 0);
         if (count(Element::getVisibleChildren($links['tabs'])) > 1) {
-          static::$links['primary'] = $links['tabs'];
+          static::$links['primary'] = $links;
         }
       }
       if ($this->configuration['secondary']) {
         $links = $this->localTaskManager->getLocalTasks($this->routeMatch->getRouteName(), 1);
         if (count(Element::getVisibleChildren($links['tabs'])) > 1) {
-          static::$links['secondary'] = $links['tabs'];
+          static::$links['secondary'] = $links;
         }
       }
     }
@@ -148,8 +147,12 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
   protected function buildTasks(&$cacheability) {
     $config = $this->configuration;
     $links = $this->getLinks();
-    $primary = !empty($links['primary']) ? $links['primary'] : [];
-    $secondary = !empty($links['secondary']) ? $links['secondary'] : [];
+    $primary = !empty($links['primary']) ? $links['primary']['tabs'] : [];
+    $secondary = !empty($links['secondary']) ? $links['secondary']['tabs'] : [];
+
+    foreach ($links as $section) {
+      $cacheability = $cacheability->merge($section['cacheability']);
+    }
 
     $tabs = [];
     foreach ($primary as $key => $tab) {
