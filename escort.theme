@@ -121,7 +121,8 @@ function template_preprocess_escort_item(&$variables) {
   }
 
   // Theme our image if it is a URL.
-  if (!empty($variables['image']) && is_string($variables['image']) && $scheme = file_uri_scheme($variables['image'])) {
+  if (!empty($variables['image']) && is_string($variables['image'])) {
+    $scheme = file_uri_scheme($variables['image']);
     switch ($scheme) {
       case 'public':
       case 'private':
