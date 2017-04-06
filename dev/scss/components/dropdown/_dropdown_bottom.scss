@@ -3,7 +3,7 @@
  */
 @include get-location($type: horizontal, $region: bottom) {
 
-  .escort-container.escort-active {
+  .escort-container:not(.escort-wrap).escort-active {
 
     .escort-aside-trigger {
 
@@ -12,20 +12,24 @@
         box-shadow: inset 0 10px 10px rgba(adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -8%), 0.25) !important;
       }
     }
+
+    .escort-aside-display-dropdown {
+      bottom: $base-size * 0.97;
+    }
   }
 
   .escort-aside-display-dropdown {
-    bottom: $base-size * 0.97;
-    box-shadow: 0 -5px 6px transparentize($black, 0.75);
+    bottom: 85%;
+    box-shadow: 0 5px 6px transparentize($black, 0.75);
     background: darken($bg-color-bottom, 2.5%);
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
 
-    @include css-triangle($base-size / 3, darken($bg-color-bottom, 2.5%), down, before) {
+    @include css-triangle($base-size / 3, darken($bg-color-bottom, 2.5%), up, before) {
       content: '';
       position: absolute;
-      left: 0;
       bottom: ($base-size / 3.25) * -1;
+      left: 0;
       z-index: 1;
     }
 

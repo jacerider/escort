@@ -15,6 +15,7 @@
         > .escort-aside-display-dropdown {
           opacity: 1;
           max-height: $base-size-active * 4;
+          max-width: auto;
           visibility: visible;
         }
       }

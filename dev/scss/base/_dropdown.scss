@@ -3,14 +3,15 @@
 // -----------------------------------------------------------------------------
 // Dropdown styles
 
-.escort-container {
+.escort-container:not(.escort-wrap) { // sass-lint:disable-line force-pseudo-nesting
 
   .escort-aside-display-dropdown:not(.escort-active) { // sass-lint:disable-line force-pseudo-nesting
     padding: 0;
     border: 0;
     opacity: 0;
-    transition: opacity 200ms, box-shadow 300ms, max-height 200ms, top 300ms, bottom 300ms, padding 200ms, visibility 200ms;
+    transition: opacity 200ms, box-shadow 300ms, max-height 200ms, max-width 200ms, top 300ms, bottom 300ms, padding 200ms, visibility 200ms;
     max-height: 0;
+    max-width: 0;
     display: block;
     z-index: 1;
     visibility: hidden;
@@ -33,6 +34,7 @@
     .escort-aside-display-dropdown {
       opacity: 1;
       max-height: auto;
+      max-width: auto;
       visibility: visible;
     }
   }

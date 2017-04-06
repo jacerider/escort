@@ -5,14 +5,21 @@
 
   .escort-menu {
 
-    // > li {
+    > li {
+      display: inline-block;
+      float: left;
+      position: relative;
 
-    //   > ul {
-    //     top: $base-size;
-    //     box-shadow: 0 5px 6px transparentize($black, 0.75);
-    //     border-bottom-left-radius: $border-radius;
-    //     border-bottom-right-radius: $border-radius;
-    //   }
-    // }
+      &:hover {
+
+        > .escort-aside-display-dropdown {
+          top: $base-size * 0.97;
+        }
+      }
+
+      > .escort-aside-display-dropdown {
+        top: 85%;
+      }
+    }
   }
 }
