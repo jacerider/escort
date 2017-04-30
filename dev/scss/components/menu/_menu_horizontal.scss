@@ -5,7 +5,7 @@
 
   .escort-menu {
 
-    > li {
+    li {
       display: inline-block;
       float: left;
       position: relative;
@@ -29,6 +29,12 @@
       
         .escort-item {
           float: none;
+          position: relative;
+        }
+
+        .escort-aside-display-dropdown {
+          left: 100%;
+          top: 0;
         }
       }
     }

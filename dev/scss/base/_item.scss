@@ -32,7 +32,11 @@
     text-transform: none;
   }
 
-  .is-active {
-    color: $primary-color;
+  .is-active &,
+  .escort-active & {
+
+    .escort-icon {
+      color: $primary-color;
+    }
   }
 }

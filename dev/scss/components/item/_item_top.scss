@@ -14,11 +14,29 @@
 
   .escort-container:not(.escort-wrap):not(.escort-active) {
 
-    .escort-link:not(.escort-add) {
+    > .escort-link:not(.escort-add) {
 
       .escort-inner {
         @include button-style($region: top, $transparent: true);
         max-height: $base-size * 0.975;
+
+        .escort-active & {
+          @include button-style($region: top, $transparent: false) {
+            border-color: transparent;
+          };
+        }
+      }
+    }
+  }
+
+  .escort-container.escort-active {
+
+    > .escort-link:not(.escort-add) {
+
+      .escort-inner {
+        @include button-style($region: top, $transparent: false) {
+          border-color: transparent;
+        };
       }
     }
   }

@@ -19,12 +19,12 @@
             background-color: transparent !important;
             padding: 0;
             margin-left: $margin !important;
-            min-width: auto;
+            min-width: none;
             height: auto;
             top: auto !important;
             bottom: auto;
             box-shadow: none !important;
-            line-height: $base-size * 0.97;
+            line-height: $base-size;
 
             &:hover,
             &:focus {
@@ -57,7 +57,7 @@
     min-width: $base-size-active * 0.75;
 
     .escort-inner {
-      padding: 0 $padding;
+      padding: 0 ($padding / 2);
       border: 0 !important;
       background: transparent;
       background-image: none !important;
@@ -70,17 +70,17 @@
 
     .escort-item {
       text-align: left;
+      display: block;
+      width: 100%;
     }
 
-    .escort-menu {
+    > li {
+      float: none;
+      display: block;
+      width: 100%;
 
-      li {
-        float: none;
-        display: block;
-
-        > .escort-item {
-          text-align: left;
-        }
+      > .escort-item {
+        text-align: left;
       }
     }
   }

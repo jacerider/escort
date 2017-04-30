@@ -17,8 +17,35 @@
         }
       }
 
+      > .escort-item {
+
+        .escort-inner {
+          @include button-style($region: top, $transparent: true);
+        }
+      }
+
       > .escort-aside-display-dropdown {
         top: 85%;
+      }
+
+      li:hover {
+
+        > .escort-item {
+
+          .escort-inner {
+            background-color: $bg-color-top;
+          }
+        }
+
+        li:hover {
+        
+          > .escort-item {
+
+            .escort-inner {
+              background-color: lighten($bg-color-top, 6%) !important;
+            }
+          }
+        }
       }
     }
   }

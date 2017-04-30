@@ -1,0 +1,13 @@
+/**
+ * Top AND Bottom region only
+ */
+
+@include get-location($type: horizontal, $region: top) {
+
+  .escort-region-after {
+
+    .escort-aside-display-shelf {
+      background-color: $bg-color-top;
+    }
+  }
+}

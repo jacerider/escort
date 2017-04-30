@@ -20,20 +20,34 @@
 
   .escort-aside-display-dropdown {
     top: 85%;
-    box-shadow: 0 5px 6px transparentize($black, 0.75);
-    background: darken($bg-color-top, 2.5%);
+    box-shadow: 0 9px 12px transparentize($black, 0.8);
+    background: darken($bg-color-top, 3%);
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
 
-    @include css-triangle($base-size / 3, darken($bg-color-top, 2.5%), up, before) {
+    @include css-triangle($base-size / 3, darken($bg-color-top, 3%), up, before) {
       content: '';
       position: absolute;
       top: ($base-size / 3.25) * -1;
+      left: 0;
       z-index: 1;
     }
 
-    &::before {
-      border-left-width: 0;
+    .escort-aside-display-dropdown {
+      background: lighten($bg-color-top, 2%);
+
+      @include css-triangle($base-size / 2, lighten($bg-color-top, 2%), left, before) {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: ($base-size / 3) * -1;
+        z-index: 1;
+      }
+
+      .escort-aside-display-dropdown {
+        @include css-triangle($base-size / 2, lighten($bg-color-top, 8%), left, before);
+        background: lighten($bg-color-top, 8%);
+      }
     }
   }
 }
