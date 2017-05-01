@@ -21,11 +21,11 @@
   .escort-aside-display-dropdown {
     top: 85%;
     box-shadow: 0 9px 12px transparentize($black, 0.8);
-    background: darken($bg-color-mini, 3%);
+    background: darken($bg-color-mini, 4%);
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
 
-    @include css-triangle($base-size / 3, darken($bg-color-mini, 3%), up, before) {
+    @include css-triangle($base-size / 3, darken($bg-color-mini, 4%), up, before) {
       content: '';
       position: absolute;
       top: ($base-size / 3.25) * -1;
@@ -34,9 +34,9 @@
     }
 
     .escort-aside-display-dropdown {
-      background: lighten($bg-color-mini, 2%);
+      background: lighten($bg-color-mini, 4%);
 
-      @include css-triangle($base-size / 2, lighten($bg-color-mini, 2%), left, before) {
+      @include css-triangle($base-size / 2, lighten($bg-color-mini, 4%), left, before) {
         content: '';
         position: absolute;
         top: 0;
@@ -45,8 +45,13 @@
       }
 
       .escort-aside-display-dropdown {
-        @include css-triangle($base-size / 2, lighten($bg-color-mini, 8%), left, before);
-        background: lighten($bg-color-mini, 8%);
+        @include css-triangle($base-size / 2, lighten($bg-color-mini, 10%), left, before);
+        background: lighten($bg-color-mini, 10%);
+
+        .escort-aside-display-dropdown {
+          @include css-triangle($base-size / 2, lighten($bg-color-mini, 15%), left, before);
+          background: lighten($bg-color-mini, 15%);
+        }
       }
     }
   }
