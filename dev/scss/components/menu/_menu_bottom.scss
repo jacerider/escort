@@ -1,14 +1,11 @@
 /**
- * Top AND Bottom region
+ * Bottom AND Bottom region
  */
 @include get-location($type: horizontal, $region: bottom) {
 
   .escort-menu {
 
     > li {
-      display: inline-block;
-      float: left;
-      position: relative;
 
       &:hover {
 
@@ -17,9 +14,41 @@
         }
       }
 
+      > .escort-item {
+
+        .escort-inner {
+          @include button-style($region: bottom, $transparent: true);
+        }
+      }
+
       > .escort-aside-display-dropdown {
         bottom: 85%;
+
+        .escort-aside-display-dropdown {
+          bottom: 0;
+        }
+      }
+
+      li:hover {
+
+        > .escort-item {
+
+          .escort-inner {
+            background-color: $bg-color-bottom;
+          }
+        }
+
+        li:hover {
+        
+          > .escort-item {
+
+            .escort-inner {
+              background-color: lighten($bg-color-bottom, 6%) !important;
+            }
+          }
+        }
       }
     }
   }
 }
+

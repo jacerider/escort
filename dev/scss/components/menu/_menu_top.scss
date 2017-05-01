@@ -6,9 +6,6 @@
   .escort-menu {
 
     > li {
-      display: inline-block;
-      float: left;
-      position: relative;
 
       &:hover {
 
@@ -26,6 +23,10 @@
 
       > .escort-aside-display-dropdown {
         top: 85%;
+
+        .escort-aside-display-dropdown {
+          top: 0;
+        }
       }
 
       li:hover {

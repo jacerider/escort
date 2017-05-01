@@ -18,7 +18,7 @@
             display: inline;
             background-color: transparent !important;
             padding: 0;
-            margin-left: $margin !important;
+            margin-left: $margin;
             min-width: none;
             height: auto;
             top: auto !important;
@@ -54,10 +54,10 @@
 
   .escort-aside-display-dropdown {
     position: absolute;
-    min-width: $base-size-active * 0.75;
+    min-width: $base-size-active * 0.8;
 
     .escort-inner {
-      padding: 0 ($padding / 2);
+      padding: 0 $padding 0 ($padding / 2);
       border: 0 !important;
       background: transparent;
       background-image: none !important;
@@ -65,6 +65,14 @@
 
       &:hover {
         box-shadow: none;
+
+        .escort-content {
+          margin-left: $margin !important;
+        }
+      }
+
+      .escort-content {
+        margin-left: $margin / 2 !important;
       }
     }
 

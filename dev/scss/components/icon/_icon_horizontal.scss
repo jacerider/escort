@@ -33,7 +33,6 @@
           left: 0;
           padding: 0 $padding;
           opacity: 0;
-          transition: opacity 200ms, top 300ms, bottom 300ms;
 
           &::before {
             opacity: 0;

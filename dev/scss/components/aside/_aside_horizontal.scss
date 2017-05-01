@@ -11,7 +11,7 @@
       display: block;
       height: 0;
       overflow: hidden;
-      padding: $padding;
+      padding: 0;
       opacity: 0;
       box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals
       transition: opacity 200ms, box-shadow 200ms;
