@@ -64,5 +64,38 @@
       }
     }
   }
+
+  .escort-bottom-right {
+
+    .escort-aside-display-dropdown {
+      .escort-aside-display-dropdown {
+
+        &::before {
+          right: ($base-size / 3) * -1 !important;
+        }
+
+        @include css-triangle($base-size / 2, lighten($bg-color-bottom, 4%), right, before) {
+          border-top-width: $base-size / 2;
+          border-bottom-width: 0;
+        }
+
+        .escort-aside-display-dropdown {
+          
+          @include css-triangle($base-size / 2, lighten($bg-color-bottom, 10%), right, before) {
+            border-top-width: $base-size / 2;
+            border-bottom-width: 0;
+          }
+
+          .escort-aside-display-dropdown {
+          
+            @include css-triangle($base-size / 2, lighten($bg-color-bottom, 15%), right, before) {
+              border-top-width: $base-size / 2;
+              border-bottom-width: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 

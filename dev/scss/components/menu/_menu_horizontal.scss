@@ -55,4 +55,23 @@
       }
     }
   }
+
+  .escort-top-right,
+  .escort-mini-right,
+  .escort-bottom-right {
+
+    .escort-menu {
+
+      li {
+
+        > .escort-aside-display-dropdown {
+          
+          .escort-aside-display-dropdown {
+            left: auto;
+            right: 100%;
+          }
+        }
+      }
+    }
+  }
 }

@@ -55,4 +55,37 @@
       }
     }
   }
+
+  .escort-top-right {
+
+    .escort-aside-display-dropdown {
+      .escort-aside-display-dropdown {
+
+        &::before {
+          right: ($base-size / 3) * -1 !important;
+        }
+
+        @include css-triangle($base-size / 2, lighten($bg-color-top, 4%), right, before) {
+          border-bottom-width: $base-size / 2;
+          border-top-width: 0;
+        }
+
+        .escort-aside-display-dropdown {
+          
+          @include css-triangle($base-size / 2, lighten($bg-color-top, 10%), right, before) {
+            border-bottom-width: $base-size / 2;
+            border-top-width: 0;
+          }
+
+          .escort-aside-display-dropdown {
+          
+            @include css-triangle($base-size / 2, lighten($bg-color-top, 15%), right, before) {
+              border-bottom-width: $base-size / 2;
+              border-top-width: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }
