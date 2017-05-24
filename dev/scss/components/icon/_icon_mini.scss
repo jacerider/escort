@@ -39,8 +39,11 @@
           border-bottom-right-radius: $border-radius;
         }
       }
+    }
 
-      .escort-mini-left {
+    .escort-mini-left {
+
+      .escort-container:not(.escort-wrap):not(.escort-active):not(.escort-preview) {
 
         .escort-item.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
 
@@ -60,8 +63,11 @@
           }
         }
       }
+    }
 
-      .escort-mini-right {
+    .escort-mini-right {
+
+      .escort-container:not(.escort-wrap):not(.escort-active):not(.escort-preview) {
 
         .escort-item.has-icon:not(.escort-add):not(.is-active) { // sass-lint:disable-line force-pseudo-nesting
 
