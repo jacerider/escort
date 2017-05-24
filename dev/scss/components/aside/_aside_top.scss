@@ -1,0 +1,15 @@
+/**
+ * Top region only
+ */
+
+@include get-location($type: horizontal, $region: top) {
+
+  .escort-region-after {
+
+    .escort-aside-display-shelf {
+      background-color: scale-color($bg-color-bottom, $lightness: -12%);
+      top: $base-size;
+      box-shadow: 0 15px 20px rgba($black, 0.33); // sass-lint:disable-line no-color-literals
+    }
+  }
+}

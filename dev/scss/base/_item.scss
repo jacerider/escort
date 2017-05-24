@@ -30,9 +30,14 @@
   .escort-content {
     text-decoration: none;
     text-transform: none;
+    transition: opacity 200ms, top 300ms, bottom 300ms, margin 300ms;
   }
 
-  .is-active {
-    color: $primary-color;
+  .is-active &,
+  .escort-active & {
+
+    .escort-icon {
+      color: $primary-color;
+    }
   }
 }

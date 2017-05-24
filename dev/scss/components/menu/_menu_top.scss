@@ -5,14 +5,49 @@
 
   .escort-menu {
 
-    // > li {
+    > li {
 
-    //   > ul {
-    //     top: $base-size;
-    //     box-shadow: 0 5px 6px transparentize($black, 0.75);
-    //     border-bottom-left-radius: $border-radius;
-    //     border-bottom-right-radius: $border-radius;
-    //   }
-    // }
+      &:hover {
+
+        > .escort-aside-display-dropdown {
+          top: $base-size * 0.97;
+        }
+      }
+
+      > .escort-item {
+
+        .escort-inner {
+          @include button-style($region: top, $transparent: true);
+        }
+      }
+
+      > .escort-aside-display-dropdown {
+        top: 85%;
+
+        .escort-aside-display-dropdown {
+          top: 0;
+        }
+      }
+
+      li:hover {
+
+        > .escort-item {
+
+          .escort-inner {
+            background-color: $bg-color-top;
+          }
+        }
+
+        li:hover {
+        
+          > .escort-item {
+
+            .escort-inner {
+              background-color: lighten($bg-color-top, 6%) !important;
+            }
+          }
+        }
+      }
+    }
   }
 }

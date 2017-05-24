@@ -8,15 +8,33 @@
 
     .escort-aside-display-shelf {
       position: absolute;
-      height: 0;
-      width: 100%;
-      overflow: hidden;
-      padding: $padding 0;
-      box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals
+      left: 0;
+      display: block;
+      width: calc(100% + 1rem);
+      max-height: 0;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      padding: 0;
+      opacity: 0;
+      transition: opacity 200ms, box-shadow 200ms;
 
       &.escort-active {
-        height: $base-size-active * 2;
-        padding: $padding;
+        max-height: $base-size-active * 2;
+        padding: $padding * 2;
+        opacity: 1;
+      }
+
+      .has-escort-left & {
+        margin-left: $base-size * 2;
+        width: calc((100% + 1rem) - #{$base-size * 2});
+      }
+
+      .has-escort-right & {
+        width: calc((100% + 1rem) - #{$base-size * 2});
+      }
+
+      .has-escort-left.has-escort-right & {
+        width: calc((100% + 1rem) - #{$base-size * 4});
       }
     }
   }

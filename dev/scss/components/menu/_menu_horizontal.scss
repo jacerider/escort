@@ -5,7 +5,7 @@
 
   .escort-menu {
 
-    > li {
+    li {
       display: inline-block;
       float: left;
       position: relative;
@@ -15,6 +15,7 @@
         > .escort-aside-display-dropdown {
           opacity: 1;
           max-height: $base-size-active * 4;
+          max-width: auto;
           visibility: visible;
         }
       }
@@ -28,6 +29,11 @@
       
         .escort-item {
           float: none;
+          position: relative;
+        }
+
+        .escort-aside-display-dropdown {
+          left: 100%;
         }
       }
     }
@@ -46,6 +52,25 @@
         padding: 0;
         margin: 0;
         box-shadow: none !important;
+      }
+    }
+  }
+
+  .escort-top-right,
+  .escort-mini-right,
+  .escort-bottom-right {
+
+    .escort-menu {
+
+      li {
+
+        > .escort-aside-display-dropdown {
+          
+          .escort-aside-display-dropdown {
+            left: auto;
+            right: 100%;
+          }
+        }
       }
     }
   }

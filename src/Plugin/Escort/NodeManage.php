@@ -4,7 +4,6 @@ namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -44,13 +43,6 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
   protected $entityTypeManager;
 
   /**
-   * The renderer service.
-   *
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected $renderer;
-
-  /**
    * Manages a LocalTasksEscort instance.
    *
    * @param array $configuration
@@ -62,10 +54,9 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
    * @param \Drupal\Core\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
-    $this->renderer = $renderer;
   }
 
   /**
@@ -76,8 +67,7 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('renderer')
+      $container->get('entity_type.manager')
     );
   }
 
@@ -85,11 +75,12 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return array(
+    return [
       'text' => $this->t('Manage [TYPE]'),
       'icon' => 'fa-edit',
       'bundle' => '',
-    ) + parent::defaultConfiguration();
+      'view' => 0,
+    ] + parent::defaultConfiguration();
   }
 
   /**
@@ -127,6 +118,12 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
       '#options' => $options,
       '#default_value' => $this->configuration['bundle'],
     ];
+    $form['view'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use view'),
+      '#description' => $this->t('Use a view instead of the entity list manager.'),
+      '#default_value' => $this->configuration['view'],
+    ];
     return $form;
   }
 
@@ -136,6 +133,7 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
   public function escortSubmit($form, FormStateInterface $form_state) {
     parent::escortSubmit($form, $form_state);
     $this->configuration['bundle'] = $form_state->getValue('bundle');
+    $this->configuration['view'] = $form_state->getValue('view');
   }
 
   /**
@@ -143,7 +141,12 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
    */
   protected function escortBuildAsideContent() {
     $build = [];
-    $build['list'] = $this->entityTypeManager->getHandler($this->entityType, 'escort_list_builder')->setTypes([$this->configuration['bundle']])->render();
+    if ($this->configuration['view']) {
+      $build['view'] = views_embed_view('escort_node_manage', 'default', $this->configuration['bundle']);
+    }
+    else {
+      $build['list'] = $this->entityTypeManager->getHandler($this->entityType, 'escort_list_builder')->setTypes([$this->configuration['bundle']])->render();
+    }
     return $build;
   }
 

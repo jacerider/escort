@@ -14,6 +14,6 @@
 .escort-region-after {
 
   .escort-aside-display-shelf {
-    transition: width 300ms, padding 300ms, left 300ms, right 300ms, box-shadow 300ms;
+    transition: width 300ms, max-height 300ms, padding 300ms, left 300ms, right 300ms, box-shadow 300ms;
   }
 }

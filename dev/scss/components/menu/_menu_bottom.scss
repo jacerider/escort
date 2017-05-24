@@ -1,5 +1,5 @@
 /**
- * Top AND Bottom region
+ * Bottom AND Bottom region
  */
 @include get-location($type: horizontal, $region: bottom) {
 
@@ -7,13 +7,48 @@
 
     > li {
 
-      > ul {
-        bottom: $base-size;
-        box-shadow: 0 -5px 6px transparentize($black, 0.75);
-        background: smart-scale($bg-color-bottom, $scale: 1%);
-        border-top-left-radius: $border-radius;
-        border-top-right-radius: $border-radius;
+      &:hover {
+
+        > .escort-aside-display-dropdown {
+          bottom: $base-size * 0.97;
+        }
+      }
+
+      > .escort-item {
+
+        .escort-inner {
+          @include button-style($region: bottom, $transparent: true);
+        }
+      }
+
+      > .escort-aside-display-dropdown {
+        bottom: 85%;
+
+        .escort-aside-display-dropdown {
+          bottom: 0;
+        }
+      }
+
+      li:hover {
+
+        > .escort-item {
+
+          .escort-inner {
+            background-color: $bg-color-bottom;
+          }
+        }
+
+        li:hover {
+        
+          > .escort-item {
+
+            .escort-inner {
+              background-color: lighten($bg-color-bottom, 6%) !important;
+            }
+          }
+        }
       }
     }
   }
 }
+

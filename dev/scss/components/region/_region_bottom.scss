@@ -6,7 +6,7 @@
   background: $bg-color-bottom;
   height: $base-size;
   padding: 0;
-  border-top: 1px solid scale-color($bg-color-bottom, $lightness: -10%);
+  border-top: 1px solid scale-color($bg-color-bottom, $lightness: -15%);
   color: smart-scale($bg-color-bottom);
 
   .hide-escort-bottom & {
@@ -16,5 +16,9 @@
   .show-escort-mini-bottom &,
   .show-escort-full-bottom & {
     transform: translate(0, 0);
+  }
+
+  .escort-bottom-right {
+    border-left: 1px solid darken($bg-color-bottom, 5%);
   }
 }

@@ -1,0 +1,161 @@
+////////////////////////////////////////////////////////////////////////////////
+// TABLES
+// -----------------------------------------------------------------------------
+
+.escort-region {
+
+  // .responsive-enabled {
+
+  //   .priority-low {
+
+  //     @include breakpoint(medium down) {
+  //       display: none;
+  //     }
+  //   }
+
+  //   .priority-medium {
+
+  //     @include breakpoint(small only) {
+  //       display: none;
+  //     }
+  //   }
+  // }
+
+  .tableresponsive-toggle {
+    @extend %button;
+    @include button-style($region: top, $transparent: false);
+  }
+
+  table {
+    border-radius: $border-radius;
+    border: 1px solid darken($bg-color-top, 7.5%);
+    margin-bottom: $margin * 1.5;
+    overflow: visible;
+    display: table;
+    width: 100%;
+    box-shadow: 0 1px 40px darken($bg-color-top, 5%);
+
+    &:last-child {
+      margin: 0;
+    }
+
+    caption,
+    thead th,
+    tbody td,
+    tbody th {
+      padding: ($padding / 2) $padding;
+      color: smart-scale($bg-color-top, $scale: 80%);
+
+      // @include breakpoint(medium) {
+      //   padding: ($global-padding / 2) ($global-padding * 1.5);
+      // }
+    }
+
+    caption {
+      text-align: left;
+    }
+
+    thead,
+    tbody,
+    tfoot {
+      width: 100%;
+      display: table-row-group;
+    }
+
+    tr {
+      display: table-row;
+    }
+
+    th,
+    td {
+      display: table-cell;
+      text-align: left;
+
+      // &.priority-low {
+      //   display: none;
+
+      //   @include breakpoint(large) {
+      //     display: table-cell;
+      //   }
+      // }
+
+      // &.priority-medium {
+      //   display: none;
+
+      //   @include breakpoint(medium) {
+      //     display: table-cell;
+      //   }
+      // }
+    }
+
+    th {
+      background-color: smart-scale($bg-color-top, $scale: 10%);
+      font-size: $font-size * 1.1;
+      opacity: 0.75;
+
+      &:last-child {
+        border: 0;
+      }
+    }
+
+    thead {
+      border: 0;
+
+      a {
+        display: block;
+        border: 0;
+
+        &:hover {
+          border: 0;
+        }
+      }
+
+      th {
+
+        a {
+          // @include icon(after, arrow-down) {
+          //   position: absolute;
+          //   right: 0;
+          //   color: $grey;
+          // };
+          
+          font-weight: bold;
+          color: $bg-color-top;
+          display: block;
+          position: relative;
+        }
+      }
+
+      .tablesort {
+        float: right;
+        margin-top: $margin / 3;
+        position: absolute;
+      }
+    }
+
+    tbody {
+      border: 0;
+
+      tr {
+        transition: background-color 300ms;
+
+        &:hover {
+          background-color: rgba($primary-color, 0.1); // sass-lint:disable-line no-color-literals
+        }
+      }
+
+      td {
+        border-right: 1px solid smart-scale($bg-color-top, $scale: -20%); // sass-lint:disable-line no-color-literals
+        border-bottom: 1px solid smart-scale($bg-color-top, $scale: -20%); // sass-lint:disable-line no-color-literals
+      }
+
+      p {
+        margin: 0;
+      }
+
+      a {
+        border: 0;
+      }
+    }
+  }
+}

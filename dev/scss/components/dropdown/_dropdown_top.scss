@@ -3,33 +3,89 @@
  */
 @include get-location($type: horizontal, $region: top) {
 
-  .escort-container.escort-active {
+  .escort-container:not(.escort-wrap).escort-active {
 
     .escort-aside-trigger {
 
       .escort-inner {
         // background: smart-scale($bg-color-top, $scale: -12%) !important;
-        box-shadow: inset 0 10px 10px rgba(adjust-color($bg-color-top, $saturation: 0%, $lightness: -8%), 0.25) !important;
+        box-shadow: inset 0 0 20px rgba(adjust-color($bg-color-top, $saturation: 0%, $lightness: -10%), 0.33) !important;
       }
+    }
+
+    .escort-aside-display-dropdown {
+      top: $base-size * 0.97;
     }
   }
 
   .escort-aside-display-dropdown {
-    top: $base-size * 0.97;
-    box-shadow: 0 5px 6px transparentize($black, 0.75);
-    background: darken($bg-color-top, 2.5%);
+    top: 85%;
+    box-shadow: 0 9px 12px transparentize($black, 0.8);
+    background: darken($bg-color-top, 4%);
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
 
-    @include css-triangle($base-size / 3, darken($bg-color-top, 2.5%), up, before) {
+    @include css-triangle($base-size / 3, darken($bg-color-top, 4%), up, before) {
       content: '';
       position: absolute;
       top: ($base-size / 3.25) * -1;
+      left: 0;
       z-index: 1;
     }
 
-    &::before {
-      border-left-width: 0;
+    .escort-aside-display-dropdown {
+      background: lighten($bg-color-top, 4%);
+
+      @include css-triangle($base-size / 2, lighten($bg-color-top, 4%), left, before) {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: ($base-size / 3) * -1;
+        z-index: 1;
+      }
+
+      .escort-aside-display-dropdown {
+        @include css-triangle($base-size / 2, lighten($bg-color-top, 10%), left, before);
+        background: lighten($bg-color-top, 10%);
+
+        .escort-aside-display-dropdown {
+          @include css-triangle($base-size / 2, lighten($bg-color-top, 15%), left, before);
+          background: lighten($bg-color-top, 15%);
+        }
+      }
+    }
+  }
+
+  .escort-top-right {
+
+    .escort-aside-display-dropdown {
+      .escort-aside-display-dropdown {
+
+        &::before {
+          right: ($base-size / 3) * -1 !important;
+        }
+
+        @include css-triangle($base-size / 2, lighten($bg-color-top, 4%), right, before) {
+          border-bottom-width: $base-size / 2;
+          border-top-width: 0;
+        }
+
+        .escort-aside-display-dropdown {
+          
+          @include css-triangle($base-size / 2, lighten($bg-color-top, 10%), right, before) {
+            border-bottom-width: $base-size / 2;
+            border-top-width: 0;
+          }
+
+          .escort-aside-display-dropdown {
+          
+            @include css-triangle($base-size / 2, lighten($bg-color-top, 15%), right, before) {
+              border-bottom-width: $base-size / 2;
+              border-top-width: 0;
+            }
+          }
+        }
+      }
     }
   }
 }

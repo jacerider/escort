@@ -54,7 +54,7 @@
           connectWith: '.escort-sort',
           placeholder: 'escort-placeholder',
           forcePlaceholderSize: true,
-          helper: "clone",
+          helper: 'clone',
           appendTo: $('body'),
           handle: '.drag',
           opacity: 0.5,

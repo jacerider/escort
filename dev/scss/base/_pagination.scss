@@ -1,0 +1,38 @@
+.escort-region-after {
+
+  .pager {
+    margin: ($margin * 2) 0 0;
+    padding: ($padding * 2) 0 0;
+    border-top: 1px solid darken($bg-color-top, 7.5%);
+    text-align: center;
+    clear: both;
+
+    > ul {
+      @extend %button;
+      @include button-style($region: top);
+      @include linear-gradient($primary-color, darken($primary-color, 5%), bottom);
+      border: 0;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+
+      > a {
+        display: block;
+        border-radius: 0;
+        color: smart-scale($primary-color, $scale: 80%);
+        padding: 0 ($padding / 2);
+        line-height: $base-size;
+      }
+
+      > a:hover {
+        @include linear-gradient(darken($primary-color, 2.5%), darken($primary-color, 7.5%), bottom);
+        color: $white;
+      }
+    }
+  }
+}

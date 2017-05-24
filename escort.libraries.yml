@@ -82,6 +82,7 @@ escort.aside:
     js/escort.aside.js: { minified: true }
   dependencies:
     - escort/escort
+    - core/drupal.ajax
 
 escort.escape:
   version: VERSION

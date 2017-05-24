@@ -48,7 +48,7 @@ class EscortEntityListBuilder extends EntityListBuilder {
    */
   protected function getEntityIds() {
     $query = $this->getStorage()->getQuery()
-      ->sort($this->entityType->getKey('id'));
+      ->sort($this->entityType->getKey('id'), 'DESC');
 
     if (!empty($this->types)) {
       $query->condition($this->entityType->getKey('bundle'), $this->types, 'IN');

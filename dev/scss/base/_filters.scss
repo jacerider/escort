@@ -1,0 +1,37 @@
+.escort-region-after {
+
+  .views-exposed-form {
+    margin: 0 0 ($margin * 2);
+    display: flex;
+    border-bottom: 1px solid darken($bg-color-top, 7.5%);
+
+    .form-item {
+      max-width: 25%;
+      margin: 0 0 ($margin * 2);
+
+      input {
+        border: 3px solid smart-scale($bg-color-top, $scale: 8%);
+        background-color: smart-scale($bg-color-top, $scale: 15%);
+        color: smart-scale($bg-color-top, $scale: 100%);
+
+        &:focus {
+          border: 3px solid $primary-color;
+        }
+      }
+    }
+
+    .form-actions {
+      margin: 0;
+    }
+
+    .form-submit {
+      @extend %button;
+      @include button-style($region: top);
+      line-height: $base-size * 0.85;
+      background-color: $primary-color;
+      color: smart-scale($primary-color, $scale: 80%);
+      margin: 0 0 0 ($margin * 2);
+      border: 0;
+    }
+  }
+}

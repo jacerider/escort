@@ -1,0 +1,111 @@
+.js .escort-aside-display-shelf {
+
+  .dropbutton-wrapper {
+    min-height: 2rem;
+
+    &.open.dropbutton-multiple {
+
+      > .dropbutton-widget {
+        box-shadow: 0 5px 20px adjust-color($bg-color-top, $lightness: -10%);
+        transition: box-shadow 300ms;
+
+        .dropbutton-arrow {
+          border-top-color: transparent;
+          border-bottom-color: smart-scale($primary-color, $scale: 90%);
+        }
+      }
+    }
+
+    &.dropbutton-multiple {
+      padding-right: 0;
+      margin-right: 0;
+      max-width: none;
+
+      > .dropbutton-widget {
+        border: 0;
+        border-radius: $border-radius;
+        box-shadow: none;
+        background-image: none;
+        text-shadow: none;
+        overflow: hidden;
+      }
+    }
+
+    > .dropbutton-widget li {
+
+      > a {
+        @include linear-gradient($primary-color, darken($primary-color, 5%), bottom);
+        padding: ($padding / 2) $padding;
+        color: smart-scale($primary-color, $scale: 90%);
+        line-height: 1;
+
+        &:hover,
+        &:focus {
+          @include linear-gradient(darken($primary-color, 2.5%), darken($primary-color, 7.5%), bottom);
+          box-shadow: none;
+          color: smart-scale($primary-color, $scale: 100%);
+        }
+      }
+
+      > button,
+      > input {
+        @include linear-gradient(lighten($primary-color, 10%), lighten($primary-color, 7.5%), left);
+        border-radius: 0;
+        border-left: 1px solid darken($primary-color, 8%);
+        font-weight: 500;
+        box-shadow: none;
+        display: block;
+        line-height: 1;
+
+        &:hover,
+        &:focus {
+          @include linear-gradient(lighten($primary-color, 15%), lighten($primary-color, 10%), left);
+          box-shadow: none;
+        }
+      }
+
+      .dropbutton-arrow {
+        border-top-color: smart-scale($primary-color, $scale: 90%);
+      }
+    }
+
+    .secondary-action {
+      border: 0;
+    }
+
+    .dropbutton-action {
+
+      > * {
+        border-radius: 0;
+        font-weight: 500;
+        box-shadow: none;
+        text-shadow: none;
+      }
+
+      a {
+        border-radius: 0 !important;
+        border-bottom: 1px solid darken($primary-color, 5%);
+      }
+    }
+
+    .dropbutton-toggle {
+
+      button {
+        border: 0;
+        border-radius: 0;
+        font-weight: 500;
+        box-shadow: none;
+
+        &:hover {
+          background-image: none;
+          background-color: smart-scale($bg-color-top, $scale: 80%);
+        }
+
+        &:focus {
+          background-image: none;
+          background-color: smart-scale($bg-color-top, $scale: 80%);
+        }
+      }
+    }
+  }
+}

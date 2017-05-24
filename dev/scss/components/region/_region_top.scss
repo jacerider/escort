@@ -17,4 +17,8 @@
   .show-escort-full-top & {
     transform: translate(0, 0);
   }
+
+  .escort-top-right {
+    border-left: 1px solid darken($bg-color-top, 5%);
+  }
 }

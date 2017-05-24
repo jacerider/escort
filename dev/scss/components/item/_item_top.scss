@@ -3,18 +3,9 @@
  */
 @include get-location($type: horizontal, $region: top) {
 
-  // .escort-item {
-  //   border-right: 1px dashed smart-scale($bg-color-top, $scale: 25%);
-  //   border-left: 1px dashed smart-scale($bg-color-top, $scale: 25%);
-  // }
-
-  .escort-item {
-    line-height: $base-size * 0.97;
-  }
-
   .escort-container:not(.escort-wrap):not(.escort-active) {
 
-    .escort-link:not(.escort-add) {
+    > .escort-link:not(.escort-add) {
 
       .escort-inner {
         @include button-style($region: top, $transparent: true);
@@ -22,7 +13,7 @@
       }
     }
   }
-
+  
   .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
     &:hover,
@@ -40,6 +31,10 @@
 
     &.secondary-tab:last-child {
       padding-right: $padding * 0.66;
+    }
+
+    .escort-inner {
+      border-right: 1px solid darken($bg-color-top, 5%);
     }
   }
 
