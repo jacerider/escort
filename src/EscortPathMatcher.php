@@ -73,8 +73,8 @@ class EscortPathMatcher implements EscortPathMatcherInterface {
         $this->isAdmin = FALSE;
       }
       else {
-        $include = ['/admin/config/escort', '/admin/config/escort/*'];
-        $exclude = ['/admin/config/escort/test/*'];
+        $include = ['/admin/config/user-interface/escort', '/admin/config/user-interface/escort/*'];
+        $exclude = ['/admin/config/user-interface/escort/test/*'];
         $request = $this->requestStack->getCurrentRequest();
         // Compare the lowercase path alias (if any) and internal path.
         $path = $this->currentPath->getPath($request);
