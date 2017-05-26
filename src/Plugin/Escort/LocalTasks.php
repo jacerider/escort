@@ -114,7 +114,8 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
     $cacheability->applyTo($build);
 
     foreach ($tabs as $key => $tab) {
-      $build[$key] = $this->buildLink($tab['#link']['title'], $tab['#link']['url'], $tab['#attributes']);
+      $attributes = isset($tab['#attributes']) ? $tab['#attributes'] : [];
+      $build[$key] = $this->buildLink($tab['#link']['title'], $tab['#link']['url'], $attributes);
       $build[$key]['#weight'] = $tab['#weight'];
       $build[$key]['#access'] = $tab['#access'];
     }

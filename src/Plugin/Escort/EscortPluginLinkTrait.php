@@ -31,7 +31,7 @@ trait EscortPluginLinkTrait {
    * @return array
    *   A render array.
    */
-  protected function buildLink($title, $uri, $attributes = array()) {
+  protected function buildLink($title, $uri, $attributes = []) {
     $title = $this->titleAndUrlToIcon($title, $uri);
     list($title, $icon) = $this->titleToTitleIcon($title);
     $attributes += $this->getUriAsAttributes($uri);
