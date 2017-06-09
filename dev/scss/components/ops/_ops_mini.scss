@@ -6,7 +6,7 @@
   .escort-ops {
     top: 97%;
     background: smart-scale($bg-color-mini, $scale: -12%);
-    box-shadow: 0 4px 4px transparentize($black, 0.75);
+    box-shadow: 0 6px 6px transparentize($black, 0.75);
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
   }

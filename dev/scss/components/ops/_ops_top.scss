@@ -4,9 +4,9 @@
 @include get-location($type: horizontal, $region: top) {
 
   .escort-ops {
-    top: 99%;
+    top: 95%;
     background: smart-scale($bg-color-top, $scale: -12%);
-    box-shadow: 0 4px 4px transparentize($black, 0.75);
+    box-shadow: 0 6px 6px transparentize($black, 0.75);
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
   }
@@ -17,7 +17,7 @@
     .escort-container:focus { // sass-lint:disable-line force-pseudo-nesting
         
       .escort-ops {
-        background: smart-scale($bg-color-top, 8%);
+        background: smart-scale($bg-color-top, 6.5%);
         
         a {
           @include button-style($region: top, $transparent: true) {
