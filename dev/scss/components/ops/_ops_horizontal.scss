@@ -15,7 +15,6 @@
     padding: $padding / 3;
     width: $base-size * 0.95;
     z-index: 1;
-    transition: width 300ms;
 
     li {
       display: none;
@@ -34,7 +33,8 @@
     .escort-container:focus {
 
       .escort-ops {
-        width: $base-size * 2;
+        min-width: $base-size * 2;
+        width: calc(100% - 1px);
         z-index: 2;
 
         li {
