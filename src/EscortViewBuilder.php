@@ -232,14 +232,9 @@ class EscortViewBuilder extends EntityViewBuilder {
         $build['#attributes']['class'][] = 'escort-sortable';
         $build['#attributes']['data-escort-id'] = $entity->id();
         // Add entity operations.
-        $ops = [
-          'drag' => [
-            'title' => t('Drag'),
-          ],
-        ] + $entity->buildOps();
         $build['ops']['links'] = [
           '#theme' => 'links',
-          '#links' => $ops,
+          '#links' => $entity->buildOps(),
           '#attached' => ['library' => [escort_dialog_library()]],
           '#attributes' => ['class' => ['escort-ops']],
         ];
