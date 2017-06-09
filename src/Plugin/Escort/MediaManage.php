@@ -6,17 +6,18 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\micon\MiconIconize;
+use Drupal\Core\Link;
 
 /**
  * Defines a plugin for managing content.
  *
  * @Escort(
- *   id = "node_manage",
- *   admin_label = @Translation("Node Manage"),
- *   category = @Translation("Node"),
+ *   id = "media_manage",
+ *   admin_label = @Translation("Media Manage"),
+ *   category = @Translation("Media"),
  * )
  */
-class NodeManage extends Aside {
+class MediaManage extends Aside {
   use EscortEntityTrait;
 
   /**
@@ -24,14 +25,14 @@ class NodeManage extends Aside {
    *
    * @var string
    */
-  protected $entityType = 'node';
+  protected $entityType = 'media';
 
   /**
    * The entity type bundle.
    *
    * @var string
    */
-  protected $entityTypeBundle = 'node_type';
+  protected $entityTypeBundle = 'media_bundle';
 
   /**
    * {@inheritdoc}
@@ -39,7 +40,7 @@ class NodeManage extends Aside {
   public function defaultConfiguration() {
     return [
       'text' => $this->t('Manage [TYPE]'),
-      'icon' => 'fa-edit',
+      'icon' => 'fa-file-image-o',
       'bundle' => '',
       'view' => 0,
     ] + parent::defaultConfiguration();
@@ -50,12 +51,12 @@ class NodeManage extends Aside {
    */
   protected function escortAccess(AccountInterface $account) {
 
-    if ($account->hasPermission('administer content types')) {
+    if ($account->hasPermission('administer media bundles')) {
       return AccessResult::allowed()->cachePerPermissions();
     }
 
     if ($bundle = $this->configuration['bundle']) {
-      if ($account->hasPermission("edit any $bundle content") || $account->hasPermission("edit own $bundle content")) {
+      if ($account->hasPermission('update media') || $account->hasPermission('update any media')) {
         return AccessResult::allowed()->cachePerPermissions();
       }
     }
@@ -106,6 +107,11 @@ class NodeManage extends Aside {
    */
   protected function escortBuildAsideContent() {
     $build = [];
+    $build['add'] = Link::createFromRoute('Add New', 'entity.' . $this->entityType . '.add_form', [
+      'media_bundle' => $this->configuration['bundle'],
+    ], [
+      'attributes' => ['class' => ['escort-create']],
+    ])->toRenderable();
     if ($this->configuration['view']) {
       $build['view'] = $this->getManagementView($this->configuration['bundle']);
     }
@@ -113,6 +119,13 @@ class NodeManage extends Aside {
       $build['list'] = $this->entityTypeManager->getHandler($this->entityType, 'escort_list_builder')->setTypes([$this->configuration['bundle']])->render();
     }
     return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function isApplicable() {
+    return \Drupal::moduleHandler()->moduleExists('media_entity');
   }
 
 }

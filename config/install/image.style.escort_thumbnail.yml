@@ -1,0 +1,15 @@
+uuid: 57d45c17-14b5-44d1-8bb9-0b62c579b1bc
+langcode: en
+status: true
+dependencies: {  }
+name: escort_thumbnail
+label: 'Escort Thumbnail'
+effects:
+  e9e5db0e-eaa4-4b05-ae60-feb36363eea3:
+    uuid: e9e5db0e-eaa4-4b05-ae60-feb36363eea3
+    id: image_scale
+    weight: 1
+    data:
+      width: null
+      height: 30
+      upscale: true

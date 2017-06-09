@@ -491,6 +491,13 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
   /**
    * {@inheritdoc}
    */
+  public static function isApplicable() {
+    return TRUE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function isEmpty() {
     return FALSE;
   }

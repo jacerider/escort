@@ -179,6 +179,14 @@ interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormI
   public function getEscort();
 
   /**
+   * Returns if the plugin can be used.
+   *
+   * @return bool
+   *   TRUE if the formatter can be used, FALSE otherwise.
+   */
+  public static function isApplicable();
+
+  /**
    * Called when building the current escort repository list.
    *
    * If a escort should not be rendered because it has no data this method
