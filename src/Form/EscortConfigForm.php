@@ -163,6 +163,18 @@ class EscortConfigForm extends ConfigFormBase {
       ];
     }
 
+    $form['rebuild'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Rebuild'),
+      '#open' => FALSE,
+      '#tree' => TRUE,
+    ];
+    $form['rebuild']['views'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Rebuild management views'),
+      '#submit' => [[$this, 'submitRebuildViews']],
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -341,6 +353,19 @@ class EscortConfigForm extends ConfigFormBase {
     if ($style) {
       $style->delete();
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitRebuildViews(array &$form, FormStateInterface $form_state) {
+    $config_path = drupal_get_path('module', 'escort') . '/config/optional';
+    $destination = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
+    foreach (file_scan_directory($config_path, '/views\.view\.escort_.*_manage.yml/') as $file) {
+      file_unmanaged_copy($file->uri, $destination, FILE_EXISTS_REPLACE);
+    }
+    drupal_set_message($this->t('Escort management configuration files were successfully reset and are ready for import.'));
+    $form_state->setRedirect('config.sync');
   }
 
 }
