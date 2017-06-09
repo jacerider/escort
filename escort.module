@@ -9,7 +9,6 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Implements hook_help().
@@ -209,29 +208,4 @@ function escort_dialog_type() {
  */
 function escort_dialog_library() {
   return escort_ux_dialog_exists() ? 'ux_dialog/ux_dialog' : 'core/drupal.dialog.ajax';
-}
-
-/**
- * Implements hook_entity_insert().
- */
-function escort_entity_update(EntityInterface $entity) {
-  if ($entity->getEntityTypeId() == 'node_type') {
-    $view_manager = \Drupal::service('entity.manager')->getStorage('view');
-    $clone_id = 'escort_node_manager_' . $entity->id();
-    if (!$view_manager->load($clone_id)) {
-      $view = $view_manager->load('escort_node_manage');
-      if ($view) {
-        // Clone base view.
-        $clone = $view->createDuplicate();
-        $clone->set('id', $clone_id);
-        $clone->set('label', $clone->get('label') . ' | ' . $entity->label());
-        // Setup display.
-        $display = $clone->getDisplay('default');
-        $display['display_options']['filters']['type']['value'][$entity->id()] = $entity->id();
-        // Save.
-        $clone->save();
-        ksm($clone);
-      }
-    }
-  }
 }
