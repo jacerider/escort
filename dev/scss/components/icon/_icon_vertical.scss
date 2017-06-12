@@ -9,7 +9,6 @@
     .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
       .escort-icon {
-        width: $base-size;
         text-align: center;
       }
     }
@@ -29,10 +28,10 @@
   .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
     .escort-icon {
-      width: $base-size * 2.025;
+      width: 100%;
       display: inline-block;
       margin-right: 0;
-      font-size: $font-size * 1.5;
+      font-size: $font-size * 1.66;
     }
   }
 }

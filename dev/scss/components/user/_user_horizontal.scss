@@ -5,6 +5,13 @@
 
   .escort-type-user {
 
+    &.escort-active {
+
+      .escort-image {
+        box-shadow: 0 2px 8px transparentize($black, 0.25);
+      }
+    }
+
     .escort-aside-trigger {
 
       .escort-active & {
@@ -24,10 +31,14 @@
       }
     }
 
-    &.escort-active {
+    .escort-aside-content {
 
-      .escort-image {
-        box-shadow: 0 2px 8px transparentize($black, 0.25);
+      .escort-menu {
+
+        > li {
+          float: none;
+          display: block;
+        }
       }
     }
 

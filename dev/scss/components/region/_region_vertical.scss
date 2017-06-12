@@ -18,7 +18,7 @@
     width: $base-size;
 
     .escort-scroll {
-      width: ($base-size * 0.95) + 1.5rem;
+      width: $base-size + 1.5em;
     }
 
     .is-escort-admin & {
@@ -29,13 +29,13 @@
     .show-escort-full-right & {
 
       .escort-scroll {
-        width: ($base-size-active * 0.99) + 1.5rem;
+        width: $base-size-active + 1.5em;
       }
     }
   }
 
   .escort-scroll {
-    width: ($base-size * 1.9) + 1.5rem;
+    width: ($base-size * 2) + 1.5em;
     padding-right: $padding * 1.5;
     height: 100%;
     display: flex;
@@ -84,7 +84,7 @@
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,
             .show-escort-full-#{$r} & {
-              bottom: map-get($s, size) * 0.975;
+              bottom: map-get($s, size);
             }
           }
         }

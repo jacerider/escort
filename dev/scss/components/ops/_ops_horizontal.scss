@@ -3,28 +3,28 @@
  */
 @include get-location($type: horizontal) {
 
-  &:hover,
-  &:focus { // sass-lint:disable-line force-pseudo-nesting
+  // &:hover,
+  // &:focus { // sass-lint:disable-line force-pseudo-nesting
 
-    .escort-ops {
-      display: block;
-    }
-  }
+  //   .escort-ops {
+  //     display: block;
+  //   }
+  // }
 
   .escort-ops {
     padding: $padding / 3;
     width: $base-size * 0.95;
     z-index: 1;
 
-    li {
-      display: none;
-    }
+    // li {
+    //   display: none;
+    // }
 
-    li:nth-child(2) { // sass-lint:disable-line force-pseudo-nesting
-      display: block;
-      line-height: $base-size / 2 !important;
-      padding: $padding / 3;
-    }
+    // li:nth-child(2) { // sass-lint:disable-line force-pseudo-nesting
+    //   display: block;
+    //   line-height: $base-size / 2 !important;
+    //   padding: $padding / 3;
+    // }
   }
 
   .escort-sort {
@@ -33,6 +33,7 @@
     .escort-container:focus {
 
       .escort-ops {
+        display: block;
         min-width: $base-size * 2;
         width: calc(100% - 1px);
         z-index: 2;

@@ -10,8 +10,8 @@
       position: absolute;
       left: 0;
       display: block;
-      width: calc(100% + 1rem);
-      max-height: 0;
+      width: calc(100% + 1em);
+      height: 0;
       overflow-x: hidden;
       overflow-y: scroll;
       padding: 0;
@@ -19,22 +19,22 @@
       transition: opacity 200ms, box-shadow 200ms;
 
       &.escort-active {
-        max-height: $base-size-active * 2;
+        height: calc(100vh - #{$base-size});
         padding: $padding * 2;
         opacity: 1;
       }
 
       .has-escort-left & {
         margin-left: $base-size * 2;
-        width: calc((100% + 1rem) - #{$base-size * 2});
+        width: calc((100% + 1.25em) - #{$base-size * 2});
       }
 
       .has-escort-right & {
-        width: calc((100% + 1rem) - #{$base-size * 2});
+        width: calc((100% + 1.25em) - #{$base-size * 2});
       }
 
       .has-escort-left.has-escort-right & {
-        width: calc((100% + 1rem) - #{$base-size * 4});
+        width: calc((100% + 1.25em) - #{$base-size * 4});
       }
     }
   }

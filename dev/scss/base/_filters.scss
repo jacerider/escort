@@ -9,8 +9,19 @@
       max-width: 25%;
       margin: 0 0 ($margin * 2);
 
+      label {
+        display: block;
+        position: relative;
+        top: auto;
+        left: auto;
+        float: none;
+        line-height: 1;
+        margin-bottom: $margin / 3;
+      }
+
       input {
         border: 3px solid smart-scale($bg-color-top, $scale: 8%);
+        border-radius: $border-radius;
         background-color: smart-scale($bg-color-top, $scale: 15%);
         color: smart-scale($bg-color-top, $scale: 100%);
 
@@ -18,15 +29,20 @@
           border: 3px solid $primary-color;
         }
       }
+
+      .field-input {
+        flex: auto;
+      }
     }
 
     .form-actions {
       margin: 0;
+      clear: none;
     }
 
     .form-submit {
       @extend %button;
-      @include button-style($region: top);
+      @include button-style($region: top, $transparent: true);
       line-height: $base-size * 0.85;
       background-color: $primary-color;
       color: smart-scale($primary-color, $scale: 80%);

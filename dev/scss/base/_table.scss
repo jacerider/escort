@@ -4,23 +4,6 @@
 
 .escort-region {
 
-  // .responsive-enabled {
-
-  //   .priority-low {
-
-  //     @include breakpoint(medium down) {
-  //       display: none;
-  //     }
-  //   }
-
-  //   .priority-medium {
-
-  //     @include breakpoint(small only) {
-  //       display: none;
-  //     }
-  //   }
-  // }
-
   .tableresponsive-toggle {
     @extend %button;
     @include button-style($region: top, $transparent: false);
@@ -45,10 +28,7 @@
     tbody th {
       padding: ($padding / 2) $padding;
       color: smart-scale($bg-color-top, $scale: 80%);
-
-      // @include breakpoint(medium) {
-      //   padding: ($global-padding / 2) ($global-padding * 1.5);
-      // }
+      line-height: $padding * 2;
     }
 
     caption {
@@ -60,38 +40,26 @@
     tfoot {
       width: 100%;
       display: table-row-group;
+      border: 0;
     }
 
     tr {
       display: table-row;
+      border: 0;
     }
 
     th,
     td {
       display: table-cell;
       text-align: left;
-
-      // &.priority-low {
-      //   display: none;
-
-      //   @include breakpoint(large) {
-      //     display: table-cell;
-      //   }
-      // }
-
-      // &.priority-medium {
-      //   display: none;
-
-      //   @include breakpoint(medium) {
-      //     display: table-cell;
-      //   }
-      // }
+      border: 0;
     }
 
     th {
       background-color: smart-scale($bg-color-top, $scale: 10%);
       font-size: $font-size * 1.1;
       opacity: 0.75;
+      text-transform: capitalize;
 
       &:last-child {
         border: 0;
