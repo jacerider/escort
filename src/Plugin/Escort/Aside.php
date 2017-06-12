@@ -6,7 +6,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
-use Drupal\escort\Ajax\EscortAsideDestinationCommand;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableMetadata;
@@ -224,7 +223,6 @@ class Aside extends Text {
     $response = new AjaxResponse();
     if (!empty($build)) {
       $response->addCommand(new HtmlCommand($id, $build));
-      $response->addCommand(new EscortAsideDestinationCommand());
     }
     return $response;
   }
