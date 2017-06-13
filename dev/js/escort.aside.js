@@ -68,6 +68,7 @@
           // than the usual location.
           element_settings.url = $(this).attr('href');
           element_settings.event = 'click.aside.ajax';
+          element_settings.progress = {type: 'fullscreen'};
           if (_this.dialogType) {
             element_settings.dialogType = _this.dialogType;
             element_settings.dialog = $(this).data('dialog-options');
