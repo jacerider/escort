@@ -21,6 +21,10 @@
   text-shadow: none;
   border: 0;
   white-space: nowrap;
+  font-family: $font;
+  font-size: $font-size;
+  font-weight: 400;
+  font-smoothing: antialiased;
   transition: background-color 300ms, color 300ms, box-shadow 300ms;
 
   &:visited,

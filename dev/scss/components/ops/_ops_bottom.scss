@@ -6,7 +6,7 @@
   .escort-ops {
     bottom: 99%;
     background: smart-scale($bg-color-bottom, $scale: -12%);
-    box-shadow: 0 -4px 4px transparentize($black, 0.75);
+    box-shadow: 0 -6px 6px transparentize($black, 0.75);
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
   }
@@ -17,6 +17,7 @@
     .escort-container:focus { // sass-lint:disable-line force-pseudo-nesting
         
       .escort-ops {
+        background: smart-scale($bg-color-bottom, 6.5%);
         
         a {
           @include button-style($region: bottom, $transparent: true) {

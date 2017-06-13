@@ -12,7 +12,7 @@
 
     img {
       max-height: $base-size;
-      max-width: $base-size;
+      max-width: $base-size * 0.96;
       float: left;
     }
 

@@ -17,7 +17,7 @@
   .escort-item {
     text-align: center;
     display: block;
-    line-height: $base-size;
+    line-height: $base-size * 0.975;
     float: left;
 
     &:first-child {
@@ -48,7 +48,8 @@
     &.has-icon:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
       .escort-content {
-        margin-left: $margin / 2;
+        margin-left: $margin / 4;
+        vertical-align: middle;
       }
     }
 

@@ -12,11 +12,10 @@
   }
 
   .escort-ops {
-    top: 0.5rem;
-    right: 1rem;
+    top: $margin / 2;
+    right: $margin;
     left: auto;
     padding: 0 $padding;
-    background-color: #333;
 
     li {
       padding: 0;
@@ -74,13 +73,12 @@
     .escort-container:focus { // sass-lint:disable-line force-pseudo-nesting
 
       .escort-ops {
-        width: 100%;
+        width: calc(100% - #{$base-size};
         top: 0;
         right: 0;
-        left: 0;
 
         li {
-          padding: ($padding * 0.975) ($padding * 0.05);
+          padding: ($padding * 0.8) ($padding * 0.05);
           width: 25%;
           display: table-cell;
 

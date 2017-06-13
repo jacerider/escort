@@ -18,13 +18,15 @@
       padding: $padding / 2;
       list-style: none;
       display: flex;
+      justify-content: space-between;
       flex-flow: wrap;
       flex: 0 1 auto;
     }
 
     li {
-      width: 50%;
-      flex-basis: 50%;
+      width: 33.333%;
+      max-width: 33.333%;
+      flex-basis: 33.333%;
       text-align: center;
       background-color: transparent;
       padding: 0;
@@ -32,8 +34,10 @@
 
     a {
       display: block;
+      box-sizing: border-box;
       vertical-align: middle;
       padding: $padding;
+      width: 100%;
     }
 
     i {

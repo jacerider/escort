@@ -9,7 +9,7 @@
 
       .escort-inner {
         @include button-style($region: top, $transparent: true);
-        max-height: $base-size * 0.975;
+        max-height: $base-size;
 
         .escort-active & {
           @include button-style($region: top, $transparent: false) {
@@ -57,6 +57,8 @@
   }
 
   .escort-content {
+    font-size: $font-size * 1.1;
+    line-height: $font-size * 1.1;
     color: smart-scale($bg-color-top, $scale: 60%);
     text-shadow: 0 1px 2px adjust-color($bg-color-top, $lightness: -25%);
   }

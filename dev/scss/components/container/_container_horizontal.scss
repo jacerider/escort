@@ -12,13 +12,13 @@
       &.escort-active {
 
         .escort-inner {
-          padding: 0 $padding;
+          padding: 0 $padding 0 ($padding / 3);
         }
       }
     }
   }
 
   .escort-container {
-    max-height: $base-size * 0.975;
+    max-height: $base-size;
   }
 }

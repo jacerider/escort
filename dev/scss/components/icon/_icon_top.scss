@@ -29,7 +29,7 @@
 
           background-color: smart-scale($bg-color-top, 20%);
           top: 85%;
-          line-height: $base-size * 0.66;
+          line-height: $base-size * 0.6;
           box-shadow: 0 2px 5px rgba($black, 0.5); // sass-lint:disable-line no-color-literals
           border-bottom-left-radius: $border-radius;
           border-bottom-right-radius: $border-radius;

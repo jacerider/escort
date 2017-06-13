@@ -13,7 +13,7 @@
       }
 
       .escort-content {
-        line-height: $base-size * 0.66;
+        line-height: $base-size * 0.5;
         margin-top: 0;
       }
     }
@@ -46,7 +46,7 @@
   .escort-item {
     padding: ($padding * 0.75) 0;
     display: block;
-    width: $base-size * 2.025;
+    width: $base-size * 2;
     overflow: hidden;
     text-align: left;
 
