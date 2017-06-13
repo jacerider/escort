@@ -126,11 +126,11 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    *   An associative array with the default configuration.
    */
   protected function baseConfigurationDefaults() {
-    $defaults = array(
+    $defaults = [
       'id' => $this->getPluginId(),
       'label' => '',
       'provider' => $this->pluginDefinition['provider'],
-    );
+    ];
     if ($this->usesIcon()) {
       $defaults['icon'] = '';
     }
@@ -437,7 +437,7 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
     // properties and rendering (for instance, its own #theme) without
     // conflicting with the properties used above, or alternate ones used by
     // alternate escort rendering approaches in contrib.
-    foreach (array(
+    foreach ([
       '#tag',
       '#icon',
       '#image',
@@ -446,7 +446,7 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
       '#contextual_links',
       '#weight',
       '#access',
-    ) as $property) {
+    ] as $property) {
       if (isset($content[$property])) {
         if (!isset($build[$property])) {
           $build[$property] = $content[$property];
