@@ -39,6 +39,8 @@
   }
 
   .escort-content {
+    font-size: $font-size * 1.2;
+    line-height: $font-size * 1.2;
     color: smart-scale($bg-color-bottom, $scale: 60%);
     text-shadow: 0 1px 2px scale-color($bg-color-bottom, $lightness: -25%);
   }

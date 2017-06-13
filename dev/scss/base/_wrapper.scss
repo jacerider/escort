@@ -19,15 +19,15 @@
       @if map-get($settings, type) == 'horizontal' {
 
         @if map-get($settings, position) == 'mini' {
-          padding-top: em2px(map-get($settings, size) * 0.75);
+          padding-top: em2px(map-get($settings, size) * 0.85);
         }
 
         @if map-get($settings, position) == 'top' {
-          padding-top: em2px(map-get($settings, size));
+          padding-top: em2px(map-get($settings, size) * 0.95);
         }
 
         @if map-get($settings, position) == 'bottom' {
-          padding-bottom: em2px(map-get($settings, size));
+          padding-bottom: em2px(map-get($settings, size) * 0.95);
         }
       }
 
@@ -89,6 +89,6 @@
 
   .has-escort-top.has-escort-mini:not(.hide-escort-mini) &,
   .has-escort-top.has-escort-mini:not(.hide-escort-top) & {
-    padding-top: em2px($base-size * 1.333);
+    padding-top: em2px($base-size * 1.3);
   }
 }

@@ -1,4 +1,10 @@
-.js .has-escort {
+////////////////////////////////////////////////////////////////////////////////
+// DROPBUTTON
+// -----------------------------------------------------------------------------
+// Overriding styles of the Drupal standard dropbutton. These styles need to be
+// overly specific and may include important tags due to admin theme conflicts
+
+.js .has-escort .escort-region {
 
   .dropbutton-wrapper {
     min-height: 2em;
