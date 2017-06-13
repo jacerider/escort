@@ -12,6 +12,8 @@
   table {
     border-radius: $border-radius;
     border: 1px solid darken($bg-color-top, 7.5%);
+    border-collapse: unset;
+    border-spacing: $padding / 6;
     margin-bottom: $margin * 1.5;
     overflow: visible;
     display: table;
@@ -81,12 +83,6 @@
       th {
 
         a {
-          // @include icon(after, arrow-down) {
-          //   position: absolute;
-          //   right: 0;
-          //   color: $grey;
-          // };
-          
           font-weight: bold;
           color: $bg-color-top;
           display: block;
@@ -115,6 +111,10 @@
       td {
         border-right: 1px solid smart-scale($bg-color-top, $scale: -20%); // sass-lint:disable-line no-color-literals
         border-bottom: 1px solid smart-scale($bg-color-top, $scale: -20%); // sass-lint:disable-line no-color-literals
+      
+        > * {
+          font-size: $font-size;
+        }
       }
 
       p {

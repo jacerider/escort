@@ -4,9 +4,9 @@
 @include get-location($type: horizontal, $region: mini) {
 
   .escort-item {
-    line-height: $base-size * 0.85;
-    height: $base-size * 0.85;
-    min-width: $base-size * 0.85;
+    line-height: $base-size * 0.75;
+    height: $base-size * 0.75;
+    min-width: $base-size * 0.75;
   }
 
   .escort-container:not(.escort-type-user):not(.escort-type-branding):not(.escort-add):not(.escort-active) {
