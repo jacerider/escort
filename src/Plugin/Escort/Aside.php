@@ -135,9 +135,19 @@ class Aside extends Text {
     if (empty($this->configuration['text'])) {
       return [];
     }
+    $close_icon = \Drupal::config('escort.config')->get('close_icon');
     return [
       '#tag' => 'a',
-      '#icon' => $this->configuration['icon'],
+      '#icon' => [
+        $this->configuration['icon'],
+        [
+          '#theme' => 'micon_icon',
+          '#icon' => $close_icon,
+          '#attributes' => [
+            'class' => ['escort-aside-close'],
+          ],
+        ],
+      ],
       '#markup' => $this->configuration['text'],
     ];
   }

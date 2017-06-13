@@ -3,6 +3,25 @@
 // -----------------------------------------------------------------------------
 // Styles applied to the aside display mode for widgets/escorts.
 
+.escort-aside {
+
+  // Calin fix here
+  .escort-aside-close {
+    display: none;
+  }
+
+  &.escort-active {
+
+    .micon {
+      display: none;
+
+      &.escort-aside-close {
+        display: inline-block;
+      }
+    }
+  }
+}
+
 .escort-aside-content {
   opacity: 0;
 
