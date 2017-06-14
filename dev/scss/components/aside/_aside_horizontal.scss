@@ -10,16 +10,18 @@
       position: absolute;
       left: 0;
       display: block;
+      box-shadow: 0 0 0 transparentize($black, 0);
       width: calc(100% + 1em);
-      height: 0;
+      max-height: 0;
       overflow-x: hidden;
       overflow-y: scroll;
-      padding: 0;
+      padding: 0 ($padding * 2);
       opacity: 0;
-      transition: opacity 200ms, box-shadow 200ms;
+      transition: opacity 200ms, box-shadow 250ms, padding 300ms, max-height 400ms;
 
       &.escort-active {
-        height: calc(100vh - #{$base-size});
+        max-height: calc(100vh - #{$base-size});
+        box-shadow: 0 10px 20px transparentize($black, 0.5);
         padding: $padding * 2;
         opacity: 1;
       }

@@ -5,18 +5,18 @@
 
 .escort-aside {
 
-  // Calin fix here
+  // Callin fix here
   .escort-aside-close {
-    display: none;
+    display: none !important;
   }
 
   &.escort-active {
 
     .micon {
-      display: none;
+      display: none !important;
 
       &.escort-aside-close {
-        display: inline-block;
+        display: inline-block !important;
       }
     }
   }

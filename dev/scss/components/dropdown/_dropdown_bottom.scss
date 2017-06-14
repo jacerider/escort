@@ -9,7 +9,7 @@
 
       .escort-inner {
         // background: smart-scale($bg-color-bottom, $scale: -12%) !important;
-        box-shadow: inset 0 0 20px rgba(adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -10%), 0.33) !important;
+        box-shadow: inset 0 -10px 20px rgba(adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -10%), 0.33) !important;
       }
     }
 
