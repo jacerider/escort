@@ -15,6 +15,7 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
+      line-height: 1;
     }
 
     li {
@@ -25,8 +26,9 @@
         display: block;
         border-radius: 0;
         color: smart-scale($primary-color, $scale: 80%);
-        padding: 0 ($padding / 2);
-        line-height: $base-size;
+        padding: 0 $padding;
+        line-height: $base-size * 0.75;
+        font-weight: normal;
       }
 
       > a:hover {

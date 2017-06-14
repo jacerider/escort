@@ -6,16 +6,22 @@
 .escort-aside {
 
   // Callin fix here
-  .escort-aside-close {
-    display: none !important;
+  .escort-aside-trigger {
+    
+    .escort-aside-close {
+      display: none !important;
+    }
   }
 
-  &.escort-active {
+  &.escort-active:not(.escort-aside-display-dropdown) {
 
-    .micon {
-      display: none !important;
+    .escort-aside-trigger {
 
-      &.escort-aside-close {
+      .micon:not(.escort-aside-close) {
+        display: none !important;
+      }
+
+      .micon.escort-aside-close {
         display: inline-block !important;
       }
     }
