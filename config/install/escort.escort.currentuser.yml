@@ -1,0 +1,17 @@
+uuid: 47b71162-1de1-495d-a3ea-ce2e17b222bf
+langcode: en
+status: true
+dependencies: {  }
+id: currentuser
+region: top_right
+weight: 0
+provider: null
+plugin: user
+settings:
+  display: dropdown
+  display_size: 700
+  ajax: 1
+  id: user
+  label: 'Current User'
+  provider: escort
+visibility: {  }

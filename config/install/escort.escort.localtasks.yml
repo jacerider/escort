@@ -1,0 +1,17 @@
+uuid: fd276c60-c3ce-45fc-85e7-d91079b35705
+langcode: en
+status: true
+dependencies: {  }
+id: localtasks
+region: mini_right
+weight: 0
+provider: null
+plugin: local_tasks
+settings:
+  id: local_tasks
+  label: 'Local Tasks'
+  provider: escort
+  label_display: false
+  primary: 1
+  secondary: 1
+visibility: {  }

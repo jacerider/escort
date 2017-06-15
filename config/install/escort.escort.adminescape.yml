@@ -1,0 +1,14 @@
+uuid: e459a5b7-80ea-45ef-b320-6083e6a04efd
+langcode: en
+status: true
+dependencies: {  }
+id: adminescape
+region: mini_left
+weight: 0
+provider: null
+plugin: admin_escape
+settings:
+  id: admin_escape
+  label: 'Admin Escape'
+  provider: escort
+visibility: {  }
