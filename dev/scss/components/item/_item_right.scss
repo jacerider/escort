@@ -3,7 +3,7 @@
  */
 @include get-location($type: vertical, $region: right) {
 
-  .show-escort-full-right.has-escort-right-icon-only &,
+  .show-escort-expanded-right.escort-right-icon-only &,
   .is-escort-admin & {
 
     .escort-item { // sass-lint:disable-line force-pseudo-nesting
@@ -40,9 +40,9 @@
         white-space: nowrap;
       }
     }
-    
-    .show-escort-full-right.has-escort-right-icon-only & {
-    
+
+    .show-escort-expanded-right.escort-right-icon-only & {
+
       .escort-item { // sass-lint:disable-line force-pseudo-nesting
         width: $base-size-active;
 

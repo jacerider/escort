@@ -25,8 +25,8 @@
       width: $base-size-active;
     }
 
-    .show-escort-full-left &,
-    .show-escort-full-right & {
+    .show-escort-expanded-left &,
+    .show-escort-expanded-right & {
 
       .escort-scroll {
         width: $base-size-active + 1.5em;
@@ -75,7 +75,7 @@
           @if map-get($s, position) == 'top' {
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,
-            .show-escort-full-#{$r} & {
+            .show-escort-expanded-#{$r} & {
               top: map-get($s, size);
             }
           }
@@ -83,7 +83,7 @@
           @if map-get($s, position) == 'bottom' {
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,
-            .show-escort-full-#{$r} & {
+            .show-escort-expanded-#{$r} & {
               bottom: map-get($s, size);
             }
           }

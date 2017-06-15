@@ -3,7 +3,7 @@
  */
 @include get-location($type: vertical, $region: left) {
 
-  .show-escort-full-left &,
+  .show-escort-expanded-left &,
   .is-escort-admin & {
 
     &.icon-only {

@@ -3,8 +3,8 @@
  */
 @include get-location($type: vertical) {
 
-  .show-escort-full-right &,
-  .show-escort-full-left &,
+  .show-escort-expanded-right &,
+  .show-escort-expanded-left &,
   .is-escort-admin & {
 
     &.icon-only {
@@ -65,7 +65,7 @@
     }
 
     .escort-menu {
-      
+
       li:first-child {
 
         a {

@@ -4,7 +4,7 @@
 
 @include get-location($type: vertical, $region: right) {
 
-  .show-escort-full-right &,
+  .show-escort-expanded-right &,
   .is-escort-admin & {
 
     .escort-type-branding {

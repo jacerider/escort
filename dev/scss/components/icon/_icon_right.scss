@@ -5,8 +5,8 @@
 
   &.icon-only {
 
-    .show-escort-full-right.has-escort-right-icon-only & {
-    
+    .show-escort-expanded-right.escort-right-icon-only & {
+
       .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
         .escort-icon {

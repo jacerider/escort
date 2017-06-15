@@ -46,7 +46,7 @@
         else {
           // Only unbind if link not handled by Drupal modal.
           if (_this.dialogType) {
-            Drupal.Escort.hideFull();
+            Drupal.Escort.hideExpanded();
           }
           else {
             _this.$trigger.off('click.aside.ajax');

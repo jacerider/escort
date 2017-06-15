@@ -27,9 +27,9 @@
     /**
      * Hide full version of all instances.
      */
-    hideFull: function () {
+    hideExpanded: function () {
       for (var i = 0, len = this.instances.length; i < len; i++) {
-        this.instances[i].hideFull();
+        this.instances[i].hideExpanded();
       }
     }
   });
@@ -54,7 +54,7 @@
           e.preventDefault();
           timeoutDelay = _this.$region.hasClass('escort-instant') ? 0 : 300;
           timeout = setTimeout(function () {
-            _this.showFull();
+            _this.showExpanded();
           }, timeoutDelay);
         }).on('mouseleave.escort', function (e) {
           e.preventDefault();
@@ -63,29 +63,29 @@
       }
     },
 
-    showFull: function () {
+    showExpanded: function () {
       var _this = this;
       if (!_this.active) {
         _this.active = true;
-        _this.$body.addClass('show-escort-full-' + _this.region);
+        _this.$body.addClass('show-escort-expanded-' + _this.region);
         // Bind body click event.
         _this.$document.on('click.escort-' + _this.region, function (e) {
           if (_this.active && !$(e.target).closest(_this.$region).length) {
-            _this.hideFull();
+            _this.hideExpanded();
           }
         });
-        _this.$region.trigger('escort-region-full:show', [_this.$region]);
+        _this.$region.trigger('escort-region-expanded:show', [_this.$region]);
         _this.$document.trigger('escort-region:show', [_this.$region]);
       }
     },
 
-    hideFull: function () {
+    hideExpanded: function () {
       var _this = this;
       if (_this.active) {
         _this.active = false;
-        _this.$body.removeClass('show-escort-full-' + _this.region);
+        _this.$body.removeClass('show-escort-expanded-' + _this.region);
         _this.$document.off('click.escort-' + _this.region);
-        _this.$region.trigger('escort-region-full:hide', [_this.$region]);
+        _this.$region.trigger('escort-region-expanded:hide', [_this.$region]);
         _this.$document.trigger('escort-region:hide', [_this.$region]);
       }
     }

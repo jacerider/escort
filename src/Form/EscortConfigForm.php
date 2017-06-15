@@ -108,6 +108,13 @@ class EscortConfigForm extends ConfigFormBase {
         '#title' => $this->t('Icon only'),
         '#default_value' => !empty($region_settings[$group_id]['icon_only']),
       ];
+      if ($group['type'] == 'vertical') {
+        $form['regions'][$group_id]['full'] = [
+          '#type' => 'checkbox',
+          '#title' => $this->t('Show as full'),
+          '#default_value' => !empty($region_settings[$group_id]['full']),
+        ];
+      }
     }
 
     $form['close_icon'] = [

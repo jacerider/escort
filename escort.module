@@ -147,7 +147,10 @@ function escort_preprocess_html(&$variables) {
       foreach ($regions as $group_id => $sections) {
         $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $group_id);
         if (!empty($config[$group_id]['icon_only'])) {
-          $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $group_id . '-icon-only');
+          $variables['attributes']['class'][] = Html::cleanCssIdentifier('escort-' . $group_id . '-icon-only');
+        }
+        if (!empty($config[$group_id]['expanded'])) {
+          $variables['attributes']['class'][] = Html::cleanCssIdentifier('escort-' . $group_id . '-full');
         }
         foreach ($sections as $section) {
           foreach ($section as $escort) {

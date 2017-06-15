@@ -43,7 +43,7 @@
       }
     }
 
-    .has-escort-#{$region}-icon-only & {
+    .escort-#{$region}-icon-only & {
 
       @if map-get($settings, type) == 'vertical' {
 
