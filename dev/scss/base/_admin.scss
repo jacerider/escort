@@ -53,11 +53,11 @@
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          padding-left: em2px(map-get($settings, size_full) * 0.75);
+          padding-left: em2px(map-get($settings, size_full) * 0.81);
         }
 
         @if map-get($settings, position) == 'right' {
-          padding-right: em2px(map-get($settings, size_full) * 0.75);
+          padding-right: em2px(map-get($settings, size_full) * 0.81);
         }
       }
     }
