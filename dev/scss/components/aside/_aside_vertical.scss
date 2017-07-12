@@ -21,7 +21,8 @@
       box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals
 
       &.escort-active {
-        width: $base-size-active * 2;
+        width: $base-size-active * 2.5;
+        max-width: 75vw;
         padding: $padding;
       }
     }

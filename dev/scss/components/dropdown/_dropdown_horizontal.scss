@@ -54,7 +54,7 @@
 
   .escort-aside-display-dropdown {
     position: absolute;
-    min-width: $base-size-active;
+    min-width: $base-size-active * 1.25;
 
     .escort-inner {
       padding: 0 $padding 0 ($padding / 2);

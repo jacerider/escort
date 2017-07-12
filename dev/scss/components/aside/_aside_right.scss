@@ -18,7 +18,7 @@
 
     .escort-aside-display-shelf {
       background-color: $bg-color-right;
-      right: $base-size * 1.975;
+      right: $base-size * 1.985;
 
       &.escort-active {
         box-shadow: -10px 0 15px rgba($black, 0.2); // sass-lint:disable-line no-color-literals

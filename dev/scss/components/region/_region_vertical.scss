@@ -23,6 +23,10 @@
 
     .is-escort-admin & {
       width: $base-size-active;
+
+      .escort-section {
+        width: $base-size-active;
+      }
     }
 
     .show-escort-expanded-left &,
@@ -31,6 +35,17 @@
       .escort-scroll {
         width: $base-size-active + 1.5em;
       }
+    }
+
+    .escort-section {
+      width: $base-size;
+    }
+  }
+
+  .is-escort-admin & {
+
+    .escort-section {
+      width: $base-size-active;
     }
   }
 
@@ -46,6 +61,7 @@
   }
 
   .escort-section {
+    width: $base-size * 2;
 
     &.escort-right-bottom,
     &.escort-left-bottom {

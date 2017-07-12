@@ -6,7 +6,6 @@
 .escort-container:not(.escort-wrap) { // sass-lint:disable-line force-pseudo-nesting
 
   .escort-aside-display-dropdown:not(.escort-active) { // sass-lint:disable-line force-pseudo-nesting
-    padding: $padding / 2;
     border: 0;
     opacity: 0;
     transition: opacity 200ms, box-shadow 300ms, max-height 200ms, max-width 200ms, top 300ms, bottom 300ms, padding 200ms, visibility 200ms;
