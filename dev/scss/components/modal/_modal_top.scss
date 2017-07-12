@@ -1,0 +1,13 @@
+/**
+ * Top region only
+ */
+@include get-location($type: horizontal, $region: top) {
+
+  &.escort-aside-display-modal {
+
+    > .ui-dialog-titlebar.ui-widget-header,
+    > .ui-dialog-content.ui-widget-content {
+      background-color: $bg-color-top;
+    }
+  }
+}

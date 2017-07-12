@@ -3,17 +3,14 @@
  */
 @include get-location($type: horizontal, $region: bottom) {
 
-  .escort-aside-content {
+  .escort-grid {
 
-    .escort-grid {
+    li {
 
-      li {
-
-        a {
-          @include button-style($region: bottom, $transparent: true) {
-            border: 1px solid darken($bg-color-bottom, 5%);
-          };
-        }
+      a {
+        @include button-style($region: bottom, $transparent: true) {
+          border: 1px solid darken($bg-color-bottom, 5%);
+        };
       }
     }
   }

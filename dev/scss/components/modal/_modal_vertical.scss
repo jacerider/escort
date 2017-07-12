@@ -1,0 +1,9 @@
+/**
+ * Left region only
+ */
+@include get-location($type: vertical) {
+
+  &.escort-aside-display-modal {
+    bottom: auto;
+  }
+}
