@@ -15,6 +15,13 @@
   .show-escort-mini-left &,
   .show-escort-expanded-left & {
     transform: translate(0, 0);
+
+    &.icon-only {
+
+      .escort-section {
+        width: $base-size-active;
+      }
+    }
   }
 
   .show-escort-expanded-left.escort-left-icon-only & {
