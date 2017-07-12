@@ -23,6 +23,13 @@ use Drupal\Core\Cache\CacheableMetadata;
 class Aside extends Text {
 
   /**
+   * The escort region manager.
+   *
+   * @var \Drupal\escort\EscortRegionManagerInterface
+   */
+  protected $escortRegionManager;
+
+  /**
    * {@inheritdoc}
    */
   protected function baseConfigurationDefaults() {
@@ -113,11 +120,20 @@ class Aside extends Text {
 
     // Modal specific additions.
     if ($this->configuration['display'] == 'modal') {
+
       $build['#attached']['library'][] = escort_dialog_library();
       $build['#attributes']['data-dialog-type'] = escort_dialog_type();
-      $build['#attributes']['data-dialog-options'] = Json::encode([
+      $group = $this->escortRegionManager()->getGroupId($this->escort->getRegion());
+      $options = [
         'width' => $this->configuration['display_size'],
-      ]);
+        'dialogClass' => implode(' ', [
+          'escort-' . $group,
+          'escort-aside-content',
+          'escort-aside-display-modal',
+          'escort-active',
+        ]),
+      ];
+      $build['#attributes']['data-dialog-options'] = Json::encode($options);
     }
 
     if ($this->configuration['ajax']) {
@@ -235,6 +251,23 @@ class Aside extends Text {
       $response->addCommand(new HtmlCommand($id, $build));
     }
     return $response;
+  }
+
+  /**
+   * Retrieves the entity manager service.
+   *
+   * @return \Drupal\Core\Entity\EntityManagerInterface
+   *   The entity manager service.
+   *
+   * @deprecated in Drupal 8.0.0, will be removed before Drupal 9.0.0.
+   *   Most of the time static::entityTypeManager() is supposed to be used
+   *   instead.
+   */
+  protected function escortRegionManager() {
+    if (!$this->escortRegionManager) {
+      $this->escortRegionManager = \Drupal::service('escort.region_manager');
+    }
+    return $this->escortRegionManager;
   }
 
 }
