@@ -21,7 +21,7 @@
       padding: 0;
     }
 
-    li:nth-child(2) { // sass-lint:disable-line force-pseudo-nesting
+    li:first-child { // sass-lint:disable-line force-pseudo-nesting
       display: table-cell;
     }
 

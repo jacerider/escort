@@ -5,6 +5,17 @@
 
 .escort-aside-content {
 
+  &.escort-aside-display-dropdown {
+
+    .escort-grid {
+      padding: $padding / 2;
+
+      li {
+        padding: $padding / 2;
+      }
+    }
+  }
+
   .escort-grid {
     margin: 0;
     padding: ($padding * 0.75) 0;
@@ -29,14 +40,15 @@
       flex-basis: 33.333%;
       text-align: center;
       background-color: transparent;
-      padding: 0;
+      padding: $padding;
+      box-sizing: border-box;
     }
 
     a {
       display: block;
       box-sizing: border-box;
       vertical-align: middle;
-      padding: $padding;
+      padding: ($padding * 1.5) $padding !important;
       width: 100%;
     }
 
@@ -49,9 +61,10 @@
 
     .icon-label {
       display: block;
-      margin-top: $margin / 2;
+      margin-top: $margin / 3;
       white-space: normal;
       line-height: $padding * 1.25;
+      font-size: $font-size * 1.1;
     }
   }
 }
