@@ -9,6 +9,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Cache\Cache;
 
 /**
  * Provides a "Local Tasks" escort to display the local tasks.
@@ -207,6 +208,16 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
     $levels = $form_state->getValue('levels');
     $this->configuration['primary'] = $levels['primary'];
     $this->configuration['secondary'] = $levels['secondary'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    return Cache::mergeContexts(
+      parent::getCacheContexts(),
+      ['route', 'user.permissions']
+    );
   }
 
 }
