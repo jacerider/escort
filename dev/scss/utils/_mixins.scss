@@ -106,7 +106,7 @@
   }
 
   @if $region == 'top' {
-    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-top, $saturation: 0%, $lightness: -8%), 0.25);
+    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-top, $saturation: 0%, $lightness: -8%), 0);
     border-left: 1px solid lighten($bg-color-top, 5%);
     border-right: 1px solid darken($bg-color-top, 5%);
 
@@ -129,7 +129,7 @@
   }
 
   @if $region == 'bottom' {
-    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -8%), 0.25);
+    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-bottom, $saturation: 0%, $lightness: -8%), 0);
     border-left: 1px solid lighten($bg-color-bottom, 5%);
     border-right: 1px solid darken($bg-color-bottom, 5%);
 
@@ -152,7 +152,7 @@
   }
 
   @if $region == 'mini' {
-    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-mini, $saturation: 0%, $lightness: -8%), 0.25);
+    box-shadow: 0 2px 10px rgba(adjust-color($bg-color-mini, $saturation: 0%, $lightness: -8%), 0);
     padding: 0 $padding * 0.75;
     line-height: $base-size * 0.5;
     border-left: 1px solid lighten($bg-color-mini, 5%);
@@ -177,7 +177,7 @@
   }
 
   @if $region == 'left' {
-    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-left, $saturation: 0%, $lightness: -6%), 0.15);
+    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-left, $saturation: 0%, $lightness: -6%), 0);
 
     &:hover,
     &:focus {
@@ -202,7 +202,7 @@
   }
 
   @if $region == 'right' {
-    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-right, $saturation: 0%, $lightness: -6%), 0.15);
+    box-shadow: 0 1px 10px rgba(adjust-color($bg-color-right, $saturation: 0%, $lightness: -6%), 0);
 
     &:hover,
     &:focus {
