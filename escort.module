@@ -87,7 +87,7 @@ function escort_ux_wrapper_alter(&$wrapper) {
 function escort_render() {
   $cacheable_metadata_list = [];
   $regions = \Drupal::service('escort.repository')->getEscortsPerRegion($cacheable_metadata_list);
-  $escort = array(
+  $escort = [
     '#type' => 'escort',
     '#access' => \Drupal::currentUser()->hasPermission('access escort'),
     '#weight' => -1001,
@@ -96,7 +96,7 @@ function escort_render() {
       'tags' => ['config:escort_list', 'config:escort.config'],
       'contexts' => ['user.permissions'],
     ],
-  );
+  ];
   $merged_cacheable_metadata = CacheableMetadata::createFromRenderArray($escort);
   foreach ($cacheable_metadata_list as $regions) {
     foreach ($regions as $cacheable_metadata) {
@@ -147,7 +147,10 @@ function escort_preprocess_html(&$variables) {
       foreach ($regions as $group_id => $sections) {
         $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $group_id);
         if (!empty($config[$group_id]['icon_only'])) {
-          $variables['attributes']['class'][] = Html::cleanCssIdentifier('has-escort-' . $group_id . '-icon-only');
+          $variables['attributes']['class'][] = Html::cleanCssIdentifier('escort-' . $group_id . '-icon-only');
+        }
+        if (!empty($config[$group_id]['expanded'])) {
+          $variables['attributes']['class'][] = Html::cleanCssIdentifier('escort-' . $group_id . '-full');
         }
         foreach ($sections as $section) {
           foreach ($section as $escort) {
@@ -169,6 +172,9 @@ function escort_entity_type_alter(array &$entity_types) {
   // @var $entity_types \Drupal\Core\Entity\EntityTypeInterface[]
   if (isset($entity_types['node'])) {
     $entity_types['node']->setHandlerClass('escort_list_builder', 'Drupal\escort\EscortEntityListBuilder');
+  }
+  if (isset($entity_types['media'])) {
+    $entity_types['media']->setHandlerClass('escort_list_builder', 'Drupal\escort\EscortEntityListBuilder');
   }
 }
 
@@ -205,4 +211,14 @@ function escort_dialog_type() {
  */
 function escort_dialog_library() {
   return escort_ux_dialog_exists() ? 'ux_dialog/ux_dialog' : 'core/drupal.dialog.ajax';
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function escort_library_info_alter(array &$libraries, $module) {
+  if ($module === 'views' && isset($libraries['views.ajax'])) {
+    $path = '/' . drupal_get_path('module', 'escort') . '/js/escort.aside.js';
+    $libraries['views.ajax']['js'][$path] = ['minified' => TRUE];
+  }
 }

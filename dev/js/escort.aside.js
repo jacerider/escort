@@ -46,7 +46,7 @@
         else {
           // Only unbind if link not handled by Drupal modal.
           if (_this.dialogType) {
-            Drupal.Escort.hideFull();
+            Drupal.Escort.hideExpanded();
           }
           else {
             _this.$trigger.off('click.aside.ajax');
@@ -68,6 +68,7 @@
           // than the usual location.
           element_settings.url = $(this).attr('href');
           element_settings.event = 'click.aside.ajax';
+          element_settings.progress = {type: 'fullscreen'};
           if (_this.dialogType) {
             element_settings.dialogType = _this.dialogType;
             element_settings.dialog = $(this).data('dialog-options');
@@ -127,49 +128,35 @@
           EscortAsides.instances.push(new EscortAsides($escortAsides[i]));
         }
       }
+
+      this.updateDestinations(context);
+    },
+
+    updateDestinations: function (context) {
+      var url;
+      var destination = drupalSettings.path.baseUrl + drupalSettings.path.currentPath;
+
+      function updateQueryStringParameter(uri, key, value) {
+        var re = new RegExp('([?&])' + key + '=.*?(&|$)', 'i');
+        // var separator = uri.indexOf('?') !== -1 ? '&' : '?';
+        if (uri.match(re)) {
+          return uri.replace(re, '$1' + key + '=' + value + '$2');
+        }
+        else {
+          return uri;
+          // return uri + separator + key + '=' + value;
+        }
+      }
+
+      $('.escort-aside-content a').once('escort-aside-content').each(function () {
+        url = $(this).attr('href');
+        url = updateQueryStringParameter(url, 'destination', destination);
+        $(this).attr('href', url);
+      });
     }
   };
 
   // Expose constructor in the public space.
   Drupal.EscortAsides = EscortAsides;
-
-  /**
-   * Command to close a dialog.
-   *
-   * If no selector is given, it defaults to trying to close the modal.
-   *
-   * @param {Drupal.Ajax} [ajax]
-   *   The ajax object.
-   * @param {object} response
-   *   Object holding the server response.
-   * @param {string} response.selector
-   *   The selector of the dialog.
-   * @param {bool} response.persist
-   *   Whether to persist the dialog element or not.
-   * @param {number} [status]
-   *   The HTTP status code.
-   */
-  Drupal.AjaxCommands.prototype.escortAsideDestination = function (ajax, response, status) {
-    var url;
-    var destination = drupalSettings.path.baseUrl + drupalSettings.path.currentPath;
-
-    function updateQueryStringParameter(uri, key, value) {
-      var re = new RegExp('([?&])' + key + '=.*?(&|$)', 'i');
-      // var separator = uri.indexOf('?') !== -1 ? '&' : '?';
-      if (uri.match(re)) {
-        return uri.replace(re, '$1' + key + '=' + value + '$2');
-      }
-      else {
-        return uri;
-        // return uri + separator + key + '=' + value;
-      }
-    }
-
-    $('.escort-aside-content a').once('escort-aside-content').each(function () {
-      url = $(this).attr('href');
-      url = updateQueryStringParameter(url, 'destination', destination);
-      $(this).attr('href', url);
-    });
-  };
 
 }(jQuery, document, Drupal));

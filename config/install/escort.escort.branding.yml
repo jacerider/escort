@@ -1,0 +1,18 @@
+uuid: 5e0eac52-19cc-49d1-8fd9-1240a2cd0695
+langcode: en
+status: true
+dependencies: {  }
+id: branding
+region: top_left
+weight: 0
+provider: null
+plugin: branding
+settings:
+  id: branding
+  label: Branding
+  provider: escort
+  use_site_logo: 1
+  use_site_name: 0
+  use_site_slogan: 0
+  label_display: false
+visibility: {  }

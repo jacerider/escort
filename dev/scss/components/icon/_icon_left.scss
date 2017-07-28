@@ -5,12 +5,13 @@
 
   &.icon-only {
 
-    .show-escort-full-left.has-escort-left-icon-only & {
-    
+    .show-escort-expanded-left.escort-left-icon-only & {
+
       .escort-item:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
 
         .escort-icon {
-          width: $base-size * 1.25;
+          width: auto;
+          padding: ($padding * 0.1) ($padding * 0.45);
         }
       }
     }

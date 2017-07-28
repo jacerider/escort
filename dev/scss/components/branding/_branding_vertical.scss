@@ -16,7 +16,7 @@
 
         .escort-site-name {
           display: inline-block;
-          line-height: $base-size * 1.5;
+          line-height: $base-size * 0.8;
           margin-left: $margin / 2;
           margin-bottom: 0;
         }
@@ -35,15 +35,15 @@
 
       .escort-site-name {
         display: block;
-        line-height: $base-size / 2;
-        margin-bottom: $margin / 2;
+        line-height: $base-size / 3;
+        // margin-bottom: $margin / 2;
       }
 
       img {
         max-height: $base-size * 1.25;
         max-width: $base-size * 1.25;
-        width: 100%;
         height: auto;
+        max-height: $base-size;
         display: block;
         margin: 0 auto;
       }

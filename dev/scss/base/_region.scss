@@ -6,14 +6,25 @@
 /**
  * Styles that apply to all escort regions.
  */
+
+.has-escort {
+
+  > .escort {
+    font-size: $global-font-size;
+  }
+}
+
 .escort-region {
   display: block;
   position: relative;
   z-index: 10;
-  font-size: $font-size;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
   box-sizing: border-box;
   transition: all 300ms;
+
+  > * {
+    font-size: $font-size;
+  }
 
   * {
     box-sizing: border-box;

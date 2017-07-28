@@ -3,9 +3,6 @@
 namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\micon\MiconIconize;
@@ -19,7 +16,8 @@ use Drupal\micon\MiconIconize;
  *   category = @Translation("Node"),
  * )
  */
-class NodeManage extends Aside implements ContainerFactoryPluginInterface {
+class NodeManage extends Aside {
+  use EscortEntityTrait;
 
   /**
    * The entity type.
@@ -34,42 +32,6 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
    * @var string
    */
   protected $entityTypeBundle = 'node_type';
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * Manages a LocalTasksEscort instance.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->entityTypeManager = $entity_type_manager;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager')
-    );
-  }
 
   /**
    * {@inheritdoc}
@@ -108,7 +70,7 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
   public function escortForm($form, FormStateInterface $form_state) {
     $form = parent::escortForm($form, $form_state);
     $options = [];
-    foreach ($this->entityTypeManager->getStorage($this->entityTypeBundle)->loadMultiple() as $entity) {
+    foreach ($this->entityStorage()->loadMultiple() as $entity) {
       $options[$entity->id()] = MiconIconize::iconize($entity->label())->addMatchPrefix('content_type');
     }
     $form['bundle'] = [
@@ -134,6 +96,9 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
     parent::escortSubmit($form, $form_state);
     $this->configuration['bundle'] = $form_state->getValue('bundle');
     $this->configuration['view'] = $form_state->getValue('view');
+
+    // Create view display if it doesn't exist.
+    $this->addManagementViewDisplay($this->configuration['bundle']);
   }
 
   /**
@@ -142,7 +107,7 @@ class NodeManage extends Aside implements ContainerFactoryPluginInterface {
   protected function escortBuildAsideContent() {
     $build = [];
     if ($this->configuration['view']) {
-      $build['view'] = views_embed_view('escort_node_manage', 'default', $this->configuration['bundle']);
+      $build['view'] = $this->getManagementView($this->configuration['bundle']);
     }
     else {
       $build['list'] = $this->entityTypeManager->getHandler($this->entityType, 'escort_list_builder')->setTypes([$this->configuration['bundle']])->render();

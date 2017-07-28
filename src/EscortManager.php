@@ -45,6 +45,23 @@ class EscortManager extends DefaultPluginManager implements EscortManagerInterfa
   /**
    * {@inheritdoc}
    */
+  public function getDefinitions() {
+    $definitions = $this->getCachedDefinitions();
+    if (!isset($definitions)) {
+      $definitions = $this->findDefinitions();
+      foreach ($definitions as $key => $definition) {
+        if (!$definition['class']::isApplicable()) {
+          unset($definitions[$key]);
+        }
+      }
+      $this->setCachedDefinitions($definitions);
+    }
+    return $definitions;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function processDefinition(&$definition, $plugin_id) {
     parent::processDefinition($definition, $plugin_id);
     $this->processDefinitionCategory($definition);

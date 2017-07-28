@@ -42,7 +42,7 @@
     }
   }
 
-  .escort-container.escort-active:not(.escort-type-user):not(.escort-wrap) {
+  .escort-container.escort-active:not(.escort-wrap) {
 
     > .escort-inner {
 
@@ -54,7 +54,7 @@
 
   .escort-aside-display-dropdown {
     position: absolute;
-    min-width: $base-size-active * 0.8;
+    min-width: $base-size-active * 1.25;
 
     .escort-inner {
       padding: 0 $padding 0 ($padding / 2);

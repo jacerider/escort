@@ -49,14 +49,16 @@
       }
 
       if ($sort.length) {
+
         $sort.sortable({
           items: '.escort-sortable',
           connectWith: '.escort-sort',
           placeholder: 'escort-placeholder',
           forcePlaceholderSize: true,
+          tolerance: 'pointer',
           helper: 'clone',
           appendTo: $('body'),
-          handle: '.drag',
+          handle: '> .escort-item',
           opacity: 0.5,
           scroll: false,
           start: function () {

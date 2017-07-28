@@ -19,40 +19,40 @@
       @if map-get($settings, type) == 'horizontal' {
 
         @if map-get($settings, position) == 'mini' {
-          padding-top: map-get($settings, size) * 0.75;
+          padding-top: em2px(map-get($settings, size) * 0.575);
         }
 
         @if map-get($settings, position) == 'top' {
-          padding-top: map-get($settings, size);
+          padding-top: em2px(map-get($settings, size) * 0.84);
         }
 
         @if map-get($settings, position) == 'bottom' {
-          padding-bottom: map-get($settings, size);
+          padding-bottom: em2px(map-get($settings, size) * 0.84);
         }
       }
 
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          padding-left: map-get($settings, size) * 2;
+          padding-left: em2px(map-get($settings, size) * 1.67);
         }
 
         @if map-get($settings, position) == 'right' {
-          padding-right: map-get($settings, size) * 2;
+          padding-right: em2px(map-get($settings, size) * 1.67);
         }
       }
     }
 
-    .has-escort-#{$region}-icon-only & {
+    .escort-#{$region}-icon-only & {
 
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          padding-left: map-get($settings, size);
+          padding-left: em2px(map-get($settings, size) * 0.85);
         }
 
         @if map-get($settings, position) == 'right' {
-          padding-right: map-get($settings, size);
+          padding-right: em2px(map-get($settings, size) * 0.85);
         }
       }
     }
@@ -89,6 +89,6 @@
 
   .has-escort-top.has-escort-mini:not(.hide-escort-mini) &,
   .has-escort-top.has-escort-mini:not(.hide-escort-top) & {
-    padding-top: $base-size * 1.75;
+    padding-top: em2px($base-size * 1.425);
   }
 }

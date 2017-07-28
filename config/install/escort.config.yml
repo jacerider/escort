@@ -1,1 +1,7 @@
-enabled: []
+enabled:
+  top: top
+  mini: mini
+regions:
+  top:
+    icon_only: 1
+close_icon: fa-times

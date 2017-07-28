@@ -42,7 +42,9 @@
 <{{tag}}{{ attributes.addClass('escort-item') }}>
   <div class="escort-inner">
     {% if prefix %}
-      <span{{ prefix_attributes.addClass('escort-prefix') }}>{{ prefix }}</span>
+      {% spaceless %}
+        <span{{ prefix_attributes.addClass('escort-prefix') }}>{{ prefix }}</span>
+      {% endspaceless %}
     {% endif %}
 
     {% if content %}

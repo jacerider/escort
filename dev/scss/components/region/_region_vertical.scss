@@ -11,31 +11,46 @@
   overflow: visible;
   z-index: 5;
   font-size: $font-size;
-  box-shadow: 0 0 5px rgba($black, 0); // sass-lint:disable-line no-color-literals
+  box-shadow: 0 0 10px rgba($black, 0); // sass-lint:disable-line no-color-literals
   transform: translate(0, 0);
 
   &.icon-only {
     width: $base-size;
 
     .escort-scroll {
-      width: ($base-size * 0.95) + 1.5rem;
+      width: $base-size + 1.5em;
     }
 
     .is-escort-admin & {
       width: $base-size-active;
+
+      .escort-section {
+        width: $base-size-active;
+      }
     }
 
-    .show-escort-full-left &,
-    .show-escort-full-right & {
+    .show-escort-expanded-left &,
+    .show-escort-expanded-right & {
 
       .escort-scroll {
-        width: ($base-size-active * 0.99) + 1.5rem;
+        width: $base-size-active + 1.5em;
       }
+    }
+
+    .escort-section {
+      width: $base-size;
+    }
+  }
+
+  .is-escort-admin & {
+
+    .escort-section {
+      width: $base-size-active;
     }
   }
 
   .escort-scroll {
-    width: ($base-size * 1.9) + 1.5rem;
+    width: ($base-size * 2) + 1.5em;
     padding-right: $padding * 1.5;
     height: 100%;
     display: flex;
@@ -46,6 +61,7 @@
   }
 
   .escort-section {
+    width: $base-size * 2;
 
     &.escort-right-bottom,
     &.escort-left-bottom {
@@ -75,7 +91,7 @@
           @if map-get($s, position) == 'top' {
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,
-            .show-escort-full-#{$r} & {
+            .show-escort-expanded-#{$r} & {
               top: map-get($s, size);
             }
           }
@@ -83,8 +99,8 @@
           @if map-get($s, position) == 'bottom' {
             .has-escort-#{$r}:not(.hide-escort-#{$r}) &, // sass-lint:disable-line force-pseudo-nesting
             .show-escort-mini-#{$r} &,
-            .show-escort-full-#{$r} & {
-              bottom: map-get($s, size) * 0.975;
+            .show-escort-expanded-#{$r} & {
+              bottom: map-get($s, size);
             }
           }
         }

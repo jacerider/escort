@@ -17,11 +17,11 @@
 $primary-color: #1c98c1;
 $secondary-color: #ec4431;
 
-$bg-color-top: #383838;
-$bg-color-bottom: #383838;
+$bg-color-top: #3b3b3b;
+$bg-color-bottom: #3b3b3b;
 $bg-color-mini: #2b2b2b;
-$bg-color-left: #383838;
-$bg-color-right: #383838;
+$bg-color-left: #3b3b3b;
+$bg-color-right: #3b3b3b;
 
 // $bg-color-edit: #4eca33;
 // $bg-color-disable: #e1be40;
@@ -36,8 +36,8 @@ $grey-light: #eee;
 // 2. Spacing/Sizes
 // ---------
 
-$base-size: 2.9rem;
-$base-size-active: $base-size * 6;
+$base-size: 3.75em;
+$base-size-active: $base-size * 6.66;
 
 $base-padding: 1em;
 $base-margin: 1em;
@@ -50,7 +50,8 @@ $border-radius: 3px;
 // 3. Typography
 // ---------
 
-$font-size: 0.85rem;
+$global-font-size: 13.5px;
+$font-size: 1em;
 
 $font-family: Ubuntu;
 $font-type: sans-serif;

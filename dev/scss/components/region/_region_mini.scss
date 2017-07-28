@@ -4,19 +4,22 @@
 @include get-location($type: horizontal, $region: mini) {
   top: 0;
   background: $bg-color-mini;
-  height: $base-size * 0.75;
-  padding: 0 ($padding / 4);
+  height: $base-size * 0.7;
+  padding: 0;
   color: smart-scale($bg-color-mini);
   width: auto;
   z-index: 4;
-  font-size: $font-size * 0.8;
   letter-spacing: 0.03em;
+
+  > * {
+    font-size: $font-size * 0.85;
+  }
 
   .has-escort-left & {
     left: $base-size * 2;
   }
 
-  .has-escort-left-icon-only & {
+  .escort-left-icon-only & {
     left: $base-size;
   }
 
@@ -28,7 +31,7 @@
     right: $base-size * 2;
   }
 
-  .has-escort-right-icon-only & {
+  .escort-right-icon-only & {
     right: $base-size;
   }
 

@@ -6,7 +6,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
-use Drupal\escort\Ajax\EscortAsideDestinationCommand;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableMetadata;
@@ -22,6 +21,13 @@ use Drupal\Core\Cache\CacheableMetadata;
  * )
  */
 class Aside extends Text {
+
+  /**
+   * The escort region manager.
+   *
+   * @var \Drupal\escort\EscortRegionManagerInterface
+   */
+  protected $escortRegionManager;
 
   /**
    * {@inheritdoc}
@@ -114,11 +120,20 @@ class Aside extends Text {
 
     // Modal specific additions.
     if ($this->configuration['display'] == 'modal') {
+
       $build['#attached']['library'][] = escort_dialog_library();
       $build['#attributes']['data-dialog-type'] = escort_dialog_type();
-      $build['#attributes']['data-dialog-options'] = Json::encode([
+      $group = $this->escortRegionManager()->getGroupId($this->escort->getRegion());
+      $options = [
         'width' => $this->configuration['display_size'],
-      ]);
+        'dialogClass' => implode(' ', [
+          'escort-' . $group,
+          'escort-aside-content',
+          'escort-aside-display-modal',
+          'escort-active',
+        ]),
+      ];
+      $build['#attributes']['data-dialog-options'] = Json::encode($options);
     }
 
     if ($this->configuration['ajax']) {
@@ -136,9 +151,19 @@ class Aside extends Text {
     if (empty($this->configuration['text'])) {
       return [];
     }
+    $close_icon = \Drupal::config('escort.config')->get('close_icon');
     return [
       '#tag' => 'a',
-      '#icon' => $this->configuration['icon'],
+      '#icon' => [
+        $this->configuration['icon'],
+        [
+          '#theme' => 'micon_icon',
+          '#icon' => $close_icon,
+          '#attributes' => [
+            'class' => ['escort-aside-close'],
+          ],
+        ],
+      ],
       '#markup' => $this->configuration['text'],
     ];
   }
@@ -224,9 +249,25 @@ class Aside extends Text {
     $response = new AjaxResponse();
     if (!empty($build)) {
       $response->addCommand(new HtmlCommand($id, $build));
-      $response->addCommand(new EscortAsideDestinationCommand());
     }
     return $response;
+  }
+
+  /**
+   * Retrieves the entity manager service.
+   *
+   * @return \Drupal\Core\Entity\EntityManagerInterface
+   *   The entity manager service.
+   *
+   * @deprecated in Drupal 8.0.0, will be removed before Drupal 9.0.0.
+   *   Most of the time static::entityTypeManager() is supposed to be used
+   *   instead.
+   */
+  protected function escortRegionManager() {
+    if (!$this->escortRegionManager) {
+      $this->escortRegionManager = \Drupal::service('escort.region_manager');
+    }
+    return $this->escortRegionManager;
   }
 
 }

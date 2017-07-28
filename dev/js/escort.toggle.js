@@ -64,9 +64,9 @@
           });
 
           // Attach region events.
-          _this.$region.on('escort-region-full:show', function () {
+          _this.$region.on('escort-region-expanded:show', function () {
             _this.$trigger.addClass('is-active');
-          }).on('escort-region-full:hide', function () {
+          }).on('escort-region-expanded:hide', function () {
             _this.$trigger.removeClass('is-active');
           });
           break;

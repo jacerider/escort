@@ -155,11 +155,25 @@ function template_preprocess_escort_item(&$variables) {
   }
 
   // Let micon theme our icon.
-  if (!empty($variables['icon']) && is_string($variables['icon'])) {
-    $variables['prefix'] = [
-      '#theme' => 'micon',
-      '#icon' => $variables['icon'],
-    ];
+  if (!empty($variables['icon'])) {
+    if (is_string($variables['icon'])) {
+      $variables['icon'] = [$variables['icon']];
+    }
+    if (is_array($variables['icon'])) {
+      // Multiple icon ids can be passed.
+      foreach ($variables['icon'] as $icon) {
+        if (is_string($icon)) {
+          $variables['prefix'][] = [
+            '#theme' => 'micon_icon',
+            '#icon' => $icon,
+          ];
+        }
+        // Render arrays can be passed as well.
+        elseif (is_array($icon) && isset($icon['#theme'])) {
+          $variables['prefix'][] = $icon;
+        }
+      }
+    }
     $variables['attributes']['class'][] = 'has-icon';
     $variables['prefix_attributes']['class'][] = 'escort-icon';
   }

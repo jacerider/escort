@@ -3,30 +3,15 @@
  */
 @include get-location($type: horizontal, $region: top) {
 
-  .escort-item {
+  .escort-grid {
 
-    .escort-grid {
+    li {
 
-      // li {
-
-      //   &:first-child {
-      //     border-right: 1px solid smart-scale($bg-color-top, 2%);
-      //   }
-
-      //   &:nth-child(2n + 3) {
-      //     border-right: 1px solid smart-scale($bg-color-top, 2%);
-      //     border-top: 1px solid smart-scale($bg-color-top, 2%);
-      //   }
-
-      //   &:nth-child(2n + 4) {
-      //     border-top: 1px solid smart-scale($bg-color-top, 2%);
-      //   }
-
-      //   &:first-child,
-      //   &:nth-child(2) {
-      //     border-top: 0;
-      //   }
-      // }
+      a {
+        @include button-style($region: top, $transparent: true) {
+          border: 1px solid darken($bg-color-top, 5%);
+        };
+      }
     }
   }
 }

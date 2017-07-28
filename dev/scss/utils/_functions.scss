@@ -33,3 +33,16 @@
   }
   @return scale-color($color, $lightness: $scale);
 }
+
+
+/////////////////////
+// 3. Convert Em to Px
+//
+// ---------
+
+@function em2px($target, $context: $font-size) {
+  @if $target == 0 {
+    @return 0
+  }
+  @return ($target / 1em) * ($context / 1em) * 16 + 0px;
+}

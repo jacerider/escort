@@ -8,20 +8,30 @@
 
     .escort-aside-display-shelf {
       background-color: scale-color($bg-color-mini, $lightness: -12%);
-      top: $base-size * 0.75;
+      top: $base-size * 0.85;
       box-shadow: 0 15px 20px rgba($black, 0.33); // sass-lint:disable-line no-color-literals
+
+      &.escort-active {
+        height: calc(100vh - #{$base-size * 0.85};
+        padding: $padding * 2;
+        opacity: 1;
+
+        .has-escort-top & {
+          height: calc(100vh - (#{$base-size} + #{$base-size * 0.85});
+        }
+      }
 
       .has-escort-left & {
         margin-left: 0;
-        width: calc(100% + 1rem);
+        width: calc(100% + 1.5em);
       }
 
       .has-escort-right & {
-        width: calc(100% + 1rem);
+        width: calc(100% + 1.5em);
       }
 
       .has-escort-left.has-escort-right & {
-        width: calc(100% + 1rem);
+        width: calc(100% + 1.5em);
       }
     }
   }

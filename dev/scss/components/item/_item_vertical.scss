@@ -46,16 +46,18 @@
   .escort-item {
     padding: ($padding * 0.75) 0;
     display: block;
-    width: $base-size * 2.025;
+    width: $base-size * 2;
     overflow: hidden;
     text-align: left;
 
     .escort-content {
       display: block;
-      line-height: $base-size * 0.4;
+      line-height: $base-size * 0.33;
+      font-size: $font-size * 1.05;
       text-align: center;
       white-space: normal;
       margin-top: $margin / 4;
+      padding: 0 ($padding / 4);
     }
   }
 }

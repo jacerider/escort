@@ -3,6 +3,31 @@
 // -----------------------------------------------------------------------------
 // Styles applied to the aside display mode for widgets/escorts.
 
+.escort-aside {
+
+  // Callin fix here
+  .escort-aside-trigger {
+    
+    .escort-aside-close {
+      display: none !important;
+    }
+  }
+
+  &.escort-active:not(.escort-aside-display-dropdown) { // sass-lint:disable-line force-pseudo-nesting
+
+    .escort-aside-trigger {
+
+      .micon:not(.escort-aside-close) { // sass-lint:disable-line force-pseudo-nesting
+        display: none !important;
+      }
+
+      .micon.escort-aside-close {
+        display: inline-block !important;
+      }
+    }
+  }
+}
+
 .escort-aside-content {
   opacity: 0;
 

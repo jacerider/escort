@@ -3,7 +3,7 @@
  */
 @include get-location($type: vertical, $region: left) {
 
-  .show-escort-full-left.has-escort-left-icon-only &,
+  .show-escort-expanded-left.escort-left-icon-only &,
   .is-escort-admin & {
 
     .escort-item { // sass-lint:disable-line force-pseudo-nesting
@@ -20,15 +20,6 @@
         display: inline-block;
         margin-top: 0;
       }
-
-      .escort-icon {
-        width: $base-size * 1.25;
-      }
-
-      .escort-content {
-        padding: 0 !important;
-        line-height: $base-size * 0.66 !important;
-      }
     }
   }
 
@@ -41,8 +32,8 @@
       }
     }
 
-    .show-escort-full-left.has-escort-left-icon-only & {
-    
+    .show-escort-expanded-left.escort-left-icon-only & {
+
       .escort-item { // sass-lint:disable-line force-pseudo-nesting
         width: $base-size-active;
 
@@ -64,7 +55,7 @@
 
   .escort-link:not(.escort-add) { // sass-lint:disable-line force-pseudo-nesting
     @include button-style($region: left, $transparent: true);
-    
+
     &:hover,
     &:focus {
 

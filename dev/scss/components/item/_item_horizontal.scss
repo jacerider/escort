@@ -17,7 +17,7 @@
   .escort-item {
     text-align: center;
     display: block;
-    line-height: $base-size;
+    line-height: $base-size * 0.975;
     float: left;
 
     &:first-child {
@@ -49,6 +49,7 @@
 
       .escort-content {
         margin-left: $margin / 2;
+        vertical-align: middle;
       }
     }
 

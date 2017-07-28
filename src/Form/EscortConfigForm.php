@@ -108,7 +108,22 @@ class EscortConfigForm extends ConfigFormBase {
         '#title' => $this->t('Icon only'),
         '#default_value' => !empty($region_settings[$group_id]['icon_only']),
       ];
+      if ($group['type'] == 'vertical') {
+        $form['regions'][$group_id]['full'] = [
+          '#type' => 'checkbox',
+          '#title' => $this->t('Show as full'),
+          '#default_value' => !empty($region_settings[$group_id]['full']),
+        ];
+      }
     }
+
+    $form['close_icon'] = [
+      '#type' => 'micon',
+      '#title' => $this->t('Close Icon'),
+      '#description' => $this->t('The icon to use when closing aside elements.'),
+      '#required' => TRUE,
+      '#default_value' => $config->get('close_icon'),
+    ];
 
     // User entity picture support.
     $has_picture = user_picture_enabled();
@@ -121,14 +136,14 @@ class EscortConfigForm extends ConfigFormBase {
       $form['user_picture']['remove'] = [
         '#type' => 'submit',
         '#value' => $this->t('Remove user picture field'),
-        '#submit' => array([$this, 'submitUserPictureRemove']),
+        '#submit' => [[$this, 'submitUserPictureRemove']],
       ];
     }
     else {
       $form['user_picture']['add'] = [
         '#type' => 'submit',
         '#value' => $this->t('Create user picture field'),
-        '#submit' => array([$this, 'submitUserPictureAdd']),
+        '#submit' => [[$this, 'submitUserPictureAdd']],
       ];
     }
 
@@ -144,25 +159,30 @@ class EscortConfigForm extends ConfigFormBase {
       $form['image_style']['remove'] = [
         '#type' => 'submit',
         '#value' => $this->t('Remove escort image style'),
-        '#submit' => array([$this, 'submitImageStyleRemove']),
+        '#submit' => [[$this, 'submitImageStyleRemove']],
       ];
     }
     else {
       $form['image_style']['add'] = [
         '#type' => 'submit',
         '#value' => $this->t('Add escort image style'),
-        '#submit' => array([$this, 'submitImageStyleAdd']),
+        '#submit' => [[$this, 'submitImageStyleAdd']],
       ];
     }
 
-    return parent::buildForm($form, $form_state);
-  }
+    $form['rebuild'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Rebuild'),
+      '#open' => FALSE,
+      '#tree' => TRUE,
+    ];
+    $form['rebuild']['views'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Rebuild management views'),
+      '#submit' => [[$this, 'submitRebuildViews']],
+    ];
 
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    parent::validateForm($form, $form_state);
+    return parent::buildForm($form, $form_state);
   }
 
   /**
@@ -180,6 +200,7 @@ class EscortConfigForm extends ConfigFormBase {
     $this->config('escort.config')
       ->set('enabled', array_filter($form_state->getValue('enabled')))
       ->set('regions', array_filter($regions))
+      ->set('close_icon', $form_state->getValue('close_icon'))
       ->save();
   }
 
@@ -228,23 +249,23 @@ class EscortConfigForm extends ConfigFormBase {
     foreach ($fields as $field_name => $config) {
       $field_storage = FieldStorageConfig::loadByName($config['entity_type'], $field_name);
       if (empty($field_storage)) {
-        FieldStorageConfig::create(array(
+        FieldStorageConfig::create([
           'field_name' => $field_name,
           'entity_type' => $config['entity_type'],
           'type' => $config['type'],
-        ))->save();
+        ])->save();
       }
     }
 
     foreach ($bundles as $bundle) {
       foreach ($fields as $field_name => $config) {
-        $config_array = array(
+        $config_array = [
           'field_name' => $field_name,
           'entity_type' => $config['entity_type'],
           'bundle' => $bundle,
           'label' => $config['label'],
           'required' => $config['required'],
-        );
+        ];
       }
 
       if (isset($config['settings'])) {
@@ -315,7 +336,7 @@ class EscortConfigForm extends ConfigFormBase {
   public function submitImageStyleAdd(array &$form, FormStateInterface $form_state) {
     $style = ImageStyle::load('escort');
     if (!$style) {
-      $style = ImageStyle::create(array('name' => 'escort', 'label' => 'Escort'));
+      $style = ImageStyle::create(['name' => 'escort', 'label' => 'Escort']);
       $effect = [
         'id' => 'image_scale_and_crop',
         'data' => [
@@ -339,6 +360,19 @@ class EscortConfigForm extends ConfigFormBase {
     if ($style) {
       $style->delete();
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitRebuildViews(array &$form, FormStateInterface $form_state) {
+    $config_path = drupal_get_path('module', 'escort') . '/config/optional';
+    $destination = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
+    foreach (file_scan_directory($config_path, '/views\.view\.escort_.*_manage.yml/') as $file) {
+      file_unmanaged_copy($file->uri, $destination, FILE_EXISTS_REPLACE);
+    }
+    drupal_set_message($this->t('Escort management configuration files were successfully reset and are ready for import.'));
+    $form_state->setRedirect('config.sync');
   }
 
 }

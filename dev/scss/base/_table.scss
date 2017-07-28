@@ -4,23 +4,6 @@
 
 .escort-region {
 
-  // .responsive-enabled {
-
-  //   .priority-low {
-
-  //     @include breakpoint(medium down) {
-  //       display: none;
-  //     }
-  //   }
-
-  //   .priority-medium {
-
-  //     @include breakpoint(small only) {
-  //       display: none;
-  //     }
-  //   }
-  // }
-
   .tableresponsive-toggle {
     @extend %button;
     @include button-style($region: top, $transparent: false);
@@ -28,12 +11,14 @@
 
   table {
     border-radius: $border-radius;
-    border: 1px solid darken($bg-color-top, 7.5%);
+    border: 1px solid darken($bg-color-top, 7.5%); // sass-lint:disable-line no-color-literals
+    border-collapse: unset;
+    border-spacing: $padding / 6;
     margin-bottom: $margin * 1.5;
     overflow: visible;
     display: table;
     width: 100%;
-    box-shadow: 0 1px 40px darken($bg-color-top, 5%);
+    box-shadow: 0 1px 40px darken($bg-color-top, 5%); // sass-lint:disable-line no-color-literals
 
     &:last-child {
       margin: 0;
@@ -45,10 +30,7 @@
     tbody th {
       padding: ($padding / 2) $padding;
       color: smart-scale($bg-color-top, $scale: 80%);
-
-      // @include breakpoint(medium) {
-      //   padding: ($global-padding / 2) ($global-padding * 1.5);
-      // }
+      line-height: $padding * 2;
     }
 
     caption {
@@ -60,32 +42,27 @@
     tfoot {
       width: 100%;
       display: table-row-group;
+      border: 0;
     }
 
     tr {
       display: table-row;
+      border-bottom: 1px solid $grey-light;
+
+      &:last-child {
+        border-bottom: 0;
+
+        td {
+          border-bottom: 0;
+        }
+      }
     }
 
     th,
     td {
       display: table-cell;
       text-align: left;
-
-      // &.priority-low {
-      //   display: none;
-
-      //   @include breakpoint(large) {
-      //     display: table-cell;
-      //   }
-      // }
-
-      // &.priority-medium {
-      //   display: none;
-
-      //   @include breakpoint(medium) {
-      //     display: table-cell;
-      //   }
-      // }
+      border: 0;
     }
 
     th {
@@ -100,6 +77,7 @@
 
     thead {
       border: 0;
+      border-bottom: 1px solid darken($bg-color-top, 7.5%); // sass-lint:disable-line no-color-literals
 
       a {
         display: block;
@@ -112,13 +90,7 @@
 
       th {
 
-        a {
-          // @include icon(after, arrow-down) {
-          //   position: absolute;
-          //   right: 0;
-          //   color: $grey;
-          // };
-          
+        a {          
           font-weight: bold;
           color: $bg-color-top;
           display: block;
@@ -147,6 +119,14 @@
       td {
         border-right: 1px solid smart-scale($bg-color-top, $scale: -20%); // sass-lint:disable-line no-color-literals
         border-bottom: 1px solid smart-scale($bg-color-top, $scale: -20%); // sass-lint:disable-line no-color-literals
+
+        &:last-child {
+          border-right: 0;
+        }
+
+        > * {
+          font-size: $font-size * 1.1;
+        }
       }
 
       p {

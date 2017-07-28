@@ -13,12 +13,19 @@
   }
 
   .show-escort-mini-left &,
-  .show-escort-full-left & {
+  .show-escort-expanded-left & {
     transform: translate(0, 0);
+
+    &.icon-only {
+
+      .escort-section {
+        width: $base-size-active;
+      }
+    }
   }
 
-  .show-escort-full-left.has-escort-left-icon-only & {
+  .show-escort-expanded-left.escort-left-icon-only & {
     width: $base-size-active;
-    box-shadow: 0 0 15px rgba($black, 0.2); // sass-lint:disable-line no-color-literals
+    box-shadow: 0 0 25px rgba($black, 0.5); // sass-lint:disable-line no-color-literals
   }
 }

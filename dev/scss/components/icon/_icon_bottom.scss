@@ -3,7 +3,7 @@
   .escort-item:not(.escort-add) {
 
     i {
-      width: $font-size * 1.66;
+      width: $font-size;
     }
   }
 
@@ -29,7 +29,7 @@
 
           background-color: smart-scale($bg-color-bottom, 20%);
           bottom: 84%;
-          line-height: $base-size * 0.66;
+          line-height: $base-size * 0.6;
           box-shadow: 0 -2px 5px rgba($black, 0.5); // sass-lint:disable-line no-color-literals
           border-top-left-radius: $border-radius;
           border-top-right-radius: $border-radius;
