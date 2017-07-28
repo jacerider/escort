@@ -32,6 +32,12 @@
       display: inline-block;
       margin-right: 0;
       font-size: $font-size * 1.75;
+      padding: ($padding * 0.1) 0;
+
+      .micon {
+        display: inline-block;
+        width: $padding * 1.25;
+      }
     }
   }
 }
