@@ -6,7 +6,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\micon\MiconIconize;
-use Drupal\Core\Link;
+use Drupal\Core\Link as DrupalLink;
 
 /**
  * Defines a plugin for managing content.
@@ -107,7 +107,7 @@ class MediaManage extends Aside {
    */
   protected function escortBuildAsideContent() {
     $build = [];
-    $build['add'] = Link::createFromRoute('Add New', 'entity.' . $this->entityType . '.add_form', [
+    $build['add'] = DrupalLink::createFromRoute('Add New', 'entity.' . $this->entityType . '.add_form', [
       'media_bundle' => $this->configuration['bundle'],
     ], [
       'attributes' => ['class' => ['escort-create']],
