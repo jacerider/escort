@@ -9,7 +9,7 @@
     .escort-region-after {
       
       .escort-aside-display-shelf {
-        right: $base-size-active * 0.996;
+        right: $base-size-active * 0.997;
       }
     }
   }
@@ -18,10 +18,10 @@
 
     .escort-aside-display-shelf {
       background-color: $bg-color-right;
-      right: $base-size * 1.985;
+      right: $base-size * 1.98;
 
       &.escort-active {
-        box-shadow: -10px 0 15px rgba($black, 0.2); // sass-lint:disable-line no-color-literals
+        box-shadow: -15px 0 20px rgba($black, 0.25); // sass-lint:disable-line no-color-literals
       }
 
       > * {

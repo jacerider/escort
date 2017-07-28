@@ -19,26 +19,26 @@
       @if map-get($settings, type) == 'horizontal' {
 
         @if map-get($settings, position) == 'mini' {
-          padding-top: em2px(map-get($settings, size) * 0.555);
+          padding-top: em2px(map-get($settings, size) * 0.575);
         }
 
         @if map-get($settings, position) == 'top' {
-          padding-top: em2px(map-get($settings, size) * 0.82);
+          padding-top: em2px(map-get($settings, size) * 0.84);
         }
 
         @if map-get($settings, position) == 'bottom' {
-          padding-bottom: em2px(map-get($settings, size) * 0.82);
+          padding-bottom: em2px(map-get($settings, size) * 0.84);
         }
       }
 
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          padding-left: em2px(map-get($settings, size) * 1.62);
+          padding-left: em2px(map-get($settings, size) * 1.67);
         }
 
         @if map-get($settings, position) == 'right' {
-          padding-right: em2px(map-get($settings, size) * 1.62);
+          padding-right: em2px(map-get($settings, size) * 1.67);
         }
       }
     }
@@ -48,11 +48,11 @@
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          padding-left: em2px(map-get($settings, size) * 0.75);
+          padding-left: em2px(map-get($settings, size) * 0.85);
         }
 
         @if map-get($settings, position) == 'right' {
-          padding-right: em2px(map-get($settings, size) * 0.75);
+          padding-right: em2px(map-get($settings, size) * 0.85);
         }
       }
     }
@@ -89,6 +89,6 @@
 
   .has-escort-top.has-escort-mini:not(.hide-escort-mini) &,
   .has-escort-top.has-escort-mini:not(.hide-escort-top) & {
-    padding-top: em2px($base-size * 1.3666);
+    padding-top: em2px($base-size * 1.425);
   }
 }
