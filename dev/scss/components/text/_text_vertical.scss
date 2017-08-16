@@ -1,0 +1,12 @@
+/**
+ * Left AND Right region only
+ */
+@include get-location($type: vertical) {
+
+  .escort-type-text.escort-container {
+
+    > .escort-item:not(.escort-add) {
+      border-top: 0;
+    }
+  }
+}

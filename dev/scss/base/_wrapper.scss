@@ -19,7 +19,7 @@
       @if map-get($settings, type) == 'horizontal' {
 
         @if map-get($settings, position) == 'mini' {
-          padding-top: em2px(map-get($settings, size) * 0.575);
+          padding-top: em2px(map-get($settings, size) * 0.585);
         }
 
         @if map-get($settings, position) == 'top' {
@@ -48,11 +48,11 @@
       @if map-get($settings, type) == 'vertical' {
 
         @if map-get($settings, position) == 'left' {
-          padding-left: em2px(map-get($settings, size) * 0.85);
+          padding-left: em2px(map-get($settings, size) * 0.845);
         }
 
         @if map-get($settings, position) == 'right' {
-          padding-right: em2px(map-get($settings, size) * 0.85);
+          padding-right: em2px(map-get($settings, size) * 0.845);
         }
       }
     }
