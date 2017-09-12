@@ -139,6 +139,9 @@ class EscortRepository implements EscortRepositoryInterface {
           // Allow escorts to remove themselves based on region requirements.
           foreach ($sections as $escort_id => $escort) {
             $plugin = $escort->getPlugin();
+            if (isset($cacheable_metadata[$group_id][$section_id])) {
+              $cacheable_metadata[$group_id][$section_id] = $cacheable_metadata[$group_id][$section_id]->merge(CacheableMetadata::createFromObject($plugin));
+            }
             if (!$is_admin && $plugin->isEmpty()) {
               unset($sections[$escort_id]);
             }
