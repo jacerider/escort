@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+// TEXT
+// -----------------------------------------------------------------------------
+// Styles that apply globally to text type widgets. All position-specific styles
+// should be added in the region specific style section.
+
+.escort-type-text.escort-container {
+  background-color: transparentize($black, 0.9);
+
+  > .escort-item:not(.escort-add) {
+
+    .escort-content {
+      font-size: $font-size * 1.2;
+      font-weight: bold;
+    }
+  }
+}
