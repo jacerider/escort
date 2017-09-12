@@ -216,7 +216,7 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
   public function getCacheContexts() {
     return Cache::mergeContexts(
       parent::getCacheContexts(),
-      ['route', 'user.permissions']
+      ['url.path', 'user.permissions']
     );
   }
 
