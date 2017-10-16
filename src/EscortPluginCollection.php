@@ -32,8 +32,8 @@ class EscortPluginCollection extends DefaultSingleLazyPluginCollection {
    *   The escort entity using this plugin.
    */
   public function __construct(PluginManagerInterface $manager, $instance_id, array $configuration, EscortInterface $escort) {
-    parent::__construct($manager, $instance_id, $configuration);
     $this->escort = $escort;
+    parent::__construct($manager, $instance_id, $configuration);
   }
 
   /**
