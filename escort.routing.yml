@@ -1,6 +1,6 @@
 
 escort.escort_config_form:
-  path: '/admin/config/escort'
+  path: '/admin/config/user-interface/escort'
   defaults:
     _form: '\Drupal\escort\Form\EscortConfigForm'
     _title: 'Escort'
@@ -10,7 +10,7 @@ escort.escort_config_form:
     _admin_route: TRUE
 
 escort.escort_list:
-  path: '/admin/config/escort/list'
+  path: '/admin/config/user-interface/escort/list'
   defaults:
     _controller: '\Drupal\escort\Controller\EscortListController::listing'
     _title: 'Escort layout'
@@ -18,7 +18,7 @@ escort.escort_list:
     _permission: 'administer escorts'
 
 escort.escort_test:
-  path: '/admin/config/escort/test'
+  path: '/admin/config/user-interface/escort/test'
   defaults:
     _controller: '\Drupal\escort\Controller\EscortTestController::listing'
     _title: 'Escort test'
@@ -26,7 +26,7 @@ escort.escort_test:
     _permission: 'administer escorts'
 
 escort.escort_test_plugin:
-  path: '/admin/config/escort/test/{plugin_id}'
+  path: '/admin/config/user-interface/escort/test/{plugin_id}'
   defaults:
     _controller: '\Drupal\escort\Controller\EscortTestController::test'
     _title: 'Escort test'
@@ -34,7 +34,7 @@ escort.escort_test_plugin:
     _permission: 'administer escorts'
 
 escort.escort_library:
-  path: '/admin/config/escort/library'
+  path: '/admin/config/user-interface/escort/library'
   defaults:
     _controller: '\Drupal\escort\Controller\EscortLibraryController::listEscorts'
     _title: 'Place escort'
@@ -42,7 +42,7 @@ escort.escort_library:
     _permission: 'administer escorts'
 
 escort.escort_add:
-  path: '/admin/config/escort/add/{plugin_id}'
+  path: '/admin/config/user-interface/escort/add/{plugin_id}'
   defaults:
     _controller: '\Drupal\escort\Controller\EscortAddController::escorItemAddForm'
     _title: 'Configure Escort'
@@ -50,7 +50,7 @@ escort.escort_add:
     _permission: 'administer escorts'
 
 entity.escort.edit_form:
-  path: '/admin/config/escort/manage/{escort}'
+  path: '/admin/config/user-interface/escort/manage/{escort}'
   defaults:
     _entity_form: 'escort.default'
     _title: 'Configure escort'
@@ -58,7 +58,7 @@ entity.escort.edit_form:
     _permission: 'administer escorts'
 
 entity.escort.disable_form:
-  path: '/admin/config/escort/manage/{escort}/disable'
+  path: '/admin/config/user-interface/escort/manage/{escort}/disable'
   defaults:
     _entity_form: 'escort.disable'
     _title: 'Disable escort'
@@ -66,7 +66,7 @@ entity.escort.disable_form:
     _permission: 'administer escorts'
 
 entity.escort.delete_form:
-  path: '/admin/config/escort/manage/{escort}/delete'
+  path: '/admin/config/user-interface/escort/manage/{escort}/delete'
   defaults:
     _entity_form: 'escort.delete'
     _title: 'Delete escort'
@@ -74,7 +74,7 @@ entity.escort.delete_form:
     _permission: 'administer escorts'
 
 escort.escort_list_update:
-  path: '/admin/config/escort/update'
+  path: '/admin/config/user-interface/escort/update'
   defaults:
     _controller: '\Drupal\escort\Controller\EscortListController::updateEscorts'
     _title: 'Update escorts'
