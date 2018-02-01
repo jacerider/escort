@@ -34,9 +34,9 @@ use Drupal\escort\EscortAjaxTrait;
  *     "id" = "id"
  *   },
  *   links = {
- *     "edit-form" = "/admin/config/escort/{escort}/edit",
- *     "disable-form" = "/admin/config/escort/{escort}/disable",
- *     "delete-form" = "/admin/config/escort/{escort}/delete"
+ *     "edit-form" = "/admin/config/user-interface/escort/{escort}/edit",
+ *     "disable-form" = "/admin/config/user-interface/escort/{escort}/disable",
+ *     "delete-form" = "/admin/config/user-interface/escort/{escort}/delete"
  *   },
  *   config_export = {
  *     "id",

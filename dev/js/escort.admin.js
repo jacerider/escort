@@ -30,7 +30,7 @@
           });
 
           $.ajax({
-            url: Drupal.url('admin/config/escort/update'),
+            url: Drupal.url('admin/config/user-interface/escort/update'),
             type: 'POST',
             data: JSON.stringify(escortValues),
             dataType: 'json',
