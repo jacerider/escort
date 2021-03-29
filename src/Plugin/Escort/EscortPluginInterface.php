@@ -16,7 +16,7 @@ use Drupal\Core\Session\AccountInterface;
  *
  * @ingroup escort_api
  */
-interface EscortPluginInterface extends ConfigurablePluginInterface, PluginFormInterface, PluginInspectionInterface, CacheableDependencyInterface, DerivativeInspectionInterface {
+interface EscortPluginInterface extends PluginFormInterface, PluginInspectionInterface, CacheableDependencyInterface, DerivativeInspectionInterface {
 
   /**
    * Returns the admin-facing escort label.
