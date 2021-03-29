@@ -56,6 +56,8 @@ class EscortPathMatcher implements EscortPathMatcherInterface {
    *   The request stack.
    * @param \Drupal\Core\Path\CurrentPathStack $current_path
    *   The current path.
+   * @param \Drupal\Core\Session\AccountProxy $current_user
+   *   The current user.
    */
   public function __construct(PathMatcherInterface $path_matcher, RequestStack $request_stack, CurrentPathStack $current_path, AccountProxy $current_user) {
     $this->pathMatcher = $path_matcher;
@@ -81,7 +83,7 @@ class EscortPathMatcher implements EscortPathMatcherInterface {
         // Do not trim a trailing slash if that is the complete path.
         $path = $path === '/' ? $path : rtrim($path, '/');
         // Set static variable.
-        $this->isAdmin = $this->pathMatcher->matchPath($path, implode($include, "\n")) && !$this->pathMatcher->matchPath($path, implode($exclude, "\n"));
+        $this->isAdmin = $this->pathMatcher->matchPath($path, implode("\n", $include)) && !$this->pathMatcher->matchPath($path, implode("\n", $exclude));
       }
     }
     return $this->isAdmin;
