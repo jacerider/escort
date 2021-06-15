@@ -19,9 +19,9 @@ class Text extends EscortPluginBase {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return array(
+    return [
       'text' => '',
-    );
+    ];
   }
 
   /**

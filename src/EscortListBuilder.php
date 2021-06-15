@@ -100,15 +100,15 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
     // Build the form tree.
     $form['escorts'] = $this->buildItemsForm();
 
-    $form['actions'] = array(
+    $form['actions'] = [
       '#tree' => FALSE,
       '#type' => 'actions',
-    );
-    $form['actions']['submit'] = array(
+    ];
+    $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Save Escorts'),
       '#button_type' => 'primary',
-    );
+    ];
     return $form;
   }
 
@@ -127,74 +127,74 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
       $definition = $entity->getPlugin()->getPluginDefinition();
       $region_id = $entity->getRegion();
       $region_id = isset($regions[$region_id]) ? $region_id : EscortInterface::ESCORT_REGION_NONE;
-      $escorts[$region_id][$entity_id] = array(
+      $escorts[$region_id][$entity_id] = [
         'label' => $entity->label(),
         'entity_id' => $entity_id,
         'weight' => $entity->getWeight(),
         'entity' => $entity,
         'category' => $definition['category'],
-      );
+      ];
     }
 
-    $form = array(
+    $form = [
       '#type' => 'table',
-      '#header' => array(
+      '#header' => [
         $this->t('Escort'),
         $this->t('Category'),
         $this->t('Type'),
         $this->t('Region'),
         $this->t('Weight'),
         $this->t('Operations'),
-      ),
-      '#attributes' => array(
+      ],
+      '#attributes' => [
         'id' => 'escorts',
-      ),
-    );
+      ],
+    ];
 
     // Weights range from -delta to +delta, so delta should be at least half
     // of the amount of escorts present. This makes sure all escorts in the same
     // region get an unique weight.
     $weight_delta = round(count($entities) / 2);
 
-    $regions_with_disabled = $regions + array(
-      EscortInterface::ESCORT_REGION_NONE => $this->t('Disabled', array(), array(
+    $regions_with_disabled = $regions + [
+      EscortInterface::ESCORT_REGION_NONE => $this->t('Disabled', [], [
         'context' => 'Plural',
-      )),
-    );
+      ]),
+    ];
     foreach ($regions_with_disabled as $region => $title) {
-      $form['#tabledrag'][] = array(
+      $form['#tabledrag'][] = [
         'action' => 'match',
         'relationship' => 'sibling',
         'group' => 'escort-region-select',
         'subgroup' => 'escort-region-' . $region,
         'hidden' => FALSE,
-      );
-      $form['#tabledrag'][] = array(
+      ];
+      $form['#tabledrag'][] = [
         'action' => 'order',
         'relationship' => 'sibling',
         'group' => 'escort-weight',
         'subgroup' => 'escort-weight-' . $region,
-      );
+      ];
 
-      $form['region-' . $region] = array(
-        '#attributes' => array(
-          'class' => array('region-title', 'region-title-' . $region),
+      $form['region-' . $region] = [
+        '#attributes' => [
+          'class' => ['region-title', 'region-title-' . $region],
           'no_striping' => TRUE,
-        ),
-      );
-      $form['region-' . $region]['title'] = array(
-        '#theme_wrappers' => array(
-          'container' => array(
-            '#attributes' => array('class' => 'region-title__action'),
-          ),
-        ),
+        ],
+      ];
+      $form['region-' . $region]['title'] = [
+        '#theme_wrappers' => [
+          'container' => [
+            '#attributes' => ['class' => 'region-title__action'],
+          ],
+        ],
         '#prefix' => $title,
         '#type' => 'link',
         '#title' => $this->t('Place escort <span class="visually-hidden">in the %region region</span>', ['%region' => $title]),
         '#url' => Url::fromRoute('escort.escort_library', [], ['query' => ['region' => $region]]),
-        '#wrapper_attributes' => array(
+        '#wrapper_attributes' => [
           'colspan' => 5,
-        ),
+        ],
         '#attributes' => [
           'class' => ['use-ajax', 'button', 'button--small'],
           'data-dialog-type' => escort_dialog_type(),
@@ -202,67 +202,67 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
             'width' => 700,
           ]),
         ],
-      );
+      ];
 
-      $form['region-' . $region . '-message'] = array(
-        '#attributes' => array(
-          'class' => array(
+      $form['region-' . $region . '-message'] = [
+        '#attributes' => [
+          'class' => [
             'region-message',
             'region-' . $region . '-message',
             empty($escorts[$region]) ? 'region-empty' : 'region-populated',
-          ),
-        ),
-      );
-      $form['region-' . $region . '-message']['message'] = array(
+          ],
+        ],
+      ];
+      $form['region-' . $region . '-message']['message'] = [
         '#markup' => '<em>' . $this->t('No escorts in this region') . '</em>',
-        '#wrapper_attributes' => array(
+        '#wrapper_attributes' => [
           'colspan' => 5,
-        ),
-      );
+        ],
+      ];
 
       if (isset($escorts[$region])) {
         foreach ($escorts[$region] as $info) {
           $entity_id = $info['entity_id'];
 
-          $form[$entity_id] = array(
-            '#attributes' => array(
-              'class' => array('draggable'),
-            ),
-          );
-          $form[$entity_id]['info'] = array(
+          $form[$entity_id] = [
+            '#attributes' => [
+              'class' => ['draggable'],
+            ],
+          ];
+          $form[$entity_id]['info'] = [
             '#plain_text' => $info['label'],
-            '#wrapper_attributes' => array(
-              'class' => array('escort'),
-            ),
-          );
-          $form[$entity_id]['category'] = array(
+            '#wrapper_attributes' => [
+              'class' => ['escort'],
+            ],
+          ];
+          $form[$entity_id]['category'] = [
             '#markup' => $info['category'],
-          );
-          $form[$entity_id]['plugin_type'] = array(
+          ];
+          $form[$entity_id]['plugin_type'] = [
             '#markup' => $info['entity']->getPluginId(),
-          );
-          $form[$entity_id]['region-theme']['region'] = array(
+          ];
+          $form[$entity_id]['region-theme']['region'] = [
             '#type' => 'select',
             '#default_value' => $region,
             '#empty_value' => EscortInterface::ESCORT_REGION_NONE,
-            '#title' => $this->t('Region for @item item', array('@item' => $info['label'])),
+            '#title' => $this->t('Region for @item item', ['@item' => $info['label']]),
             '#title_display' => 'invisible',
             '#options' => $regions,
-            '#attributes' => array(
-              'class' => array('escort-region-select', 'escort-region-' . $region),
-            ),
-            '#parents' => array('escorts', $entity_id, 'region'),
-          );
-          $form[$entity_id]['weight'] = array(
+            '#attributes' => [
+              'class' => ['escort-region-select', 'escort-region-' . $region],
+            ],
+            '#parents' => ['escorts', $entity_id, 'region'],
+          ];
+          $form[$entity_id]['weight'] = [
             '#type' => 'weight',
             '#default_value' => $info['weight'],
             '#delta' => $weight_delta,
-            '#title' => $this->t('Weight for @item item', array('@item' => $info['label'])),
+            '#title' => $this->t('Weight for @item item', ['@item' => $info['label']]),
             '#title_display' => 'invisible',
-            '#attributes' => array(
-              'class' => array('escort-weight', 'escort-weight-' . $region),
-            ),
-          );
+            '#attributes' => [
+              'class' => ['escort-weight', 'escort-weight-' . $region],
+            ],
+          ];
           $form[$entity_id]['operations'] = $this->buildOperations($info['entity']);
         }
       }
@@ -298,7 +298,7 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
     $entities = $this->storage->loadMultiple(array_keys($form_state->getValue('escorts')));
     /** @var \Drupal\escort\EscortInterface[] $entities */
     foreach ($entities as $entity_id => $entity) {
-      $entity_values = $form_state->getValue(array('escorts', $entity_id));
+      $entity_values = $form_state->getValue(['escorts', $entity_id]);
       $entity->setWeight($entity_values['weight']);
       $entity->setRegion($entity_values['region']);
       $entity->save();

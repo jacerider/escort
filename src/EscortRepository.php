@@ -102,8 +102,8 @@ class EscortRepository implements EscortRepositoryInterface {
       $raw_regions = $this->escortRegionManager->getRaw(TRUE);
       $regions = $this->escortRegionManager->getRegions(TRUE);
       $is_admin = $this->escortPathMatcher->isAdmin();
-      $full = array();
-      foreach ($this->escortStorage->loadByProperties(array('region' => array_keys($regions))) as $escort_id => $escort) {
+      $full = [];
+      foreach ($this->escortStorage->loadByProperties(['region' => array_keys($regions)]) as $escort_id => $escort) {
         /** @var \Drupal\escort\Entity\EscortInterface $escort */
         $access = $escort->access('view', NULL, TRUE);
         $region = $escort->getRegion();
@@ -126,10 +126,10 @@ class EscortRepository implements EscortRepositoryInterface {
       $this->addAddEscorts($full, $raw_regions);
 
       // Merge it with the actual values to maintain the region ordering.
-      $empty = array_fill_keys(array_keys($raw_regions), array());
+      $empty = array_fill_keys(array_keys($raw_regions), []);
       $regions = array_filter(array_intersect_key(array_merge($empty, $full), $empty));
       foreach ($regions as $group_id => &$sections) {
-        $empty = array_fill_keys(array_keys($raw_regions[$group_id]['sections']), array());
+        $empty = array_fill_keys(array_keys($raw_regions[$group_id]['sections']), []);
         $sections = array_filter(array_intersect_key(array_merge($empty, $sections), $empty));
       }
 
@@ -221,6 +221,7 @@ class EscortRepository implements EscortRepositoryInterface {
         case 'min':
           $weight = $w < $weight ? $w : $weight;
           break;
+
         case 'max':
           $weight = $w > $weight ? $w : $weight;
           break;

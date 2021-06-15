@@ -5,26 +5,9 @@
  * Contains escort.module.
  */
 
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
-
-/**
- * Implements hook_help().
- */
-function escort_help($route_name, RouteMatchInterface $route_match) {
-  switch ($route_name) {
-    // Main module help for the escort module.
-    case 'help.page.escort':
-      $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('An admin menu of extreme super awesomeness.') . '</p>';
-      return $output;
-
-    default:
-  }
-}
 
 /**
  * Implements hook_theme().

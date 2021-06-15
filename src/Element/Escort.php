@@ -20,15 +20,15 @@ class Escort extends RenderElement {
    */
   public function getInfo() {
     $class = get_class($this);
-    return array(
+    return [
       '#theme' => 'escort',
       '#attributes' => [
         'id' => 'escort',
       ],
-      '#pre_render' => array(
-        array($class, 'preRenderEscort'),
-      ),
-    );
+      '#pre_render' => [
+        [$class, 'preRenderEscort'],
+      ],
+    ];
   }
 
   /**
@@ -57,7 +57,7 @@ class Escort extends RenderElement {
       $element[$group_id] = [
         '#theme' => 'escort_region',
         '#attached' => ['library' => ['escort/escort.region.' . $group_id]],
-        '#attributes' => array(
+        '#attributes' => [
           'id' => 'escort-' . $group_id,
           'role' => 'group',
           'aria-label' => t('Site administration toolbar'),
@@ -67,7 +67,7 @@ class Escort extends RenderElement {
           ],
           'data-region' => $group_id,
           'data-offset-' . $regionManager->getGroupPosition($group_id) => '',
-        ),
+        ],
       ];
       if (!empty($config[$group_id]['icon_only'])) {
         $element[$group_id]['#attributes']['class'][] = 'icon-only';
@@ -79,12 +79,12 @@ class Escort extends RenderElement {
         $id = Html::cleanCssIdentifier('escort-' . $region_id);
         $element[$group_id][$section_id] = [
           '#theme' => 'escort_section',
-          '#attributes' => array(
+          '#attributes' => [
             'id' => $id,
             'class' => [
               $id,
             ],
-          ),
+          ],
           '#sorted' => TRUE,
         ];
         if ($is_admin) {
@@ -117,7 +117,7 @@ class Escort extends RenderElement {
         }
         // Section cache apply.
         $section_cacheable_metadata->applyTo($element[$group_id][$section_id]);
-        // If #after is not empty we need to add cache data
+        // If #after is not empty we need to add cache data.
         if (!empty($element[$group_id]['#after'])) {
           $section_cacheable_metadata->applyTo($element[$group_id]['#after']);
         }
@@ -131,7 +131,7 @@ class Escort extends RenderElement {
     }
     // Element cache apply.
     $element_cachable_metadata->applyTo($element);
-    // If #after is not empty we need to add cache data
+    // If #after is not empty we need to add cache data.
     if (!empty($element['#after'])) {
       $section_cacheable_metadata->applyTo($element['#after']);
     }

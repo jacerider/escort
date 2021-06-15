@@ -123,6 +123,9 @@ class LocalTasks extends EscortPluginBase implements ContainerFactoryPluginInter
     return $build;
   }
 
+  /**
+   *
+   */
   protected function getLinks() {
     if (!isset(static::$links)) {
       static::$links = [];

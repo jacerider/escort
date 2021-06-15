@@ -13,6 +13,9 @@ use Drupal\escort\EscortRegionManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Plugin\Context\ContextRepositoryInterface;
+use Drupal\Core\Plugin\ContextAwarePluginInterface;
+use Drupal\Core\Plugin\PluginFormFactoryInterface;
+use Drupal\Core\Plugin\PluginWithFormsInterface;
 use Drupal\escort\EscortAjaxTrait;
 
 /**
@@ -26,7 +29,7 @@ class EscortForm extends EntityForm {
   /**
    * The escort entity.
    *
-   * @var \Drupal\escort\Entity\EscortInterface
+   * @var \Drupal\escort\Entity\Escort
    */
   protected $entity;
 
@@ -66,19 +69,35 @@ class EscortForm extends EntityForm {
   protected $escortRegionManager;
 
   /**
+   * The plugin form manager.
+   *
+   * @var \Drupal\Core\Plugin\PluginFormFactoryInterface
+   */
+  protected $pluginFormFactory;
+
+  /**
    * Constructs a BlockForm object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity manager.
+   * @param \Drupal\Core\Executable\ExecutableManagerInterface $manager
+   *   The ConditionManager for building the visibility UI.
+   * @param \Drupal\Core\Plugin\Context\ContextRepositoryInterface $context_repository
+   *   The lazy context repository service.
    * @param \Drupal\escort\EscortManagerInterface $escort_manager
    *   The escort plugin manager.
+   * @param \Drupal\escort\EscortRegionManagerInterface $escort_region_manager
+   *   The escort region manager.
+   * @param \Drupal\Core\Plugin\PluginFormFactoryInterface $plugin_form_manager
+   *   The plugin form manager.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, ExecutableManagerInterface $manager, ContextRepositoryInterface $context_repository, EscortManagerInterface $escort_manager, EscortRegionManagerInterface $escort_region_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, ExecutableManagerInterface $manager, ContextRepositoryInterface $context_repository, EscortManagerInterface $escort_manager, EscortRegionManagerInterface $escort_region_manager, PluginFormFactoryInterface $plugin_form_manager) {
     $this->storage = $entity_type_manager->getStorage('escort');
     $this->manager = $manager;
     $this->contextRepository = $context_repository;
     $this->escortItemManager = $escort_manager;
     $this->escortRegionManager = $escort_region_manager;
+    $this->pluginFormFactory = $plugin_form_manager;
   }
 
   /**
@@ -90,7 +109,8 @@ class EscortForm extends EntityForm {
       $container->get('plugin.manager.condition'),
       $container->get('context.repository'),
       $container->get('plugin.manager.escort'),
-      $container->get('escort.region_manager')
+      $container->get('escort.region_manager'),
+      $container->get('plugin_form.factory')
     );
   }
 
@@ -119,29 +139,29 @@ class EscortForm extends EntityForm {
     $form['visibility'] = $this->buildVisibilityInterface([], $form_state);
 
     // If creating a new escort, calculate a safe default machine name.
-    $form['id'] = array(
+    $form['id'] = [
       '#type' => 'machine_name',
       '#maxlength' => 64,
       '#description' => $this->t('A unique name for this escort. Must be alpha-numeric and underscore separated.'),
       '#default_value' => !$entity->isNew() ? $entity->id() : $this->getUniqueMachineName($entity),
-      '#machine_name' => array(
+      '#machine_name' => [
         'exists' => '\Drupal\escort\Entity\Escort::load',
         'replace_pattern' => '[^a-z0-9_.]+',
-        'source' => array('settings', 'label'),
-      ),
+        'source' => ['settings', 'label'],
+      ],
       '#required' => TRUE,
       '#disabled' => !$entity->isNew(),
-    );
+    ];
 
     // Hidden weight setting.
     $weight = $entity->isNew() ? $this->getRequest()->query->get('weight', 0) : $entity->getWeight();
-    $form['weight'] = array(
+    $form['weight'] = [
       '#type' => 'hidden',
       '#default_value' => $weight,
-    );
+    ];
 
     // Region settings.
-    $form['region'] = array(
+    $form['region'] = [
       '#type' => 'select',
       '#title' => $this->t('Region'),
       '#description' => $this->t('Select the region where this escort should be displayed.'),
@@ -151,7 +171,7 @@ class EscortForm extends EntityForm {
       '#prefix' => '<div id="edit-escort-item-region-wrapper">',
       '#suffix' => '</div>',
       '#access' => FALSE,
-    );
+    ];
 
     return $form;
   }
@@ -300,20 +320,9 @@ class EscortForm extends EntityForm {
     $this->submitVisibility($form, $form_state);
 
     // Save the settings of the plugin.
-    $status = $entity->save();
+    $entity->save();
 
-    switch ($status) {
-      case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Escort.', [
-          '%label' => $entity->label(),
-        ]));
-        break;
-
-      default:
-        drupal_set_message($this->t('Saved the %label Escort.', [
-          '%label' => $entity->label(),
-        ]));
-    }
+    $this->messenger()->addStatus($this->t('The escort configuration has been saved.'));
     $form_state->setRedirect('escort.escort_list');
   }
 

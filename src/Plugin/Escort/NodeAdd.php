@@ -86,12 +86,12 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return array(
+    return [
       'text' => $this->t('Add Content'),
       'icon' => 'fa-plus-circle',
       'bundles' => [],
       'type' => 'include',
-    ) + parent::defaultConfiguration();
+    ] + parent::defaultConfiguration();
   }
 
   /**
@@ -188,7 +188,7 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
         $title = MiconIconize::iconize($title)->addMatchPrefix('content_type');
         $build['#links'][$type->id()] = [
           'title' => $title,
-          'url' => new Url('node.add', array($this->entityTypeBundle => $type->id())),
+          'url' => new Url('node.add', [$this->entityTypeBundle => $type->id()]),
         ];
       }
       $this->renderer->addCacheableDependency($build, $access);

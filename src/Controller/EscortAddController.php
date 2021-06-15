@@ -20,7 +20,7 @@ class EscortAddController extends ControllerBase {
    */
   public function escorItemAddForm($plugin_id) {
     // Create an escort entity.
-    $entity = $this->entityTypeManager()->getStorage('escort')->create(array('plugin' => $plugin_id));
+    $entity = $this->entityTypeManager()->getStorage('escort')->create(['plugin' => $plugin_id]);
     return $this->entityFormBuilder()->getForm($entity);
   }
 

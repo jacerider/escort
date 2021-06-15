@@ -153,7 +153,7 @@ trait EscortPluginLinkTrait {
 
         if ($url->isRouted()) {
           // Set data element for active link setting.
-          // @TODO Drupal's active-link.js seems to not work for this. Why?
+          // @todo Drupal's active-link.js seems to not work for this. Why?
           $system_path = $url->getInternalPath();
           // Special case for the front page.
           $attributes['data-escort-path'] = $system_path == '' ? '<front>' : $system_path;
@@ -219,10 +219,10 @@ trait EscortPluginLinkTrait {
     }
 
     $tree = $this->menuTree->load($menu_name, $parameters);
-    $manipulators = array(
-      array('callable' => 'menu.default_tree_manipulators:checkAccess'),
-      array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
-    );
+    $manipulators = [
+      ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+      ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
+    ];
     $tree = $this->menuTree->transform($tree, $manipulators);
     $build = $this->menuTree->build($tree);
     if ($build['#items']) {

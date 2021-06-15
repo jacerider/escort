@@ -4,6 +4,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Template\Attribute;
 use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Core\StreamWrapper\StreamWrapperManager;
 
 /**
  * Prepares variables for administration escort template.
@@ -122,7 +123,7 @@ function template_preprocess_escort_item(&$variables) {
 
   // Theme our image if it is a URL.
   if (!empty($variables['image']) && is_string($variables['image'])) {
-    $scheme = file_uri_scheme($variables['image']);
+    $scheme = StreamWrapperManager::getScheme($variables['image']);
     switch ($scheme) {
       case 'public':
       case 'private':

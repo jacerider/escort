@@ -52,11 +52,11 @@ class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return array(
+    return [
       'region' => NULL,
       'event' => 'hover',
       'icon' => 'fa-bars',
-    );
+    ];
   }
 
   /**
@@ -116,7 +116,7 @@ class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface
     $type = $this->escortRegionManager->getGroupType($escort->getRegion());
     if ($this->configuration['event'] == 'click' || $type == 'vertical') {
       $label = $this->escortRegionManager->getGroupLabel($this->configuration['region']);
-      $build['#markup'] = $this->t('Toggle @label', array('@label' => $label));
+      $build['#markup'] = $this->t('Toggle @label', ['@label' => $label]);
     }
     $build['#attached']['library'][] = 'escort/escort.toggle';
     $build['#attributes']['class'][] = 'escort-toggle';

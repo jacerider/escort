@@ -117,6 +117,9 @@ class Menu extends EscortPluginBase implements ContainerFactoryPluginInterface {
     return $build;
   }
 
+  /**
+   *
+   */
   protected function escortMenuTreeItems($items, $depth = 0) {
     foreach ($items as $id => &$item) {
       if ($item['below']) {
@@ -145,36 +148,36 @@ class Menu extends EscortPluginBase implements ContainerFactoryPluginInterface {
       '#default_value' => $config['menu'],
     ];
 
-    $form['menu_levels'] = array(
+    $form['menu_levels'] = [
       '#type' => 'details',
       '#title' => $this->t('Menu levels'),
       // Open if not set to defaults.
       '#open' => $defaults['level'] !== $config['level'] || $defaults['depth'] !== $config['depth'],
       '#process' => [[get_class(), 'processMenuLevelParents']],
-    );
+    ];
 
     $options = range(0, $this->menuTree->maxDepth());
     unset($options[0]);
 
-    $form['menu_levels']['level'] = array(
+    $form['menu_levels']['level'] = [
       '#type' => 'select',
       '#title' => $this->t('Initial menu level'),
       '#default_value' => $config['level'],
       '#options' => $options,
       '#description' => $this->t('The menu will only be visible if the menu item for the current page is at or below the selected starting level. Select level 1 to always keep this menu visible.'),
       '#required' => TRUE,
-    );
+    ];
 
     $options[0] = $this->t('Unlimited');
 
-    $form['menu_levels']['depth'] = array(
+    $form['menu_levels']['depth'] = [
       '#type' => 'select',
       '#title' => $this->t('Maximum number of menu levels to display'),
       '#default_value' => $config['depth'],
       '#options' => $options,
       '#description' => $this->t('The maximum number of menu levels to show, starting from the initial menu level. For example: with an initial level 2 and a maximum number of 3, menu levels 2, 3 and 4 can be displayed.'),
       '#required' => TRUE,
-    );
+    ];
 
     return $form;
   }

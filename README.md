@@ -1,6 +1,21 @@
 # Escort
 ##### An admin menu of extreme super awesomeness.
 
+## How To Use
+
+Escort does not use the Drupal menu system. Escort has its own menu system 
+which is geared towards making the administration area easier-to-use for site 
+administrators. The administration and configuration is located at:
+
+    admin/config/user-interface/escort
+
+There, you can enable menu regions on any side of the admin area. Also, when 
+hovering over an icon, you can edit/disable/delete items and click and hold 
+the "Drag" text to move the items to another menu or order them differently in 
+the same menu. The blue "+" (plus) icon allows you add escort widgets of a 
+variety of types. Changes to the menu item order/placement take place 
+immediately via AJAX.
+
 ## Development Setup
 
 First, you will need to install [NodeJS](https://nodejs.org/en/download/package-manager/).
@@ -21,3 +36,6 @@ the /dev folder.
 
     gulp
 
+## Extending Escort
+
+TODO: More about adding your own escort plugins here.

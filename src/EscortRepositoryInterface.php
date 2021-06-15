@@ -2,6 +2,9 @@
 
 namespace Drupal\escort;
 
+/**
+ *
+ */
 interface EscortRepositoryInterface {
 
   /**

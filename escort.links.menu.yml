@@ -2,7 +2,7 @@ escort.escort_config_form:
   title: 'Escort'
   route_name: escort.escort_config_form
   description: 'Manage the Escort toolbar.'
-  parent: system.admin_config_system
+  parent: system.admin_config_ui
   weight: 99
 
 

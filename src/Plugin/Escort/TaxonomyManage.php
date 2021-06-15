@@ -75,12 +75,12 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return array(
+    return [
       'text' => $this->t('Manage Terms'),
       'icon' => 'fa-tags',
       'bundles' => [],
       'type' => 'include',
-    );
+    ];
   }
 
   /**

@@ -41,7 +41,7 @@
       var _this = this;
 
       // Remove empty.
-      if (!_this.$region.find('.escort-item').length) {
+      if (_this.$region.find('.escort-item, [data-big-pipe-placeholder-id]').length === 0) {
         _this.$region.remove();
         _this.$body.removeClass('has-escort-' + this.region);
         Drupal.displace(true);

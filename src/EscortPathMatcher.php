@@ -56,6 +56,8 @@ class EscortPathMatcher implements EscortPathMatcherInterface {
    *   The request stack.
    * @param \Drupal\Core\Path\CurrentPathStack $current_path
    *   The current path.
+   * @param \Drupal\Core\Session\AccountProxy $current_user
+   *   The current user.
    */
   public function __construct(PathMatcherInterface $path_matcher, RequestStack $request_stack, CurrentPathStack $current_path, AccountProxy $current_user) {
     $this->pathMatcher = $path_matcher;
@@ -73,15 +75,15 @@ class EscortPathMatcher implements EscortPathMatcherInterface {
         $this->isAdmin = FALSE;
       }
       else {
-        $include = ['/admin/config/escort', '/admin/config/escort/*'];
-        $exclude = ['/admin/config/escort/test/*'];
+        $include = ['/admin/config/user-interface/escort', '/admin/config/user-interface/escort/*'];
+        $exclude = ['/admin/config/user-interface/escort/test/*'];
         $request = $this->requestStack->getCurrentRequest();
         // Compare the lowercase path alias (if any) and internal path.
         $path = $this->currentPath->getPath($request);
         // Do not trim a trailing slash if that is the complete path.
         $path = $path === '/' ? $path : rtrim($path, '/');
         // Set static variable.
-        $this->isAdmin = $this->pathMatcher->matchPath($path, implode($include, "\n")) && !$this->pathMatcher->matchPath($path, implode($exclude, "\n"));
+        $this->isAdmin = $this->pathMatcher->matchPath($path, implode("\n", $include)) && !$this->pathMatcher->matchPath($path, implode("\n", $exclude));
       }
     }
     return $this->isAdmin;

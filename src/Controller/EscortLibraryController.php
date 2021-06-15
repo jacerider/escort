@@ -2,7 +2,6 @@
 
 namespace Drupal\escort\Controller;
 
-use Drupal\Component\Serialization\Json;
 use Drupal\escort\EscortManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Plugin\Context\LazyContextRepository;
