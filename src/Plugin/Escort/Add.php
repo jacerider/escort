@@ -21,11 +21,11 @@ class Add extends EscortPluginBase implements EscortPluginImmediateInterface {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return array(
+    return [
       'region' => NULL,
       'icon' => 'fa-plus',
       'weight' => 200,
-    );
+    ];
   }
 
   /**

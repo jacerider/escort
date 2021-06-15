@@ -7,7 +7,8 @@ use Drupal\Core\Condition\ConditionPluginCollection;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\escort\EscortPluginCollection;
-use Drupal\escort\Plugin\Escort\EscortPluginInterface;;
+use Drupal\escort\Plugin\Escort\EscortPluginInterface;
+;
 use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\escort\EscortAjaxTrait;
@@ -64,7 +65,7 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
    *
    * @var array
    */
-  protected $settings = array();
+  protected $settings = [];
 
   /**
    * The region this escort is placed in.
@@ -171,7 +172,7 @@ class Escort extends ConfigEntityBase implements EscortInterface, EntityWithPlug
    */
   public function label() {
     $settings = $this->get('settings');
-    if ($settings['label']) {
+    if ($settings && $settings['label']) {
       return $settings['label'];
     }
     else {

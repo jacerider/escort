@@ -34,7 +34,7 @@ class EscortListController extends ControllerBase {
    *   A json response to use via javascript.
    */
   public function updateEscorts(Request $request = NULL) {
-    $response = array();
+    $response = [];
     $content = $request->getContent();
     if (!empty($content)) {
       $params = json_decode($content, TRUE);

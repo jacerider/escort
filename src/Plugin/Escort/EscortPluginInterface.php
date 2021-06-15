@@ -2,7 +2,7 @@
 
 namespace Drupal\escort\Plugin\Escort;
 
-use Drupal\Component\Plugin\ConfigurablePluginInterface;
+use Drupal\Component\Plugin\ConfigurableInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\Component\Plugin\PluginInspectionInterface;
 use Drupal\Core\Cache\CacheableDependencyInterface;
@@ -16,7 +16,7 @@ use Drupal\Core\Session\AccountInterface;
  *
  * @ingroup escort_api
  */
-interface EscortPluginInterface extends PluginFormInterface, PluginInspectionInterface, CacheableDependencyInterface, DerivativeInspectionInterface {
+interface EscortPluginInterface extends ConfigurableInterface, PluginFormInterface, PluginInspectionInterface, CacheableDependencyInterface, DerivativeInspectionInterface {
 
   /**
    * Returns the admin-facing escort label.

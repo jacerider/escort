@@ -60,11 +60,11 @@ class View extends Aside implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return array(
+    return [
       'view_id' => '',
       'view_display_id' => '',
       'view_argument' => '',
-    ) + parent::defaultConfiguration();
+    ] + parent::defaultConfiguration();
   }
 
   /**
@@ -123,11 +123,11 @@ class View extends Aside implements ContainerFactoryPluginInterface {
       '#wrapper_attributes' => [
         'id' => $element_id,
       ],
-      '#states' => array(
-        'visible' => array(
+      '#states' => [
+        'visible' => [
           ':input[name="settings[view][view_id]"]' => ['filled' => TRUE],
-        ),
-      ),
+        ],
+      ],
     ];
 
     if (!empty($view)) {
@@ -137,16 +137,16 @@ class View extends Aside implements ContainerFactoryPluginInterface {
       ] + $form['view']['view_display_id'];
     }
 
-    $form['view']['view_argument'] = array(
+    $form['view']['view_argument'] = [
       '#title' => 'Argument',
       '#type' => 'textfield',
       '#default_value' => $this->configuration['view_argument'],
-      '#states' => array(
-        'visible' => array(
+      '#states' => [
+        'visible' => [
           ':input[name="settings[view][view_id]"]' => ['filled' => TRUE],
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
     return $form;
   }
@@ -197,7 +197,7 @@ class View extends Aside implements ContainerFactoryPluginInterface {
    */
   protected function getViews() {
     $views = Views::getEnabledViews();
-    $options = array();
+    $options = [];
     foreach ($views as $view) {
       if ($view->status()) {
         $options[$view->get('id')] = $view->get('label');
@@ -211,7 +211,7 @@ class View extends Aside implements ContainerFactoryPluginInterface {
    */
   protected function getViewDisplayIds($entity_id) {
     $views = Views::getEnabledViews();
-    $options = array();
+    $options = [];
     foreach ($views as $view) {
       if ($view->get('id') == $entity_id) {
         foreach ($view->get('display') as $display) {

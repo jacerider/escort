@@ -69,12 +69,12 @@ class Link extends Text {
       '#process_default_value' => FALSE,
       '#element_validate' => [[get_class($this), 'validateUriElement']],
     ];
-    $form['target'] = array(
+    $form['target'] = [
       '#type' => 'checkbox',
       '#title' => t('Open link in new window'),
       '#return_value' => '_blank',
       '#default_value' => $this->configuration['target'],
-    );
+    ];
     return $form;
   }
 
@@ -178,7 +178,7 @@ class Link extends Text {
       // Show the 'entity:' URI as the entity autocomplete would.
       $entity_manager = \Drupal::entityManager();
       if ($entity_manager->getDefinition($entity_type, FALSE) && $entity = \Drupal::entityManager()->getStorage($entity_type)->load($entity_id)) {
-        $displayable_string = EntityAutocomplete::getEntityLabels(array($entity));
+        $displayable_string = EntityAutocomplete::getEntityLabels([$entity]);
       }
     }
 

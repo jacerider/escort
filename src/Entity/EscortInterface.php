@@ -56,4 +56,12 @@ interface EscortInterface extends ConfigEntityInterface {
    */
   public function buildOps();
 
+  /**
+   * {@inheritDoc}
+   *
+   * @return \Drupal\escort\Plugin\Escort\EscortPluginInterface
+   *   The plugin.
+   */
+  public function getPlugin();
+
 }

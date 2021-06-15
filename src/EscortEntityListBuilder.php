@@ -66,15 +66,15 @@ class EscortEntityListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     // Enable language column and filter if multiple languages are added.
-    $header = array(
+    $header = [
       'title' => $this->t('Title'),
       'status' => $this->t('Status'),
-    );
+    ];
     if (\Drupal::languageManager()->isMultilingual()) {
-      $header['language_name'] = array(
+      $header['language_name'] = [
         'data' => $this->t('Language'),
-        'class' => array(RESPONSIVE_PRIORITY_LOW),
-      );
+        'class' => [RESPONSIVE_PRIORITY_LOW],
+      ];
     }
     return $header + parent::buildHeader();
   }
@@ -84,21 +84,21 @@ class EscortEntityListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /** @var \Drupal\node\NodeInterface $entity */
-    $mark = array(
+    $mark = [
       '#theme' => 'mark',
       '#mark_type' => node_mark($entity->id(), $entity->getChangedTime()),
-    );
+    ];
     $langcode = $entity->language()->getId();
     $uri = $entity->urlInfo();
     $options = $uri->getOptions();
-    $options += ($langcode != LanguageInterface::LANGCODE_NOT_SPECIFIED && isset($languages[$langcode]) ? array('language' => $languages[$langcode]) : array());
+    $options += ($langcode != LanguageInterface::LANGCODE_NOT_SPECIFIED && isset($languages[$langcode]) ? ['language' => $languages[$langcode]] : []);
     $uri->setOptions($options);
-    $row['title']['data'] = array(
+    $row['title']['data'] = [
       '#type' => 'link',
       '#title' => $entity->label(),
       '#suffix' => ' ' . drupal_render($mark),
       '#url' => $uri,
-    );
+    ];
     $row['status'] = MiconIconize::iconize($entity->isPublished() ? $this->t('published') : $this->t('not published'))->setIconOnly();
     $language_manager = \Drupal::languageManager();
     if ($language_manager->isMultilingual()) {

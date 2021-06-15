@@ -67,7 +67,7 @@ class EscortAccessControlHandler extends EntityAccessControlHandler implements E
   }
 
   /**
-   * Constructs the escort access control handler instance
+   * Constructs the escort access control handler instance.
    *
    * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
    *   The entity type definition.
