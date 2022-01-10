@@ -122,7 +122,7 @@
 
   Drupal.behaviors.escortAside = {
     attach: function (context) {
-      var $escortAsides = $(context).find('.escort-aside').once('escort-aside');
+      var $escortAsides = $('.escort-aside').once('escort-aside');
       if ($escortAsides.length) {
         for (var i = 0; i < $escortAsides.length; i++) {
           EscortAsides.instances.push(new EscortAsides($escortAsides[i]));
