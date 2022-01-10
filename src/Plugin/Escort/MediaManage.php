@@ -32,7 +32,7 @@ class MediaManage extends Aside {
    *
    * @var string
    */
-  protected $entityTypeBundle = 'media_bundle';
+  protected $entityTypeBundle = 'bundle';
 
   /**
    * {@inheritdoc}
@@ -108,7 +108,7 @@ class MediaManage extends Aside {
   protected function escortBuildAsideContent() {
     $build = [];
     $build['add'] = DrupalLink::createFromRoute('Add New', 'entity.' . $this->entityType . '.add_form', [
-      'media_bundle' => $this->configuration['bundle'],
+      'media_type' => $this->configuration['bundle'],
     ], [
       'attributes' => ['class' => ['escort-create']],
     ])->toRenderable();
@@ -125,7 +125,7 @@ class MediaManage extends Aside {
    * {@inheritdoc}
    */
   public static function isApplicable() {
-    return \Drupal::moduleHandler()->moduleExists('media_entity');
+    return \Drupal::moduleHandler()->moduleExists('media');
   }
 
 }

@@ -289,7 +289,7 @@ class EscortConfigForm extends ConfigFormBase {
         }
         if ($config['formatter']) {
           foreach ($config['formatter'] as $view => $formatter) {
-            $view_modes = \Drupal::entityManager()->getViewModes($config['entity_type']);
+            $view_modes = \Drupal::service('entity_display.repository')->getViewModes($config['entity_type']);
             if (isset($view_modes[$view]) || $view == 'default') {
               entity_get_display($config['entity_type'], $bundle, $view)
                 ->setComponent($field_name, !is_array($formatter) ? $config['formatter']['default'] : $formatter)
@@ -299,7 +299,7 @@ class EscortConfigForm extends ConfigFormBase {
         }
       }
     }
-    drupal_set_message($this->t('A user picture field has been created within the user entity type.'));
+    \Drupal::messenger()->addMessage($this->t('A user picture field has been created within the user entity type.'));
   }
 
   /**
@@ -327,7 +327,7 @@ class EscortConfigForm extends ConfigFormBase {
         $field_storage->delete();
       }
     }
-    drupal_set_message($this->t('The user picture field has been removed from the user entity type.'));
+    \Drupal::messenger()->addMessage($this->t('The user picture field has been removed from the user entity type.'));
   }
 
   /**
@@ -371,7 +371,7 @@ class EscortConfigForm extends ConfigFormBase {
     foreach (file_scan_directory($config_path, '/views\.view\.escort_.*_manage.yml/') as $file) {
       file_unmanaged_copy($file->uri, $destination, FILE_EXISTS_REPLACE);
     }
-    drupal_set_message($this->t('Escort management configuration files were successfully reset and are ready for import.'));
+    \Drupal::messenger()->addMessage($this->t('Escort management configuration files were successfully reset and are ready for import.'));
     $form_state->setRedirect('config.sync');
   }
 

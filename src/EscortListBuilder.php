@@ -303,7 +303,7 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
       $entity->setRegion($entity_values['region']);
       $entity->save();
     }
-    drupal_set_message(t('The escort settings have been updated.'));
+    \Drupal::messenger()->addMessage(t('The escort settings have been updated.'));
   }
 
 }

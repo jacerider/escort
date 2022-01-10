@@ -29,34 +29,3 @@ escort.escort.*:
 
 escort.settings.*:
   type: escort_settings
-
-escort_settings:
-  type: mapping
-  label: 'Escort Item settings'
-  mapping:
-    id:
-      type: string
-      label: 'ID'
-    label:
-      type: label
-      label: 'Description'
-    label_display:
-      type: string
-      label: 'Display title'
-    status:
-      type: boolean
-      label: 'Status'
-    info:
-      type: label
-      label: 'Admin info'
-    view_mode:
-      type: string
-      label: 'View mode'
-    provider:
-      type: string
-      label: 'Provider'
-    context_mapping:
-      type: sequence
-      label: 'Context assignments'
-      sequence:
-        type: string

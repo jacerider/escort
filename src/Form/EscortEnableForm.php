@@ -114,7 +114,7 @@ class EscortEnableForm extends FormBase {
       $escort->setRegion($region);
       $escort->setWeight($weight);
       $escort->save();
-      drupal_set_message($this->t('Enabled the %label Escort.', [
+      \Drupal::messenger()->addMessage($this->t('Enabled the %label Escort.', [
         '%label' => $escort->label(),
       ]));
     }

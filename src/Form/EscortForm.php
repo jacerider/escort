@@ -13,9 +13,6 @@ use Drupal\escort\EscortRegionManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Plugin\Context\ContextRepositoryInterface;
-use Drupal\Core\Plugin\ContextAwarePluginInterface;
-use Drupal\Core\Plugin\PluginFormFactoryInterface;
-use Drupal\Core\Plugin\PluginWithFormsInterface;
 use Drupal\escort\EscortAjaxTrait;
 
 /**
@@ -29,7 +26,7 @@ class EscortForm extends EntityForm {
   /**
    * The escort entity.
    *
-   * @var \Drupal\escort\Entity\Escort
+   * @var \Drupal\escort\Entity\EscortInterface
    */
   protected $entity;
 
@@ -69,35 +66,19 @@ class EscortForm extends EntityForm {
   protected $escortRegionManager;
 
   /**
-   * The plugin form manager.
-   *
-   * @var \Drupal\Core\Plugin\PluginFormFactoryInterface
-   */
-  protected $pluginFormFactory;
-
-  /**
    * Constructs a BlockForm object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity manager.
-   * @param \Drupal\Core\Executable\ExecutableManagerInterface $manager
-   *   The ConditionManager for building the visibility UI.
-   * @param \Drupal\Core\Plugin\Context\ContextRepositoryInterface $context_repository
-   *   The lazy context repository service.
    * @param \Drupal\escort\EscortManagerInterface $escort_manager
    *   The escort plugin manager.
-   * @param \Drupal\escort\EscortRegionManagerInterface $escort_region_manager
-   *   The escort region manager.
-   * @param \Drupal\Core\Plugin\PluginFormFactoryInterface $plugin_form_manager
-   *   The plugin form manager.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, ExecutableManagerInterface $manager, ContextRepositoryInterface $context_repository, EscortManagerInterface $escort_manager, EscortRegionManagerInterface $escort_region_manager, PluginFormFactoryInterface $plugin_form_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, ExecutableManagerInterface $manager, ContextRepositoryInterface $context_repository, EscortManagerInterface $escort_manager, EscortRegionManagerInterface $escort_region_manager) {
     $this->storage = $entity_type_manager->getStorage('escort');
     $this->manager = $manager;
     $this->contextRepository = $context_repository;
     $this->escortItemManager = $escort_manager;
     $this->escortRegionManager = $escort_region_manager;
-    $this->pluginFormFactory = $plugin_form_manager;
   }
 
   /**
@@ -109,8 +90,7 @@ class EscortForm extends EntityForm {
       $container->get('plugin.manager.condition'),
       $container->get('context.repository'),
       $container->get('plugin.manager.escort'),
-      $container->get('escort.region_manager'),
-      $container->get('plugin_form.factory')
+      $container->get('escort.region_manager')
     );
   }
 
@@ -320,9 +300,20 @@ class EscortForm extends EntityForm {
     $this->submitVisibility($form, $form_state);
 
     // Save the settings of the plugin.
-    $entity->save();
+    $status = $entity->save();
 
-    $this->messenger()->addStatus($this->t('The escort configuration has been saved.'));
+    switch ($status) {
+      case SAVED_NEW:
+        \Drupal::messenger()->addMessage($this->t('Created the %label Escort.', [
+          '%label' => $entity->label(),
+        ]));
+        break;
+
+      default:
+        \Drupal::messenger()->addMessage($this->t('Saved the %label Escort.', [
+          '%label' => $entity->label(),
+        ]));
+    }
     $form_state->setRedirect('escort.escort_list');
   }
 

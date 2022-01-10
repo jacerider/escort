@@ -49,7 +49,7 @@ class EscortDisableForm extends EntityConfirmFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->entity->setRegion()->save();
 
-    drupal_set_message(
+    \Drupal::messenger()->addMessage(
       $this->t('Escort: Disabled @label.',
         [
           '@label' => $this->entity->label(),

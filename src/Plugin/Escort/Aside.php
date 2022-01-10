@@ -259,10 +259,6 @@ class Aside extends Text {
    *
    * @return \Drupal\Core\Entity\EntityManagerInterface
    *   The entity manager service.
-   *
-   * @deprecated in drupal:8.0.0 and is removed from drupal:9.0.0.
-   *   Most of the time static::entityTypeManager() is supposed to be used
-   *   instead.
    */
   protected function escortRegionManager() {
     if (!$this->escortRegionManager) {
