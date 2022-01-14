@@ -565,7 +565,7 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
     //   \Drupal\system\MachineNameController::transliterate(), so it might make
     //   sense to provide a common service for the two.
     $transliterated = $this->transliteration()->transliterate($admin_label, LanguageInterface::LANGCODE_DEFAULT, '_');
-    $transliterated = Unicode::strtolower($transliterated);
+    $transliterated = mb_strtolower($transliterated);
 
     $transliterated = preg_replace('@[^a-z0-9_.]+@', '', $transliterated);
 

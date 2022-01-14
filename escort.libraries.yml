@@ -108,7 +108,7 @@ escort.admin:
   dependencies:
     - core/jquery
     - core/drupal
-    - core/jquery.ui.sortable
+    - escort/jquery.ui.sortable
 
 escort.admin.drag:
   version: VERSION
@@ -117,3 +117,13 @@ escort.admin.drag:
   dependencies:
     - core/jquery
     - core/drupal
+
+jquery.ui.sortable:
+  version: VERSION
+  js:
+    lib/jquery.ui/sortable-min.js: { minified: true }
+  dependencies:
+    - core/jquery.ui
+    - core/jquery.ui.mouse
+    - core/jquery.ui.widget
+  deprecated: Restore "%library_id%" as it is removed from drupal:9.0.0. See https://www.drupal.org/node/3084730
