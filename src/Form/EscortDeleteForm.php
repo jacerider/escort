@@ -6,12 +6,14 @@ use Drupal\Core\Entity\EntityConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\escort\EscortAjaxTrait;
+use Drupal\Core\Messenger\MessengerTrait;
 
 /**
  * Builds the form to delete Escort entities.
  */
 class EscortDeleteForm extends EntityConfirmFormBase {
   use EscortAjaxTrait;
+  use MessengerTrait;
 
   /**
    * {@inheritdoc}
@@ -51,7 +53,7 @@ class EscortDeleteForm extends EntityConfirmFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->entity->delete();
 
-    drupal_set_message(
+    $this->messenger()->addMessage(
       $this->t('Escort: Deleted @label.',
         [
           '@label' => $this->entity->label(),
