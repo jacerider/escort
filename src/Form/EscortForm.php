@@ -17,6 +17,7 @@ use Drupal\Core\Plugin\ContextAwarePluginInterface;
 use Drupal\Core\Plugin\PluginFormFactoryInterface;
 use Drupal\Core\Plugin\PluginWithFormsInterface;
 use Drupal\escort\EscortAjaxTrait;
+use Drupal\Core\Language\LanguageManagerInterface;
 
 /**
  * Class EscortForm.
@@ -75,6 +76,13 @@ class EscortForm extends EntityForm {
    */
   protected $pluginFormFactory;
 
+    /**
+   * The language manager.
+   * 
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $language;
+
   /**
    * Constructs a BlockForm object.
    *
@@ -90,14 +98,17 @@ class EscortForm extends EntityForm {
    *   The escort region manager.
    * @param \Drupal\Core\Plugin\PluginFormFactoryInterface $plugin_form_manager
    *   The plugin form manager.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language
+   *   The language manager.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, ExecutableManagerInterface $manager, ContextRepositoryInterface $context_repository, EscortManagerInterface $escort_manager, EscortRegionManagerInterface $escort_region_manager, PluginFormFactoryInterface $plugin_form_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, ExecutableManagerInterface $manager, ContextRepositoryInterface $context_repository, EscortManagerInterface $escort_manager, EscortRegionManagerInterface $escort_region_manager, PluginFormFactoryInterface $plugin_form_manager, LanguageManagerInterface $language) {
     $this->storage = $entity_type_manager->getStorage('escort');
     $this->manager = $manager;
     $this->contextRepository = $context_repository;
     $this->escortItemManager = $escort_manager;
     $this->escortRegionManager = $escort_region_manager;
     $this->pluginFormFactory = $plugin_form_manager;
+    $this->language = $language;
   }
 
   /**
@@ -110,7 +121,8 @@ class EscortForm extends EntityForm {
       $container->get('context.repository'),
       $container->get('plugin.manager.escort'),
       $container->get('escort.region_manager'),
-      $container->get('plugin_form.factory')
+      $container->get('plugin_form.factory'),
+      $container->get('language_manager')
     );
   }
 
