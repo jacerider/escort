@@ -14,6 +14,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Plugin\Context\ContextRepositoryInterface;
 use Drupal\escort\EscortAjaxTrait;
+use Drupal\Core\Language\LanguageManagerInterface;
 
 /**
  * Class EscortForm.
@@ -66,19 +67,35 @@ class EscortForm extends EntityForm {
   protected $escortRegionManager;
 
   /**
+   * The language manager.
+   * 
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $language;
+
+  /**
    * Constructs a BlockForm object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity manager.
+   * @param \Drupal\Core\Executable\ExecutableManagerInterface $manager
+   *   The ConditionManager for building the visibility UI.
+   * @param \Drupal\Core\Plugin\Context\ContextRepositoryInterface $context_repository
+   *   The lazy context repository service.
    * @param \Drupal\escort\EscortManagerInterface $escort_manager
    *   The escort plugin manager.
+   * @param \Drupal\escort\EscortRegionManagerInterface $escort_region_manager
+   *   The escort region manager.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language
+   *   The language manager.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, ExecutableManagerInterface $manager, ContextRepositoryInterface $context_repository, EscortManagerInterface $escort_manager, EscortRegionManagerInterface $escort_region_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, ExecutableManagerInterface $manager, ContextRepositoryInterface $context_repository, EscortManagerInterface $escort_manager, EscortRegionManagerInterface $escort_region_manager, LanguageManagerInterface $language) {
     $this->storage = $entity_type_manager->getStorage('escort');
     $this->manager = $manager;
     $this->contextRepository = $context_repository;
     $this->escortItemManager = $escort_manager;
     $this->escortRegionManager = $escort_region_manager;
+    $this->language = $language;
   }
 
   /**
@@ -90,7 +107,8 @@ class EscortForm extends EntityForm {
       $container->get('plugin.manager.condition'),
       $container->get('context.repository'),
       $container->get('plugin.manager.escort'),
-      $container->get('escort.region_manager')
+      $container->get('escort.region_manager'),
+      $container->get('language_manager')
     );
   }
 
