@@ -123,7 +123,7 @@ jquery.ui.sortable:
   js:
     lib/jquery.ui/sortable-min.js: { minified: true }
   dependencies:
-    - core/jquery.ui
-    - core/jquery.ui.mouse
-    - core/jquery.ui.widget
+    - jquery_ui/core
+    - jquery_ui/mouse
+    - jquery_ui/widget
   deprecated: Restore "%library_id%" as it is removed from drupal:9.0.0. See https://www.drupal.org/node/3084730
