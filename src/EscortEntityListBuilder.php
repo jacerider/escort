@@ -58,6 +58,7 @@ class EscortEntityListBuilder extends EntityListBuilder {
     if ($this->limit) {
       $query->pager($this->limit);
     }
+    $query->accessCheck(TRUE);
     return $query->execute();
   }
 

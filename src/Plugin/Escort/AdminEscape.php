@@ -15,6 +15,7 @@ use Drupal\Core\Access\AccessResult;
  * )
  */
 class AdminEscape extends EscortPluginBase {
+
   use EscortPluginLinkTrait;
 
   /**

@@ -362,6 +362,7 @@ class EscortForm extends EntityForm {
     // Get all the escorts which start with the suggested machine name.
     $query = $this->storage->getQuery();
     $query->condition('id', $suggestion, 'CONTAINS');
+    $query->accessCheck(TRUE);
     $escort_ids = $query->execute();
 
     $escort_ids = array_map(function ($escort_id) {

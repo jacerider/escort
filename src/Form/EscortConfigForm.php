@@ -366,7 +366,7 @@ class EscortConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitRebuildViews(array &$form, FormStateInterface $form_state) {
-    $config_path = drupal_get_path('module', 'escort') . '/config/optional';
+    $config_path = \Drupal::service('extension.list.module')->getPath('escort') . '/config/optional';
     $destination = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
     foreach (file_scan_directory($config_path, '/views\.view\.escort_.*_manage.yml/') as $file) {
       file_unmanaged_copy($file->uri, $destination, FILE_EXISTS_REPLACE);

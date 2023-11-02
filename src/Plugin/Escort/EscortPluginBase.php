@@ -2,6 +2,7 @@
 
 namespace Drupal\escort\Plugin\Escort;
 
+use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Plugin\ContextAwarePluginBase;
 use Drupal\Core\Plugin\PluginWithFormsInterface;
 use Drupal\Core\Plugin\ContextAwarePluginAssignmentTrait;
@@ -14,7 +15,12 @@ use Drupal\Core\Language\LanguageInterface;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheableDependencyInterface;
+use Drupal\Core\Cache\CacheableDependencyTrait;
+use Drupal\Core\Plugin\ContextAwarePluginTrait;
 use Drupal\Core\Render\Element;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Defines a base escort implementation that most escorts plugins will extend.
@@ -25,11 +31,16 @@ use Drupal\Core\Render\Element;
  *
  * @ingroup escort_api
  */
-abstract class EscortPluginBase extends ContextAwarePluginBase implements EscortPluginInterface, PluginWithFormsInterface {
+abstract class EscortPluginBase extends PluginBase implements EscortPluginInterface, PluginWithFormsInterface {
 
+  use ContextAwarePluginTrait {
+    getCacheContexts as getContextCacheContexts;
+    getCacheTags as getContextCacheTags;
+    getCacheMaxAge as getContextCacheMaxAge;
+  }
   use ContextAwarePluginAssignmentTrait;
-  use RefinableCacheableDependencyTrait;
   use PluginWithFormsTrait;
+  use StringTranslationTrait;
 
   /**
    * The escort entity this plugin belongs to.
@@ -72,6 +83,27 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    * @var bool
    */
   protected $isTest = FALSE;
+
+  /**
+   * Cache contexts.
+   *
+   * @var string[]
+   */
+  protected $cacheContexts = [];
+
+  /**
+   * Cache tags.
+   *
+   * @var string[]
+   */
+  protected $cacheTags = [];
+
+  /**
+   * Cache max-age.
+   *
+   * @var int
+   */
+  protected $cacheMaxAge = Cache::PERMANENT;
 
   /**
    * {@inheritdoc}
@@ -607,6 +639,42 @@ abstract class EscortPluginBase extends ContextAwarePluginBase implements Escort
    */
   public function getBodyAttributes($is_admin) {
     return [];
+  }
+
+  /**
+   * Sets cacheability; useful for value object constructors.
+   *
+   * @param \Drupal\Core\Cache\CacheableDependencyInterface $cacheability
+   *   The cacheability to set.
+   *
+   * @return $this
+   */
+  protected function setCacheability(CacheableDependencyInterface $cacheability) {
+    $this->cacheContexts = $cacheability->getCacheContexts();
+    $this->cacheTags = $cacheability->getCacheTags();
+    $this->cacheMaxAge = $cacheability->getCacheMaxAge();
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    return Cache::mergeTags($this->cacheTags, $this->getContextCacheTags());
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    return Cache::mergeContexts($this->cacheContexts, $this->getContextCacheContexts());
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    return Cache::mergeMaxAges($this->cacheMaxAge, $this->getContextCacheMaxAge());
   }
 
 }
