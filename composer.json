@@ -1,6 +1,6 @@
 {
-  "name": "drupal/escort",
-  "type": "drupal-module",
+  "name": "jacerider/escort",
+  "type": "drupal-custom-module",
   "license": "GPL-2.0+",
   "homepage": "https://github.com/jacerider/micon",
   "authors": [
