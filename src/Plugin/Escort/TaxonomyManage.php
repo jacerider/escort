@@ -102,7 +102,7 @@ class TaxonomyManage extends Aside implements ContainerFactoryPluginInterface {
     // If checking whether a entity of any type may be created.
     if (\Drupal::moduleHandler()->moduleExists('taxonomy_access_fix')) {
       foreach ($entity_types as $entity_type) {
-        if (taxonomy_access_fix_access('list terms', $entity_type)) {
+        if (function_exists('taxonomy_access_fix_access') && taxonomy_access_fix_access('list terms', $entity_type)) {
           return AccessResult::allowed()->cachePerPermissions();
         }
       }
