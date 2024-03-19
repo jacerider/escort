@@ -2,7 +2,7 @@
   "name": "jacerider/escort",
   "type": "drupal-custom-module",
   "license": "GPL-2.0+",
-  "homepage": "https://github.com/jacerider/micon",
+  "homepage": "https://github.com/jacerider/escort",
   "authors": [
     {
       "name": "Cyle Carlson (JaceRider)",
@@ -11,8 +11,8 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/jacerider/micon/issues",
-    "source": "https://github.com/jacerider/micon"
+    "issues": "https://github.com/jacerider/escort/issues",
+    "source": "https://github.com/jacerider/escort"
   },
   "minimum-stability": "dev",
   "require": { }
