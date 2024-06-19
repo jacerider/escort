@@ -33,10 +33,10 @@ class AdminEscape extends EscortPluginBase {
     if (\Drupal::service('router.admin_context')->isAdminRoute($route) === TRUE) {
       $build['#tag'] = 'a';
       $build['#icon'] = 'fa-arrow-circle-o-left';
-      $build['#markup'] = $this->t('Back to site');
+      $build['#markup'] = \Drupal::translation()->translate('Back to site');
       $build['#attributes'] = $this->getUriAsAttributes('internal:/');
       $build['#attributes']['class'][] = 'escort-hidden';
-      $build['#attributes']['title'] = t('Return to site content');
+      $build['#attributes']['title'] = \Drupal::translation()->translate('Return to site content');
     }
 
     return $build;
