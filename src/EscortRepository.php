@@ -60,6 +60,13 @@ class EscortRepository implements EscortRepositoryInterface {
   protected $isTest;
 
   /**
+   * The context handler.
+   *
+   * @var \Drupal\Core\Plugin\Context\ContextHandlerInterface
+   */
+  protected $contextHandler;
+
+  /**
    * Constructs a new EscortRepository.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
