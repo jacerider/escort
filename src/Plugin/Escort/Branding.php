@@ -165,7 +165,7 @@ class Branding extends EscortPluginBase implements ContainerFactoryPluginInterfa
     // Make link to homepage.
     $build['#tag'] = 'a';
     $build['#attributes'] = $this->getUriAsAttributes('internal:/');
-    $build['#attributes']['title'] = $this->t('Site homepage');
+    $build['#attributes']['title'] = \Drupal::translation()->translate('Site homepage');
 
     $site_logo_uri = theme_get_setting('logo.url', $theme);
     if (\Drupal::moduleHandler()->moduleExists('real_favicon') && $real_favicon = real_favicon_load_by_theme($theme)) {

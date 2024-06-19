@@ -38,7 +38,7 @@ class NodeManage extends Aside {
    */
   public function defaultConfiguration() {
     return [
-      'text' => $this->t('Manage [TYPE]'),
+      'text' => \Drupal::translation()->translate('Manage [TYPE]'),
       'icon' => 'fa-edit',
       'bundle' => '',
       'view' => 0,

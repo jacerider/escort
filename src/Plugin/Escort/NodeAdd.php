@@ -87,7 +87,7 @@ class NodeAdd extends Aside implements ContainerFactoryPluginInterface {
    */
   public function defaultConfiguration() {
     return [
-      'text' => $this->t('Add Content'),
+      'text' => \Drupal::translation()->translate('Add Content'),
       'icon' => 'fa-plus-circle',
       'bundles' => [],
       'type' => 'include',
