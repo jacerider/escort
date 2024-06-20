@@ -107,6 +107,13 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
   protected $cacheMaxAge = Cache::PERMANENT;
 
   /**
+   * Flag that indicates if escort should enforce test content.
+   *
+   * @var bool
+   */
+  protected $enforceIsTemporary = FALSE;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition) {
