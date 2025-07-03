@@ -18,6 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface {
+  protected EscortRegionManagerInterface $escortRegionManager;
 
   /**
    * Creates a Toggle instance.
