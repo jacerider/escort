@@ -126,4 +126,3 @@ jquery.ui.sortable:
     - jquery_ui/core
     - jquery_ui/mouse
     - jquery_ui/widget
-  deprecated: Restore "%library_id%" as it is removed from drupal:9.0.0. See https://www.drupal.org/node/3084730
