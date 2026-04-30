@@ -6,6 +6,9 @@ use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Executable\ExecutableManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\SubformState;
+use Drupal\Core\Plugin\ContextAwarePluginInterface;
+use Drupal\Core\Plugin\PluginFormFactoryInterface;
+use Drupal\Core\Plugin\PluginWithFormsInterface;
 use Drupal\escort\Plugin\Escort\EscortPluginInterface;
 use Drupal\escort\Entity\EscortInterface;
 use Drupal\escort\EscortManagerInterface;
@@ -66,6 +69,13 @@ class EscortForm extends EntityForm {
   protected $escortRegionManager;
 
   /**
+   * The plugin form factory.
+   *
+   * @var \Drupal\Core\Plugin\PluginFormFactoryInterface
+   */
+  protected $pluginFormFactory;
+
+  /**
    * Constructs a BlockForm object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -73,12 +83,13 @@ class EscortForm extends EntityForm {
    * @param \Drupal\escort\EscortManagerInterface $escort_manager
    *   The escort plugin manager.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, ExecutableManagerInterface $manager, ContextRepositoryInterface $context_repository, EscortManagerInterface $escort_manager, EscortRegionManagerInterface $escort_region_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, ExecutableManagerInterface $manager, ContextRepositoryInterface $context_repository, EscortManagerInterface $escort_manager, EscortRegionManagerInterface $escort_region_manager, PluginFormFactoryInterface $plugin_form_factory) {
     $this->storage = $entity_type_manager->getStorage('escort');
     $this->manager = $manager;
     $this->contextRepository = $context_repository;
     $this->escortItemManager = $escort_manager;
     $this->escortRegionManager = $escort_region_manager;
+    $this->pluginFormFactory = $plugin_form_factory;
   }
 
   /**
@@ -90,7 +101,8 @@ class EscortForm extends EntityForm {
       $container->get('plugin.manager.condition'),
       $container->get('context.repository'),
       $container->get('plugin.manager.escort'),
-      $container->get('escort.region_manager')
+      $container->get('escort.region_manager'),
+      $container->get('plugin_form.factory')
     );
   }
 
@@ -187,7 +199,7 @@ class EscortForm extends EntityForm {
         continue;
       }
       // Don't display the language condition until we have multiple languages.
-      if ($condition_id == 'language' && !$this->language->isMultilingual()) {
+      if ($condition_id == 'language' && !\Drupal::languageManager()->isMultilingual()) {
         continue;
       }
       /** @var \Drupal\Core\Condition\ConditionInterface $condition */
