@@ -14,6 +14,13 @@ use Drupal\Core\Menu\MenuTreeParameters;
 trait EscortPluginLinkTrait {
 
   /**
+   * The menu link tree service.
+   *
+   * @var \Drupal\Core\Menu\MenuLinkTreeInterface
+   */
+  protected $menuTree;
+
+  /**
    * The default icon to use when an icon is not set.
    *
    * @var string
@@ -204,6 +211,9 @@ trait EscortPluginLinkTrait {
    *   The menu deptch to render.
    */
   protected function buildMenuTree($menu_name, $level = 1, $depth = 1) {
+    if (!$this->menuTree) {
+      $this->menuTree = \Drupal::service('menu.link_tree');
+    }
     $parameters = new MenuTreeParameters();
 
     // Adjust the menu tree parameters based on the block's configuration.

@@ -2,9 +2,12 @@
 
 namespace Drupal\escort\Form;
 
+use Drupal\Core\File\FileExists;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Site\Settings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\escort\EscortRegionManagerInterface;
@@ -283,7 +286,7 @@ class EscortConfigForm extends ConfigFormBase {
           $field->setRequired($config['required'])->save();
         }
         if ($config['widget']) {
-          entity_get_form_display($config['entity_type'], $bundle, 'default')
+          \Drupal::service('entity_display.repository')->getFormDisplay($config['entity_type'], $bundle, 'default')
             ->setComponent($field_name, $config['widget'])
             ->save();
         }
@@ -291,7 +294,7 @@ class EscortConfigForm extends ConfigFormBase {
           foreach ($config['formatter'] as $view => $formatter) {
             $view_modes = \Drupal::service('entity_display.repository')->getViewModes($config['entity_type']);
             if (isset($view_modes[$view]) || $view == 'default') {
-              entity_get_display($config['entity_type'], $bundle, $view)
+              \Drupal::service('entity_display.repository')->getViewDisplay($config['entity_type'], $bundle, $view)
                 ->setComponent($field_name, !is_array($formatter) ? $config['formatter']['default'] : $formatter)
                 ->save();
             }
@@ -367,9 +370,10 @@ class EscortConfigForm extends ConfigFormBase {
    */
   public function submitRebuildViews(array &$form, FormStateInterface $form_state) {
     $config_path = \Drupal::service('extension.list.module')->getPath('escort') . '/config/optional';
-    $destination = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
-    foreach (file_scan_directory($config_path, '/views\.view\.escort_.*_manage.yml/') as $file) {
-      file_unmanaged_copy($file->uri, $destination, FILE_EXISTS_REPLACE);
+    $destination = Settings::get('config_sync_directory');
+    $file_system = \Drupal::service('file_system');
+    foreach ($file_system->scanDirectory($config_path, '/views\.view\.escort_.*_manage.yml/') as $file) {
+      $file_system->copy($file->uri, $destination, FileExists::Replace);
     }
     \Drupal::messenger()->addMessage($this->t('Escort management configuration files were successfully reset and are ready for import.'));
     $form_state->setRedirect('config.sync');

@@ -20,6 +20,7 @@ use Drupal\Core\Cache\CacheableDependencyInterface;
 use Drupal\Core\Cache\CacheableDependencyTrait;
 use Drupal\Core\Plugin\ContextAwarePluginInterface;
 use Drupal\Core\Plugin\ContextAwarePluginTrait;
+use Drupal\Component\Transliteration\TransliterationInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
@@ -112,6 +113,20 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
    * @var bool
    */
   protected $enforceIsTemporary = FALSE;
+
+  /**
+   * Flag that indicates if escort should enforce immediate rendering.
+   *
+   * @var bool
+   */
+  protected $enforceIsImmediate = FALSE;
+
+  /**
+   * Flag that indicates if escort should enforce test mode.
+   *
+   * @var bool
+   */
+  protected $enforceIsTest = FALSE;
 
   /**
    * {@inheritdoc}

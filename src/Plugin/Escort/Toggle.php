@@ -133,6 +133,7 @@ class Toggle extends EscortPluginBase implements ContainerFactoryPluginInterface
     if (!$is_admin) {
       return ['class' => [Html::cleanCssIdentifier('hide-escort-' . $this->configuration['region'])]];
     }
+    return [];
   }
 
 }
