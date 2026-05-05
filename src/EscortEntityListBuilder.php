@@ -92,12 +92,11 @@ class EscortEntityListBuilder extends EntityListBuilder {
     $langcode = $entity->language()->getId();
     $uri = $entity->urlInfo();
     $options = $uri->getOptions();
-    $options += ($langcode != LanguageInterface::LANGCODE_NOT_SPECIFIED && isset($languages[$langcode]) ? ['language' => $languages[$langcode]] : []);
     $uri->setOptions($options);
     $row['title']['data'] = [
       '#type' => 'link',
       '#title' => $entity->label(),
-      '#suffix' => ' ' . drupal_render($mark),
+      '#suffix' => ' ' . \Drupal::service('renderer')->renderInIsolation($mark),
       '#url' => $uri,
     ];
     $row['status'] = MiconIconize::iconize($entity->isPublished() ? $this->t('published') : $this->t('not published'))->setIconOnly();

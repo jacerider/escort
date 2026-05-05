@@ -5,6 +5,8 @@ namespace Drupal\escort;
 use Drupal\Component\Plugin\Exception\ContextException;
 use Drupal\Core\Condition\ConditionAccessResolverTrait;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheableDependencyInterface;
 use Drupal\Core\Entity\EntityAccessControlHandler;
 use Drupal\Core\Entity\EntityHandlerInterface;
 use Drupal\Core\Entity\EntityInterface;

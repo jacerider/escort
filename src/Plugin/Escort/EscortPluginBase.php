@@ -3,6 +3,7 @@
 namespace Drupal\escort\Plugin\Escort;
 
 use Drupal\Component\Plugin\PluginBase;
+use Drupal\Component\Transliteration\TransliterationInterface;
 use Drupal\Core\Plugin\ContextAwarePluginBase;
 use Drupal\Core\Plugin\PluginWithFormsInterface;
 use Drupal\Core\Plugin\ContextAwarePluginAssignmentTrait;
@@ -568,14 +569,14 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
    * {@inheritdoc}
    */
   public function isImmediate() {
-    return !empty($this->enforceIsImmediate);
+    return !empty($this->isImmediate);
   }
 
   /**
    * {@inheritdoc}
    */
   public function enforceIsImmediate() {
-    $this->enforceIsImmediate = TRUE;
+    $this->isImmediate = TRUE;
     return $this;
   }
 
@@ -583,14 +584,14 @@ abstract class EscortPluginBase extends PluginBase implements EscortPluginInterf
    * {@inheritdoc}
    */
   public function isTest() {
-    return !empty($this->enforceIsTest);
+    return !empty($this->isTest);
   }
 
   /**
    * {@inheritdoc}
    */
   public function enforceIsTest() {
-    $this->enforceIsTest = TRUE;
+    $this->isTest = TRUE;
     return $this;
   }
 

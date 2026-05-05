@@ -2,7 +2,7 @@
 
 namespace Drupal\escort\Element;
 
-use Drupal\Core\Render\Element\RenderElement;
+use Drupal\Core\Render\Element\RenderElementBase;
 use Drupal\Core\Render\Element;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Cache\CacheableMetadata;
@@ -13,7 +13,7 @@ use Drupal\escort\EscortRegionManagerInterface;
  *
  * @RenderElement("escort")
  */
-class Escort extends RenderElement {
+class Escort extends RenderElementBase {
 
   /**
    * {@inheritdoc}
