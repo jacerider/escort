@@ -79,7 +79,7 @@ class Menu extends EscortPluginBase implements ContainerFactoryPluginInterface {
       $plugin_definition,
       $container->get('menu.link_tree'),
       $container->get('menu.active_trail'),
-      $container->get('entity.manager')->getStorage('menu')
+      $container->get('entity_type.manager')->getStorage('menu')
     );
   }
 

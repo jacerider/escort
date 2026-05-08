@@ -111,7 +111,7 @@
 
   Drupal.behaviors.escortToggle = {
     attach: function (context) {
-      var $escrotRegionToggles = $(context).find('.escort-toggle').once('escort-toggle').addClass('escort-toggle-processed');
+      var $escrotRegionToggles = $(once('escort-toggle', '.escort-toggle', context)).addClass('escort-toggle-processed');
       if ($escrotRegionToggles.length) {
         for (var i = 0; i < $escrotRegionToggles.length; i++) {
           EscortRegionToggles.instances.push(new EscortRegionToggles($escrotRegionToggles[i]));

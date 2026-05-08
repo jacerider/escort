@@ -93,7 +93,7 @@
 
   Drupal.behaviors.escort = {
     attach: function (context) {
-      var $escortRegion = $(context).find('.escort-region').once('escort-region').addClass('escort-region-processed');
+      var $escortRegion = $(once('escort-region', '.escort-region', context)).addClass('escort-region-processed');
       if ($escortRegion.length) {
         for (var i = 0; i < $escortRegion.length; i++) {
           Escort.instances.push(new Escort($escortRegion[i]));

@@ -1,77 +1,72 @@
 /**
  * @file
- * Escort admin behaviors.
+ * Escort admin behaviors. Reorders escort items between regions using
+ * SortableJS and POSTs the new region/weight map back to the server.
  */
 
-(function ($, window, Drupal) {
+(function (Drupal, drupalSettings, once) {
 
   'use strict';
 
   Drupal.behaviors.escortAdminSort = {
-    attach: function (context, settings) {
-      var $sortAll = $('.escort-sort', context);
-      var $sort = $sortAll.once('escort-admin-sort');
+    attach: function (context) {
+      var newContainers = once('escort-admin-sort', '.escort-sort', context);
+      if (!newContainers.length || typeof window.Sortable === 'undefined') {
+        return;
+      }
+
+      var allContainers = document.querySelectorAll('.escort-sort');
       var updating = false;
 
-      // Update region and weights of all escorts.
-      function updateEscorts(event, ui) {
-        if (!updating) {
-          updating = true;
-          var escortValues = {};
-          var regionId;
-          $sortAll.each(function () {
-            regionId = $(this).data('escort-region');
-            $(this).find('.escort-sortable').each(function (key) {
-              escortValues[$(this).data('escort-id')] = {
-                region: regionId,
-                weight: key
-              };
-            });
-          });
+      function updateEscorts() {
+        if (updating) {
+          return;
+        }
+        updating = true;
 
-          $.ajax({
-            url: Drupal.url('admin/config/user-interface/escort/update'),
-            type: 'POST',
-            data: JSON.stringify(escortValues),
-            dataType: 'json',
-            success: function (results) {
-              // Success
+        var escortValues = {};
+        allContainers.forEach(function (container) {
+          var regionId = container.getAttribute('data-escort-region');
+          var items = container.querySelectorAll('.escort-sortable');
+          items.forEach(function (item, index) {
+            var id = item.getAttribute('data-escort-id');
+            if (id) {
+              escortValues[id] = { region: regionId, weight: index };
             }
           });
+        });
 
-          // This function can be called multiple times if an escort is moved
-          // to a new region. Since we are processing all items we set a small
-          // timeout to prevent multiple unnecessary calls.
-          setTimeout(function () {
-            updating = false;
-          }, 10);
-        }
+        fetch(Drupal.url('admin/config/user-interface/escort/update'), {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify(escortValues)
+        });
+
+        // Coalesce rapid-fire onSort callbacks during a single drop.
+        setTimeout(function () { updating = false; }, 10);
       }
 
-      if ($sort.length) {
-
-        $sort.sortable({
-          items: '.escort-sortable',
-          connectWith: '.escort-sort',
-          placeholder: 'escort-placeholder',
-          forcePlaceholderSize: true,
-          tolerance: 'pointer',
-          helper: 'clone',
-          appendTo: $('body'),
-          handle: '> .escort-item',
-          opacity: 0.5,
-          scroll: false,
-          start: function () {
-            $('body').addClass('escort-sorting');
+      newContainers.forEach(function (container) {
+        window.Sortable.create(container, {
+          group: 'escort-admin',
+          draggable: '.escort-sortable',
+          handle: '.escort-item',
+          ghostClass: 'escort-placeholder',
+          animation: 150,
+          onStart: function () {
+            document.body.classList.add('escort-sorting');
           },
-          stop: function () {
-            $('body').removeClass('escort-sorting');
+          onEnd: function () {
+            document.body.classList.remove('escort-sorting');
           },
-          update: updateEscorts
-        }).disableSelection();
-      }
-
+          onSort: updateEscorts
+        });
+      });
     }
   };
 
-})(jQuery, window, Drupal);
+})(Drupal, drupalSettings, once);

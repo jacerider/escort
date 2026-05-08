@@ -32,7 +32,7 @@
    */
   Drupal.behaviors.escortEscape = {
     attach: function () {
-      var $escortEscape = $('.escort-type-admin-escape .escort-item').once('escortEscape');
+      var $escortEscape = $(once('escortEscape', '.escort-type-admin-escape .escort-item'));
       if ($escortEscape.length && pathInfo.currentPathIsAdmin) {
         if (escapeAdminPath !== null) {
           $escortEscape.attr('href', escapeAdminPath);

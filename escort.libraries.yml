@@ -7,7 +7,7 @@ escort:
     js/escort.js: { minified: true }
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
     - core/drupal.displace
 
@@ -106,9 +106,10 @@ escort.admin:
     component:
       css/escort.admin.css: { minified: true }
   dependencies:
-    - core/jquery
+    - core/once
     - core/drupal
-    - escort/jquery.ui.sortable
+    - core/drupalSettings
+    - escort/sortablejs
 
 escort.admin.drag:
   version: VERSION
@@ -116,13 +117,16 @@ escort.admin.drag:
     js/escort.admin.drag.js: {}
   dependencies:
     - core/jquery
+    - core/once
     - core/drupal
 
-jquery.ui.sortable:
-  version: VERSION
+sortablejs:
+  remote: https://github.com/SortableJS/Sortable
+  version: '1.15.6'
+  license:
+    name: MIT
+    url: https://github.com/SortableJS/Sortable/blob/master/LICENSE
+    gpl-compatible: true
   js:
-    lib/jquery.ui/sortable-min.js: { minified: true }
-  dependencies:
-    - jquery_ui/core
-    - jquery_ui/mouse
-    - jquery_ui/widget
+    https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js: { type: external, minified: true }
+

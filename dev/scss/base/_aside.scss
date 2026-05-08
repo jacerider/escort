@@ -34,6 +34,132 @@
   &.escort-active {
     opacity: 1;
   }
+
+  // Neutralize admin-theme (Claro) styles that bleed into the dropdown so the
+  // dark theme renders identically on frontend and backend. Specificity is
+  // tuned to beat Claro's nested `&.foo` selectors (which resolve to `0,2,0`)
+  // without resorting to `!important`.
+
+  // Filter form: kill Claro's white panel (background, border, box-shadow,
+  // padding, border-radius) so it sits flat in the dark dropdown.
+  form.views-exposed-form {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  // Table cells: defeat Claro's `td { height: 4rem }` which doubles row height.
+  table td {
+    height: auto;
+  }
+
+  // Table rows: keep transparent and inherit color from escort styles.
+  table tbody tr {
+    background: transparent;
+    color: inherit;
+  }
+
+  // Pager: Claro repaints `.pager__link` as a square pill with a bright blue
+  // active state. Restore escort's flat horizontal pager look.
+  nav.pager .pager__link {
+    display: inline-block;
+    block-size: auto;
+    min-inline-size: 0;
+    padding: 0 1em;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: #cdedf8;
+    line-height: 2.8125em;
+
+    &.is-active {
+      background: linear-gradient(to bottom, #1c98c1 0%, #1986ab 100%);
+      color: #fff;
+    }
+  }
+
+  // Claro draws the prev/next chevron as a 16x16 SVG `::after` background.
+  // It defaults to `display: inline` and sits on the text baseline, so it
+  // floats below center inside escort's tall (2.8em) line-height.
+  nav.pager .pager__link--action-link::after {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  // Hide Claro's "first/last" pager controls — frontend pager doesn't show
+  // them and they push the row out of alignment.
+  .pager__item--first,
+  .pager__item--last {
+    display: none;
+  }
+
+  // Dropbuttons (Operations column). Claro applies BEM-style markup
+  // (`.dropbutton__toggle`, `.dropbutton--extrasmall`, `.dropbutton--multiple`)
+  // that doesn't match frontend rendering. Match frontend by:
+  //   - normalizing toggle size + per-item spacing via CSS vars,
+  //   - growing action items from Claro's "extrasmall" font/padding,
+  //   - making the widget pop out absolutely on `.open` so the row doesn't
+  //     expand and the dropdown overlays subsequent rows,
+  //   - recoloring Claro's hard-fill `#000f33` chevron to white.
+  --dropbutton-toggle-size: 33px;
+  --dropbutton-extrasmall-toggle-size: 33px;
+  --dropbutton-toggle-size-spacing: 0px;
+
+  .dropbutton-wrapper {
+    box-shadow: none;
+    border-radius: 0;
+    position: relative;
+  }
+
+  .dropbutton-widget {
+    background: transparent;
+    height: auto;
+  }
+
+  // Action items: defeat Claro's extrasmall font-size/padding so primary +
+  // secondary links match the toggle height (otherwise the left "Edit" pill
+  // is 27px while the toggle is 33px and they don't align vertically).
+  .dropbutton-action a,
+  .dropbutton-action button {
+    box-sizing: border-box;
+    height: var(--dropbutton-toggle-size);
+    padding: 0 1em;
+    font-size: 1em;
+    line-height: var(--dropbutton-toggle-size);
+  }
+
+  // Open state: the widget detaches from flow and overlays as a popover
+  // menu, matching frontend behavior. Without this the table row expands and
+  // shifts subsequent rows down.
+  .dropbutton-wrapper.open {
+    .dropbutton-widget {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      overflow: visible;
+      box-shadow: 0 5px 20px #222;
+    }
+
+    ul.dropbutton {
+      height: auto;
+    }
+  }
+
+  // Toggle button: kill any inherited border + recolor the chevron.
+  .dropbutton__toggle {
+    border: 0;
+
+    // Claro's chevron SVG is hard-filled `#000f33` (dark blue) — invisible
+    // against the teal toggle. Flip it to white via filter rather than
+    // swapping the data URI.
+    &::before {
+      filter: brightness(0) invert(1);
+    }
+  }
 }
 
 .escort-region-after {

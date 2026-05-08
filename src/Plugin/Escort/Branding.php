@@ -168,8 +168,14 @@ class Branding extends EscortPluginBase implements ContainerFactoryPluginInterfa
     $build['#attributes']['title'] = \Drupal::translation()->translate('Site homepage');
 
     $site_logo_uri = theme_get_setting('logo.url', $theme);
-    if (\Drupal::moduleHandler()->moduleExists('real_favicon') && $real_favicon = real_favicon_load_by_theme($theme)) {
-      $site_logo_uri = $real_favicon->getManifestLargeImage();
+    // Bypass real_favicon_load_by_theme() — that helper ignores its argument
+    // and uses the active theme, which gives different images on admin vs
+    // frontend. Call the manager directly with the default theme.
+    if (\Drupal::moduleHandler()->moduleExists('real_favicon')) {
+      $real_favicon = \Drupal::service('real_favicon.manager')->loadFavicon($theme);
+      if ($real_favicon) {
+        $site_logo_uri = $real_favicon->getManifestLargeImage();
+      }
     }
 
     if ($this->configuration['use_site_logo']) {

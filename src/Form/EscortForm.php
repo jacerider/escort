@@ -112,7 +112,7 @@ class EscortForm extends EntityForm {
       $container->get('plugin.manager.escort'),
       $container->get('escort.region_manager'),
       $container->get('language_manager'),
-      $container->get('plugin.form_factory')
+      $container->get('plugin_form.factory')
     );
   }
 

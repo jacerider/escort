@@ -1,20 +1,45 @@
-.escort-region-after {
+// Scoped under `#escort.escort` (id + class on the same wrapper element) to
+// win specificity against sibling modules — notably `ux_form/ux-form.css`
+// which uses the same `#escort .escort-region-after ... .form-item` selector
+// and is loaded after escort.css. Doubling up via the class gives us a full
+// extra weight in the specificity column without needing !important.
+#escort.escort .escort-region-after {
 
   .views-exposed-form {
     margin: 0 0 ($margin * 2);
+    padding: 0 0 ($margin * 1.5);
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    // Align flex children to the bottom of their content so the submit button
+    // sits level with the input (instead of stacked below it). Vertical
+    // breathing room comes from this container's padding-bottom, not from
+    // bottom-margin on each child.
+    align-items: flex-end;
+    column-gap: $margin * 2;
+    row-gap: $margin;
     border-bottom: 1px solid darken($bg-color-top, 7.5%);
 
-    > div:not(.form-item):not(.form-actions) {
-      width: 100%;
+    // Treat every direct child as a flex item that sizes to its own content.
+    // Includes wrapper divs from sibling modules (e.g. `ux_form` emits
+    // `.ux-form-element` around each item). Without this rule those
+    // wrappers default to `width: 100%`, forcing every input to its own row.
+    > * {
+      flex: 0 1 auto;
+      width: auto;
+      max-width: 100%;
     }
 
-    .form-item {
-      flex: auto;
+    // Match both the legacy `.form-item` class and the modern BEM
+    // `.views-exposed-form__item` so Drupal core's `width: 100%` on the BEM
+    // class doesn't expand the input to the entire dropdown width.
+    .form-item,
+    .views-exposed-form__item {
+      flex: 0 1 auto;
       flex-direction: column;
-      margin: 0 0 ($margin * 2);
-      max-width: 25%;
+      margin: 0;
+      width: auto;
+      max-width: 100%;
 
       label {
         display: block;
@@ -31,13 +56,23 @@
       }
 
       input {
+        box-sizing: border-box;
         border: 3px solid smart-scale($bg-color-top, $scale: 8%);
         border-radius: $border-radius;
         background-color: smart-scale($bg-color-top, $scale: 15%);
         box-shadow: none;
         color: smart-scale($bg-color-top, $scale: 100%);
         font-size: $font-size * 1.25;
-        height: $base-size * 0.66;
+        // Pin input height with `!important` so the APPLY button can match.
+        // - Claro's `.form-element { min-height: calc(...) }` would make this
+        //   48px on admin while submit stays at 42px.
+        // - Site themes commonly add `.field-input > input { height: 4rem
+        //   !important }` (e.g. the client theme on this site), which beats
+        //   us on cascade order despite our higher specificity.
+        // The `!important` here, combined with our `#escort.escort ...` scope,
+        // means we win inside the dropdown without affecting other inputs.
+        height: $base-size * 0.66 !important;
+        min-height: 0 !important;
         padding: 0 $padding;
 
         &:focus {
@@ -51,8 +86,8 @@
     }
 
     .form-actions {
-      flex: auto;
-      margin: ($margin * 1.5) 0 0;
+      flex: 0 0 auto;
+      margin: 0;
       clear: none;
       text-align: left;
     }
@@ -60,11 +95,17 @@
     .form-submit {
       @extend %button;
       @include button-style($region: top, $transparent: true);
-      line-height: $base-size * 0.85;
+      // Mirror the input's vertical metrics so the button height matches the
+      // input pixel-for-pixel (same font-size + same height + a transparent
+      // border to stand in for the input's 3px border).
+      box-sizing: border-box;
+      font-size: $font-size * 1.25;
+      height: $base-size * 0.66;
+      line-height: 1;
       background-color: $primary-color;
       color: smart-scale($primary-color, $scale: 80%);
-      margin: 0 0 0 ($margin * 2);
-      border: 0;
+      margin: 0;
+      border: 3px solid transparent;
       text-transform: uppercase;
     }
   }

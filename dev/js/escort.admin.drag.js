@@ -139,7 +139,7 @@
       };
 
       // Add the behavior to each region select list.
-      $(context).find('select.escort-region-select').once('escort-region-select')
+      $(once('escort-region-select', 'select.escort-region-select', context))
         .on('change', function (event) {
           // Make our new row and select field.
           var row = $(this).closest('tr');

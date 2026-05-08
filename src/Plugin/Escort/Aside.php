@@ -255,10 +255,10 @@ class Aside extends Text {
   }
 
   /**
-   * Retrieves the entity manager service.
+   * Retrieves the escort region manager service.
    *
-   * @return \Drupal\Core\Entity\EntityManagerInterface
-   *   The entity manager service.
+   * @return \Drupal\escort\EscortRegionManagerInterface
+   *   The escort region manager service.
    */
   protected function escortRegionManager() {
     if (!$this->escortRegionManager) {

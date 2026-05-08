@@ -60,7 +60,7 @@
       var _this = this;
       if (_this.usesAjax && typeof Drupal.ajax !== 'undefined') {
         // Bind Ajax behaviors to all items showing the class.
-        _this.$trigger.once('aside-ajax').each(function () {
+        $(once('aside-ajax', _this.$trigger)).each(function () {
           var element_settings = {};
           element_settings.progress = {type: 'fullscreen'};
 
@@ -122,7 +122,7 @@
 
   Drupal.behaviors.escortAside = {
     attach: function (context) {
-      var $escortAsides = $('.escort-aside').once('escort-aside');
+      var $escortAsides = $(once('escort-aside', '.escort-aside'));
       if ($escortAsides.length) {
         for (var i = 0; i < $escortAsides.length; i++) {
           EscortAsides.instances.push(new EscortAsides($escortAsides[i]));
@@ -148,7 +148,7 @@
         }
       }
 
-      $('.escort-aside-content a').once('escort-aside-content').each(function () {
+      $(once('escort-aside-content', '.escort-aside-content a')).each(function () {
         url = $(this).attr('href');
         url = updateQueryStringParameter(url, 'destination', destination);
         $(this).attr('href', url);
