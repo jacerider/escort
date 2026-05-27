@@ -14,6 +14,13 @@ use Drupal\Core\Menu\MenuTreeParameters;
 trait EscortPluginLinkTrait {
 
   /**
+   * The menu link tree service.
+   *
+   * @var \Drupal\Core\Menu\MenuLinkTreeInterface|null
+   */
+  protected $menuTree;
+
+  /**
    * The default icon to use when an icon is not set.
    *
    * @var string
