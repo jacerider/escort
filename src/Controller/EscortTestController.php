@@ -58,7 +58,7 @@ class EscortTestController extends ControllerBase {
    * @return array
    *   A render array as expected by drupal_render().
    */
-  public function listing(Request $request = NULL) {
+  public function listing(?Request $request = NULL) {
     $build = [];
 
     $headers = [

@@ -78,7 +78,7 @@ class EscortListBuilder extends ConfigEntityListBuilder implements FormInterface
    * @return array
    *   The escort list as a renderable array.
    */
-  public function render(Request $request = NULL) {
+  public function render(?Request $request = NULL) {
     $this->request = $request;
     return $this->formBuilder->getForm($this);
   }

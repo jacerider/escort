@@ -89,7 +89,7 @@ class EscortManager extends DefaultPluginManager implements EscortManagerInterfa
   /**
    * {@inheritdoc}
    */
-  public function getSortedDefinitions(array $definitions = NULL, $show_hidden = FALSE) {
+  public function getSortedDefinitions(?array $definitions = NULL, $show_hidden = FALSE) {
     // Sort the plugins first by category, then by label.
     $definitions = $this->traitGetSortedDefinitions($definitions, 'admin_label');
     // Do not display the 'broken' plugin in the UI.
@@ -107,7 +107,7 @@ class EscortManager extends DefaultPluginManager implements EscortManagerInterfa
   /**
    * {@inheritdoc}
    */
-  public function getGroupedDefinitions(array $definitions = NULL, $show_hidden = FALSE) {
+  public function getGroupedDefinitions(?array $definitions = NULL, $show_hidden = FALSE) {
     $definitions = $this->traitGetGroupedDefinitions($definitions, 'admin_label');
 
     if (!$show_hidden) {

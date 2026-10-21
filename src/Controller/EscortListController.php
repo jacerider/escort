@@ -20,7 +20,7 @@ class EscortListController extends ControllerBase {
    * @return array
    *   A render array as expected by drupal_render().
    */
-  public function listing(Request $request = NULL) {
+  public function listing(?Request $request = NULL) {
     return $this->entityTypeManager()->getListBuilder('escort')->render($request);
   }
 
@@ -33,7 +33,7 @@ class EscortListController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   A json response to use via javascript.
    */
-  public function updateEscorts(Request $request = NULL) {
+  public function updateEscorts(?Request $request = NULL) {
     $response = [];
     $content = $request->getContent();
     if (!empty($content)) {

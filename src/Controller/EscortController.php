@@ -19,7 +19,7 @@ class EscortController extends ControllerBase {
    * @return \Drupal\Core\Ajax\AjaxResponse
    *   The ajax response.
    */
-  public function render(EscortInterface $escort = NULL) {
+  public function render(?EscortInterface $escort = NULL) {
     $plugin = $escort->getPlugin();
     return $plugin->buildContent();
   }
