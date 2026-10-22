@@ -1,7 +1,8 @@
 {
   "name": "jacerider/escort",
-  "type": "drupal-custom-module",
-  "license": "GPL-2.0+",
+  "type": "drupal-module",
+  "description": "An admin menu of extreme super awesomeness.",
+  "license": "GPL-2.0-or-later",
   "homepage": "https://github.com/jacerider/escort",
   "authors": [
     {
