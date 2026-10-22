@@ -99,7 +99,7 @@ class EscortRepository implements EscortRepositoryInterface {
   /**
    * {@inheritdoc}
    */
-  public function getEscortsPerRegion(array &$cacheable_metadata = NULL) {
+  public function getEscortsPerRegion(?array &$cacheable_metadata = NULL) {
     // Allow testing.
     if ($this->isTest) {
       return $this->getEscortsTest();
