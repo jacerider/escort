@@ -3,5 +3,6 @@ type: module
 description: An admin menu of extreme super awesomeness.
 core_version_requirement: ^10 || ^11
 package: Escort
+version: 5.0.0
 dependencies:
   - micon
