@@ -26,6 +26,171 @@ escort.escort.*:
         label: 'Visibility Condition'
     uuid:
       type: string
+    provider:
+      type: string
+      label: 'Provider'
 
 escort.settings.*:
   type: escort_settings
+
+escort_settings:
+  type: mapping
+  label: 'Escort plugin settings'
+  mapping:
+    id:
+      type: string
+      label: 'Plugin ID'
+    label:
+      type: label
+      label: 'Label'
+    provider:
+      type: string
+      label: 'Provider'
+    icon:
+      type: string
+      label: 'Icon'
+
+escort_settings_aside:
+  type: escort_settings
+  mapping:
+    display:
+      type: string
+      label: 'Display'
+    display_size:
+      type: integer
+      label: 'Display size'
+    ajax:
+      type: boolean
+      label: 'Load with AJAX'
+
+escort.settings.add:
+  type: escort_settings
+  mapping:
+    region:
+      type: string
+      label: 'Region'
+    weight:
+      type: integer
+      label: 'Weight'
+
+escort.settings.aside:
+  type: escort_settings_aside
+
+escort.settings.branding:
+  type: escort_settings
+  mapping:
+    use_site_logo:
+      type: boolean
+      label: 'Use the site logo'
+    use_site_name:
+      type: boolean
+      label: 'Use the site name'
+    use_site_slogan:
+      type: boolean
+      label: 'Use the site slogan'
+    label_display:
+      type: boolean
+      label: 'Display the label'
+
+escort.settings.local_tasks:
+  type: escort_settings
+  mapping:
+    label_display:
+      type: boolean
+      label: 'Display the label'
+    primary:
+      type: boolean
+      label: 'Show primary tabs'
+    secondary:
+      type: boolean
+      label: 'Show secondary tabs'
+
+escort.settings.menu:
+  type: escort_settings
+  mapping:
+    menu:
+      type: string
+      label: 'Menu'
+    level:
+      type: integer
+      label: 'Initial level'
+    depth:
+      type: integer
+      label: 'Depth'
+
+escort.settings.text:
+  type: escort_settings
+  mapping:
+    text:
+      type: label
+      label: 'Text'
+
+escort.settings.link:
+  type: escort.settings.text
+  mapping:
+    url:
+      type: string
+      label: 'URL'
+    target:
+      type: string
+      label: 'Link target'
+
+escort.settings.toggle:
+  type: escort_settings
+  mapping:
+    region:
+      type: string
+      label: 'Region'
+    event:
+      type: string
+      label: 'Event'
+
+escort.settings.user:
+  type: escort_settings_aside
+
+escort.settings.view:
+  type: escort_settings_aside
+  mapping:
+    view_id:
+      type: string
+      label: 'View'
+    view_display_id:
+      type: string
+      label: 'View display'
+    view_argument:
+      type: string
+      label: 'View argument'
+
+escort.settings.node_manage:
+  type: escort_settings_aside
+  mapping:
+    text:
+      type: label
+      label: 'Text'
+    bundle:
+      type: string
+      label: 'Bundle'
+    view:
+      type: boolean
+      label: 'Use a view'
+
+escort.settings.media_manage:
+  type: escort.settings.node_manage
+
+escort.settings.node_add:
+  type: escort_settings_aside
+  mapping:
+    text:
+      type: label
+      label: 'Text'
+    bundles:
+      type: sequence
+      label: 'Bundles'
+      sequence:
+        type: string
+    type:
+      type: string
+      label: 'Include or exclude the bundles'
+
+escort.settings.taxonomy_manage:
+  type: escort.settings.node_add
