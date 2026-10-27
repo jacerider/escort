@@ -20,3 +20,9 @@ escort.config:
           toggle:
             type: string
             label: 'Toggle'
+          icon_only:
+            type: boolean
+            label: 'Icons only'
+    close_icon:
+      type: string
+      label: 'Close icon'
